@@ -1,0 +1,54 @@
+# FastAPI and ASGI server
+fastapi==0.95.1
+uvicorn[standard]==0.21.1
+
+# Database
+sqlalchemy==1.4.53
+alembic==1.10.3
+pymysql==1.0.3
+cryptography==40.0.1
+
+# Data validation and serialization
+pydantic==1.10.7
+pydantic[email]==1.10.7
+email-validator==2.0.0
+phonenumbers==8.13.11
+
+# File handling and validation
+python-multipart==0.0.6
+python-magic==0.4.27
+pillow>=10.0.0
+
+# Security
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+python-dotenv==1.0.0
+
+# Email
+aiosmtplib==2.0.2
+jinja2==3.1.2
+
+# HTTP client for external services
+httpx==0.24.0
+
+# Logging and monitoring
+structlog==23.1.0
+
+# Testing
+pytest==7.3.1
+pytest-asyncio==0.21.0
+pytest-cov==4.0.0
+httpx==0.24.0
+
+# Development
+black==23.3.0
+isort==5.12.0
+flake8==6.0.0
+mypy==1.2.0
+
+# CORS support
+python-cors==1.0.0
+
+# Rate limiting
+slowapi==0.1.9
+redis==4.5.4

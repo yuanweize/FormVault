@@ -1,0 +1,202 @@
+{
+  "app": {
+    "title": "FormVault",
+    "subtitle": "安全保险申请门户"
+  },
+  "stepper": {
+    "personalInfo": "个人信息",
+    "fileUpload": "文件上传",
+    "review": "审核提交",
+    "success": "完成"
+  },
+  "navigation": {
+    "home": "首页",
+    "back": "返回",
+    "next": "下一步",
+    "submit": "提交",
+    "cancel": "取消"
+  },
+  "pages": {
+    "home": {
+      "title": "欢迎使用 FormVault",
+      "subtitle": "安全高效地完成您的保险申请",
+      "getStarted": "开始申请",
+      "features": {
+        "secure": "安全加密",
+        "secureDesc": "您的数据受到行业标准加密保护",
+        "multilingual": "多语言支持",
+        "multilingualDesc": "支持英语、中文和西班牙语",
+        "mobile": "移动友好",
+        "mobileDesc": "在任何设备上完成您的申请"
+      }
+    },
+    "personalInfo": {
+      "title": "个人信息",
+      "subtitle": "请提供您的个人详细信息"
+    },
+    "fileUpload": {
+      "title": "文件上传",
+      "subtitle": "上传您的必需文件"
+    },
+    "review": {
+      "title": "审核提交",
+      "subtitle": "提交前请审核您的信息"
+    },
+    "success": {
+      "title": "申请已提交",
+      "subtitle": "您的申请已成功提交"
+    },
+    "notFound": {
+      "title": "页面未找到",
+      "subtitle": "您要查找的页面不存在",
+      "goHome": "返回首页"
+    }
+  },
+  "footer": {
+    "allRightsReserved": "版权所有。",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "support": "支持"
+  },
+  "forms": {
+    "personalInfo": {
+      "title": "个人信息",
+      "subtitle": "请为您的保险申请提供个人详细信息",
+      "submitting": "提交中...",
+      "success": "个人信息保存成功！",
+      "sections": {
+        "personal": "个人详情",
+        "address": "地址信息"
+      },
+      "fields": {
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "email": "电子邮箱",
+        "phone": "电话号码",
+        "dateOfBirth": "出生日期",
+        "insuranceType": "保险类型",
+        "address": {
+          "street": "街道地址",
+          "city": "城市",
+          "state": "州/省",
+          "zipCode": "邮政编码",
+          "country": "国家"
+        }
+      },
+      "insuranceTypes": {
+        "health": "健康保险",
+        "auto": "汽车保险",
+        "life": "人寿保险",
+        "travel": "旅行保险"
+      },
+      "countries": {
+        "US": "美国",
+        "CA": "加拿大",
+        "MX": "墨西哥",
+        "CN": "中国",
+        "ES": "西班牙",
+        "FR": "法国",
+        "DE": "德国",
+        "GB": "英国",
+        "AU": "澳大利亚",
+        "JP": "日本"
+      },
+      "validation": {
+        "firstName": {
+          "required": "名字是必填项",
+          "minLength": "名字至少需要2个字符",
+          "maxLength": "名字不能超过50个字符",
+          "pattern": "名字只能包含字母、空格、连字符和撇号"
+        },
+        "lastName": {
+          "required": "姓氏是必填项",
+          "minLength": "姓氏至少需要2个字符",
+          "maxLength": "姓氏不能超过50个字符",
+          "pattern": "姓氏只能包含字母、空格、连字符和撇号"
+        },
+        "email": {
+          "required": "电子邮箱是必填项",
+          "pattern": "请输入有效的电子邮箱地址"
+        },
+        "phone": {
+          "required": "电话号码是必填项",
+          "pattern": "请输入有效的电话号码"
+        },
+        "dateOfBirth": {
+          "required": "出生日期是必填项",
+          "future": "出生日期不能是未来日期",
+          "minAge": "您必须年满18岁",
+          "maxAge": "请输入有效的出生日期"
+        },
+        "insuranceType": {
+          "required": "请选择保险类型"
+        },
+        "address": {
+          "street": {
+            "required": "街道地址是必填项",
+            "minLength": "街道地址至少需要5个字符",
+            "maxLength": "街道地址不能超过100个字符"
+          },
+          "city": {
+            "required": "城市是必填项",
+            "minLength": "城市至少需要2个字符",
+            "maxLength": "城市不能超过50个字符",
+            "pattern": "城市只能包含字母、空格、连字符和撇号"
+          },
+          "state": {
+            "required": "州/省是必填项",
+            "minLength": "州/省至少需要2个字符",
+            "maxLength": "州/省不能超过50个字符"
+          },
+          "zipCode": {
+            "required": "邮政编码是必填项",
+            "pattern": "请输入有效的邮政编码"
+          },
+          "country": {
+            "required": "请选择国家"
+          }
+        }
+      }
+    }
+  },
+  "fileUpload": {
+    "title": "文件上传",
+    "description": "请上传您的必需文件。您可以上传学生证或护照，或两者都上传。",
+    "studentId": "学生证",
+    "passport": "护照",
+    "dragAndDrop": "将文件拖拽到此处",
+    "orClickToSelect": "或点击选择文件",
+    "selectFile": "选择文件",
+    "takePhoto": "拍照",
+    "uploading": "上传中...",
+    "preview": "文件预览",
+    "remove": "移除",
+    "requirements": "支持格式：JPEG、PNG、PDF。每个文件最大5MB。",
+    "supportedFormats": "支持格式：{{formats}}。最大大小：{{maxSize}}MB",
+    "errors": {
+      "title": "请修复以下错误：",
+      "fileTooLarge": "文件过大。最大大小为{{maxSize}}MB",
+      "invalidFormat": "无效的文件格式。支持格式：{{formats}}",
+      "uploadFailed": "上传失败。请重试。",
+      "noFilesUploaded": "请至少上传一个文件",
+      "submitFailed": "提交文件失败。请重试。"
+    }
+  },
+  "common": {
+    "back": "返回",
+    "continue": "继续",
+    "submit": "提交",
+    "submitting": "提交中...",
+    "cancel": "取消",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "confirm": "确认",
+    "loading": "加载中..."
+  },
+  "errors": {
+    "general": "发生错误，请重试。",
+    "network": "网络错误，请检查您的连接。",
+    "validation": "请检查您的输入并重试。"
+  }
+}

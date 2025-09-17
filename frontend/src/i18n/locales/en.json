@@ -1,0 +1,320 @@
+{
+  "app": {
+    "title": "FormVault",
+    "subtitle": "Secure Insurance Application Portal"
+  },
+  "stepper": {
+    "personalInfo": "Personal Information",
+    "fileUpload": "Document Upload",
+    "review": "Review & Submit",
+    "success": "Complete"
+  },
+  "navigation": {
+    "home": "Home",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "pages": {
+    "home": {
+      "title": "Welcome to FormVault",
+      "subtitle": "Complete your insurance application securely and efficiently",
+      "getStarted": "Get Started",
+      "features": {
+        "secure": "Secure & Encrypted",
+        "secureDesc": "Your data is protected with industry-standard encryption",
+        "multilingual": "Multi-language Support",
+        "multilingualDesc": "Available in English, Chinese, and Spanish",
+        "mobile": "Mobile Friendly",
+        "mobileDesc": "Complete your application on any device"
+      }
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Please provide your personal details for the insurance application"
+    },
+    "fileUpload": {
+      "title": "Upload Documents",
+      "subtitle": "Please upload your required documents",
+      "instructions": "Upload clear, high-quality images or PDFs of your documents. Maximum file size is 5MB per file.",
+      "allFilesUploaded": "All required files have been uploaded successfully!",
+      "proceedToReview": "Proceed to Review"
+    },
+    "review": {
+      "title": "Review Your Application",
+      "subtitle": "Please review your information before proceeding",
+      "incompleteWarning": "Your application is incomplete. Please complete the missing sections:",
+      "missingPersonalInfo": "Personal information is incomplete",
+      "missingFiles": "Required files are missing",
+      "personalInfoIncomplete": "Please complete your personal information before proceeding.",
+      "fileNotUploaded": "This file has not been uploaded yet.",
+      "readyToProceed": "Your application is complete and ready for submission!",
+      "proceedToConfirmation": "Proceed to Confirmation",
+      "sections": {
+        "personalInfo": "Personal Information",
+        "uploadedFiles": "Uploaded Files"
+      }
+    },
+    "confirmation": {
+      "title": "Confirm Submission",
+      "subtitle": "Please review and confirm your application submission",
+      "incompleteWarning": "Your application cannot be submitted because it is incomplete:",
+      "missingPersonalInfo": "Personal information is incomplete",
+      "missingFiles": "Required files are missing",
+      "submissionNotice": "By submitting this application, you confirm that all information provided is accurate and complete. Once submitted, you will receive a confirmation email with your reference number.",
+      "referenceNumber": "Reference Number",
+      "sections": {
+        "personalInfo": "Personal Information",
+        "uploadedFiles": "Uploaded Files",
+        "applicationDetails": "Application Details"
+      }
+    },
+    "success": {
+      "title": "Application Submitted!",
+      "subtitle": "Your insurance application has been successfully submitted",
+      "referenceNumber": "Your Reference Number",
+      "referenceNumberNote": "Please save this reference number for your records",
+      "applicationSummary": "Application Summary",
+      "submissionDate": "Submission Date",
+      "nextSteps": {
+        "title": "What happens next?",
+        "emailConfirmation": "Email Confirmation",
+        "emailConfirmationNote": "You will receive a confirmation email within 5 minutes",
+        "processing": "Application Processing",
+        "processingNote": "Your application will be reviewed within 2-3 business days",
+        "followUp": "Follow-up Communication",
+        "followUpNote": "We will contact you if additional information is needed"
+      },
+      "importantInfo": "Important: Please keep your reference number safe. You will need it for any future correspondence regarding this application.",
+      "actions": {
+        "goHome": "Return to Home",
+        "print": "Print Confirmation"
+      }
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "subtitle": "The page you're looking for doesn't exist",
+      "goHome": "Go Home"
+    }
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "support": "Support"
+  },
+  "forms": {
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Please provide your personal details for your insurance application",
+      "submitting": "Submitting...",
+      "success": "Personal information saved successfully!",
+      "sections": {
+        "personal": "Personal Details",
+        "address": "Address Information"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "dateOfBirth": "Date of Birth",
+        "insuranceType": "Insurance Type",
+        "address": {
+          "street": "Street Address",
+          "city": "City",
+          "state": "State/Province",
+          "zipCode": "ZIP/Postal Code",
+          "country": "Country"
+        }
+      },
+      "insuranceType": {
+        "label": "Insurance Type",
+        "options": {
+          "health": "Health Insurance",
+          "auto": "Auto Insurance",
+          "life": "Life Insurance",
+          "travel": "Travel Insurance"
+        }
+      },
+      "name": {
+        "label": "Full Name"
+      },
+      "firstName": {
+        "label": "First Name"
+      },
+      "lastName": {
+        "label": "Last Name"
+      },
+      "email": {
+        "label": "Email Address"
+      },
+      "phone": {
+        "label": "Phone Number"
+      },
+      "dateOfBirth": {
+        "label": "Date of Birth"
+      },
+      "address": {
+        "label": "Address"
+      },
+      "countries": {
+        "US": "United States",
+        "CA": "Canada",
+        "MX": "Mexico",
+        "CN": "China",
+        "ES": "Spain",
+        "FR": "France",
+        "DE": "Germany",
+        "GB": "United Kingdom",
+        "AU": "Australia",
+        "JP": "Japan"
+      },
+      "validation": {
+        "firstName": {
+          "required": "First name is required",
+          "minLength": "First name must be at least 2 characters",
+          "maxLength": "First name cannot exceed 50 characters",
+          "pattern": "First name can only contain letters, spaces, hyphens, and apostrophes"
+        },
+        "lastName": {
+          "required": "Last name is required",
+          "minLength": "Last name must be at least 2 characters",
+          "maxLength": "Last name cannot exceed 50 characters",
+          "pattern": "Last name can only contain letters, spaces, hyphens, and apostrophes"
+        },
+        "email": {
+          "required": "Email address is required",
+          "pattern": "Please enter a valid email address"
+        },
+        "phone": {
+          "required": "Phone number is required",
+          "pattern": "Please enter a valid phone number"
+        },
+        "dateOfBirth": {
+          "required": "Date of birth is required",
+          "future": "Date of birth cannot be in the future",
+          "minAge": "You must be at least 18 years old",
+          "maxAge": "Please enter a valid date of birth"
+        },
+        "insuranceType": {
+          "required": "Please select an insurance type"
+        },
+        "address": {
+          "street": {
+            "required": "Street address is required",
+            "minLength": "Street address must be at least 5 characters",
+            "maxLength": "Street address cannot exceed 100 characters"
+          },
+          "city": {
+            "required": "City is required",
+            "minLength": "City must be at least 2 characters",
+            "maxLength": "City cannot exceed 50 characters",
+            "pattern": "City can only contain letters, spaces, hyphens, and apostrophes"
+          },
+          "state": {
+            "required": "State/Province is required",
+            "minLength": "State/Province must be at least 2 characters",
+            "maxLength": "State/Province cannot exceed 50 characters"
+          },
+          "zipCode": {
+            "required": "ZIP/Postal code is required",
+            "pattern": "Please enter a valid ZIP/Postal code"
+          },
+          "country": {
+            "required": "Please select a country"
+          }
+        }
+      }
+    },
+    "fileUpload": {
+      "studentId": {
+        "label": "Student ID",
+        "description": "Upload a clear photo or scan of your student ID card"
+      },
+      "passport": {
+        "label": "Passport",
+        "description": "Upload a clear photo or scan of your passport"
+      }
+    }
+  },
+  "fileUpload": {
+    "title": "Document Upload",
+    "description": "Please upload your required documents. You can upload either a student ID or passport, or both.",
+    "studentId": "Student ID",
+    "passport": "Passport",
+    "dragAndDrop": "Drag and drop your file here",
+    "orClickToSelect": "or click to select a file",
+    "selectFile": "Select File",
+    "takePhoto": "Take Photo",
+    "uploading": "Uploading...",
+    "preview": "File Preview",
+    "remove": "Remove",
+    "requirements": "Supported formats: JPEG, PNG, PDF. Maximum file size: 5MB per file.",
+    "supportedFormats": "Supported formats: {{formats}}. Max size: {{maxSize}}MB",
+    "errors": {
+      "title": "Please fix the following errors:",
+      "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB",
+      "invalidFormat": "Invalid file format. Supported formats: {{formats}}",
+      "uploadFailed": "Upload failed. Please try again.",
+      "noFilesUploaded": "Please upload at least one document",
+      "submitFailed": "Failed to submit files. Please try again."
+    }
+  },
+  "workflow": {
+    "steps": {
+      "personalInfo": {
+        "label": "Personal Info",
+        "description": "Provide your personal details"
+      },
+      "fileUpload": {
+        "label": "Upload Files",
+        "description": "Upload required documents"
+      },
+      "review": {
+        "label": "Review",
+        "description": "Review your application"
+      },
+      "confirmation": {
+        "label": "Confirm",
+        "description": "Confirm submission"
+      },
+      "success": {
+        "label": "Complete",
+        "description": "Application submitted"
+      }
+    },
+    "progress": "Step {{current}} of {{total}}",
+    "navigation": {
+      "previous": "Previous",
+      "next": "Next",
+      "submit": "Submit Application",
+      "saveAsDraft": "Save as Draft",
+      "goHome": "Go to Home",
+      "saving": "Saving...",
+      "submitting": "Submitting...",
+      "unsavedChanges": "You have unsaved changes. Don't forget to save your progress."
+    }
+  },
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "copy": "Copy",
+    "notProvided": "Not provided",
+    "notUploaded": "Not uploaded"
+  },
+  "errors": {
+    "general": "An error occurred. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "validation": "Please check your input and try again."
+  }
+}
