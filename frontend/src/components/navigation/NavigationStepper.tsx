@@ -7,6 +7,8 @@ import {
   Box,
   useTheme,
   useMediaQuery,
+  MobileStepper,
+  Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -15,12 +17,13 @@ const NavigationStepper: React.FC = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isVerySmall = useMediaQuery(theme.breakpoints.down(400));
 
   const steps = [
-    { path: '/personal-info', label: t('stepper.personalInfo') },
-    { path: '/file-upload', label: t('stepper.fileUpload') },
-    { path: '/review', label: t('stepper.review') },
-    { path: '/success', label: t('stepper.success') },
+    { path: '/personal-info', label: t('stepper.personalInfo'), shortLabel: t('stepper.personalInfoShort', { defaultValue: 'Info' }) },
+    { path: '/file-upload', label: t('stepper.fileUpload'), shortLabel: t('stepper.fileUploadShort', { defaultValue: 'Files' }) },
+    { path: '/review', label: t('stepper.review'), shortLabel: t('stepper.reviewShort', { defaultValue: 'Review' }) },
+    { path: '/success', label: t('stepper.success'), shortLabel: t('stepper.successShort', { defaultValue: 'Done' }) },
   ];
 
   const getActiveStep = () => {
@@ -36,18 +39,60 @@ const NavigationStepper: React.FC = () => {
     return null;
   }
 
+  // Use MobileStepper for very small screens
+  if (isVerySmall) {
+    return (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          mb: 1,
+        }}>
+          <Typography 
+            variant="caption" 
+            sx={{ 
+              color: 'rgba(255, 255, 255, 0.9)',
+              fontWeight: 'bold',
+            }}
+          >
+            {t('stepper.step')} {activeStep + 1} {t('stepper.of')} {steps.length}: {steps[activeStep]?.shortLabel}
+          </Typography>
+        </Box>
+        <MobileStepper
+          variant="progress"
+          steps={steps.length}
+          position="static"
+          activeStep={activeStep}
+          sx={{
+            backgroundColor: 'transparent',
+            '& .MuiLinearProgress-root': {
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: theme.palette.secondary.main,
+              },
+            },
+          }}
+          nextButton={<div />}
+          backButton={<div />}
+        />
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ width: '100%', py: 1 }}>
       <Stepper
         activeStep={activeStep}
         alternativeLabel={isMobile}
-        orientation={isMobile ? 'horizontal' : 'horizontal'}
+        orientation="horizontal"
         sx={{
           '& .MuiStepLabel-root': {
             color: 'white',
           },
           '& .MuiStepLabel-label': {
             color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: { xs: '0.75rem', sm: '0.875rem' },
             '&.Mui-active': {
               color: 'white',
               fontWeight: 'bold',
@@ -58,6 +103,7 @@ const NavigationStepper: React.FC = () => {
           },
           '& .MuiStepIcon-root': {
             color: 'rgba(255, 255, 255, 0.3)',
+            fontSize: { xs: '1.2rem', sm: '1.5rem' },
             '&.Mui-active': {
               color: 'white',
             },
@@ -65,14 +111,15 @@ const NavigationStepper: React.FC = () => {
               color: theme.palette.secondary.main,
             },
           },
+          '& .MuiStepConnector-line': {
+            borderColor: 'rgba(255, 255, 255, 0.3)',
+          },
         }}
       >
         {steps.map((step, index) => (
           <Step key={step.path}>
             <StepLabel>
-              {isMobile && step.label.length > 10
-                ? step.label.substring(0, 8) + '...'
-                : step.label}
+              {isMobile ? step.shortLabel : step.label}
             </StepLabel>
           </Step>
         ))}

@@ -172,6 +172,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
                 {...field}
                 labelId="country-label"
                 label={t('forms.personalInfo.fields.address.country')}
+                data-testid="country-select"
                 inputProps={{
                   'aria-label': t('forms.personalInfo.fields.address.country'),
                   'aria-describedby': errors?.country ? 'country-error' : undefined,

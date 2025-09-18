@@ -14,7 +14,13 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <Layout>
-        <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            py: { xs: 2, sm: 3, md: 4 },
+            px: { xs: 1, sm: 2, md: 3 },
+          }}
+        >
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/personal-info" element={<PersonalInfoPage />} />

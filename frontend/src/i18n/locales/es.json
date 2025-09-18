@@ -1,13 +1,20 @@
 {
   "app": {
     "title": "FormVault",
+    "shortTitle": "FormVault",
     "subtitle": "Portal Seguro de Solicitud de Seguros"
   },
   "stepper": {
     "personalInfo": "Información Personal",
+    "personalInfoShort": "Info",
     "fileUpload": "Subir Documentos",
+    "fileUploadShort": "Archivos",
     "review": "Revisar y Enviar",
-    "success": "Completado"
+    "reviewShort": "Revisar",
+    "success": "Completado",
+    "successShort": "Listo",
+    "step": "Paso",
+    "of": "de"
   },
   "navigation": {
     "home": "Inicio",
@@ -15,6 +22,16 @@
     "next": "Siguiente",
     "submit": "Enviar",
     "cancel": "Cancelar"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor ingrese un email válido",
+    "phone": "Por favor ingrese un número de teléfono válido",
+    "minLength": "La longitud mínima es {{min}} caracteres",
+    "maxLength": "La longitud máxima es {{max}} caracteres",
+    "fileSize": "El tamaño del archivo debe ser menor a {{size}}MB",
+    "fileType": "Por favor suba un tipo de archivo válido",
+    "dateFormat": "Por favor ingrese una fecha válida"
   },
   "pages": {
     "home": {

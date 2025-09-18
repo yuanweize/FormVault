@@ -211,15 +211,36 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
   if (uploadedFile) {
     return (
-      <Card sx={{ maxWidth: 400, margin: 'auto' }}>
-        <CardContent>
-          <Box display="flex" alignItems="center" gap={2}>
-            <CheckCircle color="success" />
+      <Card sx={{ 
+        maxWidth: { xs: '100%', sm: 400 }, 
+        margin: 'auto',
+        mx: { xs: 0, sm: 'auto' },
+      }}>
+        <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+          <Box 
+            display="flex" 
+            alignItems="center" 
+            gap={2}
+            flexDirection={{ xs: 'column', sm: 'row' }}
+            textAlign={{ xs: 'center', sm: 'left' }}
+          >
+            <CheckCircle color="success" sx={{ fontSize: { xs: '2rem', sm: '1.5rem' } }} />
             <Box flex={1}>
-              <Typography variant="h6" component="div">
+              <Typography 
+                variant="h6" 
+                component="div"
+                sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+              >
                 {getFileTypeLabel()}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography 
+                variant="body2" 
+                color="text.secondary"
+                sx={{ 
+                  wordBreak: 'break-word',
+                  fontSize: { xs: '0.875rem', sm: '0.875rem' },
+                }}
+              >
                 {uploadedFile.originalName}
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -244,13 +265,17 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           )}
         </CardContent>
         
-        <CardActions>
+        <CardActions sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}>
           <Button
             size="small"
             color="error"
             startIcon={<Delete />}
             onClick={handleRemoveFile}
             disabled={disabled}
+            sx={{ 
+              minHeight: '44px',
+              px: { xs: 3, sm: 2 },
+            }}
           >
             {t('fileUpload.remove')}
           </Button>
@@ -261,12 +286,26 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography 
+        variant="h6" 
+        gutterBottom
+        sx={{ 
+          fontSize: { xs: '1.1rem', sm: '1.25rem' },
+          textAlign: { xs: 'center', sm: 'left' },
+        }}
+      >
         {getFileTypeLabel()}
       </Typography>
       
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+        <Alert 
+          severity="error" 
+          sx={{ 
+            mb: 2,
+            fontSize: { xs: '0.875rem', sm: '0.875rem' },
+          }} 
+          onClose={() => setError(null)}
+        >
           {error}
         </Alert>
       )}
@@ -281,29 +320,55 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           borderStyle: 'dashed',
           borderColor: isDragOver ? 'primary.main' : 'grey.300',
           borderRadius: 2,
-          p: 4,
+          p: { xs: 3, sm: 4 },
           textAlign: 'center',
           cursor: disabled ? 'not-allowed' : 'pointer',
           backgroundColor: isDragOver ? 'action.hover' : 'background.paper',
           opacity: disabled ? 0.6 : 1,
           transition: 'all 0.2s ease-in-out',
+          minHeight: { xs: '200px', sm: 'auto' },
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
           '&:hover': {
             borderColor: disabled ? 'grey.300' : 'primary.main',
             backgroundColor: disabled ? 'background.paper' : 'action.hover',
           },
         }}
       >
-        <CloudUpload sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
+        <CloudUpload sx={{ 
+          fontSize: { xs: 40, sm: 48 }, 
+          color: 'text.secondary', 
+          mb: 2 
+        }} />
         
-        <Typography variant="h6" gutterBottom>
+        <Typography 
+          variant="h6" 
+          gutterBottom
+          sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+        >
           {t('fileUpload.dragAndDrop')}
         </Typography>
         
-        <Typography variant="body2" color="text.secondary" gutterBottom>
+        <Typography 
+          variant="body2" 
+          color="text.secondary" 
+          gutterBottom
+          sx={{ fontSize: { xs: '0.875rem', sm: '0.875rem' } }}
+        >
           {t('fileUpload.orClickToSelect')}
         </Typography>
         
-        <Typography variant="caption" color="text.secondary">
+        <Typography 
+          variant="caption" 
+          color="text.secondary"
+          sx={{ 
+            fontSize: { xs: '0.75rem', sm: '0.75rem' },
+            textAlign: 'center',
+            px: 1,
+          }}
+        >
           {t('fileUpload.supportedFormats', {
             formats: acceptedFormats.map(format => format.split('/')[1]).join(', '),
             maxSize: Math.round(maxSize / (1024 * 1024))
@@ -311,12 +376,22 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         </Typography>
       </Box>
 
-      <Box display="flex" gap={2} justifyContent="center" mt={2}>
+      <Box 
+        display="flex" 
+        flexDirection={{ xs: 'column', sm: 'row' }}
+        gap={2} 
+        justifyContent="center" 
+        mt={2}
+      >
         <Button
           variant="outlined"
           startIcon={<InsertDriveFile />}
           onClick={openFileDialog}
           disabled={disabled || isUploading}
+          sx={{ 
+            minHeight: '48px',
+            flex: { xs: 1, sm: 'none' },
+          }}
         >
           {t('fileUpload.selectFile')}
         </Button>
@@ -326,6 +401,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           startIcon={<PhotoCamera />}
           onClick={openCameraDialog}
           disabled={disabled || isUploading}
+          sx={{ 
+            minHeight: '48px',
+            flex: { xs: 1, sm: 'none' },
+          }}
         >
           {t('fileUpload.takePhoto')}
         </Button>

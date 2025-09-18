@@ -18,22 +18,53 @@ const NotFoundPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto', textAlign: 'center' }}>
-      <Paper elevation={2} sx={{ p: 6 }}>
-        <Typography variant="h1" sx={{ fontSize: '6rem', color: 'text.secondary', mb: 2 }}>
+    <Box sx={{ 
+      maxWidth: 600, 
+      mx: 'auto', 
+      textAlign: 'center',
+      px: { xs: 2, sm: 0 },
+    }}>
+      <Paper 
+        elevation={2} 
+        sx={{ 
+          p: { xs: 4, sm: 6 },
+          mx: { xs: 0, sm: 'auto' },
+        }}
+      >
+        <Typography 
+          variant="h1" 
+          sx={{ 
+            fontSize: { xs: '4rem', sm: '6rem' }, 
+            color: 'text.secondary', 
+            mb: 2,
+          }}
+        >
           404
         </Typography>
-        <Typography variant="h4" gutterBottom>
+        <Typography 
+          variant="h4" 
+          gutterBottom
+          sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }}
+        >
           {t('pages.notFound.title')}
         </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
+        <Typography 
+          variant="body1" 
+          color="text.secondary" 
+          paragraph
+          sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+        >
           {t('pages.notFound.subtitle')}
         </Typography>
         <Button
           variant="contained"
           startIcon={<HomeOutlined />}
           onClick={handleGoHome}
-          sx={{ mt: 2 }}
+          sx={{ 
+            mt: 2,
+            minHeight: '48px',
+            px: { xs: 3, sm: 2 },
+          }}
         >
           {t('pages.notFound.goHome')}
         </Button>

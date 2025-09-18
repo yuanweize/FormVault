@@ -6,6 +6,8 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { LanguageOutlined } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +26,8 @@ const languages: Language[] = [
 
 const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -57,11 +61,16 @@ const LanguageSelector: React.FC = () => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 1,
+          gap: { xs: 0.5, sm: 1 },
+          minWidth: '44px',
+          minHeight: '44px',
+          p: { xs: 1, sm: 1.5 },
         }}
       >
-        <span style={{ fontSize: '1.2rem' }}>{currentLanguage.flag}</span>
-        <LanguageOutlined />
+        <span style={{ fontSize: isMobile ? '1rem' : '1.2rem' }}>
+          {currentLanguage.flag}
+        </span>
+        {!isMobile && <LanguageOutlined />}
       </IconButton>
       <Menu
         id="language-menu"
@@ -73,17 +82,31 @@ const LanguageSelector: React.FC = () => {
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        PaperProps={{
+          sx: {
+            minWidth: { xs: '140px', sm: '160px' },
+          },
+        }}
       >
         {languages.map((language) => (
           <MenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language.code)}
             selected={language.code === i18n.language}
+            sx={{
+              minHeight: '44px',
+              px: { xs: 2, sm: 2 },
+            }}
           >
             <ListItemIcon sx={{ minWidth: '32px !important' }}>
               <span style={{ fontSize: '1.2rem' }}>{language.flag}</span>
             </ListItemIcon>
-            <ListItemText primary={language.name} />
+            <ListItemText 
+              primary={language.name}
+              primaryTypographyProps={{
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+              }}
+            />
           </MenuItem>
         ))}
       </Menu>

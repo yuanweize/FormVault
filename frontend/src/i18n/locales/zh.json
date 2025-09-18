@@ -1,13 +1,20 @@
 {
   "app": {
     "title": "FormVault",
+    "shortTitle": "表单库",
     "subtitle": "安全保险申请门户"
   },
   "stepper": {
     "personalInfo": "个人信息",
+    "personalInfoShort": "信息",
     "fileUpload": "文件上传",
+    "fileUploadShort": "文件",
     "review": "审核提交",
-    "success": "完成"
+    "reviewShort": "审核",
+    "success": "完成",
+    "successShort": "完成",
+    "step": "步骤",
+    "of": "共"
   },
   "navigation": {
     "home": "首页",
@@ -15,6 +22,16 @@
     "next": "下一步",
     "submit": "提交",
     "cancel": "取消"
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "email": "请输入有效的电子邮件地址",
+    "phone": "请输入有效的电话号码",
+    "minLength": "最小长度为{{min}}个字符",
+    "maxLength": "最大长度为{{max}}个字符",
+    "fileSize": "文件大小必须小于{{size}}MB",
+    "fileType": "请上传有效的文件类型",
+    "dateFormat": "请输入有效的日期"
   },
   "pages": {
     "home": {
