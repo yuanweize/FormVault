@@ -15,7 +15,7 @@ email-validator==2.0.0
 phonenumbers==8.13.11
 
 # File handling and validation
-python-multipart==0.0.6
+python-multipart==0.0.18
 python-magic==0.4.27
 pillow>=10.0.0
 
