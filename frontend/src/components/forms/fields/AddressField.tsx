@@ -52,7 +52,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               helperText={errors?.street?.message}
               disabled={disabled}
               inputProps={{
-                'aria-label': t('forms.personalInfo.fields.address.street'),
+                'data-testid': 'street-address-input',
                 'aria-describedby': errors?.street ? 'street-error' : undefined,
               }}
             />

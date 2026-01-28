@@ -20,15 +20,23 @@ interface FileUploadFormProps {
     studentId?: UploadedFile;
     passport?: UploadedFile;
   };
+  error?: string | null;
+  fileType?: string; // Add fileType to interface to match usage
+  onFileUpload?: (file: File, fileType: any) => Promise<UploadedFile | null>; // Match page usage
+  onFileRemove?: (fileType: any) => void;
+  uploadedFile?: UploadedFile | null;
+  isUploading?: boolean;
+  uploadProgress?: number;
 }
 
 export const FileUploadForm: React.FC<FileUploadFormProps> = ({
   onSubmit,
   initialFiles,
+  error,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  
+
   const [studentIdFile, setStudentIdFile] = useState<UploadedFile | null>(
     initialFiles?.studentId || null
   );
@@ -40,12 +48,12 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
 
   const handleStudentIdUpload = useCallback((file: UploadedFile) => {
     setStudentIdFile(file);
-    setErrors(prev => prev.filter(error => !error.includes('student')));
+    setErrors(prev => prev.filter(error => !error.toLowerCase().includes('student')));
   }, []);
 
   const handlePassportUpload = useCallback((file: UploadedFile) => {
     setPassportFile(file);
-    setErrors(prev => prev.filter(error => !error.includes('passport')));
+    setErrors(prev => prev.filter(error => !error.toLowerCase().includes('passport')));
   }, []);
 
   const handleStudentIdError = useCallback((error: string) => {
@@ -87,8 +95,8 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
         navigate('/review');
       }
     } catch (error) {
-      const errorMessage = error instanceof Error 
-        ? error.message 
+      const errorMessage = error instanceof Error
+        ? error.message
         : t('fileUpload.errors.submitFailed');
       setErrors([errorMessage]);
     } finally {
@@ -107,17 +115,18 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
       <Typography variant="h4" component="h1" gutterBottom align="center">
         {t('fileUpload.title')}
       </Typography>
-      
+
       <Typography variant="body1" color="text.secondary" paragraph align="center">
         {t('fileUpload.description')}
       </Typography>
 
-      {errors.length > 0 && (
+      {(errors.length > 0 || error) && (
         <Alert severity="error" sx={{ mb: 3 }}>
           <Typography variant="body2">
             {t('fileUpload.errors.title')}
           </Typography>
           <ul style={{ margin: '8px 0 0 0', paddingLeft: '20px' }}>
+            {error && <li>{error}</li>}
             {errors.map((error, index) => (
               <li key={index}>{error}</li>
             ))}
@@ -138,7 +147,7 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
             />
           </Paper>
         </Grid>
-        
+
         <Grid item xs={12} md={6}>
           <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
             <FileUpload
@@ -162,7 +171,7 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
         >
           {t('common.back')}
         </Button>
-        
+
         <Button
           variant="contained"
           onClick={handleSubmit}
