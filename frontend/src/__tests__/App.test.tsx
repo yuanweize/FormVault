@@ -84,17 +84,21 @@ const renderWithRouter = (initialEntries: string[] = ['/']) => {
 describe('App', () => {
   it('renders home page by default', () => {
     renderWithRouter(['/']);
-    expect(screen.getByText(/Secure Insurance Application Portal/i)).toBeInTheDocument();
+    // Might appear in header and main content
+    expect(screen.getAllByText(/Secure Insurance Application Portal/i)[0]).toBeInTheDocument();
   });
 
-  it('renders review page', () => {
+  it('renders review page', async () => {
     renderWithRouter(['/review']);
-    expect(screen.getByText('Review & Submit')).toBeInTheDocument();
+    // Might appear in stepper and page title
+    const elements = await screen.findAllByText('Review & Submit');
+    expect(elements.length).toBeGreaterThan(0);
   });
 
   it('renders success page', async () => {
     // Context is already mocked above
     renderWithRouter(['/success']);
+    // Should appear in title
     expect(await screen.findByText('Application Submitted!')).toBeInTheDocument();
   });
 
@@ -107,12 +111,7 @@ describe('App', () => {
     renderWithRouter(['/']);
 
     // Check that the app renders without crashing
-    // Expect mocked values or keys
-    expect(await screen.findByText(/Secure Insurance Application Portal/i)).toBeInTheDocument();
-    // The button might show the key if not mocked in the map, or specific value if mocked
-    // In our mock loop, we return key if not found.
-    // 'pages.home.getStarted' is likely the key for "Get Started"
-    // Let's expect the key or whatever the mock returns.
-    // To be safe, let's just check the header which we know works.
+    const elements = await screen.findAllByText(/Secure Insurance Application Portal/i);
+    expect(elements.length).toBeGreaterThan(0);
   });
 });
