@@ -104,7 +104,8 @@ describe('App', () => {
 
   it('renders 404 page for unknown routes', () => {
     renderWithRouter(['/unknown-route']);
-    expect(screen.getByText('Page Not Found')).toBeInTheDocument();
+    // Expect the key since we didn't mock this specific value
+    expect(screen.getByText('pages.notFound.title')).toBeInTheDocument();
   });
 
   it('renders app structure correctly', async () => {
