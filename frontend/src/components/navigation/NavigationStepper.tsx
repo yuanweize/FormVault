@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Stepper,
-  Step,
+  Step as MuiStep,
   StepLabel,
   Box,
   useTheme,
@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-interface Step {
+interface WorkflowStep {
   path?: string; // For routing
   id?: string;   // For explicit identification
   label: string;
@@ -21,7 +21,7 @@ interface Step {
 }
 
 interface NavigationStepperProps {
-  steps?: Step[];
+  steps?: WorkflowStep[];
   currentStep?: string; // path or id
 }
 
@@ -35,7 +35,7 @@ const NavigationStepper: React.FC<NavigationStepperProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isVerySmall = useMediaQuery(theme.breakpoints.down(400));
 
-  const defaultSteps: Step[] = [
+  const defaultSteps: WorkflowStep[] = [
     { path: '/personal-info', label: t('stepper.personalInfo'), shortLabel: t('stepper.personalInfoShort', { defaultValue: 'Info' }) as string },
     { path: '/file-upload', label: t('stepper.fileUpload'), shortLabel: t('stepper.fileUploadShort', { defaultValue: 'Files' }) as string },
     { path: '/review', label: t('stepper.review'), shortLabel: t('stepper.reviewShort', { defaultValue: 'Review' }) as string },
@@ -139,7 +139,7 @@ const NavigationStepper: React.FC<NavigationStepperProps> = ({
         role="list"
       >
         {steps.map((step, index) => (
-          <Step
+          <MuiStep
             key={step.id ?? step.path ?? index}
             role="listitem"
             aria-current={activeStep === index ? 'step' : undefined}
@@ -147,7 +147,7 @@ const NavigationStepper: React.FC<NavigationStepperProps> = ({
             <StepLabel>
               {isMobile ? step.shortLabel : step.label}
             </StepLabel>
-          </Step>
+          </MuiStep>
         ))}
       </Stepper>
     </Box>

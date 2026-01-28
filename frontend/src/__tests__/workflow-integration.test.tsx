@@ -76,9 +76,7 @@ const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <I18nextProvider i18n={i18n}>
       <ApplicationWorkflowProvider>
         {children}
-        <ApplicationWorkflowProvider resetOnUnmount>
-          {children}
-        </ApplicationWorkflowProvider>
+      </ApplicationWorkflowProvider>
     </I18nextProvider>
   </BrowserRouter>
 );

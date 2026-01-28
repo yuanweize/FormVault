@@ -93,14 +93,7 @@ export function WorkflowNavigation({
       }
     } catch (error) {
       console.error('Error in handleNext:', error);
-      // Use the context's error handling instead of local setError
-      if (error instanceof Error) {
-        // @ts-ignore: Dispatch error through context
-        setError(error.message);
-      } else {
-        // @ts-ignore: Dispatch error through context
-        setError(t('errors.general'));
-      }
+      // Error is handled by context, no need to set local state
     }
   };
 
