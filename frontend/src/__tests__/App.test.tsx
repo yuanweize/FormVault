@@ -4,6 +4,50 @@ import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import App from '../App';
 
+// Mock the workflow context to avoid provider race conditions
+jest.mock('../contexts/ApplicationWorkflowContext', () => {
+  const actual = jest.requireActual('../contexts/ApplicationWorkflowContext');
+  return {
+    ...actual,
+    useApplicationWorkflowContext: () => ({
+      state: {
+        referenceNumber: 'REF-12345',
+        personalInfo: { firstName: 'John', lastName: 'Doe' },
+        uploadedFiles: {},
+        currentStep: 'success',
+        completedSteps: ['personal-info', 'file-upload', 'review', 'confirmation', 'success'],
+        submissionStatus: 'submitted',
+        isDirty: false
+      },
+      resetWorkflow: jest.fn(),
+      goToStep: jest.fn(),
+    }),
+    ApplicationWorkflowProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
+
+// Mock the workflow context to avoid provider race conditions
+jest.mock('../contexts/ApplicationWorkflowContext', () => {
+  const actual = jest.requireActual('../contexts/ApplicationWorkflowContext');
+  return {
+    ...actual,
+    useApplicationWorkflowContext: () => ({
+      state: {
+        referenceNumber: 'REF-12345',
+        personalInfo: { firstName: 'John', lastName: 'Doe' },
+        uploadedFiles: {},
+        currentStep: 'success',
+        completedSteps: ['personal-info', 'file-upload', 'review', 'confirmation', 'success'],
+        submissionStatus: 'submitted',
+        isDirty: false
+      },
+      resetWorkflow: jest.fn(),
+      goToStep: jest.fn(),
+    }),
+    ApplicationWorkflowProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
+
 const theme = createTheme();
 
 const renderWithRouter = (initialEntries: string[] = ['/']) => {

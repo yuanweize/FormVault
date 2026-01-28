@@ -16,7 +16,7 @@ from app.database import get_db
 from app.models.application import Application
 from app.models.file import File
 from app.models.email_export import EmailExport
-from app.utils.database import create_audit_log, handle_integrity_error
+from app.utils.db_helpers import create_audit_log, handle_integrity_error
 from app.services.email_service import email_service
 from datetime import datetime
 from app.api.v1.endpoints.applications import router
