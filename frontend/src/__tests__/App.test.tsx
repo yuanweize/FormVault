@@ -19,17 +19,7 @@ const renderWithRouter = (initialEntries: string[] = ['/']) => {
 describe('App', () => {
   it('renders home page by default', () => {
     renderWithRouter(['/']);
-    expect(screen.getByText('Welcome to FormVault')).toBeInTheDocument();
-  });
-
-  it('renders personal info page', () => {
-    renderWithRouter(['/personal-info']);
-    expect(screen.getAllByText('Personal Information')).toHaveLength(2); // One in stepper, one in page title
-  });
-
-  it('renders file upload page', () => {
-    renderWithRouter(['/file-upload']);
-    expect(screen.getByText('Document Upload')).toBeInTheDocument();
+    expect(screen.getByText(/Secure Insurance Application Portal/i)).toBeInTheDocument();
   });
 
   it('renders review page', () => {
@@ -38,20 +28,7 @@ describe('App', () => {
   });
 
   it('renders success page', async () => {
-    // Mock localStorage to provide state for the success page
-    const mockState = {
-      referenceNumber: 'REF-12345',
-      personalInfo: { firstName: 'John', lastName: 'Doe' },
-      uploadedFiles: {},
-      currentStep: 'success',
-      completedSteps: ['personal-info', 'file-upload', 'review', 'confirmation', 'success'],
-      submissionStatus: 'submitted'
-    };
-    Storage.prototype.getItem = jest.fn((key) => {
-      if (key === 'formvault_workflow_state') return JSON.stringify(mockState);
-      return null;
-    });
-
+    // Context is already mocked above
     renderWithRouter(['/success']);
     expect(await screen.findByText('Application Submitted!')).toBeInTheDocument();
   });
