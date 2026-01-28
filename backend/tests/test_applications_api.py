@@ -270,11 +270,11 @@ class TestApplicationCreation:
         applications = db_session.query(Application).all()
         assert len(applications) == 2
 
-        @patch("app.utils.db_helpers.create_audit_log")
+    @patch("app.utils.db_helpers.create_audit_log")
     def test_create_application_audit_log_failure(
         self, mock_audit_log, client, db_session, sample_application_data
     ):
-                """Test application creation when audit logging fails."""
+        """Test application creation when audit logging fails."""
         # Mock audit log creation to return None (failure)
         mock_audit_log.return_value = None
 
@@ -452,4 +452,3 @@ class TestApplicationCreationPerformance:
         # Verify all reference numbers are unique
         ref_numbers = [app.reference_number for app in applications]
         assert len(set(ref_numbers)) == 5
-
