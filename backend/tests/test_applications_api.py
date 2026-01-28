@@ -270,7 +270,7 @@ class TestApplicationCreation:
         applications = db_session.query(Application).all()
         assert len(applications) == 2
 
-    @patch("app.utils.db_helpers.create_audit_log")
+        @patch("app.utils.db_helpers.create_audit_log")
     def test_create_application_audit_log_failure(
         self, mock_audit_log, client, db_session, sample_application_data
     ):
