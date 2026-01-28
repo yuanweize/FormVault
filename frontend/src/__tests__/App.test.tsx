@@ -38,6 +38,20 @@ describe('App', () => {
   });
 
   it('renders success page', async () => {
+    // Mock localStorage to provide state for the success page
+    const mockState = {
+      referenceNumber: 'REF-12345',
+      personalInfo: { firstName: 'John', lastName: 'Doe' },
+      uploadedFiles: {},
+      currentStep: 'success',
+      completedSteps: ['personal-info', 'file-upload', 'review', 'confirmation', 'success'],
+      submissionStatus: 'submitted'
+    };
+    Storage.prototype.getItem = jest.fn((key) => {
+      if (key === 'formvault_workflow_state') return JSON.stringify(mockState);
+      return null;
+    });
+
     renderWithRouter(['/success']);
     expect(await screen.findByText('Application Submitted!')).toBeInTheDocument();
   });

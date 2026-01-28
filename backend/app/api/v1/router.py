@@ -13,26 +13,12 @@ from .endpoints import applications, files, health, admin
 api_router = APIRouter()
 
 # Include endpoint routers
-api_router.include_router(
-    health.router,
-    prefix="/health",
-    tags=["health"]
-)
+api_router.include_router(health.router, prefix="/health", tags=["health"])
 
 api_router.include_router(
-    applications.router,
-    prefix="/applications",
-    tags=["applications"]
+    applications.router, prefix="/applications", tags=["applications"]
 )
 
-api_router.include_router(
-    files.router,
-    prefix="/files",
-    tags=["files"]
-)
+api_router.include_router(files.router, prefix="/files", tags=["files"])
 
-api_router.include_router(
-    admin.router,
-    prefix="/admin",
-    tags=["admin"]
-)
+api_router.include_router(admin.router, prefix="/admin", tags=["admin"])

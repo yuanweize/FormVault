@@ -13,24 +13,24 @@ from functools import lru_cache
 
 class Settings(BaseModel):
     """Application settings with environment variable support."""
-    
+
     # Application settings
     DEBUG: bool = False
     SECRET_KEY: str = "your-secret-key-change-in-production"
-    
+
     # Database settings
     DATABASE_URL: str = "mysql+pymysql://user:password@localhost/formvault"
     DATABASE_ECHO: bool = False
-    
+
     # CORS settings
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
     ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1", "*"]
-    
+
     # File upload settings
     MAX_FILE_SIZE: int = 5 * 1024 * 1024  # 5MB
     ALLOWED_FILE_TYPES: List[str] = ["image/jpeg", "image/png", "application/pdf"]
     UPLOAD_DIR: str = "uploads"
-    
+
     # Email settings
     SMTP_HOST: str = "localhost"
     SMTP_PORT: int = 587
@@ -38,22 +38,22 @@ class Settings(BaseModel):
     SMTP_PASSWORD: Optional[str] = None
     SMTP_USE_TLS: bool = True
     FROM_EMAIL: str = "noreply@formvault.com"
-    
+
     # Security settings
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     ALGORITHM: str = "HS256"
-    
+
     # Rate limiting
     RATE_LIMIT_ENABLED: bool = True
     RATE_LIMIT_REQUESTS: int = 100
     RATE_LIMIT_WINDOW: int = 3600  # 1 hour
-    
+
     # Redis settings (for rate limiting and caching)
     REDIS_URL: Optional[str] = None
-    
+
     # Logging
     LOG_LEVEL: str = "INFO"
-    
+
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def assemble_cors_origins(cls, v):
@@ -61,7 +61,7 @@ class Settings(BaseModel):
         if isinstance(v, str):
             return [i.strip() for i in v.split(",")]
         return v
-    
+
     @field_validator("ALLOWED_HOSTS", mode="before")
     @classmethod
     def assemble_allowed_hosts(cls, v):
@@ -69,7 +69,7 @@ class Settings(BaseModel):
         if isinstance(v, str):
             return [i.strip() for i in v.split(",")]
         return v
-    
+
     @field_validator("ALLOWED_FILE_TYPES", mode="before")
     @classmethod
     def assemble_file_types(cls, v):
@@ -77,7 +77,7 @@ class Settings(BaseModel):
         if isinstance(v, str):
             return [i.strip() for i in v.split(",")]
         return v
-    
+
     @field_validator("UPLOAD_DIR")
     @classmethod
     def create_upload_dir(cls, v):
@@ -85,7 +85,7 @@ class Settings(BaseModel):
         if not os.path.exists(v):
             os.makedirs(v, exist_ok=True)
         return v
-    
+
     model_config = {"env_file": ".env", "case_sensitive": True}
 
 

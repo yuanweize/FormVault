@@ -1,6 +1,7 @@
 """
 Database utility functions for FormVault.
 """
+
 import logging
 from typing import Optional, Dict, Any
 from contextlib import contextmanager
@@ -18,7 +19,7 @@ logger = logging.getLogger(__name__)
 def get_db_session():
     """
     Context manager for database sessions with automatic cleanup.
-    
+
     Usage:
         with get_db_session() as db:
             # Use db session
@@ -39,7 +40,7 @@ def get_db_session():
 def check_database_connection() -> bool:
     """
     Check if database connection is working.
-    
+
     Returns:
         bool: True if connection is successful, False otherwise
     """
@@ -55,7 +56,7 @@ def check_database_connection() -> bool:
 def get_database_info() -> Dict[str, Any]:
     """
     Get database connection information and statistics.
-    
+
     Returns:
         Dict containing database info
     """
@@ -64,10 +65,10 @@ def get_database_info() -> Dict[str, Any]:
             # Get database version
             result = connection.execute(text("SELECT VERSION()"))
             version = result.scalar()
-            
+
             # Get connection pool info
             pool = engine.pool
-            
+
             return {
                 "database_version": version,
                 "pool_size": pool.size(),
@@ -87,11 +88,11 @@ def create_audit_log(
     application_id: Optional[str] = None,
     user_ip: Optional[str] = None,
     user_agent: Optional[str] = None,
-    details: Optional[Dict[str, Any]] = None
+    details: Optional[Dict[str, Any]] = None,
 ) -> Optional[AuditLog]:
     """
     Create an audit log entry.
-    
+
     Args:
         db: Database session
         action: Action being logged
@@ -99,7 +100,7 @@ def create_audit_log(
         user_ip: Optional user IP address
         user_agent: Optional user agent string
         details: Optional additional details
-        
+
     Returns:
         AuditLog instance if successful, None if failed
     """
@@ -109,15 +110,15 @@ def create_audit_log(
             application_id=application_id,
             user_ip=user_ip,
             user_agent=user_agent,
-            details=details
+            details=details,
         )
-        
+
         db.add(audit_log)
         db.flush()  # Get the ID without committing
-        
+
         logger.info(f"Audit log created: {action} (ID: {audit_log.id})")
         return audit_log
-        
+
     except SQLAlchemyError as e:
         logger.error(f"Failed to create audit log: {e}")
         return None
@@ -126,11 +127,11 @@ def create_audit_log(
 def safe_delete(db: Session, model_instance) -> bool:
     """
     Safely delete a model instance with error handling.
-    
+
     Args:
         db: Database session
         model_instance: Model instance to delete
-        
+
     Returns:
         bool: True if successful, False otherwise
     """
@@ -147,12 +148,12 @@ def safe_delete(db: Session, model_instance) -> bool:
 def safe_update(db: Session, model_instance, **kwargs) -> bool:
     """
     Safely update a model instance with error handling.
-    
+
     Args:
         db: Database session
         model_instance: Model instance to update
         **kwargs: Fields to update
-        
+
     Returns:
         bool: True if successful, False otherwise
     """
@@ -161,8 +162,10 @@ def safe_update(db: Session, model_instance, **kwargs) -> bool:
             if hasattr(model_instance, key):
                 setattr(model_instance, key, value)
             else:
-                logger.warning(f"Attribute {key} not found on {type(model_instance).__name__}")
-        
+                logger.warning(
+                    f"Attribute {key} not found on {type(model_instance).__name__}"
+                )
+
         db.flush()
         return True
     except SQLAlchemyError as e:
@@ -174,15 +177,15 @@ def safe_update(db: Session, model_instance, **kwargs) -> bool:
 def handle_integrity_error(error: IntegrityError) -> str:
     """
     Convert SQLAlchemy IntegrityError to user-friendly message.
-    
+
     Args:
         error: IntegrityError instance
-        
+
     Returns:
         str: User-friendly error message
     """
     error_msg = str(error.orig).lower()
-    
+
     if "duplicate entry" in error_msg:
         if "reference_number" in error_msg:
             return "Reference number already exists"
@@ -201,11 +204,11 @@ def handle_integrity_error(error: IntegrityError) -> str:
 def execute_raw_sql(query: str, params: Optional[Dict] = None) -> Any:
     """
     Execute raw SQL query safely.
-    
+
     Args:
         query: SQL query string
         params: Optional query parameters
-        
+
     Returns:
         Query result
     """
@@ -221,10 +224,10 @@ def execute_raw_sql(query: str, params: Optional[Dict] = None) -> Any:
 def get_table_row_count(table_name: str) -> int:
     """
     Get row count for a specific table.
-    
+
     Args:
         table_name: Name of the table
-        
+
     Returns:
         int: Number of rows in the table
     """
@@ -240,10 +243,10 @@ def get_table_row_count(table_name: str) -> int:
 def cleanup_old_audit_logs(days: int = 90) -> int:
     """
     Clean up audit logs older than specified days.
-    
+
     Args:
         days: Number of days to keep logs
-        
+
     Returns:
         int: Number of deleted records
     """
@@ -255,10 +258,10 @@ def cleanup_old_audit_logs(days: int = 90) -> int:
             """)
             result = db.execute(query, {"days": days})
             deleted_count = result.rowcount
-            
+
             logger.info(f"Cleaned up {deleted_count} old audit log entries")
             return deleted_count
-            
+
     except SQLAlchemyError as e:
         logger.error(f"Failed to cleanup audit logs: {e}")
         return 0

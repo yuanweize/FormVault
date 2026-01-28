@@ -19,7 +19,7 @@ router = APIRouter()
 async def health_check() -> Dict[str, Any]:
     """
     Basic health check endpoint.
-    
+
     Returns basic system status information for load balancers
     and monitoring systems.
     """
@@ -27,17 +27,17 @@ async def health_check() -> Dict[str, Any]:
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "version": "1.0.0",
-        "service": "formvault-api"
+        "service": "formvault-api",
     }
 
 
 @router.get("/detailed", response_model=Dict[str, Any])
 async def detailed_health_check(
-    settings: Settings = Depends(get_settings)
+    settings: Settings = Depends(get_settings),
 ) -> Dict[str, Any]:
     """
     Detailed health check endpoint.
-    
+
     Returns comprehensive system status including configuration
     and dependency status (when implemented).
     """
@@ -57,7 +57,7 @@ async def detailed_health_check(
             "database": "not_checked",  # TODO: Implement database health check
             "email_service": "not_checked",  # TODO: Implement email service health check
             "file_storage": "not_checked",  # TODO: Implement file storage health check
-        }
+        },
     }
 
 
@@ -65,7 +65,7 @@ async def detailed_health_check(
 async def readiness_check() -> Dict[str, Any]:
     """
     Readiness check endpoint.
-    
+
     Returns whether the service is ready to accept requests.
     Used by Kubernetes and other orchestration systems.
     """
@@ -76,8 +76,8 @@ async def readiness_check() -> Dict[str, Any]:
         "checks": {
             "database": "ready",
             "file_storage": "ready",
-            "email_service": "ready"
-        }
+            "email_service": "ready",
+        },
     }
 
 
@@ -85,12 +85,12 @@ async def readiness_check() -> Dict[str, Any]:
 async def liveness_check() -> Dict[str, Any]:
     """
     Liveness check endpoint.
-    
+
     Returns whether the service is alive and functioning.
     Used by Kubernetes and other orchestration systems.
     """
     return {
         "status": "alive",
         "timestamp": datetime.utcnow().isoformat(),
-        "uptime": "not_implemented"  # TODO: Implement uptime tracking
+        "uptime": "not_implemented",  # TODO: Implement uptime tracking
     }

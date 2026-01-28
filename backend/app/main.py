@@ -46,13 +46,10 @@ app.add_middleware(AuditMiddleware)
 app.add_middleware(
     SecurityMiddleware,
     rate_limit_requests=settings.RATE_LIMIT_REQUESTS,
-    rate_limit_window=settings.RATE_LIMIT_WINDOW
+    rate_limit_window=settings.RATE_LIMIT_WINDOW,
 )
 
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=settings.ALLOWED_HOSTS
-)
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
 
 # CORS Middleware
 app.add_middleware(
@@ -69,7 +66,7 @@ app.add_middleware(
 async def log_requests(request: Request, call_next):
     """Log all HTTP requests with timing information."""
     start_time = time.time()
-    
+
     # Log request
     logger.info(
         "Request started",
@@ -78,12 +75,12 @@ async def log_requests(request: Request, call_next):
         client_ip=request.client.host if request.client else None,
         user_agent=request.headers.get("user-agent"),
     )
-    
+
     response = await call_next(request)
-    
+
     # Calculate processing time
     process_time = time.time() - start_time
-    
+
     # Log response
     logger.info(
         "Request completed",
@@ -92,10 +89,10 @@ async def log_requests(request: Request, call_next):
         status_code=response.status_code,
         process_time=round(process_time, 4),
     )
-    
+
     # Add timing header
     response.headers["X-Process-Time"] = str(process_time)
-    
+
     return response
 
 
@@ -110,7 +107,7 @@ async def formvault_exception_handler(request: Request, exc: FormVaultException)
         status_code=exc.status_code,
         url=str(request.url),
     )
-    
+
     # Track error for monitoring
     track_error(
         error=exc,
@@ -119,11 +116,11 @@ async def formvault_exception_handler(request: Request, exc: FormVaultException)
             "url": str(request.url),
             "method": request.method,
             "error_code": exc.error_code,
-            "status_code": exc.status_code
+            "status_code": exc.status_code,
         },
-        user_ip=request.client.host if request.client else None
+        user_ip=request.client.host if request.client else None,
     )
-    
+
     return JSONResponse(
         status_code=exc.status_code,
         content={
@@ -133,7 +130,7 @@ async def formvault_exception_handler(request: Request, exc: FormVaultException)
                 "timestamp": datetime.utcnow().isoformat(),
                 "path": str(request.url.path),
             }
-        }
+        },
     )
 
 
@@ -145,7 +142,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         errors=exc.errors(),
         url=str(request.url),
     )
-    
+
     return JSONResponse(
         status_code=422,
         content={
@@ -156,7 +153,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
                 "timestamp": datetime.utcnow().isoformat(),
                 "path": str(request.url.path),
             }
-        }
+        },
     )
 
 
@@ -169,7 +166,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
         detail=exc.detail,
         url=str(request.url),
     )
-    
+
     return JSONResponse(
         status_code=exc.status_code,
         content={
@@ -179,7 +176,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
                 "timestamp": datetime.utcnow().isoformat(),
                 "path": str(request.url.path),
             }
-        }
+        },
     )
 
 
@@ -193,7 +190,7 @@ async def general_exception_handler(request: Request, exc: Exception):
         url=str(request.url),
         exc_info=True,
     )
-    
+
     # Track critical error for monitoring
     track_error(
         error=exc,
@@ -201,11 +198,11 @@ async def general_exception_handler(request: Request, exc: Exception):
         context={
             "url": str(request.url),
             "method": request.method,
-            "exception_type": type(exc).__name__
+            "exception_type": type(exc).__name__,
         },
-        user_ip=request.client.host if request.client else None
+        user_ip=request.client.host if request.client else None,
     )
-    
+
     return JSONResponse(
         status_code=500,
         content={
@@ -215,7 +212,7 @@ async def general_exception_handler(request: Request, exc: Exception):
                 "timestamp": datetime.utcnow().isoformat(),
                 "path": str(request.url.path),
             }
-        }
+        },
     )
 
 
@@ -250,6 +247,7 @@ async def shutdown_event():
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",
