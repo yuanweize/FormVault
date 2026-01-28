@@ -71,6 +71,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
+  // Add data-testid based on fileType
+  const inputTestId = `${fileType}-upload-input`;
+
   const validateFile = useCallback((file: File): string | null => {
     if (file.size > maxSize) {
       return t('fileUpload.errors.fileTooLarge', {
@@ -136,7 +139,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : t('fileUpload.errors.uploadFailed');
       setError(errorMessage);
-      onUploadError(errorMessage);
+      onUploadError(errorMessage as string);
     } finally {
       setInternalIsUploading(false);
       setInternalUploadProgress(0);
@@ -320,19 +323,20 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       )}
 
       <Box
+        component="div"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={openFileDialog}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => {
+        onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             openFileDialog();
           }
         }}
-        aria-label={t('fileUpload.dragAndDrop')}
+        aria-label={t('fileUpload.dragAndDrop') as string}
         aria-describedby="file-upload-instruction file-upload-formats"
         sx={{
           border: 2,
@@ -439,12 +443,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           <LinearProgress
             variant="determinate"
             value={uploadProgress}
-            aria-label={t('fileUpload.uploading')}
+            aria-label={t('fileUpload.uploading') as string}
           />
         </Box>
       )}
 
       <input
+        data-testid={inputTestId}
         ref={fileInputRef}
         type="file"
         accept={acceptedFormats.join(',')}

@@ -79,10 +79,16 @@ const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 // Mock window.matchMedia for responsive tests
 const mockMatchMedia = (width: number) => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation((query: string) => ({
-      matches: query.includes(`max-width: ${width}px`),
+  const matcher = jest.fn().mockImplementation((query: string) => {
+    const maxMatch = /max-width:\s*(\d+)px/.exec(query);
+    const minMatch = /min-width:\s*(\d+)px/.exec(query);
+    const maxWidth = maxMatch ? Number(maxMatch[1]) : undefined;
+    const minWidth = minMatch ? Number(minMatch[1]) : undefined;
+    const matches = (maxWidth === undefined || width <= maxWidth)
+      && (minWidth === undefined || width >= minWidth);
+
+    return {
+      matches,
       media: query,
       onchange: null,
       addListener: jest.fn(),
@@ -90,7 +96,18 @@ const mockMatchMedia = (width: number) => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn(),
-    })),
+    };
+  });
+
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: matcher,
+  });
+  Object.defineProperty(global, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: matcher,
   });
 };
 
@@ -128,7 +145,7 @@ describe('Mobile Responsiveness Tests', () => {
 
       // Should show short title on mobile
       expect(screen.getByText('FormVault')).toBeInTheDocument();
-      
+
       // Language selector should be present
       const languageButton = screen.getByRole('button', { name: /select language/i });
       expect(languageButton).toBeInTheDocument();
@@ -155,7 +172,7 @@ describe('Mobile Responsiveness Tests', () => {
 
     test('Personal info form is mobile-friendly', () => {
       const mockSubmit = jest.fn();
-      
+
       render(
         <TestWrapper>
           <PersonalInfoForm onSubmit={mockSubmit} />
@@ -164,7 +181,7 @@ describe('Mobile Responsiveness Tests', () => {
 
       // Form should render without errors
       expect(screen.getByText('Personal Information')).toBeInTheDocument();
-      
+
       // Form fields should be present
       expect(screen.getByLabelText(/first name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/last name/i)).toBeInTheDocument();
@@ -215,7 +232,7 @@ describe('Mobile Responsiveness Tests', () => {
 
     test('Form layout adjusts for tablet', () => {
       const mockSubmit = jest.fn();
-      
+
       render(
         <TestWrapper>
           <PersonalInfoForm onSubmit={mockSubmit} />
@@ -252,7 +269,7 @@ describe('Mobile Responsiveness Tests', () => {
   describe('Error Boundary Mobile Responsiveness', () => {
     test('Error boundary displays mobile-friendly error message', () => {
       // Mock console.error to avoid test output noise
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
 
       const ThrowError = () => {
         throw new Error('Test error');
@@ -277,7 +294,7 @@ describe('Mobile Responsiveness Tests', () => {
   describe('Language Selector Mobile Behavior', () => {
     test('Language selector is touch-friendly on mobile', () => {
       mockMatchMedia(599);
-      
+
       render(
         <TestWrapper>
           <LanguageSelector />
@@ -286,11 +303,11 @@ describe('Mobile Responsiveness Tests', () => {
 
       const languageButton = screen.getByRole('button', { name: /select language/i });
       expect(languageButton).toBeInTheDocument();
-      
+
       // Button should have adequate touch target size
       const buttonElement = languageButton as HTMLElement;
       const styles = window.getComputedStyle(buttonElement);
-      
+
       // Note: In a real test environment, you would check computed styles
       // Here we just verify the button exists and is accessible
       expect(buttonElement).toBeVisible();
@@ -300,7 +317,7 @@ describe('Mobile Responsiveness Tests', () => {
   describe('Accessibility on Mobile', () => {
     test('Touch targets meet minimum size requirements', () => {
       const mockSubmit = jest.fn();
-      
+
       render(
         <TestWrapper>
           <PersonalInfoForm onSubmit={mockSubmit} />
@@ -315,7 +332,7 @@ describe('Mobile Responsiveness Tests', () => {
 
     test('Form inputs are properly labeled for screen readers', () => {
       const mockSubmit = jest.fn();
-      
+
       render(
         <TestWrapper>
           <PersonalInfoForm onSubmit={mockSubmit} />
@@ -333,16 +350,16 @@ describe('Mobile Responsiveness Tests', () => {
   describe('Performance on Mobile', () => {
     test('Components render without performance issues', () => {
       const startTime = performance.now();
-      
+
       render(
         <TestWrapper>
           <App />
         </TestWrapper>
       );
-      
+
       const endTime = performance.now();
       const renderTime = endTime - startTime;
-      
+
       // Render should complete within reasonable time (adjust threshold as needed)
       expect(renderTime).toBeLessThan(1000); // 1 second
     });

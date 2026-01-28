@@ -83,23 +83,20 @@ const NavigationStepper: React.FC<NavigationStepperProps> = ({
             {t('stepper.step')} {activeStep + 1} {t('stepper.of')} {steps.length}: {steps[activeStep]?.shortLabel}
           </Typography>
         </Box>
-        <MobileStepper
-          variant="progress"
-          steps={steps.length}
-          position="static"
-          activeStep={activeStep}
-          sx={{
-            backgroundColor: 'transparent',
-            '& .MuiLinearProgress-root': {
-              backgroundColor: 'rgba(255, 255, 255, 0.3)',
-              '& .MuiLinearProgress-bar': {
-                backgroundColor: theme.palette.secondary.main,
-              },
-            },
-          }}
-          nextButton={<div />}
-          backButton={<div />}
-        />
+        <Box sx={{ width: '100%', position: 'relative', height: 4, backgroundColor: 'rgba(255, 255, 255, 0.3)', borderRadius: 2 }}>
+          <Box
+            sx={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              height: '100%',
+              width: `${(activeStep + 1) / steps.length * 100}%`,
+              backgroundColor: theme.palette.secondary.main,
+              borderRadius: 2,
+              transition: 'width 0.3s ease'
+            }}
+          />
+        </Box>
       </Box>
     );
   }
@@ -143,7 +140,7 @@ const NavigationStepper: React.FC<NavigationStepperProps> = ({
       >
         {steps.map((step, index) => (
           <Step
-            key={step.path}
+            key={step.id ?? step.path ?? index}
             role="listitem"
             aria-current={activeStep === index ? 'step' : undefined}
           >

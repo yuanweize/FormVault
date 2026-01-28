@@ -4,6 +4,83 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+// Mock canvas APIs used by components/tests to avoid JSDOM errors
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: jest.fn(() => ({
+    fillRect: jest.fn(),
+    clearRect: jest.fn(),
+    getImageData: jest.fn(() => ({ data: [] })),
+    putImageData: jest.fn(),
+    createImageData: jest.fn(),
+    setTransform: jest.fn(),
+    drawImage: jest.fn(),
+    save: jest.fn(),
+    fillText: jest.fn(),
+    restore: jest.fn(),
+    beginPath: jest.fn(),
+    moveTo: jest.fn(),
+    lineTo: jest.fn(),
+    closePath: jest.fn(),
+    stroke: jest.fn(),
+    translate: jest.fn(),
+    scale: jest.fn(),
+    rotate: jest.fn(),
+    arc: jest.fn(),
+    fill: jest.fn(),
+    measureText: jest.fn(() => ({ width: 0 })),
+    transform: jest.fn(),
+    rect: jest.fn(),
+    clip: jest.fn(),
+  })),
+});
+
+// Mock URL APIs used for file previews
+Object.defineProperty(URL, 'createObjectURL', {
+  writable: true,
+  value: jest.fn(() => 'blob:mock-preview'),
+});
+Object.defineProperty(URL, 'revokeObjectURL', {
+  writable: true,
+  value: jest.fn(),
+});
+
+// Mock matchMedia for MUI useMediaQuery
+const createMatchMedia = (matches = false) =>
+  jest.fn().mockImplementation((query: string) => ({
+    matches,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  }));
+
+const ensureMatchMedia = () => {
+  const matcher = createMatchMedia(false);
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: matcher,
+  });
+  Object.defineProperty(global, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: matcher,
+  });
+};
+
+ensureMatchMedia();
+
+beforeEach(() => {
+  ensureMatchMedia();
+});
+
+afterEach(() => {
+  ensureMatchMedia();
+});
+
 // Mock axios to avoid ES module issues
 jest.mock('axios', () => ({
   create: jest.fn(() => ({
@@ -84,57 +161,15 @@ process.env.REACT_APP_API_BASE_URL = 'http://localhost:8000';
 // Mock react-i18next globally
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string) => {
-      // Return expected text for specific keys to match test expectations
-      const translations: Record<string, string> = {
-        'app.title': 'FormVault',
-        'app.shortTitle': 'FormVault',
-        'app.subtitle': 'Secure Insurance Application Portal',
-        'pages.home.title': 'Secure Insurance Application Portal',
-        'pages.success.title': 'Application Submitted!',
+    t: (key: string, options?: Record<string, any>) => {
+      // Return key as fallback
+      if (!options) return key;
 
-        'stepper.personalInfo': 'Personal Information',
-        'stepper.review': 'Review & Submit',
-        'stepper.fileUpload': 'Document Upload',
-        'stepper.success': 'Complete',
-
-        'forms.personalInfo.title': 'Personal Information',
-        'forms.personalInfo.subtitle': 'Please provide your personal details',
-        'forms.personalInfo.sections.personal': 'Personal Details',
-        'forms.personalInfo.sections.address': 'Address Information',
-
-        // Form fields
-        'forms.personalInfo.fields.firstName': 'First Name',
-        'forms.personalInfo.fields.lastName': 'Last Name',
-        'forms.personalInfo.fields.email': 'Email Address',
-        'forms.personalInfo.fields.phone': 'Phone Number',
-        'forms.personalInfo.fields.address': 'Address',
-        'forms.personalInfo.fields.insuranceType': 'Insurance Type',
-        'forms.personalInfo.fields.dateOfBirth': 'Date of Birth',
-
-        'forms.personalInfo.firstName.label': 'First Name',
-        'forms.personalInfo.lastName.label': 'Last Name',
-        'forms.personalInfo.email.label': 'Email Address',
-        'forms.personalInfo.phone.label': 'Phone Number',
-        'forms.personalInfo.address.label': 'Address',
-        'forms.personalInfo.insuranceType.label': 'Insurance Type',
-
-        'fileUpload.dragAndDrop': 'Drag and drop files here',
-        'fileUpload.selectFile': 'Select File',
-        'fileUpload.studentId': 'Student ID',
-        'fileUpload.passport': 'Passport',
-        'fileUpload.uploading': 'Uploading...',
-        'fileUpload.orClickToSelect': 'or click to select',
-
-        // Validation messages
-        'forms.personalInfo.validation.firstName.required': 'First name is required',
-        'forms.personalInfo.validation.lastName.required': 'Last name is required',
-        'forms.personalInfo.validation.email.required': 'Email is required',
-        'forms.personalInfo.validation.phone.required': 'Phone is required',
-        'forms.personalInfo.validation.dateOfBirth.required': 'Date of birth is required',
-        'forms.personalInfo.validation.insuranceType.required': 'Insurance type is required',
-      };
-      return translations[key] || key;
+      // Handle interpolation
+      return Object.entries(options).reduce((result, [k, v]) =>
+        result.replace(`{{${k}}}`, v),
+        key
+      );
     },
     i18n: {
       changeLanguage: () => new Promise(() => { }),

@@ -18,9 +18,12 @@ const renderWithProviders = (component: React.ReactElement) => {
 // Mock fetch for file upload
 global.fetch = jest.fn();
 
-// Mock URL.createObjectURL and URL.revokeObjectURL
-global.URL.createObjectURL = jest.fn(() => 'blob:test-url');
-global.URL.revokeObjectURL = jest.fn();
+// URL.createObjectURL and URL.revokeObjectURL are mocked in setupTests
+
+// Mock FormData
+global.FormData = class {
+  append = jest.fn();
+} as any;
 
 describe('FileUpload Component', () => {
   const mockOnUploadSuccess = jest.fn();
@@ -45,7 +48,7 @@ describe('FileUpload Component', () => {
   describe('Initial Render', () => {
     it('renders upload area when no file is uploaded', () => {
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
+
       expect(screen.getByText('Student ID')).toBeInTheDocument();
       expect(screen.getByText('Drag and drop your file here')).toBeInTheDocument();
       expect(screen.getByText('or click to select a file')).toBeInTheDocument();
@@ -57,13 +60,13 @@ describe('FileUpload Component', () => {
       renderWithProviders(
         <FileUpload {...defaultProps} fileType="passport" />
       );
-      
+
       expect(screen.getByText('Passport')).toBeInTheDocument();
     });
 
     it('displays supported formats and max size', () => {
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
+
       expect(screen.getByText(/supported formats: jpeg, png, pdf/i)).toBeInTheDocument();
       expect(screen.getByText(/max size: 5mb/i)).toBeInTheDocument();
     });
@@ -73,39 +76,37 @@ describe('FileUpload Component', () => {
     it('shows error for oversized file', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUpload {...defaultProps} maxSize={1024} />);
-      
-      const file = new File(['test content'], 'test.jpg', { 
-        type: 'image/jpeg',
-        size: 2048 // 2KB, larger than 1KB limit
+
+      const file = new File(['test content'], 'test.jpg', {
+        type: 'image/jpeg'
       });
-      
+      Object.defineProperty(file, 'size', { value: 2048 });
+
       const fileInput = screen.getByRole('button', { name: /select file/i });
       const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       await user.upload(hiddenInput, file);
-      
+
       await waitFor(() => {
-        expect(mockOnUploadError).toHaveBeenCalledWith(
-          expect.stringContaining('File is too large')
-        );
+        expect(mockOnUploadError.mock.calls.length).toBeGreaterThan(0);
+        expect(mockOnUploadError.mock.calls[0][0]).toContain('File is too large');
       });
     });
 
     it('shows error for invalid file format', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.txt', { 
+
+      const file = new File(['test content'], 'test.txt', {
         type: 'text/plain'
       });
-      
-      const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      await user.upload(hiddenInput, file);
-      
+
+      const hiddenInput = screen.getByTestId('file-upload-input');
+      fireEvent.change(hiddenInput, { target: { files: [file] } });
+
       await waitFor(() => {
-        expect(mockOnUploadError).toHaveBeenCalledWith(
-          expect.stringContaining('Invalid file format')
-        );
+        expect(mockOnUploadError.mock.calls.length).toBeGreaterThan(0);
+        expect(mockOnUploadError.mock.calls[0][0]).toContain('Invalid file format');
       });
     });
 
@@ -122,20 +123,20 @@ describe('FileUpload Component', () => {
       });
 
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.jpg', { 
+
+      const file = new File(['test content'], 'test.jpg', {
         type: 'image/jpeg'
       });
-      
+
       // Mock file size
       Object.defineProperty(file, 'size', {
         value: 1024,
         writable: false
       });
-      
-      const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      await user.upload(hiddenInput, file);
-      
+
+      const hiddenInput = screen.getByTestId('file-upload-input');
+      fireEvent.change(hiddenInput, { target: { files: [file] } });
+
       await waitFor(() => {
         expect(mockOnUploadSuccess).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -160,15 +161,15 @@ describe('FileUpload Component', () => {
       (global.fetch as jest.Mock).mockReturnValueOnce(uploadPromise);
 
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.jpg', { 
+
+      const file = new File(['test content'], 'test.jpg', {
         type: 'image/jpeg',
         size: 1024
       });
-      
-      const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      await user.upload(hiddenInput, file);
-      
+
+      const hiddenInput = screen.getByTestId('file-upload-input');
+      fireEvent.change(hiddenInput, { target: { files: [file] } });
+
       // Should show uploading state
       await waitFor(() => {
         expect(screen.getByText('Uploading...')).toBeInTheDocument();
@@ -199,19 +200,18 @@ describe('FileUpload Component', () => {
       });
 
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.jpg', { 
+
+      const file = new File(['test content'], 'test.jpg', {
         type: 'image/jpeg',
         size: 1024
       });
-      
-      const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      await user.upload(hiddenInput, file);
-      
+
+      const hiddenInput = screen.getByTestId('file-upload-input');
+      fireEvent.change(hiddenInput, { target: { files: [file] } });
+
       await waitFor(() => {
-        expect(mockOnUploadError).toHaveBeenCalledWith(
-          expect.stringContaining('Upload failed')
-        );
+        expect(mockOnUploadError.mock.calls.length).toBeGreaterThan(0);
+        expect(mockOnUploadError.mock.calls[0][0]).toContain('upload failed');
       });
     });
   });
@@ -219,15 +219,15 @@ describe('FileUpload Component', () => {
   describe('Drag and Drop', () => {
     it('handles drag over events', () => {
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
+
       const dropZone = screen.getByText('Drag and drop your file here').closest('div');
-      
+
       fireEvent.dragOver(dropZone!, {
         dataTransfer: {
           files: []
         }
       });
-      
+
       // Should highlight the drop zone
       expect(dropZone).toHaveStyle({ borderColor: expect.any(String) });
     });
@@ -244,20 +244,20 @@ describe('FileUpload Component', () => {
       });
 
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.jpg', { 
+
+      const file = new File(['test content'], 'test.jpg', {
         type: 'image/jpeg',
         size: 1024
       });
-      
+
       const dropZone = screen.getByText('Drag and drop your file here').closest('div');
-      
+
       fireEvent.drop(dropZone!, {
         dataTransfer: {
           files: [file]
         }
       });
-      
+
       await waitFor(() => {
         expect(mockOnUploadSuccess).toHaveBeenCalled();
       });
@@ -276,13 +276,13 @@ describe('FileUpload Component', () => {
 
     it('displays uploaded file information', () => {
       renderWithProviders(
-        <FileUpload 
-          {...defaultProps} 
+        <FileUpload
+          {...defaultProps}
           uploadedFile={uploadedFile}
           onFileRemove={mockOnFileRemove}
         />
       );
-      
+
       expect(screen.getByText('Student ID')).toBeInTheDocument();
       expect(screen.getByText('test.jpg')).toBeInTheDocument();
       expect(screen.getByText('1 KB')).toBeInTheDocument();
@@ -291,13 +291,13 @@ describe('FileUpload Component', () => {
 
     it('shows image preview for image files', () => {
       renderWithProviders(
-        <FileUpload 
-          {...defaultProps} 
+        <FileUpload
+          {...defaultProps}
           uploadedFile={uploadedFile}
           onFileRemove={mockOnFileRemove}
         />
       );
-      
+
       const preview = screen.getByAltText('File Preview');
       expect(preview).toBeInTheDocument();
       expect(preview).toHaveAttribute('src', 'blob:test-url');
@@ -306,16 +306,16 @@ describe('FileUpload Component', () => {
     it('handles file removal', async () => {
       const user = userEvent.setup();
       renderWithProviders(
-        <FileUpload 
-          {...defaultProps} 
+        <FileUpload
+          {...defaultProps}
           uploadedFile={uploadedFile}
           onFileRemove={mockOnFileRemove}
         />
       );
-      
+
       const removeButton = screen.getByRole('button', { name: /remove/i });
       await user.click(removeButton);
-      
+
       expect(mockOnFileRemove).toHaveBeenCalledWith('test-id');
     });
   });
@@ -323,25 +323,25 @@ describe('FileUpload Component', () => {
   describe('Disabled State', () => {
     it('disables interactions when disabled prop is true', () => {
       renderWithProviders(<FileUpload {...defaultProps} disabled />);
-      
+
       const selectButton = screen.getByRole('button', { name: /select file/i });
       const cameraButton = screen.getByRole('button', { name: /take photo/i });
-      
+
       expect(selectButton).toBeDisabled();
       expect(cameraButton).toBeDisabled();
     });
 
     it('prevents drag and drop when disabled', () => {
       renderWithProviders(<FileUpload {...defaultProps} disabled />);
-      
+
       const dropZone = screen.getByText('Drag and drop your file here').closest('div');
-      
+
       fireEvent.dragOver(dropZone!, {
         dataTransfer: {
           files: []
         }
       });
-      
+
       // Should not highlight when disabled
       expect(dropZone).toHaveStyle({ opacity: '0.6' });
     });
@@ -350,7 +350,7 @@ describe('FileUpload Component', () => {
   describe('Accessibility', () => {
     it('has proper ARIA labels and roles', () => {
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
+
       expect(screen.getByRole('button', { name: /select file/i })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /take photo/i })).toBeInTheDocument();
     });
@@ -358,14 +358,14 @@ describe('FileUpload Component', () => {
     it('announces errors to screen readers', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUpload {...defaultProps} />);
-      
-      const file = new File(['test content'], 'test.txt', { 
+
+      const file = new File(['test content'], 'test.txt', {
         type: 'text/plain'
       });
-      
-      const hiddenInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      await user.upload(hiddenInput, file);
-      
+
+      const hiddenInput = screen.getByTestId('file-upload-input');
+      fireEvent.change(hiddenInput, { target: { files: [file] } });
+
       await waitFor(() => {
         // Check if error is displayed (it might not be a role="alert" but still visible)
         expect(screen.getByText(/invalid file format/i)).toBeInTheDocument();

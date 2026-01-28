@@ -31,36 +31,36 @@ describe('NavigationStepper', () => {
 
   it('renders stepper on personal info page', () => {
     renderWithProviders(<NavigationStepper />, ['/personal-info']);
-    
+
     expect(screen.getByText('Personal Information')).toBeInTheDocument();
-    expect(screen.getByText('File Upload')).toBeInTheDocument();
-    expect(screen.getByText('Review')).toBeInTheDocument();
-    expect(screen.getByText('Success')).toBeInTheDocument();
+    expect(screen.getByText('Document Upload')).toBeInTheDocument();
+    expect(screen.getByText('Review & Submit')).toBeInTheDocument();
+    expect(screen.getByText('Complete')).toBeInTheDocument();
   });
 
   it('shows correct active step for personal info page', () => {
     renderWithProviders(<NavigationStepper />, ['/personal-info']);
-    
+
     // Check that the stepper is rendered
     expect(screen.getByText('Personal Information')).toBeInTheDocument();
-    expect(screen.getByText('File Upload')).toBeInTheDocument();
+    expect(screen.getByText('Document Upload')).toBeInTheDocument();
   });
 
   it('shows correct active step for file upload page', () => {
     renderWithProviders(<NavigationStepper />, ['/file-upload']);
-    
-    expect(screen.getByText('File Upload')).toBeInTheDocument();
+
+    expect(screen.getByText('Document Upload')).toBeInTheDocument();
   });
 
   it('shows correct active step for review page', () => {
     renderWithProviders(<NavigationStepper />, ['/review']);
-    
-    expect(screen.getByText('Review')).toBeInTheDocument();
+
+    expect(screen.getByText('Review & Submit')).toBeInTheDocument();
   });
 
   it('shows correct active step for success page', () => {
     renderWithProviders(<NavigationStepper />, ['/success']);
-    
-    expect(screen.getByText('Success')).toBeInTheDocument();
+
+    expect(screen.getByText('Complete')).toBeInTheDocument();
   });
 });

@@ -6,27 +6,79 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../i18n/config';
 import { ApplicationWorkflowProvider } from '../contexts/ApplicationWorkflowContext';
 import ApplicationWorkflowPage from '../pages/ApplicationWorkflowPage';
+import i18n from '../i18n/config';
 
-// Mock the API services
-jest.mock('../services/applicationService');
-jest.mock('../services/fileService');
-jest.mock('../hooks/useApplications');
-jest.mock('../hooks/useFiles');
+// Mock implementations
+jest.mock('../services/applicationService', () => ({
+  createApplication: jest.fn().mockResolvedValue({
+    id: 'app-123',
+    referenceNumber: 'REF-12345'
+  }),
+  saveAsDraft: jest.fn().mockResolvedValue({})
+}));
 
-// Test wrapper component
+jest.mock('../services/fileService', () => ({
+  uploadFile: jest.fn().mockImplementation((file) =>
+    Promise.resolve({
+      id: `file-${Date.now()}`,
+      originalName: file.name,
+      size: file.size,
+      mimeType: file.type,
+      uploadedAt: new Date().toISOString()
+    })
+  )
+}));
+
+jest.mock('../hooks/useApplications', () => ({
+  useApplicationWorkflow: jest.fn(() => ({
+    createApplication: {
+      execute: jest.fn().mockResolvedValue({ id: 'app-123', referenceNumber: 'REF-12345' }),
+      data: null,
+      loading: false,
+      error: null
+    },
+    saveAsDraft: {
+      execute: jest.fn().mockResolvedValue({}),
+      data: null,
+      loading: false,
+      error: null
+    },
+    goToNextStep: jest.fn(),
+    goToPreviousStep: jest.fn(),
+    updatePersonalInfo: jest.fn(),
+    setUploadedFile: jest.fn(),
+    removeUploadedFile: jest.fn(),
+    completeStep: jest.fn(),
+    resetWorkflow: jest.fn()
+  }))
+}));
+
+jest.mock('../hooks/useFiles', () => ({
+  useFileUpload: jest.fn(() => ({
+    upload: jest.fn().mockResolvedValue({}),
+    uploading: false,
+    progress: 0,
+    error: null,
+    completed: true,
+    file: null
+  }))
+}));
+
+// Test wrapper with context reset
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <BrowserRouter>
     <I18nextProvider i18n={i18n}>
       <ApplicationWorkflowProvider>
         {children}
-      </ApplicationWorkflowProvider>
+        <ApplicationWorkflowProvider resetOnUnmount>
+          {children}
+        </ApplicationWorkflowProvider>
     </I18nextProvider>
   </BrowserRouter>
 );
@@ -35,15 +87,18 @@ describe('Application Workflow Integration', () => {
   beforeEach(() => {
     // Clear localStorage before each test
     localStorage.clear();
-    
+
     // Reset all mocks
     jest.clearAllMocks();
+
+    // Reset i18n
+    i18n.changeLanguage('en');
   });
 
   describe('Complete Workflow Journey', () => {
     it('should complete the entire application workflow', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -68,7 +123,7 @@ describe('Application Workflow Integration', () => {
       await user.selectOptions(screen.getByLabelText(/insurance type/i), 'health');
 
       // Navigate to next step
-      await user.click(screen.getByRole('button', { name: /next/i }));
+      await user.click(screen.getByRole('button', { name: /^next$/i }));
 
       await waitFor(() => {
         expect(screen.getByText('Upload Documents')).toBeInTheDocument();
@@ -81,11 +136,11 @@ describe('Application Workflow Integration', () => {
       const passportFile = new File(['passport'], 'passport.jpg', { type: 'image/jpeg' });
 
       // Upload student ID
-      const studentIdInput = screen.getByLabelText(/student id/i);
+      const studentIdInput = screen.getByTestId('file-upload-input');
       await user.upload(studentIdInput, studentIdFile);
 
       // Upload passport
-      const passportInput = screen.getByLabelText(/passport/i);
+      const passportInput = screen.getByTestId('passport-upload-input');
       await user.upload(passportInput, passportFile);
 
       await waitFor(() => {
@@ -95,10 +150,11 @@ describe('Application Workflow Integration', () => {
       // Navigate to next step
       await user.click(screen.getByRole('button', { name: /proceed to review/i }));
 
+      // Wait for navigation
       await waitFor(() => {
         expect(screen.getByText('Review Your Application')).toBeInTheDocument();
-        expect(screen.getByText('Step 3 of 5')).toBeInTheDocument();
       });
+      expect(screen.getByText('Step 3 of 5')).toBeInTheDocument();
 
       // Step 3: Review
       // Verify that the entered information is displayed
@@ -122,10 +178,11 @@ describe('Application Workflow Integration', () => {
       // Submit application
       await user.click(screen.getByRole('button', { name: /submit application/i }));
 
+      // Wait for success page
       await waitFor(() => {
         expect(screen.getByText('Application Submitted!')).toBeInTheDocument();
-        expect(screen.getByText('Step 5 of 5')).toBeInTheDocument();
       });
+      expect(screen.getByText('Step 5 of 5')).toBeInTheDocument();
 
       // Step 5: Success
       // Verify success message and reference number
@@ -136,7 +193,7 @@ describe('Application Workflow Integration', () => {
 
     it('should handle form validation errors', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -144,7 +201,7 @@ describe('Application Workflow Integration', () => {
       );
 
       // Try to proceed without filling required fields
-      await user.click(screen.getByRole('button', { name: /next/i }));
+      await user.click(screen.getByRole('button', { name: /^next$/i }));
 
       // Should show validation errors
       await waitFor(() => {
@@ -160,7 +217,7 @@ describe('Application Workflow Integration', () => {
 
     it('should save and restore workflow state from localStorage', async () => {
       const user = userEvent.setup();
-      
+
       // First render - fill some data
       const { unmount } = render(
         <TestWrapper>
@@ -190,7 +247,7 @@ describe('Application Workflow Integration', () => {
 
     it('should allow navigation between completed steps', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -210,7 +267,7 @@ describe('Application Workflow Integration', () => {
       await user.type(screen.getByLabelText(/date of birth/i), '1990-01-01');
       await user.selectOptions(screen.getByLabelText(/insurance type/i), 'health');
 
-      await user.click(screen.getByRole('button', { name: /next/i }));
+      await user.click(screen.getByRole('button', { name: /^next$/i }));
 
       await waitFor(() => {
         expect(screen.getByText('Upload Documents')).toBeInTheDocument();
@@ -230,7 +287,7 @@ describe('Application Workflow Integration', () => {
 
     it('should prevent navigation to incomplete steps', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -262,7 +319,7 @@ describe('Application Workflow Integration', () => {
       });
 
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -291,7 +348,7 @@ describe('Application Workflow Integration', () => {
       });
 
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -303,7 +360,7 @@ describe('Application Workflow Integration', () => {
 
       // Try to upload file
       const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
-      const input = screen.getByLabelText(/student id/i);
+      const input = screen.getByTestId('file-upload-input');
       await user.upload(input, file);
 
       // Should show error message
@@ -327,7 +384,7 @@ describe('Application Workflow Integration', () => {
       expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
 
       // Check for proper button roles
-      expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^next$/i })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /save as draft/i })).toBeInTheDocument();
 
       // Check for progress indicator
@@ -336,7 +393,7 @@ describe('Application Workflow Integration', () => {
 
     it('should support keyboard navigation', async () => {
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
           <ApplicationWorkflowPage />
@@ -351,7 +408,7 @@ describe('Application Workflow Integration', () => {
       expect(screen.getByLabelText(/last name/i)).toHaveFocus();
 
       // Should be able to activate buttons with Enter/Space
-      const nextButton = screen.getByRole('button', { name: /next/i });
+      const nextButton = screen.getByRole('button', { name: /^next$/i });
       nextButton.focus();
       await user.keyboard('{Enter}');
 

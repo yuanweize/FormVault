@@ -6,21 +6,21 @@
  */
 
 import React from 'react';
-import { 
-  Box, 
-  Button, 
-  Stack, 
-  CircularProgress, 
+import {
+  Box,
+  Button,
+  Stack,
+  CircularProgress,
   Alert,
   useTheme,
-  useMediaQuery 
+  useMediaQuery
 } from '@mui/material';
-import { 
-  ArrowBack, 
-  ArrowForward, 
-  Save, 
-  Send, 
-  Home 
+import {
+  ArrowBack,
+  ArrowForward,
+  Save,
+  Send,
+  Home
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,7 @@ export function WorkflowNavigation({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
-  
+
   const {
     state,
     goToNextStep,
@@ -68,13 +68,13 @@ export function WorkflowNavigation({
   const isLastStep = currentStepIndex === STEP_ORDER.length - 1;
   const isSuccessStep = state.currentStep === 'success';
   const isConfirmationStep = state.currentStep === 'confirmation';
-  
+
   const isLoading = state.submissionStatus === 'saving' || state.submissionStatus === 'submitting';
   const hasError = state.submissionStatus === 'error' && state.error;
 
   const handleNext = async () => {
     clearError();
-    
+
     try {
       // Call custom onNext handler if provided
       if (onNext) {
@@ -87,19 +87,26 @@ export function WorkflowNavigation({
       // Handle confirmation step submission
       if (isConfirmationStep) {
         await submitApplication();
-        return;
+      } else {
+        // Navigate to next step
+        goToNextStep();
       }
-
-      // Navigate to next step
-      goToNextStep();
     } catch (error) {
       console.error('Error in handleNext:', error);
+      // Use the context's error handling instead of local setError
+      if (error instanceof Error) {
+        // @ts-ignore: Dispatch error through context
+        setError(error.message);
+      } else {
+        // @ts-ignore: Dispatch error through context
+        setError(t('errors.general'));
+      }
     }
   };
 
   const handlePrevious = () => {
     clearError();
-    
+
     if (onPrevious) {
       onPrevious();
     } else {
@@ -109,7 +116,7 @@ export function WorkflowNavigation({
 
   const handleSave = async () => {
     clearError();
-    
+
     try {
       if (onSave) {
         await onSave();
@@ -127,7 +134,7 @@ export function WorkflowNavigation({
 
   const getNextButtonLabel = () => {
     if (nextLabel) return nextLabel;
-    
+
     switch (state.currentStep) {
       case 'confirmation':
         return t('workflow.navigation.submit');
@@ -165,7 +172,7 @@ export function WorkflowNavigation({
             {state.error}
           </Alert>
         )}
-        
+
         <Stack direction="row" spacing={2} justifyContent="center">
           <Button
             variant="contained"
@@ -188,10 +195,10 @@ export function WorkflowNavigation({
           {state.error}
         </Alert>
       )}
-      
-      <Stack 
-        direction={isMobile ? 'column' : 'row'} 
-        spacing={2} 
+
+      <Stack
+        direction={isMobile ? 'column' : 'row'}
+        spacing={2}
         justifyContent="space-between"
         alignItems={isMobile ? 'stretch' : 'center'}
       >
@@ -218,7 +225,7 @@ export function WorkflowNavigation({
             )}
             onClick={handleSave}
             disabled={isLoading || !state.isDirty}
-            sx={{ 
+            sx={{
               order: isMobile ? 3 : 2,
               minWidth: isMobile ? 'auto' : 120,
             }}

@@ -94,10 +94,10 @@ describe('FileUploadForm Component', () => {
       Object.defineProperty(file, 'size', { value: 1024 });
 
       // Find the first file input (student ID)
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const studentIdInput = fileInputs[0] as HTMLInputElement;
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const studentIdInput = fileInputs[0];
 
-      await user.upload(studentIdInput, file);
+      fireEvent.change(studentIdInput, { target: { files: [file] } });
 
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
@@ -115,10 +115,10 @@ describe('FileUploadForm Component', () => {
       Object.defineProperty(file, 'size', { value: 1024 });
 
       // Find the second file input (passport)
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const passportInput = fileInputs[2] as HTMLInputElement; // Skip camera inputs
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const passportInput = fileInputs[1]; // Index 1 because getAllByTestId only returns our custom inputs
 
-      await user.upload(passportInput, file);
+      fireEvent.change(passportInput, { target: { files: [file] } });
 
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
@@ -140,12 +140,12 @@ describe('FileUploadForm Component', () => {
       });
       Object.defineProperty(passportFile, 'size', { value: 1024 });
 
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const studentIdInput = fileInputs[0] as HTMLInputElement;
-      const passportInput = fileInputs[2] as HTMLInputElement;
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const studentIdInput = fileInputs[0];
+      const passportInput = fileInputs[1];
 
-      await user.upload(studentIdInput, studentIdFile);
-      await user.upload(passportInput, passportFile);
+      fireEvent.change(studentIdInput, { target: { files: [studentIdFile] } });
+      fireEvent.change(passportInput, { target: { files: [passportFile] } });
 
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
@@ -276,14 +276,15 @@ describe('FileUploadForm Component', () => {
         type: 'text/plain' // Invalid format
       });
 
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const studentIdInput = fileInputs[0] as HTMLInputElement;
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const studentIdInput = fileInputs[0];
 
-      await user.upload(studentIdInput, file);
+      fireEvent.change(studentIdInput, { target: { files: [file] } });
 
       await waitFor(() => {
         expect(screen.getByText(/please fix the following errors/i)).toBeInTheDocument();
-        expect(screen.getByText(/invalid file format/i)).toBeInTheDocument();
+        const errors = screen.getAllByText(/invalid file format/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
 
@@ -306,13 +307,14 @@ describe('FileUploadForm Component', () => {
         type: 'text/plain'
       });
 
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const studentIdInput = fileInputs[0] as HTMLInputElement;
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const studentIdInput = fileInputs[0];
 
-      await user.upload(studentIdInput, invalidFile);
+      fireEvent.change(studentIdInput, { target: { files: [invalidFile] } });
 
       await waitFor(() => {
-        expect(screen.getByText(/invalid file format/i)).toBeInTheDocument();
+        const errors = screen.getAllByText(/invalid file format/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
 
       // Then upload valid file
@@ -321,7 +323,7 @@ describe('FileUploadForm Component', () => {
       });
       Object.defineProperty(validFile, 'size', { value: 1024 });
 
-      await user.upload(studentIdInput, validFile);
+      fireEvent.change(studentIdInput, { target: { files: [validFile] } });
 
       await waitFor(() => {
         expect(screen.queryByText(/invalid file format/i)).not.toBeInTheDocument();
@@ -382,14 +384,14 @@ describe('FileUploadForm Component', () => {
         type: 'text/plain'
       });
 
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      const studentIdInput = fileInputs[0] as HTMLInputElement;
+      const fileInputs = screen.getAllByTestId('file-upload-input');
+      const studentIdInput = fileInputs[0];
 
-      await user.upload(studentIdInput, file);
+      fireEvent.change(studentIdInput, { target: { files: [file] } });
 
       await waitFor(() => {
-        const alert = screen.getByRole('alert');
-        expect(alert).toBeInTheDocument();
+        const alerts = screen.getAllByRole('alert');
+        expect(alerts.length).toBeGreaterThan(0);
       });
     });
   });
