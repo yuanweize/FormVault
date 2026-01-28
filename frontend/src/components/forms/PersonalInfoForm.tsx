@@ -32,7 +32,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   isLoading = false,
 }) => {
   const { t } = useTranslation();
-  
+
   const {
     control,
     handleSubmit,
@@ -70,16 +70,16 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   };
 
   return (
-    <Paper 
-      elevation={2} 
-      sx={{ 
+    <Paper
+      elevation={2}
+      sx={{
         p: { xs: 2, sm: 3, md: 4 },
         mx: { xs: 0, sm: 'auto' },
         maxWidth: '100%',
       }}
     >
-      <Typography 
-        variant="h5" 
+      <Typography
+        variant="h5"
         gutterBottom
         sx={{
           fontSize: { xs: '1.25rem', sm: '1.5rem' },
@@ -88,9 +88,9 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       >
         {t('forms.personalInfo.title')}
       </Typography>
-      <Typography 
-        variant="body2" 
-        color="text.secondary" 
+      <Typography
+        variant="body2"
+        color="text.secondary"
         paragraph
         sx={{
           textAlign: { xs: 'center', sm: 'left' },
@@ -104,10 +104,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         <Grid container spacing={{ xs: 2, sm: 3 }}>
           {/* Personal Details Section */}
           <Grid item xs={12}>
-            <Typography 
-              variant="h6" 
-              gutterBottom 
-              sx={{ 
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
                 mt: { xs: 1, sm: 2 },
                 fontSize: { xs: '1.1rem', sm: '1.25rem' },
               }}
@@ -146,6 +146,11 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   inputProps={{
                     'aria-label': t('forms.personalInfo.fields.firstName'),
                     'aria-describedby': errors.firstName ? 'firstName-error' : undefined,
+                  }}
+                  FormHelperTextProps={{
+                    id: 'firstName-error',
+                    role: 'alert',
+                    'aria-live': 'polite',
                   }}
                 />
               )}
@@ -259,19 +264,19 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   const date = new Date(value);
                   const today = new Date();
                   const age = today.getFullYear() - date.getFullYear();
-                  
+
                   if (date > today) {
                     return t('forms.personalInfo.validation.dateOfBirth.future');
                   }
-                  
+
                   if (age < 18) {
                     return t('forms.personalInfo.validation.dateOfBirth.minAge');
                   }
-                  
+
                   if (age > 120) {
                     return t('forms.personalInfo.validation.dateOfBirth.maxAge');
                   }
-                  
+
                   return true;
                 },
               }}
@@ -317,20 +322,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           </Grid>
 
           {/* Address Section */}
-          <Grid item xs={12}>
-            <Typography 
-              variant="h6" 
-              gutterBottom 
-              sx={{ 
+          <Grid item xs={12} role="group" aria-labelledby="address-section-title">
+            <Typography
+              id="address-section-title"
+              variant="h6"
+              gutterBottom
+              sx={{
                 mt: { xs: 2, sm: 3 },
                 fontSize: { xs: '1.1rem', sm: '1.25rem' },
               }}
             >
               {t('forms.personalInfo.sections.address')}
             </Typography>
-          </Grid>
-
-          <Grid item xs={12}>
             <AddressField
               control={control}
               errors={errors.address}
@@ -340,10 +343,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
 
           {/* Form Actions */}
           <Grid item xs={12}>
-            <Box sx={{ 
-              display: 'flex', 
+            <Box sx={{
+              display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
-              justifyContent: 'space-between', 
+              justifyContent: 'space-between',
               gap: { xs: 2, sm: 0 },
               mt: { xs: 2, sm: 3 },
             }}>
@@ -352,7 +355,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   variant="outlined"
                   onClick={onCancel}
                   disabled={isLoading}
-                  sx={{ 
+                  sx={{
                     minWidth: { xs: '100%', sm: 120 },
                     order: { xs: 2, sm: 1 },
                   }}
@@ -360,12 +363,12 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   {t('navigation.cancel')}
                 </Button>
               )}
-              
+
               <Button
                 type="submit"
                 variant="contained"
-                disabled={!isValid || isLoading}
-                sx={{ 
+                disabled={isLoading}
+                sx={{
                   minWidth: { xs: '100%', sm: 120 },
                   ml: { xs: 0, sm: 'auto' },
                   order: { xs: 1, sm: 2 },

@@ -50,6 +50,10 @@ jest.mock('react-i18next', () => ({
       return translations[key] || key;
     },
   }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
 }));
 
 const theme = createTheme();
@@ -106,13 +110,13 @@ describe('PersonalInfoForm', () => {
 
   it('displays validation errors for empty required fields', async () => {
     const user = userEvent.setup();
-    
+
     renderWithTheme(
       <PersonalInfoForm onSubmit={mockOnSubmit} />
     );
 
     const submitButton = screen.getByRole('button', { name: 'Next' });
-    
+
     // Try to submit empty form
     await user.click(submitButton);
 
@@ -133,13 +137,13 @@ describe('PersonalInfoForm', () => {
 
   it('validates email format', async () => {
     const user = userEvent.setup();
-    
+
     renderWithTheme(
       <PersonalInfoForm onSubmit={mockOnSubmit} />
     );
 
     const emailField = screen.getByLabelText('Email Address');
-    
+
     await user.type(emailField, 'invalid-email');
     await user.tab(); // Trigger validation
 
@@ -150,7 +154,7 @@ describe('PersonalInfoForm', () => {
 
   it('submits form with valid data', async () => {
     const user = userEvent.setup();
-    
+
     renderWithTheme(
       <PersonalInfoForm onSubmit={mockOnSubmit} />
     );
@@ -161,20 +165,20 @@ describe('PersonalInfoForm', () => {
     await user.type(screen.getByLabelText('Email Address'), validFormData.email);
     await user.type(screen.getByLabelText('Phone Number'), validFormData.phone);
     await user.type(screen.getByLabelText('Date of Birth'), validFormData.dateOfBirth);
-    
+
     // Select insurance type
     await user.click(screen.getByLabelText('Insurance Type'));
-    await user.click(screen.getByText('Health Insurance'));
+    await user.click(screen.getByRole('option', { name: 'Health Insurance' }));
 
     // Fill address fields
     await user.type(screen.getByLabelText('Street Address'), validFormData.address.street);
     await user.type(screen.getByLabelText('City'), validFormData.address.city);
     await user.type(screen.getByLabelText('State/Province'), validFormData.address.state);
     await user.type(screen.getByLabelText('ZIP/Postal Code'), validFormData.address.zipCode);
-    
+
     // Select country
     await user.click(screen.getByLabelText('Country'));
-    await user.click(screen.getByText('United States'));
+    await user.click(screen.getByRole('option', { name: 'United States' }));
 
     // Submit form
     const submitButton = screen.getByRole('button', { name: 'Next' });
@@ -193,9 +197,9 @@ describe('PersonalInfoForm', () => {
     };
 
     renderWithTheme(
-      <PersonalInfoForm 
+      <PersonalInfoForm
         initialData={initialData}
-        onSubmit={mockOnSubmit} 
+        onSubmit={mockOnSubmit}
       />
     );
 
@@ -206,9 +210,9 @@ describe('PersonalInfoForm', () => {
 
   it('calls onCancel when cancel button is clicked', async () => {
     const user = userEvent.setup();
-    
+
     renderWithTheme(
-      <PersonalInfoForm 
+      <PersonalInfoForm
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
       />
@@ -222,7 +226,7 @@ describe('PersonalInfoForm', () => {
 
   it('disables form when loading', () => {
     renderWithTheme(
-      <PersonalInfoForm 
+      <PersonalInfoForm
         onSubmit={mockOnSubmit}
         isLoading={true}
       />
@@ -253,18 +257,18 @@ describe('PersonalInfoForm', () => {
 
   it('validates date of birth constraints', async () => {
     const user = userEvent.setup();
-    
+
     renderWithTheme(
       <PersonalInfoForm onSubmit={mockOnSubmit} />
     );
 
     const dateField = screen.getByLabelText('Date of Birth');
-    
+
     // Test future date
     const futureDate = new Date();
     futureDate.setFullYear(futureDate.getFullYear() + 1);
     const futureDateString = futureDate.toISOString().split('T')[0];
-    
+
     await user.type(dateField, futureDateString);
     await user.tab();
 

@@ -29,6 +29,10 @@ jest.mock('react-i18next', () => ({
       return translations[key] || key;
     },
   }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
 }));
 
 const theme = createTheme();
@@ -72,7 +76,7 @@ describe('AddressField', () => {
 
   it('allows user to input address information', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestWrapper />);
 
     const streetField = screen.getByLabelText('Street Address');
@@ -93,7 +97,7 @@ describe('AddressField', () => {
 
   it('allows user to select country from dropdown', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestWrapper />);
 
     const countrySelect = screen.getByLabelText('Country');
@@ -106,9 +110,9 @@ describe('AddressField', () => {
 
     // Select a country
     await user.click(screen.getByText('United States'));
-    
+
     // The select should now show the selected value
-    expect(countrySelect).toHaveValue('US');
+    expect(countrySelect).toHaveTextContent('United States');
   });
 
   it('disables all fields when disabled prop is true', () => {
@@ -118,7 +122,7 @@ describe('AddressField', () => {
     expect(screen.getByLabelText('City')).toBeDisabled();
     expect(screen.getByLabelText('State/Province')).toBeDisabled();
     expect(screen.getByLabelText('ZIP/Postal Code')).toBeDisabled();
-    expect(screen.getByLabelText('Country')).toBeDisabled();
+    expect(screen.getByLabelText('Country')).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('has proper accessibility attributes', () => {

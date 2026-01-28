@@ -4,27 +4,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import App from '../App';
 
-// Mock react-i18next
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => {
-      // Return expected text for specific keys to match test expectations
-      const translations: Record<string, string> = {
-        'pages.success.title': 'Application Submitted!',
-        'app.title': 'Secure Insurance Application Portal',
-        'app.subtitle': 'Secure Insurance Application Portal',
-        'stepper.personalInfo': 'Personal Information',
-        'stepper.review': 'Review & Submit',
-        'pages.home.title': 'Secure Insurance Application Portal',
-      };
-      return translations[key] || key;
-    },
-    i18n: {
-      changeLanguage: () => new Promise(() => { }),
-    },
-  }),
-}));
-
 // Mock the workflow context to avoid provider race conditions
 jest.mock('../contexts/ApplicationWorkflowContext', () => {
   const actual = jest.requireActual('../contexts/ApplicationWorkflowContext');
@@ -42,28 +21,8 @@ jest.mock('../contexts/ApplicationWorkflowContext', () => {
       },
       resetWorkflow: jest.fn(),
       goToStep: jest.fn(),
-    }),
-    ApplicationWorkflowProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  };
-});
-
-// Mock the workflow context to avoid provider race conditions
-jest.mock('../contexts/ApplicationWorkflowContext', () => {
-  const actual = jest.requireActual('../contexts/ApplicationWorkflowContext');
-  return {
-    ...actual,
-    useApplicationWorkflowContext: () => ({
-      state: {
-        referenceNumber: 'REF-12345',
-        personalInfo: { firstName: 'John', lastName: 'Doe' },
-        uploadedFiles: {},
-        currentStep: 'success',
-        completedSteps: ['personal-info', 'file-upload', 'review', 'confirmation', 'success'],
-        submissionStatus: 'submitted',
-        isDirty: false
-      },
-      resetWorkflow: jest.fn(),
-      goToStep: jest.fn(),
+      canGoToStep: jest.fn(() => true),
+      isStepCompleted: jest.fn(() => true),
     }),
     ApplicationWorkflowProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   };

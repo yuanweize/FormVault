@@ -12,21 +12,45 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const NavigationStepper: React.FC = () => {
+interface Step {
+  path?: string; // For routing
+  id?: string;   // For explicit identification
+  label: string;
+  shortLabel?: string;
+  completed?: boolean;
+}
+
+interface NavigationStepperProps {
+  steps?: Step[];
+  currentStep?: string; // path or id
+}
+
+const NavigationStepper: React.FC<NavigationStepperProps> = ({
+  steps: externalSteps,
+  currentStep: externalCurrentStep
+}) => {
   const { t } = useTranslation();
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isVerySmall = useMediaQuery(theme.breakpoints.down(400));
 
-  const steps = [
-    { path: '/personal-info', label: t('stepper.personalInfo'), shortLabel: t('stepper.personalInfoShort', { defaultValue: 'Info' }) },
-    { path: '/file-upload', label: t('stepper.fileUpload'), shortLabel: t('stepper.fileUploadShort', { defaultValue: 'Files' }) },
-    { path: '/review', label: t('stepper.review'), shortLabel: t('stepper.reviewShort', { defaultValue: 'Review' }) },
-    { path: '/success', label: t('stepper.success'), shortLabel: t('stepper.successShort', { defaultValue: 'Done' }) },
+  const defaultSteps: Step[] = [
+    { path: '/personal-info', label: t('stepper.personalInfo'), shortLabel: t('stepper.personalInfoShort', { defaultValue: 'Info' }) as string },
+    { path: '/file-upload', label: t('stepper.fileUpload'), shortLabel: t('stepper.fileUploadShort', { defaultValue: 'Files' }) as string },
+    { path: '/review', label: t('stepper.review'), shortLabel: t('stepper.reviewShort', { defaultValue: 'Review' }) as string },
+    { path: '/success', label: t('stepper.success'), shortLabel: t('stepper.successShort', { defaultValue: 'Done' }) as string },
   ];
 
+  const steps = externalSteps || defaultSteps;
+
   const getActiveStep = () => {
+    if (externalCurrentStep) {
+      // Try to find by id or path
+      return steps.findIndex(step =>
+        step.id === externalCurrentStep || step.path === externalCurrentStep
+      );
+    }
     const currentPath = location.pathname;
     const stepIndex = steps.findIndex(step => step.path === currentPath);
     return stepIndex >= 0 ? stepIndex : -1;
@@ -34,24 +58,24 @@ const NavigationStepper: React.FC = () => {
 
   const activeStep = getActiveStep();
 
-  // Don't show stepper on home page or 404 page
-  if (location.pathname === '/' || activeStep === -1) {
+  // Don't show stepper on home page or 404 page, unless explicitly controlled
+  if ((!externalCurrentStep && location.pathname === '/') || activeStep === -1) {
     return null;
   }
 
   // Use MobileStepper for very small screens
   if (isVerySmall) {
     return (
-      <Box sx={{ width: '100%', py: 1 }}>
-        <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
+      <Box component="nav" aria-label={t('app.progress') || 'Progress'} sx={{ width: '100%', py: 1 }}>
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'center',
           alignItems: 'center',
           mb: 1,
         }}>
-          <Typography 
-            variant="caption" 
-            sx={{ 
+          <Typography
+            variant="caption"
+            sx={{
               color: 'rgba(255, 255, 255, 0.9)',
               fontWeight: 'bold',
             }}
@@ -81,7 +105,7 @@ const NavigationStepper: React.FC = () => {
   }
 
   return (
-    <Box sx={{ width: '100%', py: 1 }}>
+    <Box component="nav" aria-label={t('app.progress') || 'Progress'} sx={{ width: '100%', py: 1 }}>
       <Stepper
         activeStep={activeStep}
         alternativeLabel={isMobile}
@@ -115,9 +139,14 @@ const NavigationStepper: React.FC = () => {
             borderColor: 'rgba(255, 255, 255, 0.3)',
           },
         }}
+        role="list"
       >
         {steps.map((step, index) => (
-          <Step key={step.path}>
+          <Step
+            key={step.path}
+            role="listitem"
+            aria-current={activeStep === index ? 'step' : undefined}
+          >
             <StepLabel>
               {isMobile ? step.shortLabel : step.label}
             </StepLabel>

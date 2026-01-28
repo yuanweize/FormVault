@@ -80,3 +80,71 @@ jest.mock('axios-mock-adapter', () => {
 
 // Mock environment variables
 process.env.REACT_APP_API_BASE_URL = 'http://localhost:8000';
+
+// Mock react-i18next globally
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      // Return expected text for specific keys to match test expectations
+      const translations: Record<string, string> = {
+        'app.title': 'FormVault',
+        'app.shortTitle': 'FormVault',
+        'app.subtitle': 'Secure Insurance Application Portal',
+        'pages.home.title': 'Secure Insurance Application Portal',
+        'pages.success.title': 'Application Submitted!',
+
+        'stepper.personalInfo': 'Personal Information',
+        'stepper.review': 'Review & Submit',
+        'stepper.fileUpload': 'Document Upload',
+        'stepper.success': 'Complete',
+
+        'forms.personalInfo.title': 'Personal Information',
+        'forms.personalInfo.subtitle': 'Please provide your personal details',
+        'forms.personalInfo.sections.personal': 'Personal Details',
+        'forms.personalInfo.sections.address': 'Address Information',
+
+        // Form fields
+        'forms.personalInfo.fields.firstName': 'First Name',
+        'forms.personalInfo.fields.lastName': 'Last Name',
+        'forms.personalInfo.fields.email': 'Email Address',
+        'forms.personalInfo.fields.phone': 'Phone Number',
+        'forms.personalInfo.fields.address': 'Address',
+        'forms.personalInfo.fields.insuranceType': 'Insurance Type',
+        'forms.personalInfo.fields.dateOfBirth': 'Date of Birth',
+
+        'forms.personalInfo.firstName.label': 'First Name',
+        'forms.personalInfo.lastName.label': 'Last Name',
+        'forms.personalInfo.email.label': 'Email Address',
+        'forms.personalInfo.phone.label': 'Phone Number',
+        'forms.personalInfo.address.label': 'Address',
+        'forms.personalInfo.insuranceType.label': 'Insurance Type',
+
+        'fileUpload.dragAndDrop': 'Drag and drop files here',
+        'fileUpload.selectFile': 'Select File',
+        'fileUpload.studentId': 'Student ID',
+        'fileUpload.passport': 'Passport',
+        'fileUpload.uploading': 'Uploading...',
+        'fileUpload.orClickToSelect': 'or click to select',
+
+        // Validation messages
+        'forms.personalInfo.validation.firstName.required': 'First name is required',
+        'forms.personalInfo.validation.lastName.required': 'Last name is required',
+        'forms.personalInfo.validation.email.required': 'Email is required',
+        'forms.personalInfo.validation.phone.required': 'Phone is required',
+        'forms.personalInfo.validation.dateOfBirth.required': 'Date of birth is required',
+        'forms.personalInfo.validation.insuranceType.required': 'Insurance type is required',
+      };
+      return translations[key] || key;
+    },
+    i18n: {
+      changeLanguage: () => new Promise(() => { }),
+      language: 'en',
+    },
+  }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
+  I18nextProvider: ({ children }: { children: React.ReactNode }) => children,
+  Trans: ({ children }: { children: React.ReactNode }) => children,
+}));

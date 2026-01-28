@@ -38,6 +38,9 @@ export interface FileUploadProps {
   onFileRemove?: (fileId: string) => void;
   uploadedFile?: UploadedFile | null;
   disabled?: boolean;
+  // Controlled state for testing
+  isUploading?: boolean;
+  uploadProgress?: number;
 }
 
 const DEFAULT_MAX_SIZE = 5 * 1024 * 1024; // 5MB
@@ -52,35 +55,41 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   onFileRemove,
   uploadedFile,
   disabled = false,
+  isUploading: externalIsUploading,
+  uploadProgress: externalUploadProgress,
 }) => {
   const { t } = useTranslation();
   const [isDragOver, setIsDragOver] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [internalIsUploading, setInternalIsUploading] = useState(false);
+  const [internalUploadProgress, setInternalUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  
+
+  // Use external props if provided, otherwise internal state
+  const isUploading = externalIsUploading !== undefined ? externalIsUploading : internalIsUploading;
+  const uploadProgress = externalUploadProgress !== undefined ? externalUploadProgress : internalUploadProgress;
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const validateFile = useCallback((file: File): string | null => {
     if (file.size > maxSize) {
-      return t('fileUpload.errors.fileTooLarge', { 
-        maxSize: Math.round(maxSize / (1024 * 1024)) 
+      return t('fileUpload.errors.fileTooLarge', {
+        maxSize: Math.round(maxSize / (1024 * 1024))
       });
     }
-    
+
     if (!acceptedFormats.includes(file.type)) {
       return t('fileUpload.errors.invalidFormat', {
         formats: acceptedFormats.map(format => format.split('/')[1]).join(', ')
       });
     }
-    
+
     return null;
   }, [maxSize, acceptedFormats, t]);
 
   const uploadFile = useCallback(async (file: File) => {
-    setIsUploading(true);
-    setUploadProgress(0);
+    setInternalIsUploading(true);
+    setInternalUploadProgress(0);
     setError(null);
 
     try {
@@ -90,7 +99,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       // Simulate upload progress
       const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
+        setInternalUploadProgress((prev: number) => {
           if (prev >= 90) {
             clearInterval(progressInterval);
             return prev;
@@ -106,14 +115,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       });
 
       clearInterval(progressInterval);
-      setUploadProgress(100);
+      setInternalUploadProgress(100);
 
       if (!response.ok) {
-        throw new Error(t('fileUpload.errors.uploadFailed'));
+        throw new Error(t('fileUpload.errors.uploadFailed') as string);
       }
 
       const result = await response.json();
-      
+
       const uploadedFileInfo: UploadedFile = {
         id: result.file_id,
         originalName: file.name,
@@ -129,20 +138,20 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       setError(errorMessage);
       onUploadError(errorMessage);
     } finally {
-      setIsUploading(false);
-      setUploadProgress(0);
+      setInternalIsUploading(false);
+      setInternalUploadProgress(0);
     }
   }, [fileType, onUploadSuccess, onUploadError, t]);
 
   const handleFileSelect = useCallback(async (files: FileList | null) => {
     if (!files || files.length === 0) return;
-    
+
     const file = files[0];
     const validationError = validateFile(file);
-    
+
     if (validationError) {
-      setError(validationError);
-      onUploadError(validationError);
+      setError(validationError as string);
+      onUploadError(validationError as string);
       return;
     }
 
@@ -164,9 +173,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    
+
     if (disabled) return;
-    
+
     handleFileSelect(e.dataTransfer.files);
   }, [disabled, handleFileSelect]);
 
@@ -204,39 +213,39 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   };
 
   const getFileTypeLabel = () => {
-    return fileType === 'student_id' 
-      ? t('fileUpload.studentId') 
+    return fileType === 'student_id'
+      ? t('fileUpload.studentId')
       : t('fileUpload.passport');
   };
 
   if (uploadedFile) {
     return (
-      <Card sx={{ 
-        maxWidth: { xs: '100%', sm: 400 }, 
+      <Card sx={{
+        maxWidth: { xs: '100%', sm: 400 },
         margin: 'auto',
         mx: { xs: 0, sm: 'auto' },
       }}>
         <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-          <Box 
-            display="flex" 
-            alignItems="center" 
+          <Box
+            display="flex"
+            alignItems="center"
             gap={2}
             flexDirection={{ xs: 'column', sm: 'row' }}
             textAlign={{ xs: 'center', sm: 'left' }}
           >
             <CheckCircle color="success" sx={{ fontSize: { xs: '2rem', sm: '1.5rem' } }} />
             <Box flex={1}>
-              <Typography 
-                variant="h6" 
+              <Typography
+                variant="h6"
                 component="div"
                 sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
               >
                 {getFileTypeLabel()}
               </Typography>
-              <Typography 
-                variant="body2" 
+              <Typography
+                variant="body2"
                 color="text.secondary"
-                sx={{ 
+                sx={{
                   wordBreak: 'break-word',
                   fontSize: { xs: '0.875rem', sm: '0.875rem' },
                 }}
@@ -248,12 +257,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               </Typography>
             </Box>
           </Box>
-          
+
           {uploadedFile.previewUrl && (
             <Box mt={2}>
               <img
                 src={uploadedFile.previewUrl}
-                alt={t('fileUpload.preview')}
+                alt={t('fileUpload.preview') as string}
                 style={{
                   width: '100%',
                   maxHeight: 200,
@@ -264,7 +273,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             </Box>
           )}
         </CardContent>
-        
+
         <CardActions sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}>
           <Button
             size="small"
@@ -272,7 +281,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             startIcon={<Delete />}
             onClick={handleRemoveFile}
             disabled={disabled}
-            sx={{ 
+            sx={{
               minHeight: '44px',
               px: { xs: 3, sm: 2 },
             }}
@@ -286,24 +295,24 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
   return (
     <Box>
-      <Typography 
-        variant="h6" 
+      <Typography
+        variant="h6"
         gutterBottom
-        sx={{ 
+        sx={{
           fontSize: { xs: '1.1rem', sm: '1.25rem' },
           textAlign: { xs: 'center', sm: 'left' },
         }}
       >
         {getFileTypeLabel()}
       </Typography>
-      
+
       {error && (
-        <Alert 
-          severity="error" 
-          sx={{ 
+        <Alert
+          severity="error"
+          sx={{
             mb: 2,
             fontSize: { xs: '0.875rem', sm: '0.875rem' },
-          }} 
+          }}
           onClose={() => setError(null)}
         >
           {error}
@@ -315,6 +324,16 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={openFileDialog}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openFileDialog();
+          }
+        }}
+        aria-label={t('fileUpload.dragAndDrop')}
+        aria-describedby="file-upload-instruction file-upload-formats"
         sx={{
           border: 2,
           borderStyle: 'dashed',
@@ -337,33 +356,35 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           },
         }}
       >
-        <CloudUpload sx={{ 
-          fontSize: { xs: 40, sm: 48 }, 
-          color: 'text.secondary', 
-          mb: 2 
+        <CloudUpload sx={{
+          fontSize: { xs: 40, sm: 48 },
+          color: 'text.secondary',
+          mb: 2
         }} />
-        
-        <Typography 
-          variant="h6" 
+
+        <Typography
+          variant="h6"
           gutterBottom
           sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
         >
           {t('fileUpload.dragAndDrop')}
         </Typography>
-        
-        <Typography 
-          variant="body2" 
-          color="text.secondary" 
+
+        <Typography
+          id="file-upload-instruction"
+          variant="body2"
+          color="text.secondary"
           gutterBottom
           sx={{ fontSize: { xs: '0.875rem', sm: '0.875rem' } }}
         >
           {t('fileUpload.orClickToSelect')}
         </Typography>
-        
-        <Typography 
-          variant="caption" 
+
+        <Typography
+          id="file-upload-formats"
+          variant="caption"
           color="text.secondary"
-          sx={{ 
+          sx={{
             fontSize: { xs: '0.75rem', sm: '0.75rem' },
             textAlign: 'center',
             px: 1,
@@ -376,11 +397,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         </Typography>
       </Box>
 
-      <Box 
-        display="flex" 
+      <Box
+        display="flex"
         flexDirection={{ xs: 'column', sm: 'row' }}
-        gap={2} 
-        justifyContent="center" 
+        gap={2}
+        justifyContent="center"
         mt={2}
       >
         <Button
@@ -388,20 +409,20 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           startIcon={<InsertDriveFile />}
           onClick={openFileDialog}
           disabled={disabled || isUploading}
-          sx={{ 
+          sx={{
             minHeight: '48px',
             flex: { xs: 1, sm: 'none' },
           }}
         >
           {t('fileUpload.selectFile')}
         </Button>
-        
+
         <Button
           variant="outlined"
           startIcon={<PhotoCamera />}
           onClick={openCameraDialog}
           disabled={disabled || isUploading}
-          sx={{ 
+          sx={{
             minHeight: '48px',
             flex: { xs: 1, sm: 'none' },
           }}
@@ -411,11 +432,15 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       </Box>
 
       {isUploading && (
-        <Box mt={2}>
+        <Box mt={2} role="status" aria-live="polite">
           <Typography variant="body2" gutterBottom>
             {t('fileUpload.uploading')}
           </Typography>
-          <LinearProgress variant="determinate" value={uploadProgress} />
+          <LinearProgress
+            variant="determinate"
+            value={uploadProgress}
+            aria-label={t('fileUpload.uploading')}
+          />
         </Box>
       )}
 
@@ -426,7 +451,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         onChange={handleFileInputChange}
         style={{ display: 'none' }}
       />
-      
+
       <input
         ref={cameraInputRef}
         type="file"
