@@ -44,28 +44,28 @@ describe('FileUploadForm Component', () => {
   describe('Initial Render', () => {
     it('renders form title and description', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       expect(screen.getByText('Document Upload')).toBeInTheDocument();
       expect(screen.getByText(/please upload your required documents/i)).toBeInTheDocument();
     });
 
     it('renders both file upload sections', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       expect(screen.getByText('Student ID')).toBeInTheDocument();
       expect(screen.getByText('Passport')).toBeInTheDocument();
     });
 
     it('renders navigation buttons', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument();
     });
 
     it('disables continue button when no files are uploaded', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       const continueButton = screen.getByRole('button', { name: /continue/i });
       expect(continueButton).toBeDisabled();
     });
@@ -87,18 +87,18 @@ describe('FileUploadForm Component', () => {
     it('enables continue button when student ID is uploaded', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
-      const file = new File(['test content'], 'student-id.jpg', { 
-        type: 'image/jpeg',
-        size: 1024
+
+      const file = new File(['test content'], 'student-id.jpg', {
+        type: 'image/jpeg'
       });
-      
+      Object.defineProperty(file, 'size', { value: 1024 });
+
       // Find the first file input (student ID)
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const studentIdInput = fileInputs[0] as HTMLInputElement;
-      
+
       await user.upload(studentIdInput, file);
-      
+
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
         expect(continueButton).not.toBeDisabled();
@@ -108,18 +108,18 @@ describe('FileUploadForm Component', () => {
     it('enables continue button when passport is uploaded', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
-      const file = new File(['test content'], 'passport.jpg', { 
-        type: 'image/jpeg',
-        size: 1024
+
+      const file = new File(['test content'], 'passport.jpg', {
+        type: 'image/jpeg'
       });
-      
+      Object.defineProperty(file, 'size', { value: 1024 });
+
       // Find the second file input (passport)
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const passportInput = fileInputs[2] as HTMLInputElement; // Skip camera inputs
-      
+
       await user.upload(passportInput, file);
-      
+
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
         expect(continueButton).not.toBeDisabled();
@@ -129,24 +129,24 @@ describe('FileUploadForm Component', () => {
     it('enables continue button when both files are uploaded', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
-      const studentIdFile = new File(['test content'], 'student-id.jpg', { 
-        type: 'image/jpeg',
-        size: 1024
+
+      const studentIdFile = new File(['test content'], 'student-id.jpg', {
+        type: 'image/jpeg'
       });
-      
-      const passportFile = new File(['test content'], 'passport.jpg', { 
-        type: 'image/jpeg',
-        size: 1024
+      Object.defineProperty(studentIdFile, 'size', { value: 1024 });
+
+      const passportFile = new File(['test content'], 'passport.jpg', {
+        type: 'image/jpeg'
       });
-      
+      Object.defineProperty(passportFile, 'size', { value: 1024 });
+
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const studentIdInput = fileInputs[0] as HTMLInputElement;
       const passportInput = fileInputs[2] as HTMLInputElement;
-      
+
       await user.upload(studentIdInput, studentIdFile);
       await user.upload(passportInput, passportFile);
-      
+
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
         expect(continueButton).not.toBeDisabled();
@@ -174,15 +174,15 @@ describe('FileUploadForm Component', () => {
     it('calls onSubmit with uploaded files when provided', async () => {
       const user = userEvent.setup();
       renderWithProviders(
-        <FileUploadForm 
+        <FileUploadForm
           onSubmit={mockOnSubmit}
           initialFiles={{ studentId: studentIdFile }}
         />
       );
-      
+
       const continueButton = screen.getByRole('button', { name: /continue/i });
       await user.click(continueButton);
-      
+
       await waitFor(() => {
         expect(mockOnSubmit).toHaveBeenCalledWith({
           studentId: studentIdFile,
@@ -196,10 +196,10 @@ describe('FileUploadForm Component', () => {
       renderWithProviders(
         <FileUploadForm initialFiles={{ studentId: studentIdFile }} />
       );
-      
+
       const continueButton = screen.getByRole('button', { name: /continue/i });
       await user.click(continueButton);
-      
+
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith('/review');
       });
@@ -207,13 +207,13 @@ describe('FileUploadForm Component', () => {
 
     it('shows error when no files are uploaded and submit is attempted', async () => {
       const user = userEvent.setup();
-      
+
       // Mock the component to allow submission without files for testing
       const TestComponent = () => {
         const [hasFiles, setHasFiles] = React.useState(false);
-        
+
         return (
-          <FileUploadForm 
+          <FileUploadForm
             onSubmit={async () => {
               if (!hasFiles) {
                 throw new Error('Please upload at least one document');
@@ -222,13 +222,13 @@ describe('FileUploadForm Component', () => {
           />
         );
       };
-      
+
       renderWithProviders(<TestComponent />);
-      
+
       // Force enable the button for testing
       const continueButton = screen.getByRole('button', { name: /continue/i });
       fireEvent.click(continueButton);
-      
+
       // The button should still be disabled, so this test verifies the disabled state
       expect(continueButton).toBeDisabled();
     });
@@ -236,19 +236,19 @@ describe('FileUploadForm Component', () => {
     it('handles submission errors gracefully', async () => {
       const user = userEvent.setup();
       const errorMessage = 'Submission failed';
-      
+
       renderWithProviders(
-        <FileUploadForm 
+        <FileUploadForm
           onSubmit={async () => {
             throw new Error(errorMessage);
           }}
           initialFiles={{ studentId: studentIdFile }}
         />
       );
-      
+
       const continueButton = screen.getByRole('button', { name: /continue/i });
       await user.click(continueButton);
-      
+
       await waitFor(() => {
         expect(screen.getByText(errorMessage)).toBeInTheDocument();
       });
@@ -259,10 +259,10 @@ describe('FileUploadForm Component', () => {
     it('navigates back to personal info page', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
+
       const backButton = screen.getByRole('button', { name: /back/i });
       await user.click(backButton);
-      
+
       expect(mockNavigate).toHaveBeenCalledWith('/personal-info');
     });
   });
@@ -271,16 +271,16 @@ describe('FileUploadForm Component', () => {
     it('displays file upload errors', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
-      const file = new File(['test content'], 'test.txt', { 
+
+      const file = new File(['test content'], 'test.txt', {
         type: 'text/plain' // Invalid format
       });
-      
+
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const studentIdInput = fileInputs[0] as HTMLInputElement;
-      
+
       await user.upload(studentIdInput, file);
-      
+
       await waitFor(() => {
         expect(screen.getByText(/please fix the following errors/i)).toBeInTheDocument();
         expect(screen.getByText(/invalid file format/i)).toBeInTheDocument();
@@ -300,29 +300,29 @@ describe('FileUploadForm Component', () => {
       });
 
       renderWithProviders(<FileUploadForm />);
-      
+
       // First upload invalid file
-      const invalidFile = new File(['test content'], 'test.txt', { 
+      const invalidFile = new File(['test content'], 'test.txt', {
         type: 'text/plain'
       });
-      
+
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const studentIdInput = fileInputs[0] as HTMLInputElement;
-      
+
       await user.upload(studentIdInput, invalidFile);
-      
+
       await waitFor(() => {
         expect(screen.getByText(/invalid file format/i)).toBeInTheDocument();
       });
-      
+
       // Then upload valid file
-      const validFile = new File(['test content'], 'test.jpg', { 
-        type: 'image/jpeg',
-        size: 1024
+      const validFile = new File(['test content'], 'test.jpg', {
+        type: 'image/jpeg'
       });
-      
+      Object.defineProperty(validFile, 'size', { value: 1024 });
+
       await user.upload(studentIdInput, validFile);
-      
+
       await waitFor(() => {
         expect(screen.queryByText(/invalid file format/i)).not.toBeInTheDocument();
       });
@@ -347,12 +347,12 @@ describe('FileUploadForm Component', () => {
           uploadedAt: new Date(),
         }
       };
-      
+
       renderWithProviders(<FileUploadForm initialFiles={initialFiles} />);
-      
+
       expect(screen.getByText('student-id.jpg')).toBeInTheDocument();
       expect(screen.getByText('passport.jpg')).toBeInTheDocument();
-      
+
       const continueButton = screen.getByRole('button', { name: /continue/i });
       expect(continueButton).not.toBeDisabled();
     });
@@ -361,31 +361,32 @@ describe('FileUploadForm Component', () => {
   describe('Accessibility', () => {
     it('has proper heading structure', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toHaveTextContent('Document Upload');
     });
 
     it('provides clear instructions', () => {
       renderWithProviders(<FileUploadForm />);
-      
+
       expect(screen.getByText(/please upload your required documents/i)).toBeInTheDocument();
-      expect(screen.getByText(/supported formats: jpeg, png, pdf/i)).toBeInTheDocument();
+      const supportedFormats = screen.getAllByText(/supported formats: jpeg, png, pdf/i);
+      expect(supportedFormats.length).toBeGreaterThan(0);
     });
 
     it('announces errors to screen readers', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
-      
-      const file = new File(['test content'], 'test.txt', { 
+
+      const file = new File(['test content'], 'test.txt', {
         type: 'text/plain'
       });
-      
+
       const fileInputs = document.querySelectorAll('input[type="file"]');
       const studentIdInput = fileInputs[0] as HTMLInputElement;
-      
+
       await user.upload(studentIdInput, file);
-      
+
       await waitFor(() => {
         const alert = screen.getByRole('alert');
         expect(alert).toBeInTheDocument();
