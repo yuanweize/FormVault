@@ -46,8 +46,6 @@ isort==5.12.0
 flake8==6.0.0
 mypy==1.2.0
 
-# CORS support
-python-cors==1.0.0
 
 # Rate limiting
 slowapi==0.1.9
