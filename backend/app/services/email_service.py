@@ -215,6 +215,15 @@ class EmailService:
         """Create plain text email content."""
         app_data = data["application"]
         
+        # Prepare additional notes section with proper line breaks
+        notes_section = ""
+        if data.get("additional_notes"):
+            notes_section = f"\nAdditional Notes:\n{data['additional_notes']}\n"
+
+        files_section = ""
+        if data.get("files_count", 0) > 0:
+            files_section = f"\nFiles Attached: {data['files_count']}\n"
+
         text = f"""
 Insurance Application Export
 
@@ -231,11 +240,7 @@ Insurance Type: {app_data["insurance_type"]}
 Address: {app_data["full_address"] or "Not provided"}
 Application Date: {app_data["created_at"]}
 Status: {app_data["status"]}
-
-{f'Files Attached: {data["files_count"]}' if data["files_count"] > 0 else ''}
-
-{f'Additional Notes:\n{data["additional_notes"]}\n' if data["additional_notes"] else ''}
-
+{files_section}{notes_section}
 Export Date: {data["export_date"]}
 
 Best regards,

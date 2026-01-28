@@ -37,9 +37,9 @@ describe('App', () => {
     expect(screen.getByText('Review & Submit')).toBeInTheDocument();
   });
 
-  it('renders success page', () => {
+  it('renders success page', async () => {
     renderWithRouter(['/success']);
-    expect(screen.getByText('Application Submitted')).toBeInTheDocument();
+    expect(await screen.findByText('Application Submitted!')).toBeInTheDocument();
   });
 
   it('renders 404 page for unknown routes', () => {
@@ -49,7 +49,7 @@ describe('App', () => {
 
   it('renders app structure correctly', () => {
     renderWithRouter(['/']);
-    
+
     // Check that the app renders without crashing
     expect(screen.getByText('Welcome to FormVault')).toBeInTheDocument();
     expect(screen.getByText('Get Started')).toBeInTheDocument();

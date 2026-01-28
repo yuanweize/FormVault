@@ -207,6 +207,20 @@ async def create_application(
 
 
 @router.get("/", response_model=ApplicationListResponseSchema)
+async def list_applications(
+    pagination: PaginationParams = Depends(),
+    status: Optional[str] = Query(None, description="Filter by application status"),
+    insurance_type: Optional[str] = Query(None, description="Filter by insurance type"),
+    db: Session = Depends(get_db)
+) -> ApplicationListResponseSchema:
+    """
+    List insurance applications with optional filtering.
+    
+    Retrieves a paginated list of applications with optional filters
+    for status and insurance type.
+    
+    - **page**: Page number (1-based)
+    - **size**: Number of items per page (max 100)
     - **status**: Filter by application status
     - **insurance_type**: Filter by insurance type
     """
@@ -275,6 +289,16 @@ async def create_application(
 
 
 @router.get("/{application_id}", response_model=ApplicationResponseSchema)
+async def get_application(
+    application_id: str,
+    db: Session = Depends(get_db)
+) -> ApplicationResponseSchema:
+    """
+    Retrieve a specific insurance application.
+    
+    Returns detailed information about a specific application
+    including personal information, files, and current status.
+    
     - **application_id**: Unique application identifier
     """
     application = db.query(Application).filter(Application.id == application_id).first()
@@ -322,6 +346,18 @@ async def create_application(
 
 
 @router.put("/{application_id}", response_model=ApplicationResponseSchema)
+async def update_application(
+    application_id: str,
+    application_data: ApplicationUpdateSchema,
+    db: Session = Depends(get_db)
+) -> ApplicationResponseSchema:
+    """
+    Update an existing insurance application.
+    
+    Updates the specified application with new information.
+    Only applications in 'draft' status can be updated.
+    
+    - **application_id**: Unique application identifier
     - **application_data**: Updated application information
     """
     application = db.query(Application).filter(Application.id == application_id).first()
@@ -486,6 +522,16 @@ async def submit_application(
 
 
 @router.delete("/{application_id}", response_model=ResponseBase)
+async def delete_application(
+    application_id: str,
+    db: Session = Depends(get_db)
+) -> ResponseBase:
+    """
+    Delete an insurance application.
+    
+    Permanently deletes an application and all associated files.
+    Only applications in 'draft' status can be deleted.
+    
     - **application_id**: Unique application identifier
     """
     application = db.query(Application).filter(Application.id == application_id).first()
