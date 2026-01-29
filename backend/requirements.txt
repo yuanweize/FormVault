@@ -47,4 +47,4 @@ mypy>=1.7.0
 
 # Security scanning
 safety>=2.3.5
-bandit>=1.7.5
+bandit>=1.7.5structlog>=23.1.0
