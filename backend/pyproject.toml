@@ -41,7 +41,7 @@ warn_unreachable = false
 strict_equality = false
 
 [[tool.mypy.overrides]]
-module = ["app.*"]
+module = ["app.*", "alembic.*"]
 ignore_errors = true
 
 [[tool.mypy.overrides]]
