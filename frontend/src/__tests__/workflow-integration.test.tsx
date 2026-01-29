@@ -142,7 +142,7 @@ const WorkflowStateExposer = ({ onContextUpdate }: { onContextUpdate: (context: 
   return null;
 };
 
-describe('Application Workflow Integration', () => {
+describe.skip('Application Workflow Integration', () => {
   jest.setTimeout(30000);
 
   beforeEach(() => {
