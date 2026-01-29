@@ -16,15 +16,26 @@ const PersonalInfoPage: React.FC = () => {
     // If we have existing data, the form will be populated automatically
   }, []);
 
+  // Local state to handle navigation after state update
+  const [shouldAdvance, setShouldAdvance] = React.useState(false);
+
+  // Handle navigation when step is completed
+  React.useEffect(() => {
+    if (shouldAdvance && state.completedSteps.includes('personal-info')) {
+      goToNextStep();
+      setShouldAdvance(false);
+    }
+  }, [state.completedSteps, shouldAdvance, goToNextStep]);
+
   const handleSubmit = async (data: PersonalInfo) => {
     // Update the workflow context with the form data
     updatePersonalInfo(data);
-    
+
     // Mark this step as completed
     completeStep('personal-info');
-    
-    // Navigate to next step
-    goToNextStep();
+
+    // Trigger navigation in useEffect
+    setShouldAdvance(true);
   };
 
   const handleNext = async (): Promise<boolean> => {
@@ -37,7 +48,7 @@ const PersonalInfoPage: React.FC = () => {
       <Box sx={{ py: 4 }}>
         {/* Progress Indicator */}
         <WorkflowProgressIndicator sx={{ mb: 4 }} />
-        
+
         {/* Page Header */}
         <Box sx={{ mb: 4, textAlign: 'center' }}>
           <Typography variant="h4" component="h1" gutterBottom>
@@ -49,7 +60,7 @@ const PersonalInfoPage: React.FC = () => {
         </Box>
 
         {/* Personal Information Form */}
-        <PersonalInfoForm 
+        <PersonalInfoForm
           initialData={state.personalInfo}
           onSubmit={handleSubmit}
           isLoading={state.submissionStatus === 'saving'}

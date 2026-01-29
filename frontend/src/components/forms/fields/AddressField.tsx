@@ -33,14 +33,14 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
           name="address.street"
           control={control}
           rules={{
-            required: t('forms.personalInfo.validation.address.street.required'),
+            required: t('forms.personalInfo.validation.address.street.required') as string,
             minLength: {
               value: 5,
-              message: t('forms.personalInfo.validation.address.street.minLength'),
+              message: t('forms.personalInfo.validation.address.street.minLength') as string,
             },
             maxLength: {
               value: 100,
-              message: t('forms.personalInfo.validation.address.street.maxLength'),
+              message: t('forms.personalInfo.validation.address.street.maxLength') as string,
             },
           }}
           render={({ field }) => (
@@ -52,7 +52,8 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               helperText={errors?.street?.message}
               disabled={disabled}
               inputProps={{
-                'aria-label': t('forms.personalInfo.fields.address.street'),
+                'data-testid': 'street-address-input',
+                'aria-label': t('forms.personalInfo.fields.address.street') as string,
                 'aria-describedby': errors?.street ? 'street-error' : undefined,
               }}
             />
@@ -65,18 +66,18 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
           name="address.city"
           control={control}
           rules={{
-            required: t('forms.personalInfo.validation.address.city.required'),
+            required: t('forms.personalInfo.validation.address.city.required') as string,
             minLength: {
               value: 2,
-              message: t('forms.personalInfo.validation.address.city.minLength'),
+              message: t('forms.personalInfo.validation.address.city.minLength') as string,
             },
             maxLength: {
               value: 50,
-              message: t('forms.personalInfo.validation.address.city.maxLength'),
+              message: t('forms.personalInfo.validation.address.city.maxLength') as string,
             },
             pattern: {
               value: /^[a-zA-Z\s\-']+$/,
-              message: t('forms.personalInfo.validation.address.city.pattern'),
+              message: t('forms.personalInfo.validation.address.city.pattern') as string,
             },
           }}
           render={({ field }) => (
@@ -88,7 +89,8 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               helperText={errors?.city?.message}
               disabled={disabled}
               inputProps={{
-                'aria-label': t('forms.personalInfo.fields.address.city'),
+                'data-testid': 'city-input',
+                'aria-label': t('forms.personalInfo.fields.address.city') as string,
                 'aria-describedby': errors?.city ? 'city-error' : undefined,
               }}
             />
@@ -101,14 +103,14 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
           name="address.state"
           control={control}
           rules={{
-            required: t('forms.personalInfo.validation.address.state.required'),
+            required: t('forms.personalInfo.validation.address.state.required') as string,
             minLength: {
               value: 2,
-              message: t('forms.personalInfo.validation.address.state.minLength'),
+              message: t('forms.personalInfo.validation.address.state.minLength') as string,
             },
             maxLength: {
               value: 50,
-              message: t('forms.personalInfo.validation.address.state.maxLength'),
+              message: t('forms.personalInfo.validation.address.state.maxLength') as string,
             },
           }}
           render={({ field }) => (
@@ -120,7 +122,8 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               helperText={errors?.state?.message}
               disabled={disabled}
               inputProps={{
-                'aria-label': t('forms.personalInfo.fields.address.state'),
+                'data-testid': 'state-input',
+                'aria-label': t('forms.personalInfo.fields.address.state') as string,
                 'aria-describedby': errors?.state ? 'state-error' : undefined,
               }}
             />
@@ -133,10 +136,10 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
           name="address.zipCode"
           control={control}
           rules={{
-            required: t('forms.personalInfo.validation.address.zipCode.required'),
+            required: t('forms.personalInfo.validation.address.zipCode.required') as string,
             pattern: {
               value: /^[A-Za-z0-9\s\-]{3,10}$/,
-              message: t('forms.personalInfo.validation.address.zipCode.pattern'),
+              message: t('forms.personalInfo.validation.address.zipCode.pattern') as string,
             },
           }}
           render={({ field }) => (
@@ -148,7 +151,8 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               helperText={errors?.zipCode?.message}
               disabled={disabled}
               inputProps={{
-                'aria-label': t('forms.personalInfo.fields.address.zipCode'),
+                'data-testid': 'zip-code-input',
+                'aria-label': t('forms.personalInfo.fields.address.zipCode') as string,
                 'aria-describedby': errors?.zipCode ? 'zipCode-error' : undefined,
               }}
             />
@@ -165,7 +169,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
             name="address.country"
             control={control}
             rules={{
-              required: t('forms.personalInfo.validation.address.country.required'),
+              required: t('forms.personalInfo.validation.address.country.required') as string,
             }}
             render={({ field }) => (
               <Select
@@ -174,7 +178,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
                 label={t('forms.personalInfo.fields.address.country')}
                 data-testid="country-select"
                 inputProps={{
-                  'aria-label': t('forms.personalInfo.fields.address.country'),
+                  'aria-label': t('forms.personalInfo.fields.address.country') as string,
                   'aria-describedby': errors?.country ? 'country-error' : undefined,
                 }}
               >

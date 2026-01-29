@@ -156,22 +156,22 @@ function workflowReducer(state: WorkflowState, action: WorkflowAction): Workflow
 // Context interface
 interface WorkflowContextType {
   state: WorkflowState;
-  
+
   // Navigation methods
   goToStep: (step: WorkflowStep) => void;
   goToNextStep: () => void;
   goToPreviousStep: () => void;
   completeStep: (step: WorkflowStep) => void;
-  
+
   // Data management methods
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   setUploadedFile: (type: 'studentId' | 'passport', file: UploadedFile) => void;
   removeUploadedFile: (type: 'studentId' | 'passport') => void;
-  
+
   // Submission methods
   saveAsDraft: () => Promise<void>;
   submitApplication: () => Promise<void>;
-  
+
   // Utility methods
   canGoToStep: (step: WorkflowStep) => boolean;
   isStepCompleted: (step: WorkflowStep) => boolean;
@@ -224,12 +224,45 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
     }
   }, [state]);
 
+  // Utility methods
+  const canGoToStep = useCallback((step: WorkflowStep): boolean => {
+    const stepIndex = STEP_ORDER.indexOf(step);
+    const currentIndex = STEP_ORDER.indexOf(state.currentStep);
+
+    console.log(`canGoToStep: target=${step}(${stepIndex}), current=${state.currentStep}(${currentIndex}), completed=${JSON.stringify(state.completedSteps)}`);
+
+    // Can always go to current or previous steps
+    if (stepIndex <= currentIndex) {
+      return true;
+    }
+
+    // Can go to next step if current step is completed
+    if (stepIndex === currentIndex + 1) {
+      const allowed = state.completedSteps.includes(state.currentStep);
+      console.log(`canGoToStep: result=${allowed}`);
+      return allowed;
+    }
+
+    // Can't skip steps
+    return false;
+  }, [state.currentStep, state.completedSteps]);
+
+  const isStepCompleted = useCallback((step: WorkflowStep): boolean => {
+    return state.completedSteps.includes(step);
+  }, [state.completedSteps]);
+
+  const getStepProgress = useCallback((): number => {
+    const totalSteps = STEP_ORDER.length;
+    const currentIndex = STEP_ORDER.indexOf(state.currentStep);
+    return Math.round(((currentIndex + 1) / totalSteps) * 100);
+  }, [state.currentStep]);
+
   // Navigation methods
   const goToStep = useCallback((step: WorkflowStep) => {
     if (canGoToStep(step)) {
       dispatch({ type: 'SET_STEP', payload: step });
     }
-  }, []);
+  }, [canGoToStep]);
 
   const goToNextStep = useCallback(() => {
     const currentIndex = STEP_ORDER.indexOf(state.currentStep);
@@ -333,35 +366,6 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
     }
   }, [state, applicationWorkflow, saveAsDraft]);
-
-  // Utility methods
-  const canGoToStep = useCallback((step: WorkflowStep): boolean => {
-    const stepIndex = STEP_ORDER.indexOf(step);
-    const currentIndex = STEP_ORDER.indexOf(state.currentStep);
-    
-    // Can always go to current or previous steps
-    if (stepIndex <= currentIndex) {
-      return true;
-    }
-    
-    // Can go to next step if current step is completed
-    if (stepIndex === currentIndex + 1) {
-      return state.completedSteps.includes(state.currentStep);
-    }
-    
-    // Can't skip steps
-    return false;
-  }, [state.currentStep, state.completedSteps]);
-
-  const isStepCompleted = useCallback((step: WorkflowStep): boolean => {
-    return state.completedSteps.includes(step);
-  }, [state.completedSteps]);
-
-  const getStepProgress = useCallback((): number => {
-    const totalSteps = STEP_ORDER.length;
-    const currentIndex = STEP_ORDER.indexOf(state.currentStep);
-    return Math.round(((currentIndex + 1) / totalSteps) * 100);
-  }, [state.currentStep]);
 
   const resetWorkflow = useCallback(() => {
     dispatch({ type: 'RESET_WORKFLOW' });

@@ -15,7 +15,7 @@ email-validator==2.0.0
 phonenumbers==8.13.11
 
 # File handling and validation
-python-multipart==0.0.6
+python-multipart==0.0.22
 python-magic==0.4.27
 pillow>=10.0.0
 
@@ -26,7 +26,7 @@ python-dotenv==1.0.0
 
 # Email
 aiosmtplib==2.0.2
-jinja2==3.1.2
+jinja2==3.1.6
 
 # HTTP client for external services
 httpx==0.24.0
@@ -38,7 +38,6 @@ structlog==23.1.0
 pytest==7.3.1
 pytest-asyncio==0.21.0
 pytest-cov==4.0.0
-httpx==0.24.0
 
 # Development
 black==23.3.0
@@ -46,8 +45,6 @@ isort==5.12.0
 flake8==6.0.0
 mypy==1.2.0
 
-# CORS support
-python-cors==1.0.0
 
 # Rate limiting
 slowapi==0.1.9

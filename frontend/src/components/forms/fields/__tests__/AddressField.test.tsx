@@ -7,29 +7,7 @@ import { AddressField } from '../AddressField';
 import { PersonalInfo } from '../../../../types';
 import '../../../../i18n/config';
 
-// Mock react-i18next
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        'forms.personalInfo.fields.address.street': 'Street Address',
-        'forms.personalInfo.fields.address.city': 'City',
-        'forms.personalInfo.fields.address.state': 'State/Province',
-        'forms.personalInfo.fields.address.zipCode': 'ZIP/Postal Code',
-        'forms.personalInfo.fields.address.country': 'Country',
-        'forms.personalInfo.countries.US': 'United States',
-        'forms.personalInfo.countries.CA': 'Canada',
-        'forms.personalInfo.countries.MX': 'Mexico',
-        'forms.personalInfo.validation.address.street.required': 'Street address is required',
-        'forms.personalInfo.validation.address.city.required': 'City is required',
-        'forms.personalInfo.validation.address.state.required': 'State/Province is required',
-        'forms.personalInfo.validation.address.zipCode.required': 'ZIP/Postal code is required',
-        'forms.personalInfo.validation.address.country.required': 'Please select a country',
-      };
-      return translations[key] || key;
-    },
-  }),
-}));
+// Redundant local mock removed to use global setupTests.ts mock
 
 const theme = createTheme();
 
@@ -65,20 +43,20 @@ describe('AddressField', () => {
 
     expect(screen.getByLabelText('Street Address')).toBeInTheDocument();
     expect(screen.getByLabelText('City')).toBeInTheDocument();
-    expect(screen.getByLabelText('State/Province')).toBeInTheDocument();
-    expect(screen.getByLabelText('ZIP/Postal Code')).toBeInTheDocument();
+    expect(screen.getByLabelText('State')).toBeInTheDocument();
+    expect(screen.getByLabelText('Zip Code')).toBeInTheDocument();
     expect(screen.getByLabelText('Country')).toBeInTheDocument();
   });
 
   it('allows user to input address information', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestWrapper />);
 
     const streetField = screen.getByLabelText('Street Address');
     const cityField = screen.getByLabelText('City');
-    const stateField = screen.getByLabelText('State/Province');
-    const zipField = screen.getByLabelText('ZIP/Postal Code');
+    const stateField = screen.getByLabelText('State');
+    const zipField = screen.getByLabelText('Zip Code');
 
     await user.type(streetField, '123 Main Street');
     await user.type(cityField, 'New York');
@@ -93,7 +71,7 @@ describe('AddressField', () => {
 
   it('allows user to select country from dropdown', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestWrapper />);
 
     const countrySelect = screen.getByLabelText('Country');
@@ -106,9 +84,9 @@ describe('AddressField', () => {
 
     // Select a country
     await user.click(screen.getByText('United States'));
-    
+
     // The select should now show the selected value
-    expect(countrySelect).toHaveValue('US');
+    expect(countrySelect).toHaveTextContent('United States');
   });
 
   it('disables all fields when disabled prop is true', () => {
@@ -116,9 +94,9 @@ describe('AddressField', () => {
 
     expect(screen.getByLabelText('Street Address')).toBeDisabled();
     expect(screen.getByLabelText('City')).toBeDisabled();
-    expect(screen.getByLabelText('State/Province')).toBeDisabled();
-    expect(screen.getByLabelText('ZIP/Postal Code')).toBeDisabled();
-    expect(screen.getByLabelText('Country')).toBeDisabled();
+    expect(screen.getByLabelText('State')).toBeDisabled();
+    expect(screen.getByLabelText('Zip Code')).toBeDisabled();
+    expect(screen.getByLabelText('Country')).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('has proper accessibility attributes', () => {

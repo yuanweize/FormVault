@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -9,9 +9,9 @@ import { PersonalInfo } from '../../../../types';
 const theme = createTheme();
 
 // Test wrapper component
-const TestWrapper: React.FC<{ disabled?: boolean; initialValue?: string }> = ({ 
-  disabled = false, 
-  initialValue = '' 
+const TestWrapper: React.FC<{ disabled?: boolean; initialValue?: string }> = ({
+  disabled = false,
+  initialValue = ''
 }) => {
   const { control, formState: { errors } } = useForm<PersonalInfo>({
     mode: 'onChange',
@@ -47,11 +47,11 @@ describe('DateField', () => {
 
   it('allows user to input date', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestWrapper />);
 
     const dateField = screen.getByLabelText('Date of Birth');
-    await user.type(dateField, '1990-01-01');
+    fireEvent.change(dateField, { target: { value: '1990-01-01' } });
 
     expect(dateField).toHaveValue('1990-01-01');
   });

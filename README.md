@@ -1,17 +1,30 @@
 # FormVault Insurance Portal
 
+[![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions)
+[![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 一个安全的多语言保险申请门户，使用 React 和 FastAPI 构建。
 
-## 功能特性
+## 🏗️ 系统架构
 
-- 🔐 安全的用户认证和授权
-- 🌍 多语言支持（中文、英文、西班牙语）
-- 📁 文件上传和文档管理
-- 📧 邮件导出功能
-- 👨‍💼 管理员仪表板
-- 📱 响应式设计，支持移动端和桌面端
-- 📊 完整的审计日志
-- 🚀 生产就绪的 Docker 部署
+```mermaid
+graph TD
+    User((User)) -->|Browser| Frontend[React Frontend]
+    Frontend -->|REST API| Backend[FastAPI Backend]
+    Backend -->|ORM| DB[(MySQL DB)]
+    Backend -->|Async| Mail[Email Service]
+    Backend -->|Local/S3| Storage[File Storage]
+```
+
+## ✨ 功能特性
+
+- 🔐 **安全认证**: 基于 JWT 的用户认证和授权。
+- 🌍 **全球化**: 多语言支持（中文、英文、西班牙语）。
+- 📁 **文档管理**: 高性能文件上传与加密存储。
+- 📧 **自动化分发**: 自动将申请书导出并发送给保险公司。
+- 👨‍💼 **管理后台**: 全面的审计日志与申请管理仪表板。
+- 🚀 **生产就绪**: 完整的 Docker Compose 部署方案与 CI 流水线。
 
 ## 技术栈
 

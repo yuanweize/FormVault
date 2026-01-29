@@ -46,9 +46,11 @@ export function SuccessPage() {
   const { referenceNumber, personalInfo } = state;
 
   useEffect(() => {
-    // Mark the success step as completed
-    // This is handled by the workflow context when submission succeeds
-  }, []);
+    // If no reference number (e.g. direct access), redirect to home
+    if (!referenceNumber) {
+      navigate('/', { replace: true });
+    }
+  }, [referenceNumber, navigate]);
 
   const handleGoHome = () => {
     resetWorkflow();
@@ -77,7 +79,9 @@ export function SuccessPage() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
       {/* Progress Indicator */}
-      <WorkflowProgressIndicator sx={{ mb: 4 }} />
+      <Box sx={{ mb: 4 }}>
+        <WorkflowProgressIndicator />
+      </Box>
 
       {/* Success Animation */}
       <Zoom in timeout={1000}>
@@ -141,7 +145,7 @@ export function SuccessPage() {
                 {t('pages.success.applicationSummary')}
               </Typography>
               <Divider sx={{ mb: 2 }} />
-              
+
               <Box sx={{ mb: 2 }}>
                 <Typography variant="body2" color="text.secondary">
                   {t('forms.personalInfo.name.label')}
@@ -150,7 +154,7 @@ export function SuccessPage() {
                   {personalInfo.firstName} {personalInfo.lastName}
                 </Typography>
               </Box>
-              
+
               <Box sx={{ mb: 2 }}>
                 <Typography variant="body2" color="text.secondary">
                   {t('forms.personalInfo.email.label')}
@@ -159,7 +163,7 @@ export function SuccessPage() {
                   {personalInfo.email}
                 </Typography>
               </Box>
-              
+
               <Box sx={{ mb: 2 }}>
                 <Typography variant="body2" color="text.secondary">
                   {t('forms.personalInfo.insuranceType.label')}
@@ -170,7 +174,7 @@ export function SuccessPage() {
                   size="small"
                 />
               </Box>
-              
+
               <Box>
                 <Typography variant="body2" color="text.secondary">
                   {t('pages.success.submissionDate')}
@@ -196,7 +200,7 @@ export function SuccessPage() {
                 {t('pages.success.nextSteps.title')}
               </Typography>
               <Divider sx={{ mb: 2 }} />
-              
+
               <List>
                 <ListItem>
                   <ListItemIcon>
@@ -207,7 +211,7 @@ export function SuccessPage() {
                     secondary={t('pages.success.nextSteps.emailConfirmationNote')}
                   />
                 </ListItem>
-                
+
                 <ListItem>
                   <ListItemIcon>
                     <Schedule color="primary" />
@@ -217,7 +221,7 @@ export function SuccessPage() {
                     secondary={t('pages.success.nextSteps.processingNote')}
                   />
                 </ListItem>
-                
+
                 <ListItem>
                   <ListItemIcon>
                     <CheckCircle color="primary" />
@@ -248,7 +252,7 @@ export function SuccessPage() {
             >
               {t('pages.success.actions.goHome')}
             </Button>
-            
+
             <Button
               variant="outlined"
               size="large"
