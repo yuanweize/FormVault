@@ -33,6 +33,11 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
   onSubmit,
   initialFiles,
   error,
+  onFileUpload, // Destructure this
+  onFileRemove,
+  uploadedFile,
+  isUploading,
+  uploadProgress,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -45,6 +50,18 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
   );
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const createUploadHandler = useCallback((type: 'student_id' | 'passport') => {
+    return async (file: File): Promise<UploadedFile> => {
+      if (onFileUpload) {
+        const result = await onFileUpload(file, type);
+        if (result) return result;
+        throw new Error('Upload failed');
+      }
+      // Fallback or error if no handler
+      throw new Error('No upload handler provided');
+    };
+  }, [onFileUpload]);
 
   const handleStudentIdUpload = useCallback((file: UploadedFile) => {
     setStudentIdFile(file);
@@ -144,6 +161,7 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
               onFileRemove={handleStudentIdRemove}
               uploadedFile={studentIdFile}
               disabled={isSubmitting}
+              customUploadHandler={onFileUpload ? createUploadHandler('student_id') : undefined}
             />
           </Paper>
         </Grid>
@@ -157,6 +175,7 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
               onFileRemove={handlePassportRemove}
               uploadedFile={passportFile}
               disabled={isSubmitting}
+              customUploadHandler={onFileUpload ? createUploadHandler('passport') : undefined}
             />
           </Paper>
         </Grid>

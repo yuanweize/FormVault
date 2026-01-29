@@ -17,12 +17,12 @@ import { FileType, UploadedFile } from '../types';
 
 export function FileUploadPage() {
   const { t } = useTranslation();
-  const { 
-    state, 
-    setUploadedFile, 
-    removeUploadedFile, 
-    completeStep, 
-    goToNextStep 
+  const {
+    state,
+    setUploadedFile,
+    removeUploadedFile,
+    completeStep,
+    goToNextStep
   } = useApplicationWorkflowContext();
 
   const studentIdUpload = useFileUpload();
@@ -31,15 +31,21 @@ export function FileUploadPage() {
   const { uploadedFiles } = state;
   const hasRequiredFiles = uploadedFiles.studentId && uploadedFiles.passport;
 
+  // Utilize useEffect to handle navigation after state update to avoid stale closure issues
+  useEffect(() => {
+    if (state.currentStep === 'file-upload' && state.completedSteps.includes('file-upload')) {
+      goToNextStep();
+    }
+  }, [state.currentStep, state.completedSteps, goToNextStep]);
+
   const handleFileUpload = async (file: File, fileType: FileType): Promise<UploadedFile | null> => {
     const upload = fileType === 'student_id' ? studentIdUpload : passportUpload;
-    
     const result = await upload.upload(file, fileType, state.applicationId);
-    
+
     if (result) {
       setUploadedFile(fileType === 'student_id' ? 'studentId' : 'passport', result);
     }
-    
+
     return result;
   };
 
@@ -51,14 +57,13 @@ export function FileUploadPage() {
     if (!hasRequiredFiles) {
       return false;
     }
-    
+
     // Mark this step as completed
     completeStep('file-upload');
-    
-    // Navigate to next step
-    goToNextStep();
-    
-    return true;
+
+    // Return false to prevent WorkflowNavigation from calling goToNextStep immediately
+    // Navigation will be handled by useEffect once state updates
+    return false;
   };
 
   return (
@@ -66,7 +71,7 @@ export function FileUploadPage() {
       <Box sx={{ py: 4 }}>
         {/* Progress Indicator */}
         <WorkflowProgressIndicator sx={{ mb: 4 }} />
-        
+
         {/* Page Header */}
         <Box sx={{ mb: 4, textAlign: 'center' }}>
           <Typography variant="h4" component="h1" gutterBottom>

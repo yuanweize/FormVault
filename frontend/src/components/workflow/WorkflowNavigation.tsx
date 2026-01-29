@@ -197,6 +197,7 @@ export function WorkflowNavigation({
       >
         {/* Previous button */}
         <Button
+          data-testid="prev-step-button"
           variant="outlined"
           startIcon={<ArrowBack />}
           onClick={handlePrevious}
@@ -210,6 +211,7 @@ export function WorkflowNavigation({
         {/* Save button */}
         {showSave && !isConfirmationStep && (
           <Button
+            data-testid="save-draft-button"
             variant="text"
             startIcon={isLoading && state.submissionStatus === 'saving' ? (
               <CircularProgress size={16} />
@@ -230,6 +232,7 @@ export function WorkflowNavigation({
 
         {/* Next/Submit button */}
         <Button
+          data-testid="next-step-button"
           variant="contained"
           endIcon={isLoading && state.submissionStatus === 'submitting' ? (
             <CircularProgress size={16} color="inherit" />

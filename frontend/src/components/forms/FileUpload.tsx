@@ -41,6 +41,7 @@ export interface FileUploadProps {
   // Controlled state for testing
   isUploading?: boolean;
   uploadProgress?: number;
+  customUploadHandler?: (file: File) => Promise<UploadedFile>;
 }
 
 const DEFAULT_MAX_SIZE = 5 * 1024 * 1024; // 5MB
@@ -57,6 +58,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   disabled = false,
   isUploading: externalIsUploading,
   uploadProgress: externalUploadProgress,
+  customUploadHandler,
 }) => {
   const { t } = useTranslation();
   const [isDragOver, setIsDragOver] = useState(false);
@@ -111,29 +113,38 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         });
       }, 200);
 
-      // TODO: Replace with actual API call
-      const response = await fetch('/api/files/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // Use custom upload handler if provided, otherwise default to fetch
+      let result;
+      if (customUploadHandler) {
+        result = await customUploadHandler(file);
+        // Normalize result if needed, but assuming handler returns correct shape or we map it
+        // The handler returns UploadedFile directly
+      } else {
+        // TODO: Replace with actual API call
+        const response = await fetch('/api/files/upload', {
+          method: 'POST',
+          body: formData,
+        });
 
-      clearInterval(progressInterval);
-      setInternalUploadProgress(100);
+        clearInterval(progressInterval);
+        setInternalUploadProgress(100);
 
-      if (!response.ok) {
-        throw new Error(t('fileUpload.errors.uploadFailed') as string);
+        if (!response.ok) {
+          throw new Error(t('fileUpload.errors.uploadFailed') as string);
+        }
+
+        const data = await response.json();
+        result = {
+          id: data.file_id,
+          originalName: file.name,
+          size: file.size,
+          mimeType: file.type,
+          uploadedAt: new Date(),
+          previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined,
+        } as UploadedFile;
       }
 
-      const result = await response.json();
-
-      const uploadedFileInfo: UploadedFile = {
-        id: result.file_id,
-        originalName: file.name,
-        size: file.size,
-        mimeType: file.type,
-        uploadedAt: new Date(),
-        previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined,
-      };
+      const uploadedFileInfo: UploadedFile = result;
 
       onUploadSuccess(uploadedFileInfo);
     } catch (err) {
@@ -141,10 +152,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       setError(errorMessage);
       onUploadError(errorMessage as string);
     } finally {
-      setInternalIsUploading(false);
       setInternalUploadProgress(0);
     }
-  }, [fileType, onUploadSuccess, onUploadError, t]);
+  }, [fileType, onUploadSuccess, onUploadError, t, customUploadHandler]);
 
   const handleFileSelect = useCallback(async (files: FileList | null) => {
     if (!files || files.length === 0) return;
