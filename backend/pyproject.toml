@@ -41,15 +41,14 @@ warn_unreachable = false
 strict_equality = false
 
 [[tool.mypy.overrides]]
-module = ["app.*", "alembic.*"]
-ignore_errors = true
-
-[[tool.mypy.overrides]]
 module = [
+    "app.*",
+    "alembic.*",
+    "alembic.env",
+    "tests.*",
     "pymysql.*",
     "python_magic.*",
-    "slowapi.*",
-    "tests.*"
+    "slowapi.*"
 ]
-ignore_missing_imports = true
 ignore_errors = true
+ignore_missing_imports = true
