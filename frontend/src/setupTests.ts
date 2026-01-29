@@ -305,14 +305,28 @@ jest.mock('react-i18next', () => ({
         'forms.fileUpload.passport.label': 'Passport',
         'forms.fileUpload.passport.description': 'Upload your passport',
         'pages.fileUpload.allFilesUploaded': 'All files uploaded',
-        'pages.fileUpload.proceedToReview': 'Proceed to Review',
-
-
-
+        'pages.fileUpload.proceedToReview': 'Proceed to Review', 'forms.personalInfo.validation.address.street.required': 'Street address is required',
+        'forms.personalInfo.validation.address.city.required': 'City is required',
+        'forms.personalInfo.validation.address.state.required': 'State is required',
+        'forms.personalInfo.validation.address.state.minLength': 'State must be at least 2 characters',
+        'forms.personalInfo.validation.address.state.maxLength': 'State must be less than 50 characters',
+        'forms.personalInfo.validation.address.zipCode.required': 'Zip code is required',
+        'forms.personalInfo.validation.address.zipCode.pattern': 'Invalid zip code format',
+        'forms.personalInfo.validation.address.country.required': 'Country is required',
 
       };
 
-      let text = translations[key] || key;
+      let text = translations[key];
+
+      // Fallback for keys that might be missing but are standard in components
+      if (!text) {
+        if (key.endsWith('.street')) return 'Street Address';
+        if (key.endsWith('.city')) return 'City';
+        if (key.endsWith('.state')) return 'State';
+        if (key.endsWith('.zipCode')) return 'Zip Code';
+        if (key.endsWith('.country')) return 'Country';
+        text = key;
+      }
 
       if (options) {
         Object.entries(options).forEach(([k, v]) => {

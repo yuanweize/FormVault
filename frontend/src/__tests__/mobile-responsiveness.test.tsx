@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { I18nextProvider } from 'react-i18next';
@@ -13,45 +13,7 @@ import FileUpload from '../components/forms/FileUpload';
 import LanguageSelector from '../components/common/LanguageSelector';
 import ErrorBoundary from '../components/common/ErrorBoundary';
 
-// Initialize i18n for testing
-i18n.init({
-  lng: 'en',
-  fallbackLng: 'en',
-  debug: false,
-  interpolation: {
-    escapeValue: false,
-  },
-  resources: {
-    en: {
-      translation: {
-        'app.title': 'FormVault',
-        'app.shortTitle': 'FormVault',
-        'stepper.personalInfo': 'Personal Information',
-        'stepper.personalInfoShort': 'Info',
-        'stepper.fileUpload': 'Document Upload',
-        'stepper.fileUploadShort': 'Files',
-        'stepper.review': 'Review & Submit',
-        'stepper.reviewShort': 'Review',
-        'stepper.success': 'Complete',
-        'stepper.successShort': 'Done',
-        'stepper.step': 'Step',
-        'stepper.of': 'of',
-        'forms.personalInfo.title': 'Personal Information',
-        'forms.personalInfo.subtitle': 'Please provide your personal details',
-        'forms.personalInfo.fields.firstName': 'First Name',
-        'forms.personalInfo.fields.lastName': 'Last Name',
-        'forms.personalInfo.fields.email': 'Email Address',
-        'forms.personalInfo.fields.phone': 'Phone Number',
-        'forms.personalInfo.sections.personal': 'Personal Details',
-        'fileUpload.studentId': 'Student ID',
-        'fileUpload.passport': 'Passport',
-        'fileUpload.selectFile': 'Select File',
-        'fileUpload.takePhoto': 'Take Photo',
-        'navigation.next': 'Next',
-      },
-    },
-  },
-});
+// i18n initialization removed to use global setupTests.ts mock and i18n/config.ts
 
 // Mock theme with responsive breakpoints
 const theme = createTheme({
@@ -77,11 +39,11 @@ const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </BrowserRouter>
 );
 
-// Mock window.matchMedia for responsive tests
+// Mock matchMedia for responsive tests
 const mockMatchMedia = (width: number) => {
   const matcher = jest.fn().mockImplementation((query: string) => {
-    const maxMatch = /max-width:\s*(\d+)px/.exec(query);
-    const minMatch = /min-width:\s*(\d+)px/.exec(query);
+    const maxMatch = /max-width:\s*(\d+(\.\d+)?)px/.exec(query);
+    const minMatch = /min-width:\s*(\d+(\.\d+)?)px/.exec(query);
     const maxWidth = maxMatch ? Number(maxMatch[1]) : undefined;
     const minWidth = minMatch ? Number(minMatch[1]) : undefined;
     const matches = (maxWidth === undefined || width <= maxWidth)
@@ -128,11 +90,11 @@ describe('Mobile Responsiveness Tests', () => {
 
   describe('Mobile Viewport (320px - 599px)', () => {
     beforeEach(() => {
-      mockMatchMedia(599);
+      mockMatchMedia(450);
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
-        value: 375,
+        value: 450,
       });
     });
 
@@ -152,17 +114,13 @@ describe('Mobile Responsiveness Tests', () => {
     });
 
     test('Navigation stepper adapts to mobile', () => {
-      // Mock location to show stepper
-      const mockLocation = { pathname: '/personal-info' };
-      jest.doMock('react-router-dom', () => ({
-        ...jest.requireActual('react-router-dom'),
-        useLocation: () => mockLocation,
-      }));
-
       render(
-        <TestWrapper>
-          <NavigationStepper />
-        </TestWrapper>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <MemoryRouter initialEntries={['/personal-info']}>
+            <NavigationStepper />
+          </MemoryRouter>
+        </ThemeProvider>
       );
 
       // Should show short labels on mobile

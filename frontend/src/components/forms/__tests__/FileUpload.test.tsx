@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { I18nextProvider } from 'react-i18next';
+// Using global setupTests.ts mock
 import FileUpload, { UploadedFile } from '../FileUpload';
 
 const theme = createTheme();
@@ -101,7 +102,7 @@ describe('FileUpload Component', () => {
         type: 'text/plain'
       });
 
-      const hiddenInput = screen.getByTestId('file-upload-input');
+      const hiddenInput = screen.getByTestId('student_id-upload-input');
       fireEvent.change(hiddenInput, { target: { files: [file] } });
 
       await waitFor(() => {
@@ -134,7 +135,7 @@ describe('FileUpload Component', () => {
         writable: false
       });
 
-      const hiddenInput = screen.getByTestId('file-upload-input');
+      const hiddenInput = screen.getByTestId('student_id-upload-input');
       fireEvent.change(hiddenInput, { target: { files: [file] } });
 
       await waitFor(() => {
@@ -167,7 +168,7 @@ describe('FileUpload Component', () => {
         size: 1024
       });
 
-      const hiddenInput = screen.getByTestId('file-upload-input');
+      const hiddenInput = screen.getByTestId('student_id-upload-input');
       fireEvent.change(hiddenInput, { target: { files: [file] } });
 
       // Should show uploading state
@@ -206,7 +207,7 @@ describe('FileUpload Component', () => {
         size: 1024
       });
 
-      const hiddenInput = screen.getByTestId('file-upload-input');
+      const hiddenInput = screen.getByTestId('student_id-upload-input');
       fireEvent.change(hiddenInput, { target: { files: [file] } });
 
       await waitFor(() => {
@@ -363,7 +364,7 @@ describe('FileUpload Component', () => {
         type: 'text/plain'
       });
 
-      const hiddenInput = screen.getByTestId('file-upload-input');
+      const hiddenInput = screen.getByTestId('student_id-upload-input');
       fireEvent.change(hiddenInput, { target: { files: [file] } });
 
       await waitFor(() => {

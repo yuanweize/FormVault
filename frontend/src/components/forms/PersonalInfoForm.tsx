@@ -100,7 +100,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         {t('forms.personalInfo.subtitle')}
       </Typography>
 
-      <Box component="form" onSubmit={handleSubmit(onFormSubmit)} noValidate>
+      <Box component="form" onSubmit={handleSubmit(onFormSubmit, (errors) => console.log('FORM ERRORS:', errors))} noValidate>
         <Grid container spacing={{ xs: 2, sm: 3 }}>
           {/* Personal Details Section */}
           <Grid item xs={12}>
@@ -121,18 +121,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               name="firstName"
               control={control}
               rules={{
-                required: t('forms.personalInfo.validation.firstName.required'),
+                required: t('forms.personalInfo.validation.firstName.required') as string,
                 minLength: {
                   value: 2,
-                  message: t('forms.personalInfo.validation.firstName.minLength'),
+                  message: t('forms.personalInfo.validation.firstName.minLength') as string,
                 },
                 maxLength: {
                   value: 50,
-                  message: t('forms.personalInfo.validation.firstName.maxLength'),
+                  message: t('forms.personalInfo.validation.firstName.maxLength') as string,
                 },
                 pattern: {
                   value: /^[a-zA-Z\s\-']+$/,
-                  message: t('forms.personalInfo.validation.firstName.pattern'),
+                  message: t('forms.personalInfo.validation.firstName.pattern') as string,
                 },
               }}
               render={({ field }) => (
@@ -144,7 +144,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   helperText={errors.firstName?.message}
                   disabled={isLoading}
                   inputProps={{
-                    'aria-label': t('forms.personalInfo.fields.firstName'),
+                    'data-testid': 'first-name-input',
+                    'aria-label': t('forms.personalInfo.fields.firstName') as string,
                     'aria-describedby': errors.firstName ? 'firstName-error' : undefined,
                   }}
                   FormHelperTextProps={{
@@ -162,18 +163,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               name="lastName"
               control={control}
               rules={{
-                required: t('forms.personalInfo.validation.lastName.required'),
+                required: t('forms.personalInfo.validation.lastName.required') as string,
                 minLength: {
                   value: 2,
-                  message: t('forms.personalInfo.validation.lastName.minLength'),
+                  message: t('forms.personalInfo.validation.lastName.minLength') as string,
                 },
                 maxLength: {
                   value: 50,
-                  message: t('forms.personalInfo.validation.lastName.maxLength'),
+                  message: t('forms.personalInfo.validation.lastName.maxLength') as string,
                 },
                 pattern: {
                   value: /^[a-zA-Z\s\-']+$/,
-                  message: t('forms.personalInfo.validation.lastName.pattern'),
+                  message: t('forms.personalInfo.validation.lastName.pattern') as string,
                 },
               }}
               render={({ field }) => (
@@ -185,7 +186,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   helperText={errors.lastName?.message}
                   disabled={isLoading}
                   inputProps={{
-                    'aria-label': t('forms.personalInfo.fields.lastName'),
+                    'data-testid': 'last-name-input',
+                    'aria-label': t('forms.personalInfo.fields.lastName') as string,
                     'aria-describedby': errors.lastName ? 'lastName-error' : undefined,
                   }}
                 />
@@ -198,10 +200,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               name="email"
               control={control}
               rules={{
-                required: t('forms.personalInfo.validation.email.required'),
+                required: t('forms.personalInfo.validation.email.required') as string,
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: t('forms.personalInfo.validation.email.pattern'),
+                  message: t('forms.personalInfo.validation.email.pattern') as string,
                 },
               }}
               render={({ field }) => (
@@ -214,7 +216,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   helperText={errors.email?.message}
                   disabled={isLoading}
                   inputProps={{
-                    'aria-label': t('forms.personalInfo.fields.email'),
+                    'data-testid': 'email-input',
+                    'aria-label': t('forms.personalInfo.fields.email') as string,
                     'aria-describedby': errors.email ? 'email-error' : undefined,
                   }}
                 />
@@ -227,10 +230,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               name="phone"
               control={control}
               rules={{
-                required: t('forms.personalInfo.validation.phone.required'),
+                required: t('forms.personalInfo.validation.phone.required') as string,
                 pattern: {
                   value: /^[\+]?[1-9][\d]{0,15}$/,
-                  message: t('forms.personalInfo.validation.phone.pattern'),
+                  message: t('forms.personalInfo.validation.phone.pattern') as string,
                 },
               }}
               render={({ field }) => (
@@ -243,7 +246,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   helperText={errors.phone?.message}
                   disabled={isLoading}
                   inputProps={{
-                    'aria-label': t('forms.personalInfo.fields.phone'),
+                    'data-testid': 'phone-input',
+                    'aria-label': t('forms.personalInfo.fields.phone') as string,
                     'aria-describedby': errors.phone ? 'phone-error' : undefined,
                   }}
                 />
@@ -259,22 +263,22 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               error={errors.dateOfBirth}
               disabled={isLoading}
               rules={{
-                required: t('forms.personalInfo.validation.dateOfBirth.required'),
+                required: t('forms.personalInfo.validation.dateOfBirth.required') as string,
                 validate: (value: string) => {
                   const date = new Date(value);
                   const today = new Date();
                   const age = today.getFullYear() - date.getFullYear();
 
                   if (date > today) {
-                    return t('forms.personalInfo.validation.dateOfBirth.future');
+                    return t('forms.personalInfo.validation.dateOfBirth.future') as string;
                   }
 
                   if (age < 18) {
-                    return t('forms.personalInfo.validation.dateOfBirth.minAge');
+                    return t('forms.personalInfo.validation.dateOfBirth.minAge') as string;
                   }
 
                   if (age > 120) {
-                    return t('forms.personalInfo.validation.dateOfBirth.maxAge');
+                    return t('forms.personalInfo.validation.dateOfBirth.maxAge') as string;
                   }
 
                   return true;
@@ -292,7 +296,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 name="insuranceType"
                 control={control}
                 rules={{
-                  required: t('forms.personalInfo.validation.insuranceType.required'),
+                  required: t('forms.personalInfo.validation.insuranceType.required') as string,
                 }}
                 render={({ field }) => (
                   <Select

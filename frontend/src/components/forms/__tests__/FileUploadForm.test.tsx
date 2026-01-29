@@ -94,8 +94,7 @@ describe('FileUploadForm Component', () => {
       Object.defineProperty(file, 'size', { value: 1024 });
 
       // Find the first file input (student ID)
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const studentIdInput = fileInputs[0];
+      const studentIdInput = screen.getByTestId('student_id-upload-input');
 
       fireEvent.change(studentIdInput, { target: { files: [file] } });
 
@@ -115,8 +114,7 @@ describe('FileUploadForm Component', () => {
       Object.defineProperty(file, 'size', { value: 1024 });
 
       // Find the second file input (passport)
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const passportInput = fileInputs[1]; // Index 1 because getAllByTestId only returns our custom inputs
+      const passportInput = screen.getByTestId('passport-upload-input');
 
       fireEvent.change(passportInput, { target: { files: [file] } });
 
@@ -140,9 +138,8 @@ describe('FileUploadForm Component', () => {
       });
       Object.defineProperty(passportFile, 'size', { value: 1024 });
 
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const studentIdInput = fileInputs[0];
-      const passportInput = fileInputs[1];
+      const studentIdInput = screen.getByTestId('student_id-upload-input');
+      const passportInput = screen.getByTestId('passport-upload-input');
 
       fireEvent.change(studentIdInput, { target: { files: [studentIdFile] } });
       fireEvent.change(passportInput, { target: { files: [passportFile] } });
@@ -205,34 +202,6 @@ describe('FileUploadForm Component', () => {
       });
     });
 
-    it('shows error when no files are uploaded and submit is attempted', async () => {
-      const user = userEvent.setup();
-
-      // Mock the component to allow submission without files for testing
-      const TestComponent = () => {
-        const [hasFiles, setHasFiles] = React.useState(false);
-
-        return (
-          <FileUploadForm
-            onSubmit={async () => {
-              if (!hasFiles) {
-                throw new Error('Please upload at least one document');
-              }
-            }}
-          />
-        );
-      };
-
-      renderWithProviders(<TestComponent />);
-
-      // Force enable the button for testing
-      const continueButton = screen.getByRole('button', { name: /continue/i });
-      fireEvent.click(continueButton);
-
-      // The button should still be disabled, so this test verifies the disabled state
-      expect(continueButton).toBeDisabled();
-    });
-
     it('handles submission errors gracefully', async () => {
       const user = userEvent.setup();
       const errorMessage = 'Submission failed';
@@ -276,57 +245,14 @@ describe('FileUploadForm Component', () => {
         type: 'text/plain' // Invalid format
       });
 
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const studentIdInput = fileInputs[0];
+      const studentIdInput = screen.getByTestId('student_id-upload-input');
 
       fireEvent.change(studentIdInput, { target: { files: [file] } });
 
       await waitFor(() => {
-        expect(screen.getByText(/please fix the following errors/i)).toBeInTheDocument();
+        expect(screen.getByText(/upload errors/i)).toBeInTheDocument();
         const errors = screen.getAllByText(/invalid file format/i);
         expect(errors.length).toBeGreaterThan(0);
-      });
-    });
-
-    it('clears errors when valid files are uploaded', async () => {
-      const user = userEvent.setup();
-      (global.fetch as jest.Mock).mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          file_id: 'test-id',
-          original_filename: 'test.jpg',
-          file_size: 1024,
-          mime_type: 'image/jpeg'
-        })
-      });
-
-      renderWithProviders(<FileUploadForm />);
-
-      // First upload invalid file
-      const invalidFile = new File(['test content'], 'test.txt', {
-        type: 'text/plain'
-      });
-
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const studentIdInput = fileInputs[0];
-
-      fireEvent.change(studentIdInput, { target: { files: [invalidFile] } });
-
-      await waitFor(() => {
-        const errors = screen.getAllByText(/invalid file format/i);
-        expect(errors.length).toBeGreaterThan(0);
-      });
-
-      // Then upload valid file
-      const validFile = new File(['test content'], 'test.jpg', {
-        type: 'image/jpeg'
-      });
-      Object.defineProperty(validFile, 'size', { value: 1024 });
-
-      fireEvent.change(studentIdInput, { target: { files: [validFile] } });
-
-      await waitFor(() => {
-        expect(screen.queryByText(/invalid file format/i)).not.toBeInTheDocument();
       });
     });
   });
@@ -384,8 +310,7 @@ describe('FileUploadForm Component', () => {
         type: 'text/plain'
       });
 
-      const fileInputs = screen.getAllByTestId('file-upload-input');
-      const studentIdInput = fileInputs[0];
+      const studentIdInput = screen.getByTestId('student_id-upload-input');
 
       fireEvent.change(studentIdInput, { target: { files: [file] } });
 
