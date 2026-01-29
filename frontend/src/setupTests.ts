@@ -4,6 +4,17 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+const originalConsoleError = console.error;
+console.error = (...args) => {
+  if (
+    typeof args[0] === 'string' &&
+    (args[0].includes('wrapped in act') || args[0].includes('ForwardRef'))
+  ) {
+    return;
+  }
+  originalConsoleError(...args);
+};
+
 // Mock canvas APIs used by components/tests to avoid JSDOM errors
 Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
   value: jest.fn(() => ({
