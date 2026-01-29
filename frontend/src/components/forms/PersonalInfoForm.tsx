@@ -100,7 +100,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         {t('forms.personalInfo.subtitle')}
       </Typography>
 
-      <Box component="form" onSubmit={handleSubmit(onFormSubmit, (errors) => console.log('FORM ERRORS:', errors))} noValidate>
+      <Box component="form" onSubmit={handleSubmit(onFormSubmit)} noValidate>
         <Grid container spacing={{ xs: 2, sm: 3 }}>
           {/* Personal Details Section */}
           <Grid item xs={12}>

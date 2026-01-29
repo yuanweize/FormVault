@@ -1,50 +1,50 @@
 # Core FastAPI and dependencies
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
 
 # Database
-sqlalchemy==2.0.23
-alembic==1.13.1
-pymysql==1.1.1
-cryptography==44.0.1
+sqlalchemy>=2.0.23
+alembic>=1.13.1
+pymysql>=1.1.1
+cryptography>=44.0.1
 
 # Security
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-python-multipart==0.0.22
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.22
 
 # Email
-aiosmtplib==3.0.1
-jinja2==3.1.6
+aiosmtplib>=3.0.1
+jinja2>=3.1.6
 
 # Performance and monitoring
-uvloop==0.19.0
-httptools==0.6.1
-redis==5.0.1
-prometheus-client==0.19.0
+uvloop>=0.19.0
+httptools>=0.6.1
+redis>=5.0.1
+prometheus-client>=0.19.0
 
 # File handling
-python-magic==0.4.27
-pillow==10.3.0
+python-magic>=0.4.27
+pillow>=10.3.0
 
 # Utilities
-python-dotenv==1.0.0
-click==8.1.7
+python-dotenv>=1.0.0
+click>=8.1.7
 
 # Testing
-pytest==7.4.3
-pytest-asyncio==0.21.1
-pytest-cov==4.1.0
-httpx==0.25.1
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
+pytest-cov>=4.1.0
+httpx>=0.25.1
 
 # Linting and formatting
-black==23.11.0
-isort==5.12.0
-flake8==6.1.0
-mypy==1.7.0
+black>=23.11.0
+isort>=5.12.0
+flake8>=6.1.0
+mypy>=1.7.0
 
 # Security scanning
-safety==2.3.5
-bandit==1.7.5
+safety>=2.3.5
+bandit>=1.7.5
