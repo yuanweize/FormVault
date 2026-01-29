@@ -269,6 +269,8 @@ jest.mock('react-i18next', () => ({
         'forms.personalInfo.validation.dateOfBirth.minAge': 'You must be at least 18 years old',
         'forms.personalInfo.validation.dateOfBirth.maxAge': 'Age cannot exceed 120 years',
         'forms.personalInfo.validation.insuranceType.required': 'Insurance type is required',
+        'forms.personalInfo.validation.address.zipCode.required': 'Zip Code is required',
+        'forms.personalInfo.validation.address.country.required': 'Country is required',
 
         'forms.personalInfo.insuranceTypes.health': 'Health Insurance',
         'forms.personalInfo.insuranceTypes.auto': 'Auto Insurance',
@@ -305,14 +307,9 @@ jest.mock('react-i18next', () => ({
         'forms.fileUpload.passport.label': 'Passport',
         'forms.fileUpload.passport.description': 'Upload your passport',
         'pages.fileUpload.allFilesUploaded': 'All files uploaded',
-        'pages.fileUpload.proceedToReview': 'Proceed to Review', 'forms.personalInfo.validation.address.street.required': 'Street address is required',
-        'forms.personalInfo.validation.address.city.required': 'City is required',
-        'forms.personalInfo.validation.address.state.required': 'State is required',
-        'forms.personalInfo.validation.address.state.minLength': 'State must be at least 2 characters',
-        'forms.personalInfo.validation.address.state.maxLength': 'State must be less than 50 characters',
-        'forms.personalInfo.validation.address.zipCode.required': 'Zip code is required',
-        'forms.personalInfo.validation.address.zipCode.pattern': 'Invalid zip code format',
-        'forms.personalInfo.validation.address.country.required': 'Country is required',
+        'pages.fileUpload.next': 'Next',
+        'pages.fileUpload.back': 'Back',
+        'pages.fileUpload.submit': 'Submit',
 
       };
 

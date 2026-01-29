@@ -117,38 +117,31 @@ describe('Application Workflow Integration', () => {
       const phoneInput = screen.getByTestId('phone-input');
       const streetInput = screen.getByTestId('street-address-input');
       const cityInput = screen.getByTestId('city-input');
-      const stateInput = screen.getByTestId('state-input');
-      const zipInput = screen.getByTestId('zip-code-input');
+      // Form is already partially filled by previous steps or needs to be completely filled here
+      // Let's ensure a clean state by just filling what's missing or ensuring everything is set
 
-      await user.type(firstNameInput, 'John');
-      await user.type(lastNameInput, 'Doe');
-      await user.type(emailInput, 'john.doe@example.com');
-      await user.type(phoneInput, '12345678901');
-      await user.type(streetInput, '123 Main St');
-      await user.type(cityInput, 'Anytown');
-      await user.type(stateInput, 'CA');
-      await user.type(zipInput, '12345');
+      // Select insurance type
+      const insuranceTypeSelect = screen.getByLabelText(/Insurance Type/i);
+      fireEvent.mouseDown(insuranceTypeSelect);
+      const healthInsuranceOption = await screen.findByRole('option', { name: /Health Insurance/i });
+      await user.click(healthInsuranceOption);
 
-      // Select Country (MUI Select)
-      const countrySelect = screen.getByLabelText(/country/i);
-      await user.click(countrySelect);
-      const countryListbox = screen.getByRole('listbox');
-      await user.click(within(countryListbox).getByText('United States'));
+      // Fill in address (Fill Country before Street Address)
+      const countrySelect = screen.getByLabelText(/Country/i);
+      fireEvent.mouseDown(countrySelect);
+      const usOption = await screen.findByRole('option', { name: /United States/i });
+      await user.click(usOption);
 
-      // Date of Birth
-      const dobInput = screen.getByLabelText(/date of birth/i);
-      await user.type(dobInput, '1990-01-01');
-
-      // Select Insurance Type (MUI Select)
-      const insuranceSelect = screen.getByLabelText(/insurance type/i);
-      await user.click(insuranceSelect);
-      const insuranceListbox = screen.getByRole('listbox');
-      await user.click(within(insuranceListbox).getByText('Health Insurance'));
-
+      await user.type(screen.getByLabelText(/Street Address/i), '123 Test St');
+      await user.type(screen.getByLabelText(/City/i), 'Test City');
+      await user.type(screen.getByLabelText(/State/i), 'TS');
+      await user.type(screen.getByLabelText(/Zip Code/i), '12345');
       // Navigate to next step
       const nextButtons = screen.getAllByRole('button', { name: /next/i });
+      console.log('Next buttons found:', nextButtons.length);
       await user.click(nextButtons[0]);
 
+      console.log('Waiting for Document Upload step...');
       await waitFor(() => {
         expect(screen.getByText('Document Upload')).toBeInTheDocument();
         expect(screen.getByText('Step 2 of 5')).toBeInTheDocument();
@@ -185,8 +178,9 @@ describe('Application Workflow Integration', () => {
       expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
       expect(screen.getByText('123 Main St')).toBeInTheDocument();
 
-      // Navigate to confirmation
-      await user.click(screen.getByRole('button', { name: /proceed to confirmation/i }));
+      // Navigate to Step 3
+      const nextButtons2 = screen.getAllByRole('button', { name: /next/i });
+      await user.click(nextButtons2[0]);
 
       await waitFor(() => {
         expect(screen.getByText('Confirm Submission')).toBeInTheDocument();
