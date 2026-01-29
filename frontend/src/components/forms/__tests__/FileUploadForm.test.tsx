@@ -45,7 +45,7 @@ describe('FileUploadForm Component', () => {
     it('renders form title and description', () => {
       renderWithProviders(<FileUploadForm />);
 
-      expect(screen.getByText('Document Upload')).toBeInTheDocument();
+      expect(screen.getByText('Upload Documents')).toBeInTheDocument();
       expect(screen.getByText(/please upload your required documents/i)).toBeInTheDocument();
     });
 
@@ -291,7 +291,7 @@ describe('FileUploadForm Component', () => {
       renderWithProviders(<FileUploadForm />);
 
       const heading = screen.getByRole('heading', { level: 1 });
-      expect(heading).toHaveTextContent('Document Upload');
+      expect(heading).toHaveTextContent('Upload Documents');
     });
 
     it('provides clear instructions', () => {

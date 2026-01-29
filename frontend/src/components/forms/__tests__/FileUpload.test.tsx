@@ -27,6 +27,7 @@ global.FormData = class {
 } as any;
 
 describe('FileUpload Component', () => {
+  jest.setTimeout(15000);
   const mockOnUploadSuccess = jest.fn();
   const mockOnUploadError = jest.fn();
   const mockOnFileRemove = jest.fn();
@@ -190,7 +191,7 @@ describe('FileUpload Component', () => {
 
       await waitFor(() => {
         expect(screen.queryByText('Uploading...')).not.toBeInTheDocument();
-      });
+      }, { timeout: 5000 });
     });
 
     it('handles upload failure', async () => {

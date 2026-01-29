@@ -153,6 +153,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       onUploadError(errorMessage as string);
     } finally {
       setInternalUploadProgress(0);
+      setInternalIsUploading(false);
     }
   }, [fileType, onUploadSuccess, onUploadError, t, customUploadHandler]);
 

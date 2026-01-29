@@ -169,7 +169,7 @@ interface WorkflowContextType {
   removeUploadedFile: (type: 'studentId' | 'passport') => void;
 
   // Submission methods
-  saveAsDraft: () => Promise<void>;
+  saveAsDraft: () => Promise<string | undefined>;
   submitApplication: () => Promise<void>;
 
   // Utility methods
@@ -298,7 +298,7 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
   }, []);
 
   // Submission methods
-  const saveAsDraft = useCallback(async () => {
+  const saveAsDraft = useCallback(async (): Promise<string | undefined> => {
     try {
       dispatch({ type: 'SET_SUBMISSION_STATUS', payload: 'saving' });
       dispatch({ type: 'CLEAR_ERROR' });
@@ -331,9 +331,11 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
       }
 
       dispatch({ type: 'SET_SUBMISSION_STATUS', payload: 'idle' });
+      return result?.id || state.applicationId;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to save application';
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
+      return undefined;
     }
   }, [state, applicationWorkflow]);
 
@@ -342,18 +344,20 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
       dispatch({ type: 'SET_SUBMISSION_STATUS', payload: 'submitting' });
       dispatch({ type: 'CLEAR_ERROR' });
 
+      let currentAppId = state.applicationId;
+
       // First save as draft if needed
-      if (state.isDirty || !state.applicationId) {
-        await saveAsDraft();
+      if (state.isDirty || !currentAppId) {
+        currentAppId = await saveAsDraft();
       }
 
-      if (!state.applicationId) {
+      if (!currentAppId) {
         throw new Error('No application ID available for submission');
       }
 
       // Submit the application
       await applicationWorkflow.submitApplication.execute({
-        id: state.applicationId,
+        id: currentAppId,
         data: { confirm_submission: true },
       });
 
