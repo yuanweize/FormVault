@@ -289,18 +289,6 @@ jest.mock('react-i18next', () => ({
         'pages.success.subtitle': 'Your application has been successfully submitted.',
         'pages.success.referenceNumberLabel': 'Reference Number:',
         'pages.success.emailConfirmation': 'We have sent a confirmation email to your address.',
-
-        // Workflow steps
-        'workflow.steps.personalInfo.label': 'Personal Information',
-        'workflow.steps.personalInfo.description': 'Enter your personal details',
-        'workflow.steps.fileUpload.label': 'Document Upload',
-        'workflow.steps.fileUpload.description': 'Upload required documents',
-        'workflow.steps.review.label': 'Review Your Application',
-        'workflow.steps.review.description': 'Review your information',
-        'workflow.steps.confirmation.label': 'Confirmation',
-        'workflow.steps.confirmation.description': 'Confirm submission',
-        'workflow.steps.success.label': 'Success',
-        'workflow.steps.success.description': 'Application submitted',
         'pages.success.whatNext': 'What happens next?',
         'pages.success.returnToHome': 'Return to Home',
       };
