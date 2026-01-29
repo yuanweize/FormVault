@@ -18,7 +18,7 @@ def init_test_db():
     if not database_url:
         print("ERROR: DATABASE_URL environment variable not set")
         sys.exit(1)
-    
+
     # Create engine using the test database URL
     engine = create_engine(database_url)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
