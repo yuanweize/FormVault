@@ -15,11 +15,11 @@ from app.models import *  # Import all models
 def init_test_db():
     """Initialize the test database with required tables."""
     settings = get_settings()
-    
+
     # Use the test database URL
     engine = create_engine(settings.DATABASE_URL)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    
+
     # Create all tables
     print("Creating database tables...")
     Base.metadata.create_all(bind=engine)
