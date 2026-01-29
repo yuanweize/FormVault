@@ -252,12 +252,10 @@ def cleanup_old_audit_logs(days: int = 90) -> int:
     """
     try:
         with get_db_session() as db:
-            query = text(
-                """
+            query = text("""
                 DELETE FROM audit_logs 
                 WHERE created_at < DATE_SUB(NOW(), INTERVAL :days DAY)
-            """
-            )
+            """)
             result = db.execute(query, {"days": days})
             deleted_count = result.rowcount
 
