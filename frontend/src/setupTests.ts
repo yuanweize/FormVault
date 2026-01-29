@@ -285,7 +285,7 @@ jest.mock('react-i18next', () => ({
         'pages.confirmation.sections.applicationDetails': 'Application Details',
         'pages.confirmation.referenceNumber': 'Reference Number',
         'pages.confirmation.submissionNotice': 'By submitting this application, you confirm that the information provided is accurate.',
-        'pages.success.title': 'Application Submitted!',
+
         'pages.success.subtitle': 'Your application has been successfully submitted.',
         'pages.success.referenceNumberLabel': 'Reference Number:',
         'pages.success.emailConfirmation': 'We have sent a confirmation email to your address.',
