@@ -8,6 +8,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ApiError } from '../types';
 
+// Augment Axios types to include metadata
+declare module 'axios' {
+  export interface InternalAxiosRequestConfig {
+    metadata?: { startTime: number };
+  }
+}
+
 // API Configuration
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
 const API_VERSION = 'v1';
@@ -55,7 +62,7 @@ const defaultRetryCondition = (error: AxiosError): boolean => {
 /**
  * Sleep utility for retry delays
  */
-const sleep = (ms: number): Promise<void> => 
+const sleep = (ms: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 /**
@@ -83,12 +90,12 @@ const createApiClient = (): AxiosInstance => {
     (config) => {
       // Add timestamp to requests for debugging
       config.metadata = { startTime: Date.now() };
-      
+
       // Log request in development
       if (process.env.NODE_ENV === 'development') {
         console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`);
       }
-      
+
       return config;
     },
     (error) => {
@@ -102,18 +109,18 @@ const createApiClient = (): AxiosInstance => {
     (response: AxiosResponse) => {
       // Calculate request duration
       const duration = Date.now() - (response.config.metadata?.startTime || 0);
-      
+
       // Log response in development
       if (process.env.NODE_ENV === 'development') {
         console.log(`✅ API Response: ${response.status} ${response.config.url} (${duration}ms)`);
       }
-      
+
       return response;
     },
     (error: AxiosError) => {
       // Calculate request duration if available
-      const duration = error.config?.metadata?.startTime 
-        ? Date.now() - error.config.metadata.startTime 
+      const duration = error.config?.metadata?.startTime
+        ? Date.now() - error.config.metadata.startTime
         : 0;
 
       // Log error in development
@@ -122,8 +129,8 @@ const createApiClient = (): AxiosInstance => {
       }
 
       // Transform API errors to our custom format
-      if (error.response?.data?.error) {
-        const apiError = error.response.data.error as ApiError;
+      if (error.response && (error.response.data as any)?.error) {
+        const apiError = (error.response.data as any).error as ApiError;
         throw new ApiException(apiError, error.response.status);
       }
 
@@ -170,7 +177,7 @@ const createApiClient = (): AxiosInstance => {
  * Add retry functionality to an Axios instance
  */
 const addRetryInterceptor = (
-  client: AxiosInstance, 
+  client: AxiosInstance,
   config: RetryConfig = {
     retries: MAX_RETRIES,
     retryDelay: RETRY_DELAY,
@@ -182,26 +189,26 @@ const addRetryInterceptor = (
     async (error: AxiosError) => {
       const { retries, retryDelay, retryCondition } = config;
       const shouldRetry = retryCondition ? retryCondition(error) : defaultRetryCondition(error);
-      
+
       // Get current retry count
       const currentRetry = (error.config as any)?.__retryCount || 0;
-      
+
       if (shouldRetry && currentRetry < retries) {
         // Increment retry count
         (error.config as any).__retryCount = currentRetry + 1;
-        
+
         // Calculate delay with exponential backoff
         const delay = calculateRetryDelay(currentRetry + 1, retryDelay);
-        
+
         console.log(`🔄 Retrying request (${currentRetry + 1}/${retries}) after ${delay}ms: ${error.config?.url}`);
-        
+
         // Wait before retrying
         await sleep(delay);
-        
+
         // Retry the request
         return client.request(error.config!);
       }
-      
+
       // No more retries, throw the error
       throw error;
     }
@@ -230,11 +237,11 @@ export const createFileUploadClient = (): AxiosInstance => {
   client.interceptors.request.use(
     (config) => {
       config.metadata = { startTime: Date.now() };
-      
+
       if (process.env.NODE_ENV === 'development') {
         console.log(`📤 File Upload: ${config.method?.toUpperCase()} ${config.url}`);
       }
-      
+
       return config;
     },
     (error) => Promise.reject(error)
@@ -243,11 +250,11 @@ export const createFileUploadClient = (): AxiosInstance => {
   client.interceptors.response.use(
     (response: AxiosResponse) => {
       const duration = Date.now() - (response.config.metadata?.startTime || 0);
-      
+
       if (process.env.NODE_ENV === 'development') {
         console.log(`✅ File Upload Complete: ${response.status} (${duration}ms)`);
       }
-      
+
       return response;
     },
     (error: AxiosError) => {
@@ -256,8 +263,8 @@ export const createFileUploadClient = (): AxiosInstance => {
       }
 
       // Transform errors similar to main client
-      if (error.response?.data?.error) {
-        const apiError = error.response.data.error as ApiError;
+      if (error.response && (error.response.data as any)?.error) {
+        const apiError = (error.response.data as any).error as ApiError;
         throw new ApiException(apiError, error.response.status);
       }
 
@@ -303,11 +310,11 @@ export const getErrorMessage = (error: unknown): string => {
   if (error instanceof ApiException) {
     return error.message;
   }
-  
+
   if (error instanceof Error) {
     return error.message;
   }
-  
+
   return 'An unexpected error occurred';
 };
 

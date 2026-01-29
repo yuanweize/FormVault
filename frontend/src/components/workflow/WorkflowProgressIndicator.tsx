@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Box, Stepper, Step, StepLabel, StepContent, Typography, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Stepper, Step, StepLabel, StepContent, Typography, useTheme, useMediaQuery, SxProps, Theme } from '@mui/material';
 import { Check, Person, CloudUpload, Visibility, Send, CheckCircle } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useApplicationWorkflowContext, WorkflowStep } from '../../contexts/ApplicationWorkflowContext';
@@ -15,7 +15,7 @@ import { useApplicationWorkflowContext, WorkflowStep } from '../../contexts/Appl
 const STEP_CONFIG: Record<WorkflowStep, {
   label: string;
   description: string;
-  icon: React.ComponentType;
+  icon: React.ElementType;
 }> = {
   'personal-info': {
     label: 'workflow.steps.personalInfo.label',
@@ -50,6 +50,7 @@ interface WorkflowProgressIndicatorProps {
   variant?: 'horizontal' | 'vertical';
   showDescriptions?: boolean;
   className?: string;
+  sx?: SxProps<Theme>;
 }
 
 export function WorkflowProgressIndicator({

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { PersonalInfo, InsuranceType } from '../../types';
+import { PersonalInfo, InsuranceType, Address } from '../../types';
 import { AddressField } from './fields/AddressField';
 import { DateField } from './fields/DateField';
 
@@ -264,7 +264,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               disabled={isLoading}
               rules={{
                 required: t('forms.personalInfo.validation.dateOfBirth.required') as string,
-                validate: (value: string) => {
+                validate: (value: string | Address) => {
+                  if (typeof value !== 'string') return true;
                   const date = new Date(value);
                   const today = new Date();
                   const age = today.getFullYear() - date.getFullYear();
@@ -302,10 +303,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   <Select
                     {...field}
                     labelId="insurance-type-label"
-                    label={t('forms.personalInfo.fields.insuranceType')}
+                    label={t('forms.personalInfo.fields.insuranceType') as string}
                     data-testid="insurance-type-select"
                     inputProps={{
-                      'aria-label': t('forms.personalInfo.fields.insuranceType'),
+                      'aria-label': t('forms.personalInfo.fields.insuranceType') as string,
                       'aria-describedby': errors.insuranceType ? 'insuranceType-error' : undefined,
                     }}
                   >
@@ -340,7 +341,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             </Typography>
             <AddressField
               control={control}
-              errors={errors.address}
+              errors={errors.address as any}
               disabled={isLoading}
             />
           </Grid>

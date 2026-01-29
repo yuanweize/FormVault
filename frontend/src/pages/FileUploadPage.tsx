@@ -149,7 +149,7 @@ export function FileUploadPage() {
         <Box sx={{ mt: 4 }}>
           <WorkflowNavigation
             onNext={handleNext}
-            nextLabel={hasRequiredFiles ? t('pages.fileUpload.proceedToReview') : undefined}
+            nextLabel={hasRequiredFiles ? t('pages.fileUpload.proceedToReview') as string : undefined}
           />
         </Box>
       </Box>

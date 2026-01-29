@@ -396,7 +396,7 @@ export function ReviewPage() {
       <Box sx={{ mt: 4 }}>
         <WorkflowNavigation
           onNext={handleNext}
-          nextLabel={canProceed ? t('pages.review.proceedToConfirmation') : undefined}
+          nextLabel={canProceed ? t('pages.review.proceedToConfirmation') as string : undefined}
         />
       </Box>
     </Box>
