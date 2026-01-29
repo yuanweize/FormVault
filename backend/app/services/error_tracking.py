@@ -6,8 +6,8 @@ import traceback
 import smtplib
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from sqlalchemy.orm import Session
 import structlog
 
@@ -257,12 +257,12 @@ FormVault Monitoring System
     def _send_email(self, to_email: str, subject: str, body: str):
         """Send email notification."""
         try:
-            msg = MimeMultipart()
+            msg = MIMEMultipart()
             msg["From"] = settings.FROM_EMAIL
             msg["To"] = to_email
             msg["Subject"] = subject
 
-            msg.attach(MimeText(body, "plain"))
+            msg.attach(MIMEText(body, "plain"))
 
             # Connect to SMTP server and send email
             with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
