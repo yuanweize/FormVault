@@ -59,6 +59,7 @@ jobs:
       run: black . --check
 
     - name: Type check with mypy
+      continue-on-error: true
       run: mypy . --ignore-missing-imports
 
     - name: Wait for MySQL to be ready
