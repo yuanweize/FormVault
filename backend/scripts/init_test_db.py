@@ -8,7 +8,7 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.core.config import get_settings
-from app.database.session import Base
+from app.database import Base
 from app.models import *  # Import all models
 
 
