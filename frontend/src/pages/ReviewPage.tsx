@@ -44,20 +44,20 @@ import { fileService } from '../services/fileService';
 
 export function ReviewPage() {
   const { t } = useTranslation();
-  const { 
-    state, 
-    goToStep, 
-    completeStep, 
+  const {
+    state,
+    goToStep,
+    completeStep,
     removeUploadedFile,
-    saveAsDraft 
+    saveAsDraft
   } = useApplicationWorkflowContext();
 
   const { personalInfo, uploadedFiles } = state;
 
   // Validation checks
-  const hasRequiredPersonalInfo = personalInfo.firstName && 
-    personalInfo.lastName && 
-    personalInfo.email && 
+  const hasRequiredPersonalInfo = personalInfo.firstName &&
+    personalInfo.lastName &&
+    personalInfo.email &&
     personalInfo.phone &&
     personalInfo.address?.street &&
     personalInfo.address?.city &&
@@ -73,7 +73,7 @@ export function ReviewPage() {
     if (!canProceed) {
       return false;
     }
-    
+
     // Save as draft before proceeding
     await saveAsDraft();
     completeStep('review');
@@ -109,7 +109,7 @@ export function ReviewPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }} data-testid="review-page">
       {/* Progress Indicator */}
       <WorkflowProgressIndicator sx={{ mb: 4 }} />
 
@@ -173,7 +173,7 @@ export function ReviewPage() {
                 </Button>
               </Box>
               <Divider sx={{ mb: 2 }} />
-              
+
               {hasRequiredPersonalInfo ? (
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
@@ -184,7 +184,7 @@ export function ReviewPage() {
                       <Typography variant="body1">{personalInfo.firstName}</Typography>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <Box sx={{ mb: 2 }}>
                       <Typography variant="body2" color="text.secondary">
@@ -193,7 +193,7 @@ export function ReviewPage() {
                       <Typography variant="body1">{personalInfo.lastName}</Typography>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                       <Email sx={{ mr: 1, fontSize: 16, color: 'text.secondary' }} />
@@ -205,7 +205,7 @@ export function ReviewPage() {
                       </Box>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                       <Phone sx={{ mr: 1, fontSize: 16, color: 'text.secondary' }} />
@@ -217,7 +217,7 @@ export function ReviewPage() {
                       </Box>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12}>
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'flex-start' }}>
                       <LocationOn sx={{ mr: 1, fontSize: 16, color: 'text.secondary', mt: 0.5 }} />
@@ -233,7 +233,7 @@ export function ReviewPage() {
                       </Box>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                       <CalendarToday sx={{ mr: 1, fontSize: 16, color: 'text.secondary' }} />
@@ -247,7 +247,7 @@ export function ReviewPage() {
                       </Box>
                     </Box>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                       <HealthAndSafety sx={{ mr: 1, fontSize: 16, color: 'text.secondary' }} />
@@ -296,7 +296,7 @@ export function ReviewPage() {
                 </Button>
               </Box>
               <Divider sx={{ mb: 2 }} />
-              
+
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Paper variant="outlined" sx={{ p: 2 }}>
@@ -337,7 +337,7 @@ export function ReviewPage() {
                     )}
                   </Paper>
                 </Grid>
-                
+
                 <Grid item xs={12} sm={6}>
                   <Paper variant="outlined" sx={{ p: 2 }}>
                     <Typography variant="body2" color="text.secondary" gutterBottom>

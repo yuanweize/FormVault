@@ -158,11 +158,11 @@ export function WorkflowProgressIndicator({
                   sx={{
                     cursor: isClickable ? 'pointer' : 'default',
                     '& .MuiStepLabel-label': {
-                      color: isCurrent 
-                        ? theme.palette.primary.main 
-                        : isCompleted 
-                        ? theme.palette.success.main 
-                        : theme.palette.text.secondary,
+                      color: isCurrent
+                        ? theme.palette.primary.main
+                        : isCompleted
+                          ? theme.palette.success.main
+                          : theme.palette.text.secondary,
                       fontWeight: isCurrent ? 600 : 400,
                     },
                   }}
@@ -201,11 +201,11 @@ export function WorkflowProgressIndicator({
                 sx={{
                   cursor: isClickable ? 'pointer' : 'default',
                   '& .MuiStepLabel-label': {
-                    color: isCurrent 
-                      ? theme.palette.primary.main 
-                      : isCompleted 
-                      ? theme.palette.success.main 
-                      : theme.palette.text.secondary,
+                    color: isCurrent
+                      ? theme.palette.primary.main
+                      : isCompleted
+                        ? theme.palette.success.main
+                        : theme.palette.text.secondary,
                     fontWeight: isCurrent ? 600 : 400,
                     fontSize: isMobile ? '0.75rem' : '0.875rem',
                   },
@@ -223,7 +223,7 @@ export function WorkflowProgressIndicator({
           );
         })}
       </Stepper>
-      
+
       {/* Progress bar */}
       <Box sx={{ mt: 2, mb: 1 }}>
         <Box
@@ -245,9 +245,9 @@ export function WorkflowProgressIndicator({
           />
         </Box>
         <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-          {t('workflow.progress', { 
-            current: currentStepIndex + 1, 
-            total: STEP_ORDER.length 
+          {t('workflow.progress', {
+            current: currentStepIndex + 1,
+            total: STEP_ORDER.length
           })}
         </Typography>
       </Box>
