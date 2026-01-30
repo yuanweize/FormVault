@@ -131,7 +131,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   message: t('forms.personalInfo.validation.firstName.maxLength') as string,
                 },
                 pattern: {
-                  value: /^[a-zA-Z\s\-']+$/,
+                  value: /^[\p{L}\s\-']+$/u,
                   message: t('forms.personalInfo.validation.firstName.pattern') as string,
                 },
               }}
@@ -173,7 +173,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   message: t('forms.personalInfo.validation.lastName.maxLength') as string,
                 },
                 pattern: {
-                  value: /^[a-zA-Z\s\-']+$/,
+                  value: /^[\p{L}\s\-']+$/u,
                   message: t('forms.personalInfo.validation.lastName.pattern') as string,
                 },
               }}

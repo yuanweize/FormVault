@@ -3,7 +3,6 @@ import { Box, Typography, Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import PersonalInfoForm from '../components/forms/PersonalInfoForm';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
-import { WorkflowNavigation } from '../components/workflow/WorkflowNavigation';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { PersonalInfo } from '../types';
 
@@ -38,11 +37,6 @@ const PersonalInfoPage: React.FC = () => {
     setShouldAdvance(true);
   };
 
-  const handleNext = async (): Promise<boolean> => {
-    // This will be handled by the form submission
-    return true;
-  };
-
   return (
     <Container maxWidth="md">
       <Box sx={{ py: 4 }}>
@@ -59,19 +53,12 @@ const PersonalInfoPage: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Personal Information Form */}
+        {/* Personal Information Form - Contains its own Next button */}
         <PersonalInfoForm
           initialData={state.personalInfo}
           onSubmit={handleSubmit}
           isLoading={state.submissionStatus === 'saving'}
         />
-
-        {/* Navigation */}
-        <Box sx={{ mt: 4 }}>
-          <WorkflowNavigation
-            onNext={handleNext}
-          />
-        </Box>
       </Box>
     </Container>
   );

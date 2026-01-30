@@ -76,7 +76,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
               message: t('forms.personalInfo.validation.address.city.maxLength') as string,
             },
             pattern: {
-              value: /^[a-zA-Z\s\-']+$/,
+              value: /^[\p{L}\s\-']+$/u,
               message: t('forms.personalInfo.validation.address.city.pattern') as string,
             },
           }}

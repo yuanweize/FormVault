@@ -155,6 +155,12 @@
           "travel": "Travel Insurance"
         }
       },
+      "insuranceTypes": {
+        "health": "Health Insurance",
+        "auto": "Auto Insurance",
+        "life": "Life Insurance",
+        "travel": "Travel Insurance"
+      },
       "name": {
         "label": "Full Name"
       },

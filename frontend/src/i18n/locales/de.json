@@ -1,0 +1,216 @@
+{
+    "app": {
+        "title": "FormVault",
+        "shortTitle": "FormVault",
+        "subtitle": "Sichere Versicherungsantrags-Portal"
+    },
+    "stepper": {
+        "personalInfo": "Persönliche Informationen",
+        "personalInfoShort": "Info",
+        "fileUpload": "Dokumenten-Upload",
+        "fileUploadShort": "Dateien",
+        "review": "Überprüfen & Absenden",
+        "reviewShort": "Prüfen",
+        "success": "Abgeschlossen",
+        "successShort": "Fertig",
+        "step": "Schritt",
+        "of": "von"
+    },
+    "navigation": {
+        "home": "Startseite",
+        "back": "Zurück",
+        "next": "Weiter",
+        "submit": "Absenden",
+        "cancel": "Abbrechen"
+    },
+    "validation": {
+        "required": "Dieses Feld ist erforderlich",
+        "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "phone": "Bitte geben Sie eine gültige Telefonnummer ein",
+        "minLength": "Mindestlänge ist {{min}} Zeichen",
+        "maxLength": "Maximale Länge ist {{max}} Zeichen",
+        "fileSize": "Dateigröße muss unter {{size}}MB liegen",
+        "fileType": "Bitte laden Sie einen gültigen Dateityp hoch",
+        "dateFormat": "Bitte geben Sie ein gültiges Datum ein"
+    },
+    "pages": {
+        "home": {
+            "title": "Willkommen bei FormVault",
+            "subtitle": "Füllen Sie Ihren Versicherungsantrag sicher und effizient aus",
+            "getStarted": "Loslegen",
+            "features": {
+                "secure": "Sicher & Verschlüsselt",
+                "secureDesc": "Ihre Daten sind mit branchenüblicher Verschlüsselung geschützt",
+                "multilingual": "Mehrsprachig",
+                "multilingualDesc": "Verfügbar in mehreren Sprachen",
+                "mobile": "Mobilfreundlich",
+                "mobileDesc": "Füllen Sie Ihren Antrag auf jedem Gerät aus"
+            }
+        },
+        "personalInfo": {
+            "title": "Persönliche Informationen",
+            "subtitle": "Bitte geben Sie Ihre persönlichen Daten für den Versicherungsantrag an"
+        },
+        "fileUpload": {
+            "title": "Dokumente hochladen",
+            "subtitle": "Bitte laden Sie Ihre erforderlichen Dokumente hoch"
+        },
+        "review": {
+            "title": "Antrag überprüfen",
+            "subtitle": "Bitte überprüfen Sie Ihre Informationen vor dem Absenden"
+        },
+        "success": {
+            "title": "Antrag eingereicht!",
+            "subtitle": "Ihr Versicherungsantrag wurde erfolgreich eingereicht"
+        },
+        "notFound": {
+            "title": "Seite nicht gefunden",
+            "subtitle": "Die gesuchte Seite existiert nicht",
+            "goHome": "Zur Startseite"
+        }
+    },
+    "footer": {
+        "allRightsReserved": "Alle Rechte vorbehalten.",
+        "privacy": "Datenschutzrichtlinie",
+        "terms": "Nutzungsbedingungen",
+        "support": "Support"
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "Persönliche Informationen",
+            "subtitle": "Bitte geben Sie Ihre persönlichen Daten für Ihren Versicherungsantrag an",
+            "submitting": "Wird gesendet...",
+            "success": "Persönliche Informationen erfolgreich gespeichert!",
+            "sections": {
+                "personal": "Persönliche Daten",
+                "address": "Adressinformationen"
+            },
+            "fields": {
+                "firstName": "Vorname",
+                "lastName": "Nachname",
+                "email": "E-Mail-Adresse",
+                "phone": "Telefonnummer",
+                "dateOfBirth": "Geburtsdatum",
+                "insuranceType": "Versicherungstyp",
+                "address": {
+                    "street": "Straße",
+                    "city": "Stadt",
+                    "state": "Bundesland",
+                    "zipCode": "Postleitzahl",
+                    "country": "Land"
+                }
+            },
+            "insuranceTypes": {
+                "health": "Krankenversicherung",
+                "auto": "Kfz-Versicherung",
+                "life": "Lebensversicherung",
+                "travel": "Reiseversicherung"
+            },
+            "countries": {
+                "US": "Vereinigte Staaten",
+                "CA": "Kanada",
+                "MX": "Mexiko",
+                "CN": "China",
+                "ES": "Spanien",
+                "FR": "Frankreich",
+                "DE": "Deutschland",
+                "GB": "Vereinigtes Königreich",
+                "AU": "Australien",
+                "JP": "Japan"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "Vorname ist erforderlich",
+                    "minLength": "Vorname muss mindestens 2 Zeichen haben",
+                    "maxLength": "Vorname darf 50 Zeichen nicht überschreiten",
+                    "pattern": "Vorname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                },
+                "lastName": {
+                    "required": "Nachname ist erforderlich",
+                    "minLength": "Nachname muss mindestens 2 Zeichen haben",
+                    "maxLength": "Nachname darf 50 Zeichen nicht überschreiten",
+                    "pattern": "Nachname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                },
+                "email": {
+                    "required": "E-Mail-Adresse ist erforderlich",
+                    "pattern": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+                },
+                "phone": {
+                    "required": "Telefonnummer ist erforderlich",
+                    "pattern": "Bitte geben Sie eine gültige Telefonnummer ein"
+                },
+                "dateOfBirth": {
+                    "required": "Geburtsdatum ist erforderlich",
+                    "future": "Geburtsdatum kann nicht in der Zukunft liegen",
+                    "minAge": "Sie müssen mindestens 18 Jahre alt sein",
+                    "maxAge": "Bitte geben Sie ein gültiges Geburtsdatum ein"
+                },
+                "insuranceType": {
+                    "required": "Bitte wählen Sie einen Versicherungstyp"
+                },
+                "address": {
+                    "street": {
+                        "required": "Straße ist erforderlich",
+                        "minLength": "Straße muss mindestens 5 Zeichen haben",
+                        "maxLength": "Straße darf 100 Zeichen nicht überschreiten"
+                    },
+                    "city": {
+                        "required": "Stadt ist erforderlich",
+                        "minLength": "Stadt muss mindestens 2 Zeichen haben",
+                        "maxLength": "Stadt darf 50 Zeichen nicht überschreiten",
+                        "pattern": "Stadt darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                    },
+                    "state": {
+                        "required": "Bundesland ist erforderlich",
+                        "minLength": "Bundesland muss mindestens 2 Zeichen haben",
+                        "maxLength": "Bundesland darf 50 Zeichen nicht überschreiten"
+                    },
+                    "zipCode": {
+                        "required": "Postleitzahl ist erforderlich",
+                        "pattern": "Bitte geben Sie eine gültige Postleitzahl ein"
+                    },
+                    "country": {
+                        "required": "Bitte wählen Sie ein Land"
+                    }
+                }
+            }
+        }
+    },
+    "fileUpload": {
+        "title": "Dokumenten-Upload",
+        "description": "Bitte laden Sie Ihre erforderlichen Dokumente hoch.",
+        "studentId": "Studentenausweis",
+        "passport": "Reisepass",
+        "dragAndDrop": "Datei hierher ziehen",
+        "orClickToSelect": "oder klicken zum Auswählen",
+        "selectFile": "Datei auswählen",
+        "takePhoto": "Foto aufnehmen",
+        "uploading": "Wird hochgeladen...",
+        "preview": "Dateivorschau",
+        "remove": "Entfernen",
+        "requirements": "Unterstützte Formate: JPEG, PNG, PDF. Maximale Dateigröße: 5MB pro Datei.",
+        "errors": {
+            "title": "Bitte beheben Sie die folgenden Fehler:",
+            "fileTooLarge": "Datei ist zu groß. Maximale Größe ist {{maxSize}}MB",
+            "invalidFormat": "Ungültiges Dateiformat. Unterstützte Formate: {{formats}}",
+            "uploadFailed": "Upload fehlgeschlagen. Bitte versuchen Sie es erneut."
+        }
+    },
+    "common": {
+        "back": "Zurück",
+        "continue": "Weiter",
+        "submit": "Absenden",
+        "submitting": "Wird gesendet...",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "confirm": "Bestätigen",
+        "loading": "Lädt..."
+    },
+    "errors": {
+        "general": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+        "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+        "validation": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."
+    }
+}

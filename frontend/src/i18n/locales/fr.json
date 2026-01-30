@@ -1,0 +1,216 @@
+{
+    "app": {
+        "title": "FormVault",
+        "shortTitle": "FormVault",
+        "subtitle": "Portail sécurisé de demande d'assurance"
+    },
+    "stepper": {
+        "personalInfo": "Informations personnelles",
+        "personalInfoShort": "Info",
+        "fileUpload": "Téléchargement de documents",
+        "fileUploadShort": "Fichiers",
+        "review": "Réviser et soumettre",
+        "reviewShort": "Réviser",
+        "success": "Terminé",
+        "successShort": "Fait",
+        "step": "Étape",
+        "of": "sur"
+    },
+    "navigation": {
+        "home": "Accueil",
+        "back": "Retour",
+        "next": "Suivant",
+        "submit": "Soumettre",
+        "cancel": "Annuler"
+    },
+    "validation": {
+        "required": "Ce champ est obligatoire",
+        "email": "Veuillez entrer une adresse e-mail valide",
+        "phone": "Veuillez entrer un numéro de téléphone valide",
+        "minLength": "La longueur minimale est de {{min}} caractères",
+        "maxLength": "La longueur maximale est de {{max}} caractères",
+        "fileSize": "La taille du fichier doit être inférieure à {{size}}MB",
+        "fileType": "Veuillez télécharger un type de fichier valide",
+        "dateFormat": "Veuillez entrer une date valide"
+    },
+    "pages": {
+        "home": {
+            "title": "Bienvenue sur FormVault",
+            "subtitle": "Complétez votre demande d'assurance en toute sécurité et efficacité",
+            "getStarted": "Commencer",
+            "features": {
+                "secure": "Sécurisé et crypté",
+                "secureDesc": "Vos données sont protégées par un cryptage standard de l'industrie",
+                "multilingual": "Support multilingue",
+                "multilingualDesc": "Disponible en plusieurs langues",
+                "mobile": "Compatible mobile",
+                "mobileDesc": "Complétez votre demande sur n'importe quel appareil"
+            }
+        },
+        "personalInfo": {
+            "title": "Informations personnelles",
+            "subtitle": "Veuillez fournir vos informations personnelles pour la demande d'assurance"
+        },
+        "fileUpload": {
+            "title": "Télécharger des documents",
+            "subtitle": "Veuillez télécharger vos documents requis"
+        },
+        "review": {
+            "title": "Réviser votre demande",
+            "subtitle": "Veuillez réviser vos informations avant de soumettre"
+        },
+        "success": {
+            "title": "Demande soumise!",
+            "subtitle": "Votre demande d'assurance a été soumise avec succès"
+        },
+        "notFound": {
+            "title": "Page non trouvée",
+            "subtitle": "La page que vous recherchez n'existe pas",
+            "goHome": "Retour à l'accueil"
+        }
+    },
+    "footer": {
+        "allRightsReserved": "Tous droits réservés.",
+        "privacy": "Politique de confidentialité",
+        "terms": "Conditions d'utilisation",
+        "support": "Support"
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "Informations personnelles",
+            "subtitle": "Veuillez fournir vos informations personnelles pour votre demande d'assurance",
+            "submitting": "Envoi en cours...",
+            "success": "Informations personnelles enregistrées avec succès!",
+            "sections": {
+                "personal": "Détails personnels",
+                "address": "Informations d'adresse"
+            },
+            "fields": {
+                "firstName": "Prénom",
+                "lastName": "Nom de famille",
+                "email": "Adresse e-mail",
+                "phone": "Numéro de téléphone",
+                "dateOfBirth": "Date de naissance",
+                "insuranceType": "Type d'assurance",
+                "address": {
+                    "street": "Rue",
+                    "city": "Ville",
+                    "state": "État/Province",
+                    "zipCode": "Code postal",
+                    "country": "Pays"
+                }
+            },
+            "insuranceTypes": {
+                "health": "Assurance maladie",
+                "auto": "Assurance auto",
+                "life": "Assurance vie",
+                "travel": "Assurance voyage"
+            },
+            "countries": {
+                "US": "États-Unis",
+                "CA": "Canada",
+                "MX": "Mexique",
+                "CN": "Chine",
+                "ES": "Espagne",
+                "FR": "France",
+                "DE": "Allemagne",
+                "GB": "Royaume-Uni",
+                "AU": "Australie",
+                "JP": "Japon"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "Le prénom est obligatoire",
+                    "minLength": "Le prénom doit comporter au moins 2 caractères",
+                    "maxLength": "Le prénom ne peut pas dépasser 50 caractères",
+                    "pattern": "Le prénom ne peut contenir que des lettres, espaces, tirets et apostrophes"
+                },
+                "lastName": {
+                    "required": "Le nom de famille est obligatoire",
+                    "minLength": "Le nom de famille doit comporter au moins 2 caractères",
+                    "maxLength": "Le nom de famille ne peut pas dépasser 50 caractères",
+                    "pattern": "Le nom de famille ne peut contenir que des lettres, espaces, tirets et apostrophes"
+                },
+                "email": {
+                    "required": "L'adresse e-mail est obligatoire",
+                    "pattern": "Veuillez entrer une adresse e-mail valide"
+                },
+                "phone": {
+                    "required": "Le numéro de téléphone est obligatoire",
+                    "pattern": "Veuillez entrer un numéro de téléphone valide"
+                },
+                "dateOfBirth": {
+                    "required": "La date de naissance est obligatoire",
+                    "future": "La date de naissance ne peut pas être dans le futur",
+                    "minAge": "Vous devez avoir au moins 18 ans",
+                    "maxAge": "Veuillez entrer une date de naissance valide"
+                },
+                "insuranceType": {
+                    "required": "Veuillez sélectionner un type d'assurance"
+                },
+                "address": {
+                    "street": {
+                        "required": "La rue est obligatoire",
+                        "minLength": "La rue doit comporter au moins 5 caractères",
+                        "maxLength": "La rue ne peut pas dépasser 100 caractères"
+                    },
+                    "city": {
+                        "required": "La ville est obligatoire",
+                        "minLength": "La ville doit comporter au moins 2 caractères",
+                        "maxLength": "La ville ne peut pas dépasser 50 caractères",
+                        "pattern": "La ville ne peut contenir que des lettres, espaces, tirets et apostrophes"
+                    },
+                    "state": {
+                        "required": "L'état/province est obligatoire",
+                        "minLength": "L'état/province doit comporter au moins 2 caractères",
+                        "maxLength": "L'état/province ne peut pas dépasser 50 caractères"
+                    },
+                    "zipCode": {
+                        "required": "Le code postal est obligatoire",
+                        "pattern": "Veuillez entrer un code postal valide"
+                    },
+                    "country": {
+                        "required": "Veuillez sélectionner un pays"
+                    }
+                }
+            }
+        }
+    },
+    "fileUpload": {
+        "title": "Téléchargement de documents",
+        "description": "Veuillez télécharger vos documents requis.",
+        "studentId": "Carte d'étudiant",
+        "passport": "Passeport",
+        "dragAndDrop": "Glissez-déposez votre fichier ici",
+        "orClickToSelect": "ou cliquez pour sélectionner",
+        "selectFile": "Sélectionner un fichier",
+        "takePhoto": "Prendre une photo",
+        "uploading": "Téléchargement en cours...",
+        "preview": "Aperçu du fichier",
+        "remove": "Supprimer",
+        "requirements": "Formats pris en charge: JPEG, PNG, PDF. Taille maximale: 5MB par fichier.",
+        "errors": {
+            "title": "Veuillez corriger les erreurs suivantes:",
+            "fileTooLarge": "Le fichier est trop volumineux. La taille maximale est {{maxSize}}MB",
+            "invalidFormat": "Format de fichier invalide. Formats pris en charge: {{formats}}",
+            "uploadFailed": "Échec du téléchargement. Veuillez réessayer."
+        }
+    },
+    "common": {
+        "back": "Retour",
+        "continue": "Continuer",
+        "submit": "Soumettre",
+        "submitting": "Envoi en cours...",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "confirm": "Confirmer",
+        "loading": "Chargement..."
+    },
+    "errors": {
+        "general": "Une erreur s'est produite. Veuillez réessayer.",
+        "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+        "validation": "Veuillez vérifier votre saisie et réessayer."
+    }
+}
