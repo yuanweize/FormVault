@@ -151,15 +151,27 @@ Deploy the full stack with a single click:
 > [!TIP]
 > **Deploy backend first, then frontend.** This ensures your API URL is ready when configuring the frontend.
 
-1. **Backend First** — Deploy to Render or Railway to get your API URL
-2. **Frontend Second** — Use the API URL when deploying to Vercel/Netlify
-3. **Environment Setup** — Configure `CORS_ORIGINS` on backend to allow frontend domain
+#### Step 1: Deploy Backend (Render/Railway)
+1. Click the **Render** or **Railway** button above
+2. Wait for the build to complete (~5 minutes)
+3. Copy your Backend URL (e.g., `https://formvault-api.onrender.com`)
+
+#### Step 2: Deploy Frontend (Vercel/Netlify)
+1. Click the **Vercel** or **Netlify** button above
+2. When prompted for Environment Variables, add:
+   - `REACT_APP_API_BASE_URL` = `https://formvault-api.onrender.com` (your backend URL from Step 1)
+3. Click Deploy
+
+#### Step 3: Configure CORS
+1. Go to your Backend dashboard (Render/Railway)
+2. Add/Update the environment variable:
+   - `CORS_ORIGINS` = `https://formvault-frontend.onrender.com` (your frontend URL)
 
 ### Deployment Options
 
 | Platform | Type | What's Deployed |
 |----------|------|-----------------|
-| **Render** | Full Stack | Backend API + Frontend + MySQL Database |
+| **Render** | Full Stack | Backend API + Frontend + PostgreSQL Database |
 | **Vercel** | Frontend Only | React app (configure API URL separately) |
 | **Railway** | Full Stack | Backend + Frontend + Database |
 | **Netlify** | Frontend Only | React app (static hosting with Functions support) |
@@ -169,9 +181,9 @@ Deploy the full stack with a single click:
 | Variable | Required | Source | Description |
 |----------|----------|--------|-------------|
 | `SECRET_KEY` | Yes | 🔄 Auto (Render) / 🔧 Manual | JWT signing key for authentication |
-| `DATABASE_URL` | Yes | 🔄 Auto (Render/Railway) | MySQL connection string |
+| `DATABASE_URL` | Yes | 🔄 Auto (Render/Railway) | PostgreSQL connection string |
 | `CORS_ORIGINS` | Yes | 🔧 Manual | Frontend URL for CORS (e.g., `https://yourapp.vercel.app`) |
-| `REACT_APP_API_URL` | Yes | 🔧 Manual | Backend API base URL (e.g., `https://api.yourapp.com`) |
+| `REACT_APP_API_BASE_URL` | Yes | 🔧 Manual | Backend API base URL (e.g., `https://api.yourapp.com`) |
 
 **Legend:**
 - 🔄 Auto — Automatically provided by the platform

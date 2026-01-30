@@ -151,15 +151,27 @@ uvicorn app.main:app --reload
 > [!TIP]
 > **先部署后端，再部署前端。** 这样可以确保配置前端时 API URL 已就绪。
 
-1. **第一步：后端** — 部署到 Render 或 Railway，获取 API URL
-2. **第二步：前端** — 使用 API URL 部署到 Vercel/Netlify
-3. **环境配置** — 在后端配置 `CORS_ORIGINS`，允许前端域名访问
+#### 第一步：部署后端 (Render/Railway)
+1. 点击上方 **Render** 或 **Railway** 按钮
+2. 等待构建完成（约5分钟）
+3. 复制您的后端 URL（如 `https://formvault-api.onrender.com`）
+
+#### 第二步：部署前端 (Vercel/Netlify)
+1. 点击上方 **Vercel** 或 **Netlify** 按钮
+2. 当提示配置环境变量时，添加：
+   - `REACT_APP_API_BASE_URL` = `https://formvault-api.onrender.com`（第一步获取的后端 URL）
+3. 点击部署
+
+#### 第三步：配置 CORS
+1. 进入后端控制台 (Render/Railway)
+2. 添加/更新环境变量：
+   - `CORS_ORIGINS` = `https://formvault-frontend.onrender.com`（您的前端 URL）
 
 ### 部署平台选项
 
 | 平台 | 类型 | 部署内容 |
 |------|------|----------|
-| **Render** | 全栈 | 后端 API + 前端 + MySQL 数据库 |
+| **Render** | 全栈 | 后端 API + 前端 + PostgreSQL 数据库 |
 | **Vercel** | 仅前端 | React 应用（需单独配置 API URL） |
 | **Railway** | 全栈 | 后端 + 前端 + 数据库 |
 | **Netlify** | 仅前端 | React 应用（静态托管，支持 Functions） |
@@ -169,9 +181,9 @@ uvicorn app.main:app --reload
 | 变量 | 必填 | 来源 | 说明 |
 |------|------|------|------|
 | `SECRET_KEY` | 是 | 🔄 自动 (Render) / 🔧 手动 | JWT 认证签名密钥 |
-| `DATABASE_URL` | 是 | 🔄 自动 (Render/Railway) | MySQL 连接字符串 |
+| `DATABASE_URL` | 是 | 🔄 自动 (Render/Railway) | PostgreSQL 连接字符串 |
 | `CORS_ORIGINS` | 是 | 🔧 手动 | 前端 URL，用于 CORS 配置（如 `https://yourapp.vercel.app`） |
-| `REACT_APP_API_URL` | 是 | 🔧 手动 | 后端 API 基础 URL（如 `https://api.yourapp.com`） |
+| `REACT_APP_API_BASE_URL` | 是 | 🔧 手动 | 后端 API 基础 URL（如 `https://api.yourapp.com`） |
 
 **图例：**
 - 🔄 自动 — 平台自动提供
