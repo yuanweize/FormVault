@@ -2,19 +2,19 @@
     "app": {
         "title": "FormVault",
         "shortTitle": "FormVault",
-        "subtitle": "Portail sécurisé de demande d'assurance"
+        "subtitle": "Portail de Demande d'Assurance Sécurisé"
     },
     "stepper": {
-        "personalInfo": "Informations personnelles",
+        "personalInfo": "Informations Personnelles",
         "personalInfoShort": "Info",
-        "fileUpload": "Téléchargement de documents",
+        "fileUpload": "Téléchargement de Documents",
         "fileUploadShort": "Fichiers",
-        "review": "Réviser et soumettre",
-        "reviewShort": "Réviser",
+        "review": "Vérifier & Soumettre",
+        "reviewShort": "Vérifier",
         "success": "Terminé",
-        "successShort": "Fait",
+        "successShort": "Fini",
         "step": "Étape",
-        "of": "sur"
+        "of": "de"
     },
     "navigation": {
         "home": "Accueil",
@@ -25,7 +25,7 @@
     },
     "validation": {
         "required": "Ce champ est obligatoire",
-        "email": "Veuillez entrer une adresse e-mail valide",
+        "email": "Veuillez entrer une adresse email valide",
         "phone": "Veuillez entrer un numéro de téléphone valide",
         "minLength": "La longueur minimale est de {{min}} caractères",
         "maxLength": "La longueur maximale est de {{max}} caractères",
@@ -36,75 +36,183 @@
     "pages": {
         "home": {
             "title": "Bienvenue sur FormVault",
-            "subtitle": "Complétez votre demande d'assurance en toute sécurité et efficacité",
+            "subtitle": "Complétez votre demande d'assurance en toute sécurité",
             "getStarted": "Commencer",
             "features": {
-                "secure": "Sécurisé et crypté",
-                "secureDesc": "Vos données sont protégées par un cryptage standard de l'industrie",
-                "multilingual": "Support multilingue",
-                "multilingualDesc": "Disponible en plusieurs langues",
-                "mobile": "Compatible mobile",
+                "secure": "Sécurisé & Crypté",
+                "secureDesc": "Vos données sont protégées par des normes industrielles",
+                "multilingual": "Support Multilingue",
+                "multilingualDesc": "Disponible en anglais, chinois, espagnol, etc.",
+                "mobile": "Compatible Mobile",
                 "mobileDesc": "Complétez votre demande sur n'importe quel appareil"
             }
         },
         "personalInfo": {
-            "title": "Informations personnelles",
-            "subtitle": "Veuillez fournir vos informations personnelles pour la demande d'assurance"
+            "title": "Informations Personnelles",
+            "subtitle": "Veuillez fournir vos coordonnées"
         },
         "fileUpload": {
-            "title": "Télécharger des documents",
-            "subtitle": "Veuillez télécharger vos documents requis"
+            "title": "Télécharger des Documents",
+            "subtitle": "Veuillez télécharger les documents requis",
+            "instructions": "Téléchargez des images claires ou des PDF. Max 5MB par fichier.",
+            "allFilesUploaded": "Tous les fichiers requis ont été téléchargés avec succès !",
+            "proceedToReview": "Procéder à la Vérification"
         },
         "review": {
-            "title": "Réviser votre demande",
-            "subtitle": "Veuillez réviser vos informations avant de soumettre"
+            "title": "Vérifier votre Demande",
+            "subtitle": "Veuillez vérifier vos informations avant de continuer",
+            "incompleteWarning": "Votre demande est incomplète.",
+            "missingPersonalInfo": "Informations personnelles incomplètes",
+            "missingFiles": "Fichiers requis manquants",
+            "personalInfoIncomplete": "Veuillez compléter vos informations personnelles.",
+            "fileNotUploaded": "Ce fichier n'a pas encore été téléchargé.",
+            "readyToProceed": "Votre demande est complète et prête à être soumise !",
+            "proceedToConfirmation": "Procéder à la Confirmation",
+            "sections": {
+                "personalInfo": "Informations Personnelles",
+                "uploadedFiles": "Fichiers Téléchargés"
+            }
+        },
+        "confirmation": {
+            "title": "Confirmer la Soumission",
+            "subtitle": "Veuillez confirmer l'envoi de votre demande",
+            "incompleteWarning": "Impossible de soumettre : demande incomplète.",
+            "missingPersonalInfo": "Info perso manquante",
+            "missingFiles": "Fichiers manquants",
+            "submissionNotice": "En soumettant, vous confirmez l'exactitude des informations. Vous recevrez un email de confirmation.",
+            "referenceNumber": "Numéro de Référence",
+            "sections": {
+                "personalInfo": "Informations Personnelles",
+                "uploadedFiles": "Fichiers Téléchargés",
+                "applicationDetails": "Détails de la Demande"
+            }
         },
         "success": {
-            "title": "Demande soumise!",
-            "subtitle": "Votre demande d'assurance a été soumise avec succès"
+            "title": "Demande Soumise !",
+            "subtitle": "Votre demande a été envoyée avec succès",
+            "referenceNumber": "Votre Numéro de Référence",
+            "referenceNumberNote": "Veuillez conserver ce numéro",
+            "applicationSummary": "Résumé de la Demande",
+            "submissionDate": "Date de Soumission",
+            "nextSteps": {
+                "title": "Et ensuite ?",
+                "emailConfirmation": "Confirmation par Email",
+                "emailConfirmationNote": "Vous recevrez une confirmation sous 5 minutes",
+                "processing": "Traitement de la Demande",
+                "processingNote": "Revue sous 2-3 jours ouvrables",
+                "followUp": "Suivi",
+                "followUpNote": "Nous vous contacterons si nécessaire"
+            },
+            "importantInfo": "Important : Gardez votre numéro de référence en sécurité.",
+            "actions": {
+                "goHome": "Retour à l'Accueil",
+                "print": "Imprimer"
+            }
         },
         "notFound": {
-            "title": "Page non trouvée",
-            "subtitle": "La page que vous recherchez n'existe pas",
-            "goHome": "Retour à l'accueil"
+            "title": "Page Non Trouvée",
+            "subtitle": "La page demandée n'existe pas",
+            "goHome": "Accueil"
         }
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",
-        "privacy": "Politique de confidentialité",
-        "terms": "Conditions d'utilisation",
+        "privacy": "Confidentialité",
+        "terms": "Conditions",
         "support": "Support"
     },
     "forms": {
         "personalInfo": {
-            "title": "Informations personnelles",
-            "subtitle": "Veuillez fournir vos informations personnelles pour votre demande d'assurance",
-            "submitting": "Envoi en cours...",
-            "success": "Informations personnelles enregistrées avec succès!",
+            "title": "Informations Personnelles",
+            "subtitle": "Détails personnels pour l'assurance",
+            "submitting": "Envoi...",
+            "success": "Informations sauvegardées !",
             "sections": {
-                "personal": "Détails personnels",
-                "address": "Informations d'adresse"
+                "personal": "Détails Personnels",
+                "address": "Adresse"
             },
             "fields": {
                 "firstName": "Prénom",
-                "lastName": "Nom de famille",
-                "email": "Adresse e-mail",
-                "phone": "Numéro de téléphone",
-                "dateOfBirth": "Date de naissance",
-                "insuranceType": "Type d'assurance",
+                "lastName": "Nom",
+                "email": "Email",
+                "phone": "Téléphone",
+                "dateOfBirth": "Date de Naissance",
+                "insuranceType": "Type d'Assurance",
                 "address": {
                     "street": "Rue",
                     "city": "Ville",
-                    "state": "État/Province",
-                    "zipCode": "Code postal",
+                    "state": "État/Région",
+                    "zipCode": "Code Postal",
                     "country": "Pays"
                 }
             },
+            "insuranceType": {
+                "label": "Type d'Assurance",
+                "options": {
+                    "health": "Assurance Santé",
+                    "auto": "Assurance Auto",
+                    "life": "Assurance Vie",
+                    "travel": "Assurance Voyage"
+                }
+            },
             "insuranceTypes": {
-                "health": "Assurance maladie",
-                "auto": "Assurance auto",
-                "life": "Assurance vie",
-                "travel": "Assurance voyage"
+                "health": "Assurance Santé",
+                "auto": "Assurance Auto",
+                "life": "Assurance Vie",
+                "travel": "Assurance Voyage"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "Prénom requis",
+                    "minLength": "Min 2 caractères",
+                    "maxLength": "Max 50 caractères",
+                    "pattern": "Lettres uniquement"
+                },
+                "lastName": {
+                    "required": "Nom requis",
+                    "minLength": "Min 2 caractères",
+                    "maxLength": "Max 50 caractères",
+                    "pattern": "Lettres uniquement"
+                },
+                "email": {
+                    "required": "Email requis",
+                    "pattern": "Email invalide"
+                },
+                "phone": {
+                    "required": "Téléphone requis",
+                    "pattern": "Numéro invalide"
+                },
+                "dateOfBirth": {
+                    "required": "Date de naissance requise",
+                    "future": "Date invalide (futur)",
+                    "minAge": "Vous devez avoir 18 ans",
+                    "maxAge": "Date invalide"
+                },
+                "insuranceType": {
+                    "required": "Sélectionnez un type"
+                },
+                "address": {
+                    "street": {
+                        "required": "Rue requise",
+                        "minLength": "Min 5 caractères"
+                    },
+                    "city": {
+                        "required": "Ville requise",
+                        "minLength": "Min 2 caractères",
+                        "pattern": "Lettres uniquement"
+                    },
+                    "state": {
+                        "required": "Région requise",
+                        "minLength": "Min 2 caractères"
+                    },
+                    "zipCode": {
+                        "required": "Code postal requis",
+                        "pattern": "Code invalide"
+                    },
+                    "country": {
+                        "required": "Pays requis"
+                    }
+                }
             },
             "countries": {
                 "US": "États-Unis",
@@ -117,100 +225,89 @@
                 "GB": "Royaume-Uni",
                 "AU": "Australie",
                 "JP": "Japon"
+            }
+        },
+        "fileUpload": {
+            "studentId": {
+                "label": "Carte Étudiante",
+                "description": "Photo claire de votre carte"
             },
-            "validation": {
-                "firstName": {
-                    "required": "Le prénom est obligatoire",
-                    "minLength": "Le prénom doit comporter au moins 2 caractères",
-                    "maxLength": "Le prénom ne peut pas dépasser 50 caractères",
-                    "pattern": "Le prénom ne peut contenir que des lettres, espaces, tirets et apostrophes"
-                },
-                "lastName": {
-                    "required": "Le nom de famille est obligatoire",
-                    "minLength": "Le nom de famille doit comporter au moins 2 caractères",
-                    "maxLength": "Le nom de famille ne peut pas dépasser 50 caractères",
-                    "pattern": "Le nom de famille ne peut contenir que des lettres, espaces, tirets et apostrophes"
-                },
-                "email": {
-                    "required": "L'adresse e-mail est obligatoire",
-                    "pattern": "Veuillez entrer une adresse e-mail valide"
-                },
-                "phone": {
-                    "required": "Le numéro de téléphone est obligatoire",
-                    "pattern": "Veuillez entrer un numéro de téléphone valide"
-                },
-                "dateOfBirth": {
-                    "required": "La date de naissance est obligatoire",
-                    "future": "La date de naissance ne peut pas être dans le futur",
-                    "minAge": "Vous devez avoir au moins 18 ans",
-                    "maxAge": "Veuillez entrer une date de naissance valide"
-                },
-                "insuranceType": {
-                    "required": "Veuillez sélectionner un type d'assurance"
-                },
-                "address": {
-                    "street": {
-                        "required": "La rue est obligatoire",
-                        "minLength": "La rue doit comporter au moins 5 caractères",
-                        "maxLength": "La rue ne peut pas dépasser 100 caractères"
-                    },
-                    "city": {
-                        "required": "La ville est obligatoire",
-                        "minLength": "La ville doit comporter au moins 2 caractères",
-                        "maxLength": "La ville ne peut pas dépasser 50 caractères",
-                        "pattern": "La ville ne peut contenir que des lettres, espaces, tirets et apostrophes"
-                    },
-                    "state": {
-                        "required": "L'état/province est obligatoire",
-                        "minLength": "L'état/province doit comporter au moins 2 caractères",
-                        "maxLength": "L'état/province ne peut pas dépasser 50 caractères"
-                    },
-                    "zipCode": {
-                        "required": "Le code postal est obligatoire",
-                        "pattern": "Veuillez entrer un code postal valide"
-                    },
-                    "country": {
-                        "required": "Veuillez sélectionner un pays"
-                    }
-                }
+            "passport": {
+                "label": "Passeport",
+                "description": "Photo claire de votre passeport"
             }
         }
     },
     "fileUpload": {
-        "title": "Téléchargement de documents",
-        "description": "Veuillez télécharger vos documents requis.",
-        "studentId": "Carte d'étudiant",
+        "title": "Téléchargement",
+        "description": "Téléchargez vos documents.",
+        "studentId": "Carte Étudiante",
         "passport": "Passeport",
-        "dragAndDrop": "Glissez-déposez votre fichier ici",
-        "orClickToSelect": "ou cliquez pour sélectionner",
-        "selectFile": "Sélectionner un fichier",
-        "takePhoto": "Prendre une photo",
-        "uploading": "Téléchargement en cours...",
-        "preview": "Aperçu du fichier",
-        "remove": "Supprimer",
-        "requirements": "Formats pris en charge: JPEG, PNG, PDF. Taille maximale: 5MB par fichier.",
+        "dragAndDrop": "Glisser-déposer ici",
+        "orClickToSelect": "ou cliquer pour sélectionner",
+        "uploading": "Téléchargement...",
+        "remove": "Retirer",
+        "requirements": "JPEG, PNG, PDF. Max 5MB.",
         "errors": {
-            "title": "Veuillez corriger les erreurs suivantes:",
-            "fileTooLarge": "Le fichier est trop volumineux. La taille maximale est {{maxSize}}MB",
-            "invalidFormat": "Format de fichier invalide. Formats pris en charge: {{formats}}",
-            "uploadFailed": "Échec du téléchargement. Veuillez réessayer."
+            "fileTooLarge": "Fichier trop volumineux.",
+            "invalidFormat": "Format invalide.",
+            "uploadFailed": "Échec.",
+            "noFilesUploaded": "Aucun fichier."
+        }
+    },
+    "workflow": {
+        "steps": {
+            "personalInfo": {
+                "label": "Info Perso",
+                "description": "Détails"
+            },
+            "fileUpload": {
+                "label": "Fichiers",
+                "description": "Documents"
+            },
+            "review": {
+                "label": "Vérifier",
+                "description": "Récapitulatif"
+            },
+            "confirmation": {
+                "label": "Confirmer",
+                "description": "Envoi"
+            },
+            "success": {
+                "label": "Fini",
+                "description": "Terminé"
+            }
+        },
+        "progress": "Étape {{current}} sur {{total}}",
+        "navigation": {
+            "previous": "Précédent",
+            "next": "Suivant",
+            "submit": "Soumettre",
+            "saveAsDraft": "Sauvegarder Brouillon",
+            "goHome": "Accueil",
+            "saving": "Sauvegarde...",
+            "submitting": "Envoi...",
+            "unsavedChanges": "Modifications non enregistrées."
         }
     },
     "common": {
         "back": "Retour",
         "continue": "Continuer",
         "submit": "Soumettre",
-        "submitting": "Envoi en cours...",
+        "submitting": "Envoi...",
         "cancel": "Annuler",
-        "save": "Enregistrer",
+        "save": "Sauvegarder",
         "edit": "Modifier",
         "delete": "Supprimer",
         "confirm": "Confirmer",
-        "loading": "Chargement..."
+        "loading": "Chargement...",
+        "copy": "Copier",
+        "notProvided": "Non fourni",
+        "notUploaded": "Non téléchargé"
     },
     "errors": {
-        "general": "Une erreur s'est produite. Veuillez réessayer.",
-        "network": "Erreur réseau. Veuillez vérifier votre connexion.",
-        "validation": "Veuillez vérifier votre saisie et réessayer."
+        "general": "Une erreur est survenue.",
+        "network": "Erreur réseau.",
+        "validation": "Vérifiez vos entrées."
     }
 }

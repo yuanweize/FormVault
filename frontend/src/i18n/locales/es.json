@@ -2,12 +2,12 @@
   "app": {
     "title": "FormVault",
     "shortTitle": "FormVault",
-    "subtitle": "Portal Seguro de Solicitud de Seguros"
+    "subtitle": "Portal de Solicitud de Seguro Seguro"
   },
   "stepper": {
     "personalInfo": "Información Personal",
     "personalInfoShort": "Info",
-    "fileUpload": "Subir Documentos",
+    "fileUpload": "Carga de Documentos",
     "fileUploadShort": "Archivos",
     "review": "Revisar y Enviar",
     "reviewShort": "Revisar",
@@ -25,79 +25,134 @@
   },
   "validation": {
     "required": "Este campo es obligatorio",
-    "email": "Por favor ingrese un email válido",
-    "phone": "Por favor ingrese un número de teléfono válido",
-    "minLength": "La longitud mínima es {{min}} caracteres",
-    "maxLength": "La longitud máxima es {{max}} caracteres",
-    "fileSize": "El tamaño del archivo debe ser menor a {{size}}MB",
-    "fileType": "Por favor suba un tipo de archivo válido",
-    "dateFormat": "Por favor ingrese una fecha válida"
+    "email": "Por favor ingrese un correo válido",
+    "phone": "Por favor ingrese un teléfono válido",
+    "minLength": "Longitud mínima {{min}} caracteres",
+    "maxLength": "Longitud máxima {{max}} caracteres",
+    "fileSize": "El archivo debe ser menor a {{size}}MB",
+    "fileType": "Tipo de archivo no válido",
+    "dateFormat": "Fecha no válida"
   },
   "pages": {
     "home": {
       "title": "Bienvenido a FormVault",
-      "subtitle": "Complete su solicitud de seguro de forma segura y eficiente",
+      "subtitle": "Complete su solicitud de seguro de manera segura y eficiente",
       "getStarted": "Comenzar",
       "features": {
         "secure": "Seguro y Encriptado",
-        "secureDesc": "Sus datos están protegidos con encriptación estándar de la industria",
-        "multilingual": "Soporte Multiidioma",
-        "multilingualDesc": "Disponible en inglés, chino y español",
-        "mobile": "Compatible con Móviles",
+        "secureDesc": "Sus datos están protegidos",
+        "multilingual": "Soporte Multilingüe",
+        "multilingualDesc": "Disponible en inglés, chino, español, etc.",
+        "mobile": "Compatible con Móvil",
         "mobileDesc": "Complete su solicitud en cualquier dispositivo"
       }
     },
     "personalInfo": {
       "title": "Información Personal",
-      "subtitle": "Por favor proporcione sus datos personales"
+      "subtitle": "Proporcione sus datos personales"
     },
     "fileUpload": {
-      "title": "Subir Documentos",
-      "subtitle": "Suba sus documentos requeridos"
+      "title": "Cargar Documentos",
+      "subtitle": "Por favor cargue los documentos requeridos",
+      "instructions": "Imágenes claras o PDF. Máx 5MB por archivo.",
+      "allFilesUploaded": "¡Todos los archivos requeridos cargados!",
+      "proceedToReview": "Proceder a Revisar"
     },
     "review": {
-      "title": "Revisar y Enviar",
-      "subtitle": "Por favor revise su información antes de enviar"
+      "title": "Revisar Solicitud",
+      "subtitle": "Verifique su información",
+      "incompleteWarning": "Solicitud incompleta.",
+      "missingPersonalInfo": "Falta información personal",
+      "missingFiles": "Faltan archivos",
+      "personalInfoIncomplete": "Complete su información personal.",
+      "fileNotUploaded": "Archivo no cargado.",
+      "readyToProceed": "¡Solicitud completa!",
+      "proceedToConfirmation": "Ir a Confirmación",
+      "sections": {
+        "personalInfo": "Información Personal",
+        "uploadedFiles": "Archivos Cargados"
+      }
+    },
+    "confirmation": {
+      "title": "Confirmar Envío",
+      "subtitle": "Confirme el envío de su solicitud",
+      "incompleteWarning": "Incompleto.",
+      "missingPersonalInfo": "Falta info",
+      "missingFiles": "Faltan archivos",
+      "submissionNotice": "Al enviar, confirma que la información es correcta. Recibirá un correo de confirmación.",
+      "referenceNumber": "Número de Referencia",
+      "sections": {
+        "personalInfo": "Info Personal",
+        "uploadedFiles": "Archivos",
+        "applicationDetails": "Detalles"
+      }
     },
     "success": {
-      "title": "Solicitud Enviada",
-      "subtitle": "Su solicitud ha sido enviada exitosamente"
+      "title": "¡Solicitud Enviada!",
+      "subtitle": "Su solicitud ha sido enviada con éxito",
+      "referenceNumber": "Su Número de Referencia",
+      "referenceNumberNote": "Guarde este número",
+      "applicationSummary": "Resumen",
+      "submissionDate": "Fecha de Envío",
+      "nextSteps": {
+        "title": "¿Qué sigue?",
+        "emailConfirmation": "Confirmación por Correo",
+        "emailConfirmationNote": "Recibirá un correo en 5 minutos",
+        "processing": "Procesamiento",
+        "processingNote": "Revisión en 2-3 días hábiles",
+        "followUp": "Seguimiento",
+        "followUpNote": "Le contactaremos si es necesario"
+      },
+      "importantInfo": "Importante: Guarde su número de referencia.",
+      "actions": {
+        "goHome": "Volver al Inicio",
+        "print": "Imprimir"
+      }
     },
     "notFound": {
-      "title": "Página No Encontrada",
-      "subtitle": "La página que busca no existe",
-      "goHome": "Ir al Inicio"
+      "title": "Página no encontrada",
+      "subtitle": "La página no existe",
+      "goHome": "Inicio"
     }
   },
   "footer": {
     "allRightsReserved": "Todos los derechos reservados.",
-    "privacy": "Política de Privacidad",
-    "terms": "Términos de Servicio",
+    "privacy": "Privacidad",
+    "terms": "Términos",
     "support": "Soporte"
   },
   "forms": {
     "personalInfo": {
       "title": "Información Personal",
-      "subtitle": "Por favor proporcione sus datos personales para su solicitud de seguro",
+      "subtitle": "Detalles para el seguro",
       "submitting": "Enviando...",
-      "success": "¡Información personal guardada exitosamente!",
+      "success": "¡Guardado!",
       "sections": {
-        "personal": "Datos Personales",
-        "address": "Información de Dirección"
+        "personal": "Detalles Personales",
+        "address": "Dirección"
       },
       "fields": {
         "firstName": "Nombre",
         "lastName": "Apellido",
-        "email": "Correo Electrónico",
-        "phone": "Número de Teléfono",
+        "email": "Correo",
+        "phone": "Teléfono",
         "dateOfBirth": "Fecha de Nacimiento",
         "insuranceType": "Tipo de Seguro",
         "address": {
-          "street": "Dirección",
+          "street": "Calle",
           "city": "Ciudad",
           "state": "Estado/Provincia",
           "zipCode": "Código Postal",
           "country": "País"
+        }
+      },
+      "insuranceType": {
+        "label": "Tipo de Seguro",
+        "options": {
+          "health": "Seguro de Salud",
+          "auto": "Seguro de Auto",
+          "life": "Seguro de Vida",
+          "travel": "Seguro de Viaje"
         }
       },
       "insuranceTypes": {
@@ -105,6 +160,57 @@
         "auto": "Seguro de Auto",
         "life": "Seguro de Vida",
         "travel": "Seguro de Viaje"
+      },
+      "validation": {
+        "firstName": {
+          "required": "Nombre requerido",
+          "minLength": "Mínimo 2 caracteres",
+          "maxLength": "Máximo 50 caracteres",
+          "pattern": "Solo letras"
+        },
+        "lastName": {
+          "required": "Apellido requerido",
+          "minLength": "Mínimo 2 caracteres",
+          "maxLength": "Máximo 50 caracteres",
+          "pattern": "Solo letras"
+        },
+        "email": {
+          "required": "Correo requerido",
+          "pattern": "Correo no válido"
+        },
+        "phone": {
+          "required": "Teléfono requerido",
+          "pattern": "Número no válido"
+        },
+        "dateOfBirth": {
+          "required": "Fecha requerida",
+          "future": "Fecha futura no permitida",
+          "minAge": "Debe ser mayor de 18",
+          "maxAge": "Fecha no válida"
+        },
+        "insuranceType": {
+          "required": "Seleccione un tipo"
+        },
+        "address": {
+          "street": {
+            "required": "Calle requerida",
+            "minLength": "Mínimo 5 caracteres"
+          },
+          "city": {
+            "required": "Ciudad requerida",
+            "minLength": "Mínimo 2 caracteres"
+          },
+          "state": {
+            "required": "Estado requerido",
+            "minLength": "Mínimo 2 caracteres"
+          },
+          "zipCode": {
+            "required": "Código postal requerido"
+          },
+          "country": {
+            "required": "País requerido"
+          }
+        }
       },
       "countries": {
         "US": "Estados Unidos",
@@ -117,86 +223,69 @@
         "GB": "Reino Unido",
         "AU": "Australia",
         "JP": "Japón"
+      }
+    },
+    "fileUpload": {
+      "studentId": {
+        "label": "Carnet de Estudiante",
+        "description": "Foto clara del carnet"
       },
-      "validation": {
-        "firstName": {
-          "required": "El nombre es requerido",
-          "minLength": "El nombre debe tener al menos 2 caracteres",
-          "maxLength": "El nombre no puede exceder 50 caracteres",
-          "pattern": "El nombre solo puede contener letras, espacios, guiones y apostrofes"
-        },
-        "lastName": {
-          "required": "El apellido es requerido",
-          "minLength": "El apellido debe tener al menos 2 caracteres",
-          "maxLength": "El apellido no puede exceder 50 caracteres",
-          "pattern": "El apellido solo puede contener letras, espacios, guiones y apostrofes"
-        },
-        "email": {
-          "required": "El correo electrónico es requerido",
-          "pattern": "Por favor ingrese un correo electrónico válido"
-        },
-        "phone": {
-          "required": "El número de teléfono es requerido",
-          "pattern": "Por favor ingrese un número de teléfono válido"
-        },
-        "dateOfBirth": {
-          "required": "La fecha de nacimiento es requerida",
-          "future": "La fecha de nacimiento no puede ser en el futuro",
-          "minAge": "Debe tener al menos 18 años",
-          "maxAge": "Por favor ingrese una fecha de nacimiento válida"
-        },
-        "insuranceType": {
-          "required": "Por favor seleccione un tipo de seguro"
-        },
-        "address": {
-          "street": {
-            "required": "La dirección es requerida",
-            "minLength": "La dirección debe tener al menos 5 caracteres",
-            "maxLength": "La dirección no puede exceder 100 caracteres"
-          },
-          "city": {
-            "required": "La ciudad es requerida",
-            "minLength": "La ciudad debe tener al menos 2 caracteres",
-            "maxLength": "La ciudad no puede exceder 50 caracteres",
-            "pattern": "La ciudad solo puede contener letras, espacios, guiones y apostrofes"
-          },
-          "state": {
-            "required": "El estado/provincia es requerido",
-            "minLength": "El estado/provincia debe tener al menos 2 caracteres",
-            "maxLength": "El estado/provincia no puede exceder 50 caracteres"
-          },
-          "zipCode": {
-            "required": "El código postal es requerido",
-            "pattern": "Por favor ingrese un código postal válido"
-          },
-          "country": {
-            "required": "Por favor seleccione un país"
-          }
-        }
+      "passport": {
+        "label": "Pasaporte",
+        "description": "Foto clara del pasaporte"
       }
     }
   },
   "fileUpload": {
-    "title": "Subir Documentos",
-    "description": "Por favor suba sus documentos requeridos. Puede subir una identificación de estudiante o pasaporte, o ambos.",
-    "studentId": "Identificación de Estudiante",
+    "title": "Carga de Archivos",
+    "description": "Cargue sus documentos.",
+    "studentId": "Carnet de Estudiante",
     "passport": "Pasaporte",
-    "dragAndDrop": "Arrastre y suelte su archivo aquí",
-    "orClickToSelect": "o haga clic para seleccionar un archivo",
-    "selectFile": "Seleccionar Archivo",
-    "takePhoto": "Tomar Foto",
-    "uploading": "Subiendo...",
-    "preview": "Vista Previa del Archivo",
+    "dragAndDrop": "Arrastre archivos aquí",
+    "orClickToSelect": "o clic para seleccionar",
+    "uploading": "Cargando...",
     "remove": "Eliminar",
-    "requirements": "Formatos soportados: JPEG, PNG, PDF. Tamaño máximo de archivo: 5MB por archivo.",
-    "supportedFormats": "Formatos soportados: {{formats}}. Tamaño máximo: {{maxSize}}MB",
+    "requirements": "JPEG, PNG, PDF. Max 5MB.",
     "errors": {
-      "title": "Por favor corrija los siguientes errores:",
-      "fileTooLarge": "El archivo es demasiado grande. El tamaño máximo es {{maxSize}}MB",
-      "invalidFormat": "Formato de archivo inválido. Formatos soportados: {{formats}}",
-      "uploadFailed": "La subida falló. Por favor intente de nuevo.",
-      "noFilesUploaded": "Por favor suba al menos un documento",
-      "submitFailed": "Error al enviar archivos. Por favor intente de nuevo."
+      "fileTooLarge": "Archivo muy grande.",
+      "invalidFormat": "Formato inválido.",
+      "uploadFailed": "Error.",
+      "noFilesUploaded": "Sin archivos."
+    }
+  },
+  "workflow": {
+    "steps": {
+      "personalInfo": {
+        "label": "Info Personal",
+        "description": "Detalles"
+      },
+      "fileUpload": {
+        "label": "Archivos",
+        "description": "Documentos"
+      },
+      "review": {
+        "label": "Revisar",
+        "description": "Resumen"
+      },
+      "confirmation": {
+        "label": "Confirmar",
+        "description": "Envío"
+      },
+      "success": {
+        "label": "Listo",
+        "description": "Enviado"
+      }
+    },
+    "progress": "Paso {{current}} de {{total}}",
+    "navigation": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "submit": "Enviar Solicitud",
+      "saveAsDraft": "Guardar Borrador",
+      "goHome": "Ir a Inicio",
+      "saving": "Guardando...",
+      "submitting": "Enviando...",
+      "unsavedChanges": "Cambios sin guardar."
     }
   },
   "common": {
@@ -209,11 +298,14 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "confirm": "Confirmar",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "copy": "Copiar",
+    "notProvided": "No proporcionado",
+    "notUploaded": "No cargado"
   },
   "errors": {
-    "general": "Ocurrió un error. Por favor intente de nuevo.",
-    "network": "Error de red. Por favor verifique su conexión.",
-    "validation": "Por favor verifique su entrada e intente de nuevo."
+    "general": "Ocurrió un error.",
+    "network": "Error de red.",
+    "validation": "Verifique su entrada."
   }
 }

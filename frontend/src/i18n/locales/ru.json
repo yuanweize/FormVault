@@ -1,0 +1,311 @@
+{
+    "app": {
+        "title": "FormVault",
+        "shortTitle": "FormVault",
+        "subtitle": "Безопасный Портал Страхования"
+    },
+    "stepper": {
+        "personalInfo": "Личные Данные",
+        "personalInfoShort": "Инфо",
+        "fileUpload": "Загрузка Файлов",
+        "fileUploadShort": "Файлы",
+        "review": "Проверка и Отправка",
+        "reviewShort": "Проверка",
+        "success": "Завершено",
+        "successShort": "Готово",
+        "step": "Шаг",
+        "of": "из"
+    },
+    "navigation": {
+        "home": "Главная",
+        "back": "Назад",
+        "next": "Далее",
+        "submit": "Отправить",
+        "cancel": "Отмена"
+    },
+    "validation": {
+        "required": "Это поле обязательно",
+        "email": "Введите верный email",
+        "phone": "Введите верный номер телефона",
+        "minLength": "Минимум {{min}} символов",
+        "maxLength": "Максимум {{max}} символов",
+        "fileSize": "Размер файла должен быть меньше {{size}}МБ",
+        "fileType": "Неверный тип файла",
+        "dateFormat": "Неверная дата"
+    },
+    "pages": {
+        "home": {
+            "title": "Добро пожаловать в FormVault",
+            "subtitle": "Оформите страховку безопасно и эффективно",
+            "getStarted": "Начать",
+            "features": {
+                "secure": "Безопасно и Зашифровано",
+                "secureDesc": "Ваши данные защищены",
+                "multilingual": "Мультиязычность",
+                "multilingualDesc": "Доступно на английском, китайском, русском и др.",
+                "mobile": "Для мобильных устройств",
+                "mobileDesc": "Работает на любом устройстве"
+            }
+        },
+        "personalInfo": {
+            "title": "Личные Данные",
+            "subtitle": "Укажите ваши личные данные"
+        },
+        "fileUpload": {
+            "title": "Загрузка Документов",
+            "subtitle": "Загрузите необходимые документы",
+            "instructions": "Четкие фото или PDF. Макс. 5МБ.",
+            "allFilesUploaded": "Все файлы загружены!",
+            "proceedToReview": "Перейти к Проверке"
+        },
+        "review": {
+            "title": "Проверка Заявки",
+            "subtitle": "Проверьте информацию",
+            "incompleteWarning": "Заявка не полна.",
+            "missingPersonalInfo": "Нет личных данных",
+            "missingFiles": "Нет файлов",
+            "personalInfoIncomplete": "Заполните личные данные.",
+            "fileNotUploaded": "Файл не загружен.",
+            "readyToProceed": "Заявка готова к отправке!",
+            "proceedToConfirmation": "К Подтверждению",
+            "sections": {
+                "personalInfo": "Личные Данные",
+                "uploadedFiles": "Загруженные Файлы"
+            }
+        },
+        "confirmation": {
+            "title": "Подтверждение",
+            "subtitle": "Подтвердите отправку",
+            "incompleteWarning": "Неполная заявка.",
+            "missingPersonalInfo": "Нет данных",
+            "missingFiles": "Нет файлов",
+            "submissionNotice": "Отправляя, вы подтверждаете точность данных. Вы получите email с подтверждением.",
+            "referenceNumber": "Номер заявки",
+            "sections": {
+                "personalInfo": "Личные Данные",
+                "uploadedFiles": "Файлы",
+                "applicationDetails": "Детали"
+            }
+        },
+        "success": {
+            "title": "Заявка Отправлена!",
+            "subtitle": "Ваша заявка успешно отправлена",
+            "referenceNumber": "Ваш Номер Заявки",
+            "referenceNumberNote": "Сохраните этот номер",
+            "applicationSummary": "Сводка",
+            "submissionDate": "Дата Отправки",
+            "nextSteps": {
+                "title": "Что дальше?",
+                "emailConfirmation": "Подтверждение Email",
+                "emailConfirmationNote": "Письмо придет в течение 5 минут",
+                "processing": "Обработка",
+                "processingNote": "Проверка займет 2-3 рабочих дня",
+                "followUp": "Связь",
+                "followUpNote": "Мы свяжемся с вами при необходимости"
+            },
+            "importantInfo": "Важно: Сохраните номер заявки.",
+            "actions": {
+                "goHome": "На Главную",
+                "print": "Печать"
+            }
+        },
+        "notFound": {
+            "title": "Страница не найдена",
+            "subtitle": "Такой страницы не существует",
+            "goHome": "На Главную"
+        }
+    },
+    "footer": {
+        "allRightsReserved": "Все права защищены.",
+        "privacy": "Конфиденциальность",
+        "terms": "Условия",
+        "support": "Поддержка"
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "Личные Данные",
+            "subtitle": "Детали для страховки",
+            "submitting": "Отправка...",
+            "success": "Сохранено!",
+            "sections": {
+                "personal": "Личные Детали",
+                "address": "Адрес"
+            },
+            "fields": {
+                "firstName": "Имя",
+                "lastName": "Фамилия",
+                "email": "Email",
+                "phone": "Телефон",
+                "dateOfBirth": "Дата Рождения",
+                "insuranceType": "Тип Страховки",
+                "address": {
+                    "street": "Улица, Дом",
+                    "city": "Город",
+                    "state": "Область/Край",
+                    "zipCode": "Индекс",
+                    "country": "Страна"
+                }
+            },
+            "insuranceType": {
+                "label": "Тип Страховки",
+                "options": {
+                    "health": "Медицинская",
+                    "auto": "Автомобильная",
+                    "life": "Страхование Жизни",
+                    "travel": "Туристическая"
+                }
+            },
+            "insuranceTypes": {
+                "health": "Медицинская",
+                "auto": "Автомобильная",
+                "life": "Страхование Жизни",
+                "travel": "Туристическая"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "Имя обязательно",
+                    "minLength": "Мин 2 символа",
+                    "maxLength": "Макс 50 символов",
+                    "pattern": "Только буквы"
+                },
+                "lastName": {
+                    "required": "Фамилия обязательна",
+                    "minLength": "Мин 2 символа",
+                    "maxLength": "Макс 50 символов",
+                    "pattern": "Только буквы"
+                },
+                "email": {
+                    "required": "Email обязателен",
+                    "pattern": "Неверный email"
+                },
+                "phone": {
+                    "required": "Телефон обязателен",
+                    "pattern": "Неверный номер"
+                },
+                "dateOfBirth": {
+                    "required": "Дата обязательна",
+                    "future": "Дата в будущем не разрешена",
+                    "minAge": "Вам должно быть 18 лет",
+                    "maxAge": "Неверная дата"
+                },
+                "insuranceType": {
+                    "required": "Выберите тип"
+                },
+                "address": {
+                    "street": {
+                        "required": "Улица обязательна",
+                        "minLength": "Мин 5 символов"
+                    },
+                    "city": {
+                        "required": "Город обязателен",
+                        "minLength": "Мин 2 символа"
+                    },
+                    "state": {
+                        "required": "Область обязательна",
+                        "minLength": "Мин 2 символа"
+                    },
+                    "zipCode": {
+                        "required": "Индекс обязателен"
+                    },
+                    "country": {
+                        "required": "Страна обязательна"
+                    }
+                }
+            },
+            "countries": {
+                "US": "США",
+                "CA": "Канада",
+                "MX": "Мексика",
+                "CN": "Китай",
+                "ES": "Испания",
+                "FR": "Франция",
+                "DE": "Германия",
+                "GB": "Великобритания",
+                "AU": "Австралия",
+                "JP": "Япония"
+            }
+        },
+        "fileUpload": {
+            "studentId": {
+                "label": "Студенческий Билет",
+                "description": "Четкое фото билета"
+            },
+            "passport": {
+                "label": "Паспорт",
+                "description": "Четкое фото паспорта"
+            }
+        }
+    },
+    "fileUpload": {
+        "title": "Файлы",
+        "description": "Загрузите документы.",
+        "studentId": "Студенческий",
+        "passport": "Паспорт",
+        "dragAndDrop": "Перетащите файлы",
+        "orClickToSelect": "или кликните",
+        "uploading": "Загрузка...",
+        "remove": "Удалить",
+        "requirements": "JPEG, PNG, PDF. Макс 5МБ.",
+        "errors": {
+            "fileTooLarge": "Файл слишком большой.",
+            "invalidFormat": "Неверный формат.",
+            "uploadFailed": "Ошибка.",
+            "noFilesUploaded": "Нет файлов."
+        }
+    },
+    "workflow": {
+        "steps": {
+            "personalInfo": {
+                "label": "Личные Данные",
+                "description": "Детали"
+            },
+            "fileUpload": {
+                "label": "Файлы",
+                "description": "Документы"
+            },
+            "review": {
+                "label": "Проверка",
+                "description": "Сводка"
+            },
+            "confirmation": {
+                "label": "Подтверждение",
+                "description": "Отправка"
+            },
+            "success": {
+                "label": "Готово",
+                "description": "Отправлено"
+            }
+        },
+        "progress": "Шаг {{current}} из {{total}}",
+        "navigation": {
+            "previous": "Назад",
+            "next": "Далее",
+            "submit": "Отправить Заявку",
+            "saveAsDraft": "Сохранить Черновик",
+            "goHome": "На Главную",
+            "saving": "Сохранение...",
+            "submitting": "Отправка...",
+            "unsavedChanges": "Несохраненные изменения."
+        }
+    },
+    "common": {
+        "back": "Назад",
+        "continue": "Продолжить",
+        "submit": "Отправить",
+        "submitting": "Отправка...",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "edit": "Изменить",
+        "delete": "Удалить",
+        "confirm": "Подтвердить",
+        "loading": "Загрузка...",
+        "copy": "Копировать",
+        "notProvided": "Не указано",
+        "notUploaded": "Не загружено"
+    },
+    "errors": {
+        "general": "Произошла ошибка.",
+        "network": "Ошибка сети.",
+        "validation": "Проверьте данные."
+    }
+}

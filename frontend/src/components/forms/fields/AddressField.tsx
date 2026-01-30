@@ -47,6 +47,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
             <TextField
               {...field}
               fullWidth
+              size="medium"
               label={t('forms.personalInfo.fields.address.street')}
               error={!!errors?.street}
               helperText={errors?.street?.message}
@@ -84,6 +85,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
             <TextField
               {...field}
               fullWidth
+              size="medium"
               label={t('forms.personalInfo.fields.address.city')}
               error={!!errors?.city}
               helperText={errors?.city?.message}
@@ -117,6 +119,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
             <TextField
               {...field}
               fullWidth
+              size="medium"
               label={t('forms.personalInfo.fields.address.state')}
               error={!!errors?.state}
               helperText={errors?.state?.message}
@@ -146,6 +149,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
             <TextField
               {...field}
               fullWidth
+              size="medium"
               label={t('forms.personalInfo.fields.address.zipCode')}
               error={!!errors?.zipCode}
               helperText={errors?.zipCode?.message}
@@ -161,7 +165,7 @@ const AddressField: React.FC<AddressFieldProps> = ({ control, errors, disabled =
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <FormControl fullWidth error={!!errors?.country} disabled={disabled}>
+        <FormControl fullWidth error={!!errors?.country} disabled={disabled} size="medium">
           <InputLabel id="country-label">
             {t('forms.personalInfo.fields.address.country')}
           </InputLabel>

@@ -21,7 +21,16 @@ interface Language {
 const languages: Language[] = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ];
 
 const LanguageSelector: React.FC = () => {
@@ -101,7 +110,7 @@ const LanguageSelector: React.FC = () => {
             <ListItemIcon sx={{ minWidth: '32px !important' }}>
               <span style={{ fontSize: '1.2rem' }}>{language.flag}</span>
             </ListItemIcon>
-            <ListItemText 
+            <ListItemText
               primary={language.name}
               primaryTypographyProps={{
                 fontSize: { xs: '0.875rem', sm: '1rem' },

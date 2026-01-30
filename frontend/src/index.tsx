@@ -100,14 +100,29 @@ const theme = createTheme({
         },
       },
     },
-    MuiSelect: {
+    MuiOutlinedInput: {
       styleOverrides: {
-        select: {
+        root: {
           minHeight: '44px',
           '@media (max-width:600px)': {
             minHeight: '48px',
           },
         },
+        input: {
+          // Fix for Select's inner element height contribution
+          '&.MuiSelect-select': {
+            minHeight: 'auto',
+            paddingTop: '10px',
+            paddingBottom: '10px',
+            display: 'flex',
+            alignItems: 'center',
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        // Removed incorrect minHeight on select element
       },
     },
     MuiPaper: {

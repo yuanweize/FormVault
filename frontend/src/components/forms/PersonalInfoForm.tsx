@@ -139,6 +139,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <TextField
                   {...field}
                   fullWidth
+                  size="medium"
                   label={t('forms.personalInfo.fields.firstName')}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message}
@@ -181,6 +182,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <TextField
                   {...field}
                   fullWidth
+                  size="medium"
                   label={t('forms.personalInfo.fields.lastName')}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message}
@@ -210,6 +212,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <TextField
                   {...field}
                   fullWidth
+                  size="medium"
                   type="email"
                   label={t('forms.personalInfo.fields.email')}
                   error={!!errors.email}
@@ -240,6 +243,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <TextField
                   {...field}
                   fullWidth
+                  size="medium"
                   type="tel"
                   label={t('forms.personalInfo.fields.phone')}
                   error={!!errors.phone}
@@ -289,7 +293,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth error={!!errors.insuranceType} disabled={isLoading}>
+            <FormControl fullWidth error={!!errors.insuranceType} disabled={isLoading} size="medium">
               <InputLabel id="insurance-type-label">
                 {t('forms.personalInfo.fields.insuranceType')}
               </InputLabel>

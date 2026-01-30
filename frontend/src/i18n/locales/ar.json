@@ -1,0 +1,311 @@
+{
+    "app": {
+        "title": "FormVault",
+        "shortTitle": "FormVault",
+        "subtitle": "بوابة طلب التأمين الآمنة"
+    },
+    "stepper": {
+        "personalInfo": "معلومات شخصية",
+        "personalInfoShort": "معلومات",
+        "fileUpload": "تحميل المستندات",
+        "fileUploadShort": "ملفات",
+        "review": "مراجعة وإرسال",
+        "reviewShort": "مراجعة",
+        "success": "مكتمل",
+        "successShort": "تم",
+        "step": "خطوة",
+        "of": "من"
+    },
+    "navigation": {
+        "home": "الرئيسية",
+        "back": "رجوع",
+        "next": "التالي",
+        "submit": "إرسال",
+        "cancel": "إلغاء"
+    },
+    "validation": {
+        "required": "هذا الحقل مطلوب",
+        "email": "يرجى إدخال بريد إلكتروني صالح",
+        "phone": "يرجى إدخال رقم هاتف صالح",
+        "minLength": "الحد الأدنى للطول هو {{min}} حرفًا",
+        "maxLength": "الحد الأقصى للطول هو {{max}} حرفًا",
+        "fileSize": "يجب أن يكون حجم الملف أقل من {{size}} ميغابايت",
+        "fileType": "نوع الملف غير صالح",
+        "dateFormat": "التاريخ غير صالح"
+    },
+    "pages": {
+        "home": {
+            "title": "مرحبًا بكم في FormVault",
+            "subtitle": "أكمل طلب التأمين الخاص بك بأمان وكفاءة",
+            "getStarted": "ابدأ الآن",
+            "features": {
+                "secure": "آمن ومشفر",
+                "secureDesc": "بياناتك محمية",
+                "multilingual": "دعم متعدد اللغات",
+                "multilingualDesc": "متوفر بالإنجليزية والصينية والعربية وغيرها",
+                "mobile": "متوافق مع الجوال",
+                "mobileDesc": "أكمل طلبك على أي جهاز"
+            }
+        },
+        "personalInfo": {
+            "title": "معلومات شخصية",
+            "subtitle": "يرجى تقديم تفاصيلك الشخصية"
+        },
+        "fileUpload": {
+            "title": "تحميل المستندات",
+            "subtitle": "يرجى تحميل المستندات المطلوبة",
+            "instructions": "صور واضحة أو PDF. الحد الأقصى 5 ميغابايت لكل ملف.",
+            "allFilesUploaded": "تم تحميل جميع الملفات المطلوبة بنجاح!",
+            "proceedToReview": "المتابعة للمراجعة"
+        },
+        "review": {
+            "title": "مراجعة الطلب",
+            "subtitle": "يرجى مراجعة معلوماتك",
+            "incompleteWarning": "الطلب غير مكتمل.",
+            "missingPersonalInfo": "المعلومات الشخصية ناقصة",
+            "missingFiles": "الملفات مفقودة",
+            "personalInfoIncomplete": "يرجى إكمال معلوماتك الشخصية.",
+            "fileNotUploaded": "لم يتم تحميل هذا الملف.",
+            "readyToProceed": "طلبك مكتمل وجاهز للإرسال!",
+            "proceedToConfirmation": "المتابعة للتأكيد",
+            "sections": {
+                "personalInfo": "معلومات شخصية",
+                "uploadedFiles": "الملفات المحملة"
+            }
+        },
+        "confirmation": {
+            "title": "تأكيد الإرسال",
+            "subtitle": "يرجى تأكيد إرسال طلبك",
+            "incompleteWarning": "غير مكتمل.",
+            "missingPersonalInfo": "نقص في المعلومات",
+            "missingFiles": "نقص في الملفات",
+            "submissionNotice": "بإرسالك للطلب، تؤكد أن المعلومات دقيقة. ستتلقى بريدًا إلكترونيًا للتأكيد.",
+            "referenceNumber": "رقم المرجع",
+            "sections": {
+                "personalInfo": "معلومات شخصية",
+                "uploadedFiles": "ملفات",
+                "applicationDetails": "تفاصيل"
+            }
+        },
+        "success": {
+            "title": "تم إرسال الطلب!",
+            "subtitle": "تم إرسال طلب التأمين الخاص بك بنجاح",
+            "referenceNumber": "رقم المرجع الخاص بك",
+            "referenceNumberNote": "يرجى حفظ هذا الرقم",
+            "applicationSummary": "ملخص الطلب",
+            "submissionDate": "تاريخ الإرسال",
+            "nextSteps": {
+                "title": "ماذا بعد؟",
+                "emailConfirmation": "تأكيد البريد الإلكتروني",
+                "emailConfirmationNote": "ستتلقى تأكيدًا خلال 5 دقائق",
+                "processing": "معالجة الطلب",
+                "processingNote": "ستستغرق المراجعة 2-3 أيام عمل",
+                "followUp": "متابعة التواصل",
+                "followUpNote": "سنتصل بك إذا لزم الأمر"
+            },
+            "importantInfo": "هام: احتفظ برقم المرجع.",
+            "actions": {
+                "goHome": "العودة للرئيسية",
+                "print": "طباعة"
+            }
+        },
+        "notFound": {
+            "title": "الصفحة غير موجودة",
+            "subtitle": "الصفحة التي تبحث عنها غير موجودة",
+            "goHome": "الرئيسية"
+        }
+    },
+    "footer": {
+        "allRightsReserved": "جميع الحقوق محفوظة.",
+        "privacy": "الخصوصية",
+        "terms": "الشروط",
+        "support": "الدعم"
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "معلومات شخصية",
+            "subtitle": "تفاصيل التأمين",
+            "submitting": "جاري الإرسال...",
+            "success": "تم الحفظ!",
+            "sections": {
+                "personal": "تفاصيل شخصية",
+                "address": "العنوان"
+            },
+            "fields": {
+                "firstName": "الاسم الأول",
+                "lastName": "اسم العائلة",
+                "email": "البريد الإلكتروني",
+                "phone": "رقم الهاتف",
+                "dateOfBirth": "تاريخ الميلاد",
+                "insuranceType": "نوع التأمين",
+                "address": {
+                    "street": "الشارع",
+                    "city": "المدينة",
+                    "state": "الولاية/المقاطعة",
+                    "zipCode": "الرمز البريدي",
+                    "country": "الدولة"
+                }
+            },
+            "insuranceType": {
+                "label": "نوع التأمين",
+                "options": {
+                    "health": "تأمين صحي",
+                    "auto": "تأمين سيارات",
+                    "life": "تأمين على الحياة",
+                    "travel": "تأمين سفر"
+                }
+            },
+            "insuranceTypes": {
+                "health": "تأمين صحي",
+                "auto": "تأمين سيارات",
+                "life": "تأمين على الحياة",
+                "travel": "تأمين سفر"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "الاسم الأول مطلوب",
+                    "minLength": "حرفان على الأقل",
+                    "maxLength": "50 حرفًا كحد أقصى",
+                    "pattern": "أحرف فقط"
+                },
+                "lastName": {
+                    "required": "اسم العائلة مطلوب",
+                    "minLength": "حرفان على الأقل",
+                    "maxLength": "50 حرفًا كحد أقصى",
+                    "pattern": "أحرف فقط"
+                },
+                "email": {
+                    "required": "البريد الإلكتروني مطلوب",
+                    "pattern": "بريد إلكتروني غير صالح"
+                },
+                "phone": {
+                    "required": "رقم الهاتف مطلوب",
+                    "pattern": "رقم غير صالح"
+                },
+                "dateOfBirth": {
+                    "required": "التاريخ مطلوب",
+                    "future": "التاريخ المستقبلي غير مسموح",
+                    "minAge": "يجب أن يكون عمرك 18 عامًا",
+                    "maxAge": "تاريخ غير صالح"
+                },
+                "insuranceType": {
+                    "required": "اختر نوعًا"
+                },
+                "address": {
+                    "street": {
+                        "required": "الشارع مطلوب",
+                        "minLength": "5 أحرف على الأقل"
+                    },
+                    "city": {
+                        "required": "المدينة مطلوبة",
+                        "minLength": "حرفان على الأقل"
+                    },
+                    "state": {
+                        "required": "الولاية مطلوبة",
+                        "minLength": "حرفان على الأقل"
+                    },
+                    "zipCode": {
+                        "required": "الرمز البريدي مطلوب"
+                    },
+                    "country": {
+                        "required": "الدولة مطلوبة"
+                    }
+                }
+            },
+            "countries": {
+                "US": "الولايات المتحدة",
+                "CA": "كندا",
+                "MX": "المكسيك",
+                "CN": "الصين",
+                "ES": "إسبانيا",
+                "FR": "فرنسا",
+                "DE": "ألمانيا",
+                "GB": "المملكة المتحدة",
+                "AU": "أستراليا",
+                "JP": "اليابان"
+            }
+        },
+        "fileUpload": {
+            "studentId": {
+                "label": "بطاقة طالب",
+                "description": "صورة واضحة للبطاقة"
+            },
+            "passport": {
+                "label": "جواز سفر",
+                "description": "صورة واضحة للجواز"
+            }
+        }
+    },
+    "fileUpload": {
+        "title": "تحميل الملفات",
+        "description": "حمل مستنداتك.",
+        "studentId": "بطاقة طالب",
+        "passport": "جواز سفر",
+        "dragAndDrop": "اسحب الملفات هنا",
+        "orClickToSelect": "أو انقر للاختيار",
+        "uploading": "جاري التحميل...",
+        "remove": "إزالة",
+        "requirements": "JPEG, PNG, PDF. بحد أقصى 5 ميغابايت.",
+        "errors": {
+            "fileTooLarge": "الملف كبير جدًا.",
+            "invalidFormat": "تنسيق غير صالح.",
+            "uploadFailed": "فشل.",
+            "noFilesUploaded": "لا توجد ملفات."
+        }
+    },
+    "workflow": {
+        "steps": {
+            "personalInfo": {
+                "label": "معلومات شخصية",
+                "description": "تفاصيل"
+            },
+            "fileUpload": {
+                "label": "ملفات",
+                "description": "مستندات"
+            },
+            "review": {
+                "label": "مراجعة",
+                "description": "ملخص"
+            },
+            "confirmation": {
+                "label": "تأكيد",
+                "description": "إرسال"
+            },
+            "success": {
+                "label": "تم",
+                "description": "أرسلت"
+            }
+        },
+        "progress": "الخطوة {{current}} من {{total}}",
+        "navigation": {
+            "previous": "السابق",
+            "next": "التالي",
+            "submit": "إرسال الطلب",
+            "saveAsDraft": "حفظ كمسودة",
+            "goHome": "للصفحة الرئيسية",
+            "saving": "جاري الحفظ...",
+            "submitting": "جاري الإرسال...",
+            "unsavedChanges": "تغييرات غير محفوظة."
+        }
+    },
+    "common": {
+        "back": "رجوع",
+        "continue": "متابعة",
+        "submit": "إرسال",
+        "submitting": "جاري الإرسال...",
+        "cancel": "إلغاء",
+        "save": "حفظ",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "confirm": "تأكيد",
+        "loading": "جاري التحميل...",
+        "copy": "نسخ",
+        "notProvided": "غير مقدم",
+        "notUploaded": "غير محمل"
+    },
+    "errors": {
+        "general": "حدث خطأ.",
+        "network": "خطأ في الشبكة.",
+        "validation": "تحقق من المدخلات."
+    }
+}

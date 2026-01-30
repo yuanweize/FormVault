@@ -6,6 +6,12 @@ import esTranslations from './locales/es.json';
 import deTranslations from './locales/de.json';
 import frTranslations from './locales/fr.json';
 import csTranslations from './locales/cs.json';
+import itTranslations from './locales/it.json';
+import ptTranslations from './locales/pt.json';
+import ruTranslations from './locales/ru.json';
+import jaTranslations from './locales/ja.json';
+import koTranslations from './locales/ko.json';
+import arTranslations from './locales/ar.json';
 
 const resources = {
   en: {
@@ -25,6 +31,24 @@ const resources = {
   },
   cs: {
     translation: csTranslations,
+  },
+  it: {
+    translation: itTranslations,
+  },
+  pt: {
+    translation: ptTranslations,
+  },
+  ru: {
+    translation: ruTranslations,
+  },
+  ja: {
+    translation: jaTranslations,
+  },
+  ko: {
+    translation: koTranslations,
+  },
+  ar: {
+    translation: arTranslations,
   },
 };
 

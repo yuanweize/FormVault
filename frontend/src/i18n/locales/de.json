@@ -2,10 +2,10 @@
     "app": {
         "title": "FormVault",
         "shortTitle": "FormVault",
-        "subtitle": "Sichere Versicherungsantrags-Portal"
+        "subtitle": "Sicheres Versicherungsportal"
     },
     "stepper": {
-        "personalInfo": "Persönliche Informationen",
+        "personalInfo": "Persönliche Daten",
         "personalInfoShort": "Info",
         "fileUpload": "Dokumenten-Upload",
         "fileUploadShort": "Dateien",
@@ -27,62 +27,108 @@
         "required": "Dieses Feld ist erforderlich",
         "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
         "phone": "Bitte geben Sie eine gültige Telefonnummer ein",
-        "minLength": "Mindestlänge ist {{min}} Zeichen",
-        "maxLength": "Maximale Länge ist {{max}} Zeichen",
-        "fileSize": "Dateigröße muss unter {{size}}MB liegen",
+        "minLength": "Mindestlänge beträgt {{min}} Zeichen",
+        "maxLength": "Maximallänge beträgt {{max}} Zeichen",
+        "fileSize": "Dateigröße muss kleiner als {{size}}MB sein",
         "fileType": "Bitte laden Sie einen gültigen Dateityp hoch",
         "dateFormat": "Bitte geben Sie ein gültiges Datum ein"
     },
     "pages": {
         "home": {
             "title": "Willkommen bei FormVault",
-            "subtitle": "Füllen Sie Ihren Versicherungsantrag sicher und effizient aus",
+            "subtitle": "Schließen Sie Ihren Versicherungsantrag sicher und effizient ab",
             "getStarted": "Loslegen",
             "features": {
                 "secure": "Sicher & Verschlüsselt",
-                "secureDesc": "Ihre Daten sind mit branchenüblicher Verschlüsselung geschützt",
-                "multilingual": "Mehrsprachig",
-                "multilingualDesc": "Verfügbar in mehreren Sprachen",
+                "secureDesc": "Ihre Daten sind durch Industriestandards geschützt",
+                "multilingual": "Mehrsprachige Unterstützung",
+                "multilingualDesc": "Verfügbar in Englisch, Chinesisch und Spanisch",
                 "mobile": "Mobilfreundlich",
-                "mobileDesc": "Füllen Sie Ihren Antrag auf jedem Gerät aus"
+                "mobileDesc": "Schließen Sie Ihren Antrag auf jedem Gerät ab"
             }
         },
         "personalInfo": {
             "title": "Persönliche Informationen",
-            "subtitle": "Bitte geben Sie Ihre persönlichen Daten für den Versicherungsantrag an"
+            "subtitle": "Bitte geben Sie Ihre persönlichen Details für den Antrag an"
         },
         "fileUpload": {
             "title": "Dokumente hochladen",
-            "subtitle": "Bitte laden Sie Ihre erforderlichen Dokumente hoch"
+            "subtitle": "Bitte laden Sie die erforderlichen Dokumente hoch",
+            "instructions": "Laden Sie klare, hochwertige Bilder oder PDFs hoch. Maximale Größe 5MB pro Datei.",
+            "allFilesUploaded": "Alle erforderlichen Dateien wurden erfolgreich hochgeladen!",
+            "proceedToReview": "Weiter zur Überprüfung"
         },
         "review": {
             "title": "Antrag überprüfen",
-            "subtitle": "Bitte überprüfen Sie Ihre Informationen vor dem Absenden"
+            "subtitle": "Bitte überprüfen Sie Ihre Angaben vor dem Fortfahren",
+            "incompleteWarning": "Ihr Antrag ist unvollständig. Bitte vervollständigen Sie fehlende Abschnitte:",
+            "missingPersonalInfo": "Persönliche Daten sind unvollständig",
+            "missingFiles": "Erforderliche Dateien fehlen",
+            "personalInfoIncomplete": "Bitte vervollständigen Sie Ihre persönlichen Daten.",
+            "fileNotUploaded": "Diese Datei wurde noch nicht hochgeladen.",
+            "readyToProceed": "Ihr Antrag ist vollständig und bereit zum Absenden!",
+            "proceedToConfirmation": "Weiter zur Bestätigung",
+            "sections": {
+                "personalInfo": "Persönliche Daten",
+                "uploadedFiles": "Hochgeladene Dateien"
+            }
+        },
+        "confirmation": {
+            "title": "Absenden bestätigen",
+            "subtitle": "Bitte bestätigen Sie das Absenden Ihres Antrags",
+            "incompleteWarning": "Ihr Antrag kann nicht gesendet werden, da er unvollständig ist:",
+            "missingPersonalInfo": "Persönliche Daten sind unvollständig",
+            "missingFiles": "Erforderliche Dateien fehlen",
+            "submissionNotice": "Durch das Absenden bestätigen Sie, dass alle Angaben korrekt und vollständig sind. Sie erhalten eine Bestätigungs-E-Mail mit Ihrer Referenznummer.",
+            "referenceNumber": "Referenznummer",
+            "sections": {
+                "personalInfo": "Persönliche Daten",
+                "uploadedFiles": "Hochgeladene Dateien",
+                "applicationDetails": "Antragsdetails"
+            }
         },
         "success": {
-            "title": "Antrag eingereicht!",
-            "subtitle": "Ihr Versicherungsantrag wurde erfolgreich eingereicht"
+            "title": "Antrag gesendet!",
+            "subtitle": "Ihr Versicherungsantrag wurde erfolgreich übermittelt",
+            "referenceNumber": "Ihre Referenznummer",
+            "referenceNumberNote": "Bitte speichern Sie diese Nummer für Ihre Unterlagen",
+            "applicationSummary": "Antragszusammenfassung",
+            "submissionDate": "Einreichungsdatum",
+            "nextSteps": {
+                "title": "Was passiert als Nächstes?",
+                "emailConfirmation": "E-Mail-Bestätigung",
+                "emailConfirmationNote": "Sie erhalten innerhalb von 5 Minuten eine Bestätigung per E-Mail",
+                "processing": "Antragsbearbeitung",
+                "processingNote": "Ihr Antrag wird innerhalb von 2-3 Werktagen geprüft",
+                "followUp": "Weitere Kommunikation",
+                "followUpNote": "Wir kontaktieren Sie, falls weitere Informationen benötigt werden"
+            },
+            "importantInfo": "Wichtig: Bewahren Sie Ihre Referenznummer sicher auf. Sie benötigen sie für zukünftige Korrespondenz.",
+            "actions": {
+                "goHome": "Zurück zur Startseite",
+                "print": "Bestätigung drucken"
+            }
         },
         "notFound": {
             "title": "Seite nicht gefunden",
             "subtitle": "Die gesuchte Seite existiert nicht",
-            "goHome": "Zur Startseite"
+            "goHome": "Startseite"
         }
     },
     "footer": {
         "allRightsReserved": "Alle Rechte vorbehalten.",
-        "privacy": "Datenschutzrichtlinie",
+        "privacy": "Datenschutz",
         "terms": "Nutzungsbedingungen",
         "support": "Support"
     },
     "forms": {
         "personalInfo": {
             "title": "Persönliche Informationen",
-            "subtitle": "Bitte geben Sie Ihre persönlichen Daten für Ihren Versicherungsantrag an",
+            "subtitle": "Bitte geben Sie Ihre persönlichen Daten an",
             "submitting": "Wird gesendet...",
-            "success": "Persönliche Informationen erfolgreich gespeichert!",
+            "success": "Daten erfolgreich gespeichert!",
             "sections": {
-                "personal": "Persönliche Daten",
+                "personal": "Persönliche Angaben",
                 "address": "Adressinformationen"
             },
             "fields": {
@@ -91,13 +137,22 @@
                 "email": "E-Mail-Adresse",
                 "phone": "Telefonnummer",
                 "dateOfBirth": "Geburtsdatum",
-                "insuranceType": "Versicherungstyp",
+                "insuranceType": "Versicherungsart",
                 "address": {
-                    "street": "Straße",
+                    "street": "Straße und Hausnummer",
                     "city": "Stadt",
-                    "state": "Bundesland",
+                    "state": "Bundesland/Kanton",
                     "zipCode": "Postleitzahl",
                     "country": "Land"
+                }
+            },
+            "insuranceType": {
+                "label": "Versicherungsart",
+                "options": {
+                    "health": "Krankenversicherung",
+                    "auto": "Kfz-Versicherung",
+                    "life": "Lebensversicherung",
+                    "travel": "Reiseversicherung"
                 }
             },
             "insuranceTypes": {
@@ -105,6 +160,62 @@
                 "auto": "Kfz-Versicherung",
                 "life": "Lebensversicherung",
                 "travel": "Reiseversicherung"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "Vorname ist erforderlich",
+                    "minLength": "Vorname muss mindestens 2 Zeichen lang sein",
+                    "maxLength": "Vorname darf 50 Zeichen nicht überschreiten",
+                    "pattern": "Vorname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                },
+                "lastName": {
+                    "required": "Nachname ist erforderlich",
+                    "minLength": "Nachname muss mindestens 2 Zeichen lang sein",
+                    "maxLength": "Nachname darf 50 Zeichen nicht überschreiten",
+                    "pattern": "Nachname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                },
+                "email": {
+                    "required": "E-Mail ist erforderlich",
+                    "pattern": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+                },
+                "phone": {
+                    "required": "Telefonnummer ist erforderlich",
+                    "pattern": "Bitte geben Sie eine gültige Telefonnummer ein"
+                },
+                "dateOfBirth": {
+                    "required": "Geburtsdatum ist erforderlich",
+                    "future": "Geburtsdatum darf nicht in der Zukunft liegen",
+                    "minAge": "Sie müssen mindestens 18 Jahre alt sein",
+                    "maxAge": "Bitte geben Sie ein gültiges Geburtsdatum ein"
+                },
+                "insuranceType": {
+                    "required": "Bitte wählen Sie eine Versicherungsart"
+                },
+                "address": {
+                    "street": {
+                        "required": "Straße ist erforderlich",
+                        "minLength": "Straße muss mindestens 5 Zeichen lang sein",
+                        "maxLength": "Straße darf 100 Zeichen nicht überschreiten"
+                    },
+                    "city": {
+                        "required": "Stadt ist erforderlich",
+                        "minLength": "Stadt muss mindestens 2 Zeichen lang sein",
+                        "maxLength": "Stadt darf 50 Zeichen nicht überschreiten",
+                        "pattern": "Stadt darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+                    },
+                    "state": {
+                        "required": "Bundesland ist erforderlich",
+                        "minLength": "Bundesland muss mindestens 2 Zeichen lang sein",
+                        "maxLength": "Bundesland darf 50 Zeichen nicht überschreiten"
+                    },
+                    "zipCode": {
+                        "required": "PLZ ist erforderlich",
+                        "pattern": "Bitte geben Sie eine gültige PLZ ein"
+                    },
+                    "country": {
+                        "required": "Bitte wählen Sie ein Land"
+                    }
+                }
             },
             "countries": {
                 "US": "Vereinigte Staaten",
@@ -117,62 +228,16 @@
                 "GB": "Vereinigtes Königreich",
                 "AU": "Australien",
                 "JP": "Japan"
+            }
+        },
+        "fileUpload": {
+            "studentId": {
+                "label": "Studentenausweis",
+                "description": "Laden Sie ein klares Foto oder Scan Ihres Studentenausweises hoch"
             },
-            "validation": {
-                "firstName": {
-                    "required": "Vorname ist erforderlich",
-                    "minLength": "Vorname muss mindestens 2 Zeichen haben",
-                    "maxLength": "Vorname darf 50 Zeichen nicht überschreiten",
-                    "pattern": "Vorname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
-                },
-                "lastName": {
-                    "required": "Nachname ist erforderlich",
-                    "minLength": "Nachname muss mindestens 2 Zeichen haben",
-                    "maxLength": "Nachname darf 50 Zeichen nicht überschreiten",
-                    "pattern": "Nachname darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
-                },
-                "email": {
-                    "required": "E-Mail-Adresse ist erforderlich",
-                    "pattern": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
-                },
-                "phone": {
-                    "required": "Telefonnummer ist erforderlich",
-                    "pattern": "Bitte geben Sie eine gültige Telefonnummer ein"
-                },
-                "dateOfBirth": {
-                    "required": "Geburtsdatum ist erforderlich",
-                    "future": "Geburtsdatum kann nicht in der Zukunft liegen",
-                    "minAge": "Sie müssen mindestens 18 Jahre alt sein",
-                    "maxAge": "Bitte geben Sie ein gültiges Geburtsdatum ein"
-                },
-                "insuranceType": {
-                    "required": "Bitte wählen Sie einen Versicherungstyp"
-                },
-                "address": {
-                    "street": {
-                        "required": "Straße ist erforderlich",
-                        "minLength": "Straße muss mindestens 5 Zeichen haben",
-                        "maxLength": "Straße darf 100 Zeichen nicht überschreiten"
-                    },
-                    "city": {
-                        "required": "Stadt ist erforderlich",
-                        "minLength": "Stadt muss mindestens 2 Zeichen haben",
-                        "maxLength": "Stadt darf 50 Zeichen nicht überschreiten",
-                        "pattern": "Stadt darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
-                    },
-                    "state": {
-                        "required": "Bundesland ist erforderlich",
-                        "minLength": "Bundesland muss mindestens 2 Zeichen haben",
-                        "maxLength": "Bundesland darf 50 Zeichen nicht überschreiten"
-                    },
-                    "zipCode": {
-                        "required": "Postleitzahl ist erforderlich",
-                        "pattern": "Bitte geben Sie eine gültige Postleitzahl ein"
-                    },
-                    "country": {
-                        "required": "Bitte wählen Sie ein Land"
-                    }
-                }
+            "passport": {
+                "label": "Reisepass",
+                "description": "Laden Sie ein klares Foto oder Scan Ihres Reisepasses hoch"
             }
         }
     },
@@ -182,35 +247,70 @@
         "studentId": "Studentenausweis",
         "passport": "Reisepass",
         "dragAndDrop": "Datei hierher ziehen",
-        "orClickToSelect": "oder klicken zum Auswählen",
-        "selectFile": "Datei auswählen",
-        "takePhoto": "Foto aufnehmen",
+        "orClickToSelect": "oder zum Auswählen klicken",
         "uploading": "Wird hochgeladen...",
-        "preview": "Dateivorschau",
         "remove": "Entfernen",
-        "requirements": "Unterstützte Formate: JPEG, PNG, PDF. Maximale Dateigröße: 5MB pro Datei.",
+        "requirements": "Formate: JPEG, PNG, PDF. Max. 5MB.",
         "errors": {
-            "title": "Bitte beheben Sie die folgenden Fehler:",
-            "fileTooLarge": "Datei ist zu groß. Maximale Größe ist {{maxSize}}MB",
-            "invalidFormat": "Ungültiges Dateiformat. Unterstützte Formate: {{formats}}",
-            "uploadFailed": "Upload fehlgeschlagen. Bitte versuchen Sie es erneut."
+            "fileTooLarge": "Datei ist zu groß. Max. {{maxSize}}MB",
+            "invalidFormat": "Ungültiges Format. Unterstützt: {{formats}}",
+            "uploadFailed": "Upload fehlgeschlagen.",
+            "noFilesUploaded": "Bitte laden Sie mindestens ein Dokument hoch"
+        }
+    },
+    "workflow": {
+        "steps": {
+            "personalInfo": {
+                "label": "Persönliche Info",
+                "description": "Details eingeben"
+            },
+            "fileUpload": {
+                "label": "Dateien hochladen",
+                "description": "Dokumente"
+            },
+            "review": {
+                "label": "Prüfen",
+                "description": "Zusammenfassung"
+            },
+            "confirmation": {
+                "label": "Bestätigen",
+                "description": "Absenden"
+            },
+            "success": {
+                "label": "Fertig",
+                "description": "Gesendet"
+            }
+        },
+        "progress": "Schritt {{current}} von {{total}}",
+        "navigation": {
+            "previous": "Zurück",
+            "next": "Weiter",
+            "submit": "Antrag absenden",
+            "saveAsDraft": "Als Entwurf speichern",
+            "goHome": "Zur Startseite",
+            "saving": "Speichert...",
+            "submitting": "Sendet...",
+            "unsavedChanges": "Ungespeicherte Änderungen."
         }
     },
     "common": {
         "back": "Zurück",
         "continue": "Weiter",
         "submit": "Absenden",
-        "submitting": "Wird gesendet...",
+        "submitting": "Sendet...",
         "cancel": "Abbrechen",
         "save": "Speichern",
         "edit": "Bearbeiten",
         "delete": "Löschen",
         "confirm": "Bestätigen",
-        "loading": "Lädt..."
+        "loading": "Lädt...",
+        "copy": "Kopieren",
+        "notProvided": "Nicht angegeben",
+        "notUploaded": "Nicht hochgeladen"
     },
     "errors": {
-        "general": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-        "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
-        "validation": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."
+        "general": "Ein Fehler ist aufgetreten.",
+        "network": "Netzwerkfehler.",
+        "validation": "Bitte überprüfen Sie Ihre Eingaben."
     }
 }

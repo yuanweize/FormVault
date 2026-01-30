@@ -1,0 +1,311 @@
+{
+    "app": {
+        "title": "FormVault",
+        "shortTitle": "FormVault",
+        "subtitle": "安全な保険申請ポータル"
+    },
+    "stepper": {
+        "personalInfo": "個人情報",
+        "personalInfoShort": "情報",
+        "fileUpload": "書類アップロード",
+        "fileUploadShort": "ファイル",
+        "review": "確認と送信",
+        "reviewShort": "確認",
+        "success": "完了",
+        "successShort": "完了",
+        "step": "ステップ",
+        "of": "/"
+    },
+    "navigation": {
+        "home": "ホーム",
+        "back": "戻る",
+        "next": "次へ",
+        "submit": "送信",
+        "cancel": "キャンセル"
+    },
+    "validation": {
+        "required": "必須項目です",
+        "email": "有効なメールアドレスを入力してください",
+        "phone": "有効な電話番号を入力してください",
+        "minLength": "最小文字数は{{min}}文字です",
+        "maxLength": "最大文字数は{{max}}文字です",
+        "fileSize": "ファイルサイズは{{size}}MB未満にしてください",
+        "fileType": "無効なファイル形式です",
+        "dateFormat": "無効な日付です"
+    },
+    "pages": {
+        "home": {
+            "title": "FormVaultへようこそ",
+            "subtitle": "安全かつ効率的に保険申請を完了できます",
+            "getStarted": "始める",
+            "features": {
+                "secure": "安全な暗号化",
+                "secureDesc": "データは保護されています",
+                "multilingual": "多言語対応",
+                "multilingualDesc": "英語、中国語、日本語などに対応",
+                "mobile": "モバイル対応",
+                "mobileDesc": "どのデバイスでも申請可能"
+            }
+        },
+        "personalInfo": {
+            "title": "個人情報",
+            "subtitle": "詳細を入力してください"
+        },
+        "fileUpload": {
+            "title": "書類アップロード",
+            "subtitle": "必要な書類をアップロードしてください",
+            "instructions": "鮮明な画像またはPDF。ファイルあたり最大5MB。",
+            "allFilesUploaded": "全ての必須ファイルがアップロードされました！",
+            "proceedToReview": "確認へ進む"
+        },
+        "review": {
+            "title": "申請内容の確認",
+            "subtitle": "情報を確認してください",
+            "incompleteWarning": "申請が不完全です。",
+            "missingPersonalInfo": "個人情報が不足しています",
+            "missingFiles": "ファイルが不足しています",
+            "personalInfoIncomplete": "個人情報を入力してください。",
+            "fileNotUploaded": "ファイルがアップロードされていません。",
+            "readyToProceed": "申請の準備が整いました！",
+            "proceedToConfirmation": "確認へ進む",
+            "sections": {
+                "personalInfo": "個人情報",
+                "uploadedFiles": "アップロードされたファイル"
+            }
+        },
+        "confirmation": {
+            "title": "送信の確認",
+            "subtitle": "申請の送信を確認してください",
+            "incompleteWarning": "不完全です。",
+            "missingPersonalInfo": "情報不足",
+            "missingFiles": "ファイル不足",
+            "submissionNotice": "送信することで、情報が正確であることを確認します。確認メールが送信されます。",
+            "referenceNumber": "参照番号",
+            "sections": {
+                "personalInfo": "個人情報",
+                "uploadedFiles": "ファイル",
+                "applicationDetails": "詳細"
+            }
+        },
+        "success": {
+            "title": "送信完了！",
+            "subtitle": "保険申請が正常に送信されました",
+            "referenceNumber": "あなたの参照番号",
+            "referenceNumberNote": "この番号を保存してください",
+            "applicationSummary": "申請サマリー",
+            "submissionDate": "送信日",
+            "nextSteps": {
+                "title": "次のステップは？",
+                "emailConfirmation": "メール確認",
+                "emailConfirmationNote": "5分以内に確認メールが届きます",
+                "processing": "申請処理",
+                "processingNote": "審査には2-3営業日かかります",
+                "followUp": "フォローアップ",
+                "followUpNote": "必要に応じて連絡いたします"
+            },
+            "importantInfo": "重要：参照番号を保管してください。",
+            "actions": {
+                "goHome": "ホームに戻る",
+                "print": "印刷"
+            }
+        },
+        "notFound": {
+            "title": "ページが見つかりません",
+            "subtitle": "お探しのページは存在しません",
+            "goHome": "ホーム"
+        }
+    },
+    "footer": {
+        "allRightsReserved": "All rights reserved.",
+        "privacy": "プライバシー",
+        "terms": "利用規約",
+        "support": "サポート"
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "個人情報",
+            "subtitle": "保険の詳細",
+            "submitting": "送信中...",
+            "success": "保存しました！",
+            "sections": {
+                "personal": "個人詳細",
+                "address": "住所"
+            },
+            "fields": {
+                "firstName": "名",
+                "lastName": "姓",
+                "email": "メールアドレス",
+                "phone": "電話番号",
+                "dateOfBirth": "生年月日",
+                "insuranceType": "保険の種類",
+                "address": {
+                    "street": "住所（番地など）",
+                    "city": "市区町村",
+                    "state": "都道府県",
+                    "zipCode": "郵便番号",
+                    "country": "国"
+                }
+            },
+            "insuranceType": {
+                "label": "保険の種類",
+                "options": {
+                    "health": "健康保険",
+                    "auto": "自動車保険",
+                    "life": "生命保険",
+                    "travel": "旅行保険"
+                }
+            },
+            "insuranceTypes": {
+                "health": "健康保険",
+                "auto": "自動車保険",
+                "life": "生命保険",
+                "travel": "旅行保険"
+            },
+            "validation": {
+                "firstName": {
+                    "required": "名前は必須です",
+                    "minLength": "2文字以上",
+                    "maxLength": "50文字以下",
+                    "pattern": "文字のみ使用可能"
+                },
+                "lastName": {
+                    "required": "姓は必須です",
+                    "minLength": "2文字以上",
+                    "maxLength": "50文字以下",
+                    "pattern": "文字のみ使用可能"
+                },
+                "email": {
+                    "required": "メールは必須です",
+                    "pattern": "無効なメールアドレス"
+                },
+                "phone": {
+                    "required": "電話番号は必須です",
+                    "pattern": "無効な番号"
+                },
+                "dateOfBirth": {
+                    "required": "生年月日は必須です",
+                    "future": "未来の日付は無効です",
+                    "minAge": "18歳以上である必要があります",
+                    "maxAge": "無効な日付"
+                },
+                "insuranceType": {
+                    "required": "選択してください"
+                },
+                "address": {
+                    "street": {
+                        "required": "住所は必須です",
+                        "minLength": "5文字以上"
+                    },
+                    "city": {
+                        "required": "市区町村は必須です",
+                        "minLength": "2文字以上"
+                    },
+                    "state": {
+                        "required": "都道府県は必須です",
+                        "minLength": "2文字以上"
+                    },
+                    "zipCode": {
+                        "required": "郵便番号は必須です"
+                    },
+                    "country": {
+                        "required": "国は必須です"
+                    }
+                }
+            },
+            "countries": {
+                "US": "アメリカ",
+                "CA": "カナダ",
+                "MX": "メキシコ",
+                "CN": "中国",
+                "ES": "スペイン",
+                "FR": "フランス",
+                "DE": "ドイツ",
+                "GB": "イギリス",
+                "AU": "オーストラリア",
+                "JP": "日本"
+            }
+        },
+        "fileUpload": {
+            "studentId": {
+                "label": "学生証",
+                "description": "鮮明な写真"
+            },
+            "passport": {
+                "label": "パスポート",
+                "description": "鮮明な写真"
+            }
+        }
+    },
+    "fileUpload": {
+        "title": "ファイルアップロード",
+        "description": "書類をアップロード。",
+        "studentId": "学生証",
+        "passport": "パスポート",
+        "dragAndDrop": "ここにドラッグ＆ドロップ",
+        "orClickToSelect": "またはクリックして選択",
+        "uploading": "アップロード中...",
+        "remove": "削除",
+        "requirements": "JPEG, PNG, PDF. 最大5MB.",
+        "errors": {
+            "fileTooLarge": "ファイルが大きすぎます。",
+            "invalidFormat": "無効な形式。",
+            "uploadFailed": "失敗しました。",
+            "noFilesUploaded": "ファイルがありません。"
+        }
+    },
+    "workflow": {
+        "steps": {
+            "personalInfo": {
+                "label": "個人情報",
+                "description": "詳細"
+            },
+            "fileUpload": {
+                "label": "ファイル",
+                "description": "書類"
+            },
+            "review": {
+                "label": "確認",
+                "description": "サマリー"
+            },
+            "confirmation": {
+                "label": "確認",
+                "description": "送信"
+            },
+            "success": {
+                "label": "完了",
+                "description": "送信済"
+            }
+        },
+        "progress": "ステップ {{current}} / {{total}}",
+        "navigation": {
+            "previous": "前へ",
+            "next": "次へ",
+            "submit": "申請を送信",
+            "saveAsDraft": "下書き保存",
+            "goHome": "ホームへ",
+            "saving": "保存中...",
+            "submitting": "送信中...",
+            "unsavedChanges": "未保存の変更があります。"
+        }
+    },
+    "common": {
+        "back": "戻る",
+        "continue": "次へ",
+        "submit": "送信",
+        "submitting": "送信中...",
+        "cancel": "キャンセル",
+        "save": "保存",
+        "edit": "編集",
+        "delete": "削除",
+        "confirm": "確認",
+        "loading": "読み込み中...",
+        "copy": "コピー",
+        "notProvided": "未入力",
+        "notUploaded": "未アップロード"
+    },
+    "errors": {
+        "general": "エラーが発生しました。",
+        "network": "ネットワークエラー。",
+        "validation": "入力を確認してください。"
+    }
+}
