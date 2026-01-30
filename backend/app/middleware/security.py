@@ -76,7 +76,8 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         """Process request through security checks."""
 
         # Skip security checks for health endpoint
-        if request.url.path in ["/health", "/api/v1/health"]:
+        health_paths = ("/health", "/api/v1/health")
+        if request.url.path.rstrip("/") in health_paths:
             return await call_next(request)
 
         try:
