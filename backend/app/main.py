@@ -216,6 +216,20 @@ async def general_exception_handler(request: Request, exc: Exception):
     )
 
 
+# Root endpoint
+@app.get("/")
+async def root() -> Dict[str, Any]:
+    """Root endpoint - returns API information."""
+    return {
+        "name": "FormVault Insurance Portal API",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs" if settings.DEBUG else None,
+        "health": "/health",
+        "api": "/api/v1",
+    }
+
+
 # Health check endpoint
 @app.get("/health")
 async def health_check() -> Dict[str, Any]:
@@ -229,6 +243,7 @@ async def health_check() -> Dict[str, Any]:
 
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")
+
 
 
 # Application startup event
