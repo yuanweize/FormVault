@@ -144,6 +144,17 @@ uvicorn app.main:app --reload
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/yuanweize/FormVault)
 
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yuanweize/FormVault)
+
+### 📋 推荐部署顺序
+
+> [!TIP]
+> **先部署后端，再部署前端。** 这样可以确保配置前端时 API URL 已就绪。
+
+1. **第一步：后端** — 部署到 Render 或 Railway，获取 API URL
+2. **第二步：前端** — 使用 API URL 部署到 Vercel/Netlify
+3. **环境配置** — 在后端配置 `CORS_ORIGINS`，允许前端域名访问
+
 ### 部署平台选项
 
 | 平台 | 类型 | 部署内容 |
@@ -151,15 +162,20 @@ uvicorn app.main:app --reload
 | **Render** | 全栈 | 后端 API + 前端 + MySQL 数据库 |
 | **Vercel** | 仅前端 | React 应用（需单独配置 API URL） |
 | **Railway** | 全栈 | 后端 + 前端 + 数据库 |
+| **Netlify** | 仅前端 | React 应用（静态托管，支持 Functions） |
 
 ### 环境变量
 
-| 变量 | 必填 | 说明 |
-|------|------|------|
-| `SECRET_KEY` | 是 | JWT 签名密钥（Render 自动生成） |
-| `DATABASE_URL` | 是 | MySQL 连接字符串（Render 自动填充） |
-| `CORS_ORIGINS` | 是 | 前端 URL，用于 CORS 配置 |
-| `REACT_APP_API_URL` | 前端 | 后端 API 基础 URL |
+| 变量 | 必填 | 来源 | 说明 |
+|------|------|------|------|
+| `SECRET_KEY` | 是 | 🔄 自动 (Render) / 🔧 手动 | JWT 认证签名密钥 |
+| `DATABASE_URL` | 是 | 🔄 自动 (Render/Railway) | MySQL 连接字符串 |
+| `CORS_ORIGINS` | 是 | 🔧 手动 | 前端 URL，用于 CORS 配置（如 `https://yourapp.vercel.app`） |
+| `REACT_APP_API_URL` | 是 | 🔧 手动 | 后端 API 基础 URL（如 `https://api.yourapp.com`） |
+
+**图例：**
+- 🔄 自动 — 平台自动提供
+- 🔧 手动 — 需要手动配置
 
 ---
 

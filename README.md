@@ -144,6 +144,17 @@ Deploy the full stack with a single click:
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/yuanweize/FormVault)
 
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yuanweize/FormVault)
+
+### 📋 Recommended Deployment Order
+
+> [!TIP]
+> **Deploy backend first, then frontend.** This ensures your API URL is ready when configuring the frontend.
+
+1. **Backend First** — Deploy to Render or Railway to get your API URL
+2. **Frontend Second** — Use the API URL when deploying to Vercel/Netlify
+3. **Environment Setup** — Configure `CORS_ORIGINS` on backend to allow frontend domain
+
 ### Deployment Options
 
 | Platform | Type | What's Deployed |
@@ -151,15 +162,20 @@ Deploy the full stack with a single click:
 | **Render** | Full Stack | Backend API + Frontend + MySQL Database |
 | **Vercel** | Frontend Only | React app (configure API URL separately) |
 | **Railway** | Full Stack | Backend + Frontend + Database |
+| **Netlify** | Frontend Only | React app (static hosting with Functions support) |
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SECRET_KEY` | Yes | JWT signing key (auto-generated on Render) |
-| `DATABASE_URL` | Yes | MySQL connection string (auto-filled on Render) |
-| `CORS_ORIGINS` | Yes | Frontend URL for CORS |
-| `REACT_APP_API_URL` | Frontend | Backend API base URL |
+| Variable | Required | Source | Description |
+|----------|----------|--------|-------------|
+| `SECRET_KEY` | Yes | 🔄 Auto (Render) / 🔧 Manual | JWT signing key for authentication |
+| `DATABASE_URL` | Yes | 🔄 Auto (Render/Railway) | MySQL connection string |
+| `CORS_ORIGINS` | Yes | 🔧 Manual | Frontend URL for CORS (e.g., `https://yourapp.vercel.app`) |
+| `REACT_APP_API_URL` | Yes | 🔧 Manual | Backend API base URL (e.g., `https://api.yourapp.com`) |
+
+**Legend:**
+- 🔄 Auto — Automatically provided by the platform
+- 🔧 Manual — You must configure this manually
 
 ---
 
