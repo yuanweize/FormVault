@@ -216,8 +216,9 @@ async def general_exception_handler(request: Request, exc: Exception):
     )
 
 
-# Root endpoint
+# Root endpoint - supports both GET and HEAD for health checks
 @app.get("/")
+@app.head("/")
 async def root() -> Dict[str, Any]:
     """Root endpoint - returns API information."""
     return {
@@ -243,7 +244,6 @@ async def health_check() -> Dict[str, Any]:
 
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")
-
 
 
 # Application startup event
