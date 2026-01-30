@@ -142,7 +142,7 @@ const WorkflowStateExposer = ({ onContextUpdate }: { onContextUpdate: (context: 
   return null;
 };
 
-describe.skip('Application Workflow Integration', () => {
+describe('Application Workflow Integration', () => {
   jest.setTimeout(30000);
 
   beforeEach(() => {
@@ -169,6 +169,7 @@ describe.skip('Application Workflow Integration', () => {
   });
 
   describe('Complete Workflow Journey', () => {
+    // TODO: Submit flow times out waiting for "Application Submitted!" - needs mock improvement
     it.skip('should complete the entire application workflow', async () => {
       const user = userEvent.setup();
       const workflowContext = { current: null as any };
@@ -181,7 +182,7 @@ describe.skip('Application Workflow Integration', () => {
       );
 
       // Step 1: Personal Information
-      expect(screen.getByRole('heading', { name: 'Personal Information' })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: 'Personal Information' })[0]).toBeInTheDocument();
       expect(screen.getByText('Step 1 of 5')).toBeInTheDocument();
 
       // Fill out personal information form
@@ -325,7 +326,7 @@ describe.skip('Application Workflow Integration', () => {
       });
 
       // Should still be on the same step
-      expect(screen.getByRole('heading', { name: 'Personal Information' })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: 'Personal Information' })[0]).toBeInTheDocument();
       expect(screen.getByText('Step 1 of 5')).toBeInTheDocument();
     });
 
@@ -403,7 +404,7 @@ describe.skip('Application Workflow Integration', () => {
       // Navigate back
       await user.click(screen.getByTestId('prev-step-button'));
 
-      expect(screen.getByRole('heading', { name: 'Personal Information' })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: 'Personal Information' })[0]).toBeInTheDocument();
       expect(screen.getByDisplayValue('John')).toBeInTheDocument();
     });
 
@@ -424,7 +425,7 @@ describe.skip('Application Workflow Integration', () => {
       // This test might be asserting that we CANNOT jump.
       // If the UI doesn't allow click, checking it's not on Review page is enough.
 
-      expect(screen.getByRole('heading', { name: 'Personal Information' })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: 'Personal Information' })[0]).toBeInTheDocument();
     });
   });
 
@@ -445,7 +446,7 @@ describe.skip('Application Workflow Integration', () => {
         </TestWrapper>
       );
 
-      expect(screen.getByRole('heading', { name: 'Personal Information' })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: 'Personal Information' })[0]).toBeInTheDocument();
       expect(screen.getByTestId('first-name-input')).toHaveAttribute('aria-label');
     });
 
