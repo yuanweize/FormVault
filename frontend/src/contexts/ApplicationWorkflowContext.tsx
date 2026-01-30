@@ -6,6 +6,7 @@
  */
 
 import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PersonalInfo, UploadedFile, ApplicationStatus } from '../types';
 import { useApplicationWorkflow } from '../hooks/useApplications';
 import { CreateApplicationRequest } from '../services/applicationService';
@@ -187,6 +188,15 @@ const WorkflowContext = createContext<WorkflowContextType | undefined>(undefined
 // Step order for navigation
 const STEP_ORDER: WorkflowStep[] = ['personal-info', 'file-upload', 'review', 'confirmation', 'success'];
 
+// Step to Path mapping
+const STEP_PATHS: Record<WorkflowStep, string> = {
+  'personal-info': '/personal-info',
+  'file-upload': '/file-upload',
+  'review': '/review',
+  'confirmation': '/review', // Confirmation is part of review page logic usually, or omitted
+  'success': '/success'
+};
+
 // Storage key for persistence
 const STORAGE_KEY = 'formvault_workflow_state';
 
@@ -194,6 +204,7 @@ const STORAGE_KEY = 'formvault_workflow_state';
 export function ApplicationWorkflowProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(workflowReducer, initialState);
   const applicationWorkflow = useApplicationWorkflow();
+  const navigate = useNavigate();
 
   // Load state from localStorage on mount
   useEffect(() => {
@@ -262,8 +273,14 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
   const goToStep = useCallback((step: WorkflowStep) => {
     if (canGoToStep(step)) {
       dispatch({ type: 'SET_STEP', payload: step });
+
+      // Trigger navigation if path exists
+      const path = STEP_PATHS[step];
+      if (path) {
+        navigate(path);
+      }
     }
-  }, [canGoToStep]);
+  }, [canGoToStep, navigate]);
 
   const goToNextStep = useCallback(() => {
     const currentIndex = STEP_ORDER.indexOf(state.currentStep);
