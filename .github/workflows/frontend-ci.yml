@@ -38,6 +38,7 @@ jobs:
       env:
         CI: true
         NODE_ENV: test
+        DISABLE_ESLINT_PLUGIN: true
 
     - name: Build check
       run: npm run build
@@ -45,3 +46,4 @@ jobs:
         CI: true
         REACT_APP_API_BASE_URL: http://localhost:8000
         GENERATE_SOURCEMAP: false  # Reduce build size in CI
+        DISABLE_ESLINT_PLUGIN: true

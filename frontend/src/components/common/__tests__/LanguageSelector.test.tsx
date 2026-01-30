@@ -47,7 +47,7 @@ describe('LanguageSelector', () => {
 
   it('renders language selector button', () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     expect(button).toBeInTheDocument();
   });
@@ -55,27 +55,27 @@ describe('LanguageSelector', () => {
   it('shows current language flag for English', () => {
     mockI18n.language = 'en';
     renderWithTheme(<LanguageSelector />);
-    
+
     expect(screen.getByText('🇺🇸')).toBeInTheDocument();
   });
 
   it('shows current language flag for Chinese', () => {
     mockI18n.language = 'zh';
     renderWithTheme(<LanguageSelector />);
-    
+
     expect(screen.getByText('🇨🇳')).toBeInTheDocument();
   });
 
   it('shows current language flag for Spanish', () => {
     mockI18n.language = 'es';
     renderWithTheme(<LanguageSelector />);
-    
+
     expect(screen.getByText('🇪🇸')).toBeInTheDocument();
   });
 
   it('opens language menu when clicked', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     fireEvent.click(button);
 
@@ -88,7 +88,7 @@ describe('LanguageSelector', () => {
 
   it('changes language to Chinese and persists in localStorage', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     fireEvent.click(button);
 
@@ -103,7 +103,7 @@ describe('LanguageSelector', () => {
 
   it('changes language to Spanish and persists in localStorage', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     fireEvent.click(button);
 
@@ -118,7 +118,7 @@ describe('LanguageSelector', () => {
 
   it('closes menu after language selection', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     fireEvent.click(button);
 
@@ -135,7 +135,7 @@ describe('LanguageSelector', () => {
   it('highlights currently selected language in menu', async () => {
     mockI18n.language = 'zh';
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
     fireEvent.click(button);
 
@@ -148,12 +148,12 @@ describe('LanguageSelector', () => {
 
   it('handles keyboard navigation', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
-    
+
     // Open menu with click (keyboard navigation is handled by MUI internally)
     fireEvent.click(button);
-    
+
     await waitFor(() => {
       expect(screen.getByText('English')).toBeInTheDocument();
     });
@@ -167,12 +167,12 @@ describe('LanguageSelector', () => {
 
   it('provides proper accessibility attributes', async () => {
     renderWithTheme(<LanguageSelector />);
-    
+
     const button = screen.getByRole('button', { name: /select language/i });
-    
+
     expect(button).toHaveAttribute('aria-label', 'select language');
     expect(button).toHaveAttribute('aria-haspopup', 'true');
-    
+
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -184,7 +184,7 @@ describe('LanguageSelector', () => {
   it('handles localStorage unavailability gracefully', () => {
     // Mock localStorage to be undefined
     const originalLocalStorage = window.localStorage;
-    // @ts-ignore
+    // @ts-expect-error - testing localStorage unavailability
     delete window.localStorage;
 
     expect(() => {

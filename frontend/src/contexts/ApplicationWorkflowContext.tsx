@@ -92,13 +92,14 @@ function workflowReducer(state: WorkflowState, action: WorkflowAction): Workflow
         isDirty: true,
       };
 
-    case 'REMOVE_UPLOADED_FILE':
+    case 'REMOVE_UPLOADED_FILE': {
       const { [action.payload]: removed, ...remainingFiles } = state.uploadedFiles;
       return {
         ...state,
         uploadedFiles: remainingFiles,
         isDirty: true,
       };
+    }
 
     case 'SET_APPLICATION_ID':
       return {

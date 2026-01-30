@@ -7,13 +7,13 @@
 
 import { useCallback } from 'react';
 import { useApi, useApiWithParams } from './useApi';
-import { 
-  applicationService, 
-  CreateApplicationRequest, 
+import {
+  applicationService,
+  CreateApplicationRequest,
   CreateApplicationResponse,
   UpdateApplicationRequest,
   SubmitApplicationRequest,
-  ExportApplicationRequest 
+  ExportApplicationRequest
 } from '../services/applicationService';
 import { Application, ApplicationStatus } from '../types';
 
@@ -150,38 +150,34 @@ export function useApplicationWorkflow() {
     applicationData: CreateApplicationRequest,
     exportData?: ExportApplicationRequest
   ) => {
-    try {
-      // Create application
-      await createApplication.execute(applicationData);
-      
-      if (!createApplication.data) {
-        throw new Error('Failed to create application');
-      }
+    // Create application
+    await createApplication.execute(applicationData);
 
-      const applicationId = createApplication.data.id;
-
-      // Submit application
-      await submitApplication.execute({
-        id: applicationId,
-        data: { confirm_submission: true }
-      });
-
-      // Export if requested
-      if (exportData) {
-        await exportApplication.execute({
-          id: applicationId,
-          data: exportData
-        });
-      }
-
-      return {
-        application: createApplication.data,
-        submitted: true,
-        exported: !!exportData,
-      };
-    } catch (error) {
-      throw error;
+    if (!createApplication.data) {
+      throw new Error('Failed to create application');
     }
+
+    const applicationId = createApplication.data.id;
+
+    // Submit application
+    await submitApplication.execute({
+      id: applicationId,
+      data: { confirm_submission: true }
+    });
+
+    // Export if requested
+    if (exportData) {
+      await exportApplication.execute({
+        id: applicationId,
+        data: exportData
+      });
+    }
+
+    return {
+      application: createApplication.data,
+      submitted: true,
+      exported: !!exportData,
+    };
   }, [createApplication, submitApplication, exportApplication]);
 
   return {
@@ -190,10 +186,10 @@ export function useApplicationWorkflow() {
     submitApplication,
     exportApplication,
     createAndSubmit,
-    loading: createApplication.loading || updateApplication.loading || 
-             submitApplication.loading || exportApplication.loading,
-    error: createApplication.error || updateApplication.error || 
-           submitApplication.error || exportApplication.error,
+    loading: createApplication.loading || updateApplication.loading ||
+      submitApplication.loading || exportApplication.loading,
+    error: createApplication.error || updateApplication.error ||
+      submitApplication.error || exportApplication.error,
   };
 }
 
