@@ -24,7 +24,7 @@ from ..core.exceptions import (
     ApplicationNotFoundException,
     DatabaseException,
 )
-from ..utils.database import create_audit_log
+from ..utils.db_helpers import create_audit_log
 from .file_storage import file_storage
 
 logger = logging.getLogger(__name__)
