@@ -42,7 +42,11 @@ strict_equality = false
 
 [[tool.mypy.overrides]]
 module = [
-    "app.*",
+    "app.api.*",
+    "app.models.*",
+    "app.services.*",
+    "app.middleware.*",
+    "app.utils.*",
     "alembic.*",
     "alembic.env",
     "tests.*",
@@ -52,3 +56,10 @@ module = [
 ]
 ignore_errors = true
 ignore_missing_imports = true
+
+# Enable stricter checks for core and schemas
+[[tool.mypy.overrides]]
+module = ["app.core.*", "app.schemas.*"]
+ignore_errors = false
+disallow_untyped_defs = true
+warn_return_any = true
