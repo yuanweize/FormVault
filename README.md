@@ -1,93 +1,175 @@
 # 🛡️ FormVault
 
-[![CI Status](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions)
+[![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
+[![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
-[![Python](https://img.shields.io/badge/Python-3.9+-3776AB.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg)](https://www.python.org/)
+[![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3.svg)](https://eslint.org/)
 
 > **[中文文档 (Chinese Version)](README_zh.md)**
 
-**FormVault** is a secure, efficient, and user-friendly multi-step application workflow system. It is designed to handle complex form submissions, document uploads, and validation processes with a modern tech stack.
+**FormVault** is a secure, modern multi-step application workflow system designed for complex form submissions, document uploads, and validation processes.
+
+---
 
 ## ✨ Key Features
 
-*   **Multi-Step Workflow**: Intuitive stepper navigation for complex data entry.
-*   **Secure File Uploads**: Support for ID cards, passports, and document validation.
-*   **Real-time Validation**: Robust form validation using `react-hook-form` and schema validation.
-*   **State Persistence**: Automatically saves progress to LocalStorage to prevent data loss.
-*   **Responsive Design**: Built with Material UI (MUI) for a seamless mobile and desktop experience.
-*   **Accessibility**: WCAG compliant with comprehensive ARIA support.
+- **🔄 Multi-Step Workflow** — Intuitive stepper navigation for complex data entry
+- **📁 Secure File Uploads** — ID cards, passports, and document validation with type checking
+- **✅ Real-time Validation** — Robust form validation using `react-hook-form` and Zod schemas
+- **💾 State Persistence** — Automatically saves progress to LocalStorage
+- **📱 Responsive Design** — Built with Material UI for seamless mobile/desktop UX
+- **♿ Accessibility** — WCAG compliant with comprehensive ARIA support
+- **🌍 Internationalization** — Multi-language support (i18n)
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend["🖥️ Frontend (React 18)"]
+        UI[React Components]
+        Context[Context API]
+        LS[(LocalStorage)]
+        UI --> Context
+        Context --> LS
+    end
+
+    subgraph Backend["⚙️ Backend (FastAPI)"]
+        API[REST API Endpoints]
+        Services[Business Logic]
+        ORM[SQLAlchemy ORM]
+        API --> Services
+        Services --> ORM
+    end
+
+    subgraph Database["🗄️ Database"]
+        MySQL[(MySQL)]
+    end
+
+    UI -->|HTTP/REST| API
+    ORM --> MySQL
+```
+
+---
+
+## 📁 Project Structure
+
+```
+FormVault/
+├── frontend/
+│   └── src/
+│       ├── components/      # Reusable UI components
+│       │   ├── common/      # Shared components (Header, Footer, etc.)
+│       │   └── forms/       # Form-specific components
+│       ├── pages/           # Route-level page components
+│       ├── hooks/           # Custom React hooks
+│       ├── contexts/        # React Context providers
+│       ├── services/        # API client services
+│       ├── i18n/            # Internationalization config
+│       └── types/           # TypeScript type definitions
+│
+├── backend/
+│   └── app/
+│       ├── api/             # FastAPI route handlers
+│       │   └── v1/endpoints/
+│       ├── core/            # Configuration & exceptions
+│       ├── models/          # SQLAlchemy ORM models
+│       ├── schemas/         # Pydantic request/response schemas
+│       ├── services/        # Business logic layer
+│       ├── middleware/      # Request middleware
+│       └── utils/           # Helper utilities
+│
+└── .github/workflows/       # CI/CD pipelines
+    ├── frontend-ci.yml
+    └── backend-ci.yml
+```
+
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-*   **Core**: React 18, TypeScript, Vite
-*   **UI Framework**: Material UI (MUI) v5
-*   **State Management**: Context API + useReducer
-*   **Form Handling**: React Hook Form
-*   **Routing**: React Router v6
-*   **Testing**: Jest, React Testing Library, Cypress (E2E)
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | React 18, TypeScript 5, Material UI v5, React Router v6 |
+| **State** | Context API + useReducer, LocalStorage persistence |
+| **Forms** | React Hook Form, Zod validation |
+| **Backend** | FastAPI, Python 3.11+, Uvicorn |
+| **Database** | SQLAlchemy ORM, MySQL, Alembic migrations |
+| **Testing** | Jest, React Testing Library, pytest |
+| **Quality** | ESLint 9 (Flat Config), Mypy (strict for core modules), Black |
 
-### Backend
-*   **Framework**: FastAPI (Python 3.9+)
-*   **Server**: Gunicorn / Uvicorn
-*   **Database**: SQLAlchemy / PyMySQL
-*   **Security**: Python-jose, Passlib, Cryptography
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-*   Node.js (v16+)
-*   Python (v3.9+)
-*   npm or yarn
+
+- Node.js v18+
+- Python 3.11+
+- MySQL 8.0+
 
 ### Installation
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/yuanweize/FormVault.git
-    cd FormVault
-    ```
-
-2.  **Frontend Setup**
-    ```bash
-    cd frontend
-    npm install
-    # Start the development server
-    npm start
-    ```
-
-3.  **Backend Setup**
-    ```bash
-    cd backend
-    pip install -r requirements.txt
-    # Start the backend server
-    uvicorn app.main:app --reload
-    ```
-
-## 🧪 Testing
-
-We maintain high code quality with comprehensive testing suites.
-
-### Unit & Integration Tests (Frontend)
-Run the Jest test suite:
 ```bash
+# Clone the repository
+git clone https://github.com/yuanweize/FormVault.git
+cd FormVault
+
+# Frontend setup
 cd frontend
-npm test
+npm install
+npm start
+
+# Backend setup (in another terminal)
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
 ```
 
-### End-to-End Tests (Cypress)
-Run Cypress tests:
+---
+
+## 🧪 Testing & Quality
+
+### Frontend
 ```bash
 cd frontend
-npm run cypress:run
+npm run lint      # ESLint 9 with Flat Config
+npm test          # Jest + React Testing Library
+npm run build     # Production build check
 ```
+
+### Backend
+```bash
+cd backend
+flake8 .          # Linting
+black --check .   # Format check
+mypy .            # Type checking (strict for core/schemas)
+pytest            # Unit & integration tests
+```
+
+---
+
+## 🔒 Quality Assurance
+
+| Tool | Purpose | Scope |
+|------|---------|-------|
+| **ESLint 9** | Linting | Frontend (Flat Config) |
+| **Mypy** | Type checking | Backend (strict for `app.core`, `app.schemas`) |
+| **Black** | Formatting | Backend |
+| **Jest** | Unit tests | Frontend components |
+| **pytest** | Tests | Backend API & services |
+| **Dual CI** | Automation | Separate pipelines for frontend/backend |
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting PRs.
