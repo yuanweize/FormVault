@@ -23,7 +23,7 @@ class FileUploadResponseSchema(ResponseBase, TimestampMixin):
     file_hash: str = Field(..., description="File hash for integrity verification")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "success": True,
                 "timestamp": "2023-01-01T00:00:00Z",
@@ -62,7 +62,7 @@ class FileDeleteResponseSchema(ResponseBase):
     file_id: str = Field(..., description="Deleted file ID")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "success": True,
                 "message": "File deleted successfully",
@@ -79,7 +79,7 @@ class FileValidationSchema(BaseModel):
     allowed_types: List[str] = Field(..., description="List of allowed MIME types")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "max_size": 5242880,
                 "allowed_types": ["image/jpeg", "image/png", "application/pdf"],

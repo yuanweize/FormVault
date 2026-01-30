@@ -34,7 +34,7 @@ class ErrorResponse(BaseModel):
     error: Dict[str, Any] = Field(..., description="Error details")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "error": {
                     "message": "Validation failed",

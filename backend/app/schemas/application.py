@@ -154,7 +154,7 @@ class ApplicationResponseSchema(ResponseBase, TimestampMixin):
     )
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "success": True,
                 "timestamp": "2023-01-01T00:00:00Z",
@@ -217,7 +217,7 @@ class ApplicationSubmitResponseSchema(ResponseBase):
     submitted_at: datetime = Field(..., description="Submission timestamp")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "success": True,
                 "message": "Application submitted successfully",
