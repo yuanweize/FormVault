@@ -132,6 +132,35 @@ uvicorn app.main:app --reload
 
 ---
 
+## ☁️ Deployment
+
+### One-Click Deploy
+
+Deploy the full stack with a single click:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/yuanweize/FormVault)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yuanweize/FormVault)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/yuanweize/FormVault)
+
+### Deployment Options
+
+| Platform | Type | What's Deployed |
+|----------|------|-----------------|
+| **Render** | Full Stack | Backend API + Frontend + MySQL Database |
+| **Vercel** | Frontend Only | React app (configure API URL separately) |
+| **Railway** | Full Stack | Backend + Frontend + Database |
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SECRET_KEY` | Yes | JWT signing key (auto-generated on Render) |
+| `DATABASE_URL` | Yes | MySQL connection string (auto-filled on Render) |
+| `CORS_ORIGINS` | Yes | Frontend URL for CORS |
+| `REACT_APP_API_URL` | Frontend | Backend API base URL |
+
+---
+
 ## 🧪 Testing & Quality
 
 ### Frontend

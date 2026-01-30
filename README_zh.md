@@ -132,6 +132,35 @@ uvicorn app.main:app --reload
 
 ---
 
+## ☁️ 部署
+
+### 一键部署
+
+点击按钮即可完成全栈部署：
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/yuanweize/FormVault)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yuanweize/FormVault)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/yuanweize/FormVault)
+
+### 部署平台选项
+
+| 平台 | 类型 | 部署内容 |
+|------|------|----------|
+| **Render** | 全栈 | 后端 API + 前端 + MySQL 数据库 |
+| **Vercel** | 仅前端 | React 应用（需单独配置 API URL） |
+| **Railway** | 全栈 | 后端 + 前端 + 数据库 |
+
+### 环境变量
+
+| 变量 | 必填 | 说明 |
+|------|------|------|
+| `SECRET_KEY` | 是 | JWT 签名密钥（Render 自动生成） |
+| `DATABASE_URL` | 是 | MySQL 连接字符串（Render 自动填充） |
+| `CORS_ORIGINS` | 是 | 前端 URL，用于 CORS 配置 |
+| `REACT_APP_API_URL` | 前端 | 后端 API 基础 URL |
+
+---
+
 ## 🧪 测试与质量
 
 ### 前端
