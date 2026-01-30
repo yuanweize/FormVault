@@ -23,12 +23,9 @@ def engine():
     if DATABASE_URL == "sqlite:///:memory:":
         connect_args["check_same_thread"] = False
         poolclass = StaticPool
-        
+
     return create_engine(
-        DATABASE_URL, 
-        poolclass=poolclass,
-        pool_pre_ping=True, 
-        connect_args=connect_args
+        DATABASE_URL, poolclass=poolclass, pool_pre_ping=True, connect_args=connect_args
     )
 
 
@@ -40,16 +37,17 @@ def patch_db_objects(engine):
     or where dependency overrides fail.
     """
     from unittest.mock import patch
-    
+
     # Create a new SessionLocal bound to the test engine
     TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    
+
     # Patch both engine and SessionLocal in app.database
     # db_helpers now uses database.engine directly so no separate patch needed
-    with patch("app.database.engine", engine), \
-         patch("app.database.SessionLocal", TestSessionLocal):
+    with (
+        patch("app.database.engine", engine),
+        patch("app.database.SessionLocal", TestSessionLocal),
+    ):
         yield
-
 
 
 @pytest.fixture(scope="function")
@@ -59,7 +57,7 @@ def db(engine) -> Generator[Session, None, None]:
     Creates tables if they don't exist, and drops them after test to ensure isolation.
     """
     from app.database import Base
-    
+
     # Create tables
     Base.metadata.create_all(bind=engine)
 
@@ -75,6 +73,7 @@ def db(engine) -> Generator[Session, None, None]:
         # In a real CI with massive tests, we might use transaction rollback instead,
         # but for now this ensures correctness.
         from app.database import Base
+
         Base.metadata.drop_all(bind=engine)
 
 

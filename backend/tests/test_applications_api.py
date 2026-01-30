@@ -18,6 +18,7 @@ from app.models.audit_log import AuditLog
 
 # Removed local DB setup and dependency overrides to avoid conflicts with conftest.py
 
+
 @pytest.fixture
 def sample_application_data():
     """Sample application data for testing."""
@@ -52,7 +53,7 @@ def sample_file(db: Session):
         last_name="Owner",
         email="file.owner@example.com",
         insurance_type="health",
-        status="draft"
+        status="draft",
     )
     db.add(app)
     db.flush()
@@ -77,9 +78,7 @@ def sample_file(db: Session):
 class TestApplicationCreation:
     """Test cases for application creation endpoint."""
 
-    def test_create_application_success(
-        self, client, db, sample_application_data
-    ):
+    def test_create_application_success(self, client, db, sample_application_data):
         """Test successful application creation."""
         response = client.post("/api/v1/applications/", json=sample_application_data)
 
@@ -106,9 +105,7 @@ class TestApplicationCreation:
         assert len(data["reference_number"]) == 16
 
         # Verify database record was created
-        application = (
-            db.query(Application).filter(Application.id == data["id"]).first()
-        )
+        application = db.query(Application).filter(Application.id == data["id"]).first()
         assert application is not None
         assert application.first_name == "John"
         assert application.last_name == "Doe"
@@ -265,9 +262,7 @@ class TestApplicationCreation:
         data = response.json()
 
         # Verify application was created
-        application = (
-            db.query(Application).filter(Application.id == data["id"]).first()
-        )
+        application = db.query(Application).filter(Application.id == data["id"]).first()
         assert application is not None
 
     def test_create_application_request_headers_logging(

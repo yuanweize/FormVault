@@ -150,12 +150,16 @@ class TestCompleteApplicationWorkflow:
                 "last_name": "Doe",
                 "email": "invalid-email",  # Invalid email format
                 "address": {
-                     "street": "123 St", "city": "City", "state": "CA", "zip_code": "12345", "country": "US"
+                    "street": "123 St",
+                    "city": "City",
+                    "state": "CA",
+                    "zip_code": "12345",
+                    "country": "US",
                 },
-                "date_of_birth": "1990-01-01"
+                "date_of_birth": "1990-01-01",
             },
             "insurance_type": "invalid_type",  # Invalid enum value
-            "preferred_language": "en"
+            "preferred_language": "en",
         }
 
         response = client.post("/api/v1/applications", json=invalid_data)
@@ -164,13 +168,13 @@ class TestCompleteApplicationWorkflow:
         errors = response.json()["detail"]
         # Validation errors will be in personal_info.first_name, personal_info.email, insurance_type
         # Pydantic returns "loc": ["body", "personal_info", "first_name"]
-        
+
         # Check for first_name error
         assert any("first_name" in error["loc"] for error in errors)
-        
+
         # Check for email error
         assert any("email" in error["loc"] for error in errors)
-        
+
         # Check for insurance_type error
         assert any("insurance_type" in error["loc"] for error in errors)
 
@@ -243,7 +247,7 @@ class TestCompleteApplicationWorkflow:
                 "phone": "+1234567890",
                 "address": {
                     "street": "123 Test St",
-                     "city": "Test City",
+                    "city": "Test City",
                     "state": "TS",
                     "zip_code": "12345",
                     "country": "USA",

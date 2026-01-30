@@ -328,7 +328,9 @@ class TestFileService:
             50
         )
 
-    def test_delete_file_success(self, mock_db, mock_request, mock_file_record, file_service):
+    def test_delete_file_success(
+        self, mock_db, mock_request, mock_file_record, file_service
+    ):
         """Test successful file deletion."""
         service, mock_storage = file_service
 
@@ -362,7 +364,9 @@ class TestFileService:
 
         assert exc_info.value.details["file_id"] == "nonexistent-id"
 
-    def test_delete_file_database_error(self, mock_db, mock_request, mock_file_record, file_service):
+    def test_delete_file_database_error(
+        self, mock_db, mock_request, mock_file_record, file_service
+    ):
         """Test file deletion with database error."""
         service, mock_storage = file_service
 
@@ -380,7 +384,9 @@ class TestFileService:
         assert "Failed to delete file" in str(exc_info.value)
         mock_db.rollback.assert_called_once()
 
-    def test_verify_file_integrity_success(self, mock_db, mock_file_record, file_service):
+    def test_verify_file_integrity_success(
+        self, mock_db, mock_file_record, file_service
+    ):
         """Test successful file integrity verification."""
         service, mock_storage = file_service
 
@@ -442,7 +448,9 @@ class TestFileService:
         with pytest.raises(FileNotFoundException):
             service.get_file_path(mock_db, "nonexistent-id")
 
-    def test_get_file_path_storage_not_found(self, mock_db, mock_file_record, file_service):
+    def test_get_file_path_storage_not_found(
+        self, mock_db, mock_file_record, file_service
+    ):
         """Test file path retrieval when file not found in storage."""
         service, mock_storage = file_service
 
