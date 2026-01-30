@@ -37,7 +37,8 @@
     "globals": "^17.2.0",
     "jest-axe": "^10.0.0",
     "prettier": "^2.8.7",
-    "typescript-eslint": "^8.54.0"
+    "typescript-eslint": "^8.54.0",
+    "yaml": "^2.8.2"
   },
   "scripts": {
     "start": "react-scripts start",
