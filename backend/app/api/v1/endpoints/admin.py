@@ -16,7 +16,7 @@ from ....models.email_export import EmailExport
 from ....models.audit_log import AuditLog
 from ....utils.performance_monitor import get_performance_stats, reset_performance_stats
 from ....services.error_tracking import get_error_summary
-from ....schemas.base import BaseResponse
+from ....schemas.base import ResponseBase
 
 logger = structlog.get_logger(__name__)
 
@@ -127,13 +127,13 @@ async def get_performance_statistics() -> Dict[str, Any]:
         )
 
 
-@router.post("/performance/reset", response_model=BaseResponse)
-async def reset_performance_statistics() -> BaseResponse:
+@router.post("/performance/reset", response_model=ResponseBase)
+async def reset_performance_statistics() -> ResponseBase:
     """Reset performance statistics."""
     try:
         reset_performance_stats()
         logger.info("Performance statistics reset by admin")
-        return BaseResponse(
+        return ResponseBase(
             success=True, message="Performance statistics reset successfully"
         )
     except Exception as e:
