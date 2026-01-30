@@ -146,6 +146,9 @@ Deploy the full stack with a single click:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yuanweize/FormVault)
 
+> [!IMPORTANT]
+> **Manual connection required!** After deployment, you must manually set the frontend's `REACT_APP_API_BASE_URL` to point to your backend. See steps below.
+
 ### 📋 Recommended Deployment Order
 
 > [!TIP]
@@ -162,7 +165,14 @@ Deploy the full stack with a single click:
    - `REACT_APP_API_BASE_URL` = `https://formvault-api.onrender.com` (your backend URL from Step 1)
 3. Click Deploy
 
-#### Step 3: Configure CORS
+#### Step 3: Link Frontend to Backend (Critical!)
+> If you missed Step 2, or deployed without env vars:
+1. Go to your Frontend dashboard (Vercel/Netlify)
+2. Navigate to **Settings** → **Environment Variables**
+3. Add: `REACT_APP_API_BASE_URL` = `https://your-backend-url.onrender.com`
+4. **Trigger a Redeploy** (required for changes to take effect)
+
+#### Step 4: Configure CORS on Backend
 1. Go to your Backend dashboard (Render/Railway)
 2. Add/Update the environment variable:
    - `CORS_ORIGINS` = `https://formvault-frontend.onrender.com` (your frontend URL)

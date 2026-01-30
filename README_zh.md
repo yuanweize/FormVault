@@ -146,6 +146,9 @@ uvicorn app.main:app --reload
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yuanweize/FormVault)
 
+> [!IMPORTANT]
+> **需要手动连接！** 部署后，您必须手动设置前端的 `REACT_APP_API_BASE_URL` 指向后端。请参阅下方步骤。
+
 ### 📋 推荐部署顺序
 
 > [!TIP]
@@ -162,7 +165,14 @@ uvicorn app.main:app --reload
    - `REACT_APP_API_BASE_URL` = `https://formvault-api.onrender.com`（第一步获取的后端 URL）
 3. 点击部署
 
-#### 第三步：配置 CORS
+#### 第三步：连接前后端（关键！）
+> 如果您错过了第二步，或部署时未配置环境变量：
+1. 进入前端控制台 (Vercel/Netlify)
+2. 导航到 **Settings** → **Environment Variables**
+3. 添加：`REACT_APP_API_BASE_URL` = `https://your-backend-url.onrender.com`
+4. **触发重新部署**（必须重新部署才能生效）
+
+#### 第四步：配置后端 CORS
 1. 进入后端控制台 (Render/Railway)
 2. 添加/更新环境变量：
    - `CORS_ORIGINS` = `https://formvault-frontend.onrender.com`（您的前端 URL）
