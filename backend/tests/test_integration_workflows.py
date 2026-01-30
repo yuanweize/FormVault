@@ -27,16 +27,20 @@ class TestCompleteApplicationWorkflow:
 
         # Step 1: Submit personal information
         application_data = {
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john.doe@example.com",
-            "phone": "+1234567890",
-            "address_street": "123 Main St",
-            "address_city": "Anytown",
-            "address_state": "CA",
-            "address_zip_code": "12345",
-            "address_country": "USA",
-            "date_of_birth": "1990-01-01",
+            "personal_info": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "email": "john.doe@example.com",
+                "phone": "+1234567890",
+                "address": {
+                    "street": "123 Main St",
+                    "city": "Anytown",
+                    "state": "CA",
+                    "zip_code": "12345",
+                    "country": "USA",
+                },
+                "date_of_birth": "1990-01-01",
+            },
             "insurance_type": "health",
             "preferred_language": "en",
         }
@@ -141,34 +145,54 @@ class TestCompleteApplicationWorkflow:
 
         # Submit invalid application data
         invalid_data = {
-            "first_name": "",  # Required field empty
-            "email": "invalid-email",  # Invalid email format
+            "personal_info": {
+                "first_name": "",  # Required field empty
+                "last_name": "Doe",
+                "email": "invalid-email",  # Invalid email format
+                "address": {
+                     "street": "123 St", "city": "City", "state": "CA", "zip_code": "12345", "country": "US"
+                },
+                "date_of_birth": "1990-01-01"
+            },
             "insurance_type": "invalid_type",  # Invalid enum value
+            "preferred_language": "en"
         }
 
         response = client.post("/api/v1/applications", json=invalid_data)
         assert response.status_code == 422
 
         errors = response.json()["detail"]
-        assert any(error["field"] == "first_name" for error in errors)
-        assert any(error["field"] == "email" for error in errors)
-        assert any(error["field"] == "insurance_type" for error in errors)
+        # Validation errors will be in personal_info.first_name, personal_info.email, insurance_type
+        # Pydantic returns "loc": ["body", "personal_info", "first_name"]
+        
+        # Check for first_name error
+        assert any("first_name" in error["loc"] for error in errors)
+        
+        # Check for email error
+        assert any("email" in error["loc"] for error in errors)
+        
+        # Check for insurance_type error
+        assert any("insurance_type" in error["loc"] for error in errors)
 
     def test_workflow_with_file_upload_errors(self, client: TestClient, db: Session):
         """Test workflow handles file upload errors."""
 
         # Create valid application first
         application_data = {
-            "first_name": "Jane",
-            "last_name": "Smith",
-            "email": "jane.smith@example.com",
-            "phone": "+1234567890",
-            "address_street": "456 Oak Ave",
-            "address_city": "Somewhere",
-            "address_state": "NY",
-            "address_zip_code": "67890",
-            "address_country": "USA",
-            "date_of_birth": "1985-05-15",
+            "personal_info": {
+                "first_name": "Jane",
+                "last_name": "Smith",
+                "email": "jane.smith@example.com",
+                "phone": "+1234567890",
+                "address": {
+                    "street": "456 Oak Ave",
+                    "city": "Somewhere",
+                    "state": "NY",
+                    "zip_code": "67890",
+                    "country": "USA",
+                },
+                "date_of_birth": "1985-05-15",
+            },
             "insurance_type": "auto",
             "preferred_language": "en",
         }
@@ -212,16 +236,20 @@ class TestCompleteApplicationWorkflow:
 
         # Create application with files
         application_data = {
-            "first_name": "Test",
-            "last_name": "User",
-            "email": "test@example.com",
-            "phone": "+1234567890",
-            "address_street": "123 Test St",
-            "address_city": "Test City",
-            "address_state": "TS",
-            "address_zip_code": "12345",
-            "address_country": "USA",
-            "date_of_birth": "1990-01-01",
+            "personal_info": {
+                "first_name": "Test",
+                "last_name": "User",
+                "email": "test@example.com",
+                "phone": "+1234567890",
+                "address": {
+                    "street": "123 Test St",
+                     "city": "Test City",
+                    "state": "TS",
+                    "zip_code": "12345",
+                    "country": "USA",
+                },
+                "date_of_birth": "1990-01-01",
+            },
             "insurance_type": "health",
             "preferred_language": "en",
         }
@@ -281,16 +309,20 @@ class TestConcurrentOperations:
 
         # Create application
         application_data = {
-            "first_name": "Concurrent",
-            "last_name": "Test",
-            "email": "concurrent@example.com",
-            "phone": "+1234567890",
-            "address_street": "123 Concurrent St",
-            "address_city": "Test City",
-            "address_state": "TS",
-            "address_zip_code": "12345",
-            "address_country": "USA",
-            "date_of_birth": "1990-01-01",
+            "personal_info": {
+                "first_name": "Concurrent",
+                "last_name": "Test",
+                "email": "concurrent@example.com",
+                "phone": "+1234567890",
+                "address": {
+                    "street": "123 Concurrent St",
+                    "city": "Test City",
+                    "state": "TS",
+                    "zip_code": "12345",
+                    "country": "USA",
+                },
+                "date_of_birth": "1990-01-01",
+            },
             "insurance_type": "health",
             "preferred_language": "en",
         }
@@ -355,16 +387,20 @@ class TestErrorRecovery:
             mock_model.side_effect = Exception("Database connection lost")
 
             application_data = {
-                "first_name": "Rollback",
-                "last_name": "Test",
-                "email": "rollback@example.com",
-                "phone": "+1234567890",
-                "address_street": "123 Rollback St",
-                "address_city": "Test City",
-                "address_state": "TS",
-                "address_zip_code": "12345",
-                "address_country": "USA",
-                "date_of_birth": "1990-01-01",
+                "personal_info": {
+                    "first_name": "Rollback",
+                    "last_name": "Test",
+                    "email": "rollback@example.com",
+                    "phone": "+1234567890",
+                    "address": {
+                        "street": "123 Rollback St",
+                        "city": "Test City",
+                        "state": "TS",
+                        "zip_code": "12345",
+                        "country": "USA",
+                    },
+                    "date_of_birth": "1990-01-01",
+                },
                 "insurance_type": "health",
                 "preferred_language": "en",
             }
@@ -385,16 +421,20 @@ class TestErrorRecovery:
 
         # Create application
         application_data = {
-            "first_name": "Cleanup",
-            "last_name": "Test",
-            "email": "cleanup@example.com",
-            "phone": "+1234567890",
-            "address_street": "123 Cleanup St",
-            "address_city": "Test City",
-            "address_state": "TS",
-            "address_zip_code": "12345",
-            "address_country": "USA",
-            "date_of_birth": "1990-01-01",
+            "personal_info": {
+                "first_name": "Cleanup",
+                "last_name": "Test",
+                "email": "cleanup@example.com",
+                "phone": "+1234567890",
+                "address": {
+                    "street": "123 Cleanup St",
+                    "city": "Test City",
+                    "state": "TS",
+                    "zip_code": "12345",
+                    "country": "USA",
+                },
+                "date_of_birth": "1990-01-01",
+            },
             "insurance_type": "health",
             "preferred_language": "en",
         }

@@ -5,9 +5,8 @@ Audit log model for tracking system activities and user actions.
 from datetime import datetime
 from typing import Optional, Dict, Any
 
-from sqlalchemy import Column, String, BigInteger, DateTime, ForeignKey, Index
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Index, Text, JSON
 from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.mysql import VARCHAR, TIMESTAMP, TEXT, JSON
 
 from ..database import Base
 
@@ -19,36 +18,36 @@ class AuditLog(Base):
 
     __tablename__ = "audit_logs"
 
-    # Primary key (using BigInteger for high volume logging)
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    # Primary key (using Integer for SQLite compatibility with autoincrement)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
     # Foreign key to application (optional, some logs may not be application-specific)
     application_id = Column(
-        VARCHAR(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=True
+        String(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=True
     )
 
     # Action information
-    action = Column(VARCHAR(100), nullable=False)
+    action = Column(String(100), nullable=False)
 
     # User/request information
-    user_ip = Column(VARCHAR(45), nullable=True)  # Supports both IPv4 and IPv6
-    user_agent = Column(TEXT, nullable=True)
+    user_ip = Column(String(45), nullable=True)  # Supports both IPv4 and IPv6
+    user_agent = Column(Text, nullable=True)
 
     # Additional details stored as JSON
     details = Column(JSON, nullable=True)
 
     # Timestamp
-    created_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     # Relationships
     application = relationship("Application", back_populates="audit_logs")
 
     # Indexes
     __table_args__ = (
-        Index("idx_application_id", "application_id"),
-        Index("idx_action", "action"),
-        Index("idx_created_at", "created_at"),
-        Index("idx_user_ip", "user_ip"),
+        Index("idx_audit_logs_application_id", "application_id"),
+        Index("idx_audit_logs_action", "action"),
+        Index("idx_audit_logs_created_at", "created_at"),
+        Index("idx_audit_logs_user_ip", "user_ip"),
     )
 
     def __repr__(self) -> str:

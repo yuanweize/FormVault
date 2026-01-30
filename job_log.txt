@@ -1,0 +1,1084 @@
+test	Set up job	﻿2026-01-30T06:28:20.0682417Z Current runner version: '2.331.0'
+test	Set up job	2026-01-30T06:28:20.0707122Z ##[group]Runner Image Provisioner
+test	Set up job	2026-01-30T06:28:20.0707862Z Hosted Compute Agent
+test	Set up job	2026-01-30T06:28:20.0708399Z Version: 20260123.484
+test	Set up job	2026-01-30T06:28:20.0709096Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+test	Set up job	2026-01-30T06:28:20.0709808Z Build Date: 2026-01-23T19:41:17Z
+test	Set up job	2026-01-30T06:28:20.0710411Z Worker ID: {97e3d6fd-7b5f-411f-8354-c5d40ff3363d}
+test	Set up job	2026-01-30T06:28:20.0711227Z Azure Region: eastus
+test	Set up job	2026-01-30T06:28:20.0711721Z ##[endgroup]
+test	Set up job	2026-01-30T06:28:20.0713097Z ##[group]Operating System
+test	Set up job	2026-01-30T06:28:20.0713805Z Ubuntu
+test	Set up job	2026-01-30T06:28:20.0714437Z 24.04.3
+test	Set up job	2026-01-30T06:28:20.0714894Z LTS
+test	Set up job	2026-01-30T06:28:20.0715721Z ##[endgroup]
+test	Set up job	2026-01-30T06:28:20.0716251Z ##[group]Runner Image
+test	Set up job	2026-01-30T06:28:20.0716769Z Image: ubuntu-24.04
+test	Set up job	2026-01-30T06:28:20.0717311Z Version: 20260126.10.1
+test	Set up job	2026-01-30T06:28:20.0718297Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+test	Set up job	2026-01-30T06:28:20.0720035Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+test	Set up job	2026-01-30T06:28:20.0720913Z ##[endgroup]
+test	Set up job	2026-01-30T06:28:20.0721941Z ##[group]GITHUB_TOKEN Permissions
+test	Set up job	2026-01-30T06:28:20.0724134Z Contents: read
+test	Set up job	2026-01-30T06:28:20.0724724Z Metadata: read
+test	Set up job	2026-01-30T06:28:20.0725159Z Packages: read
+test	Set up job	2026-01-30T06:28:20.0725734Z ##[endgroup]
+test	Set up job	2026-01-30T06:28:20.0727985Z Secret source: Actions
+test	Set up job	2026-01-30T06:28:20.0728800Z Prepare workflow directory
+test	Set up job	2026-01-30T06:28:20.1143157Z Prepare all required actions
+test	Set up job	2026-01-30T06:28:20.1179821Z Getting action download info
+test	Set up job	2026-01-30T06:28:20.4528141Z Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
+test	Set up job	2026-01-30T06:28:20.5673016Z Download action repository 'actions/setup-python@v4' (SHA:7f4fc3e22c37d6ff65e88745f38bd3157c663f7c)
+test	Set up job	2026-01-30T06:28:20.6493377Z Download action repository 'codecov/codecov-action@v3' (SHA:ab904c41d6ece82784817410c45d8b8c02684457)
+test	Set up job	2026-01-30T06:28:20.9714525Z Complete job name: test
+test	Initialize containers	﻿2026-01-30T06:28:21.0192434Z ##[group]Checking docker version
+test	Initialize containers	2026-01-30T06:28:21.0205408Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+test	Initialize containers	2026-01-30T06:28:21.1026912Z '1.48'
+test	Initialize containers	2026-01-30T06:28:21.1049447Z Docker daemon API version: '1.48'
+test	Initialize containers	2026-01-30T06:28:21.1050189Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+test	Initialize containers	2026-01-30T06:28:21.1215802Z '1.48'
+test	Initialize containers	2026-01-30T06:28:21.1227377Z Docker client API version: '1.48'
+test	Initialize containers	2026-01-30T06:28:21.1231616Z ##[endgroup]
+test	Initialize containers	2026-01-30T06:28:21.1234600Z ##[group]Clean up resources from previous jobs
+test	Initialize containers	2026-01-30T06:28:21.1239362Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=c63fcd"
+test	Initialize containers	2026-01-30T06:28:21.1378760Z ##[command]/usr/bin/docker network prune --force --filter "label=c63fcd"
+test	Initialize containers	2026-01-30T06:28:21.1503248Z ##[endgroup]
+test	Initialize containers	2026-01-30T06:28:21.1503747Z ##[group]Create local container network
+test	Initialize containers	2026-01-30T06:28:21.1513524Z ##[command]/usr/bin/docker network create --label c63fcd github_network_e14154abeb74497e91e28eb00216e798
+test	Initialize containers	2026-01-30T06:28:21.2036027Z e1b53a567649ca3f9027884eede45d4758a032d8da34fdd33f28e6e1b8337530
+test	Initialize containers	2026-01-30T06:28:21.2054491Z ##[endgroup]
+test	Initialize containers	2026-01-30T06:28:21.2078201Z ##[group]Starting mysql service container
+test	Initialize containers	2026-01-30T06:28:21.2097583Z ##[command]/usr/bin/docker pull mysql:8.0
+test	Initialize containers	2026-01-30T06:28:21.4699036Z 8.0: Pulling from library/mysql
+test	Initialize containers	2026-01-30T06:28:21.5434583Z 869c24490fd0: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5436074Z 66262e8c98ce: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5437228Z c852e6fd6ca6: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5438478Z ea5417dc65ba: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5439712Z c0cda71723ca: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5440834Z b5f3eb4051e1: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5441741Z f8f75bb8cb90: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5442650Z 85492c82cc5e: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5444322Z d8c48ae948a5: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5445186Z 0a46d9073fa4: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5446008Z 496c3bd4b150: Pulling fs layer
+test	Initialize containers	2026-01-30T06:28:21.5447092Z 85492c82cc5e: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5447853Z ea5417dc65ba: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5448650Z 0a46d9073fa4: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5449762Z d8c48ae948a5: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5450820Z c0cda71723ca: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5451872Z 496c3bd4b150: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5452742Z f8f75bb8cb90: Waiting
+test	Initialize containers	2026-01-30T06:28:21.5453523Z b5f3eb4051e1: Waiting
+test	Initialize containers	2026-01-30T06:28:21.8517317Z 66262e8c98ce: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:21.8518124Z 66262e8c98ce: Download complete
+test	Initialize containers	2026-01-30T06:28:21.8625687Z c852e6fd6ca6: Download complete
+test	Initialize containers	2026-01-30T06:28:21.9147586Z c0cda71723ca: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:21.9152414Z c0cda71723ca: Download complete
+test	Initialize containers	2026-01-30T06:28:21.9819210Z b5f3eb4051e1: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:21.9820576Z b5f3eb4051e1: Download complete
+test	Initialize containers	2026-01-30T06:28:21.9826769Z ea5417dc65ba: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:21.9828819Z ea5417dc65ba: Download complete
+test	Initialize containers	2026-01-30T06:28:21.9945264Z 869c24490fd0: Download complete
+test	Initialize containers	2026-01-30T06:28:22.0459392Z 85492c82cc5e: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:22.0460511Z 85492c82cc5e: Download complete
+test	Initialize containers	2026-01-30T06:28:22.1050551Z 0a46d9073fa4: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:22.1053435Z 0a46d9073fa4: Download complete
+test	Initialize containers	2026-01-30T06:28:22.1670101Z 496c3bd4b150: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:22.1671814Z 496c3bd4b150: Download complete
+test	Initialize containers	2026-01-30T06:28:22.2286576Z f8f75bb8cb90: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:22.2287180Z f8f75bb8cb90: Download complete
+test	Initialize containers	2026-01-30T06:28:22.8665234Z d8c48ae948a5: Verifying Checksum
+test	Initialize containers	2026-01-30T06:28:22.8667323Z d8c48ae948a5: Download complete
+test	Initialize containers	2026-01-30T06:28:23.3288045Z 869c24490fd0: Pull complete
+test	Initialize containers	2026-01-30T06:28:23.8087940Z 66262e8c98ce: Pull complete
+test	Initialize containers	2026-01-30T06:28:23.8294734Z c852e6fd6ca6: Pull complete
+test	Initialize containers	2026-01-30T06:28:24.0218230Z ea5417dc65ba: Pull complete
+test	Initialize containers	2026-01-30T06:28:24.0344235Z c0cda71723ca: Pull complete
+test	Initialize containers	2026-01-30T06:28:24.0542735Z b5f3eb4051e1: Pull complete
+test	Initialize containers	2026-01-30T06:28:24.8110757Z f8f75bb8cb90: Pull complete
+test	Initialize containers	2026-01-30T06:28:24.8227542Z 85492c82cc5e: Pull complete
+test	Initialize containers	2026-01-30T06:28:32.1099095Z d8c48ae948a5: Pull complete
+test	Initialize containers	2026-01-30T06:28:32.1246661Z 0a46d9073fa4: Pull complete
+test	Initialize containers	2026-01-30T06:28:32.1356010Z 496c3bd4b150: Pull complete
+test	Initialize containers	2026-01-30T06:28:32.1398890Z Digest: sha256:68bee0989e5623da84778fe2e20d38a0b2432e46645cf8e4667b9ea15e8ee373
+test	Initialize containers	2026-01-30T06:28:32.1415448Z Status: Downloaded newer image for mysql:8.0
+test	Initialize containers	2026-01-30T06:28:32.1426291Z docker.io/library/mysql:8.0
+test	Initialize containers	2026-01-30T06:28:32.1488275Z ##[command]/usr/bin/docker create --name ee3f19ba565f49ab8a10cefb6c081955_mysql80_cb32aa --label c63fcd --network github_network_e14154abeb74497e91e28eb00216e798 --network-alias mysql -p 3306:3306 --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -e "MYSQL_ROOT_PASSWORD=root" -e "MYSQL_DATABASE=formvault_test" -e "MYSQL_USER=test_user" -e "MYSQL_PASSWORD=test_password" -e GITHUB_ACTIONS=true -e CI=true mysql:8.0
+test	Initialize containers	2026-01-30T06:28:32.1754490Z 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:32.1776474Z ##[command]/usr/bin/docker start 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:32.3580939Z 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:32.3603521Z ##[command]/usr/bin/docker ps --all --filter id=189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+test	Initialize containers	2026-01-30T06:28:32.3723445Z 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3 Up Less than a second (health: starting)
+test	Initialize containers	2026-01-30T06:28:32.3749407Z ##[command]/usr/bin/docker port 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:32.3885144Z 3306/tcp -> 0.0.0.0:3306
+test	Initialize containers	2026-01-30T06:28:32.3885931Z 3306/tcp -> [::]:3306
+test	Initialize containers	2026-01-30T06:28:32.3943354Z ##[endgroup]
+test	Initialize containers	2026-01-30T06:28:32.3954903Z ##[group]Waiting for all services to be ready
+test	Initialize containers	2026-01-30T06:28:32.3972046Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:32.4105820Z starting
+test	Initialize containers	2026-01-30T06:28:32.4132162Z mysql service is starting, waiting 2 seconds before checking again.
+test	Initialize containers	2026-01-30T06:28:34.4131383Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:34.4249522Z starting
+test	Initialize containers	2026-01-30T06:28:34.4262598Z mysql service is starting, waiting 3 seconds before checking again.
+test	Initialize containers	2026-01-30T06:28:38.1308724Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:38.1435505Z starting
+test	Initialize containers	2026-01-30T06:28:38.1449156Z mysql service is starting, waiting 7 seconds before checking again.
+test	Initialize containers	2026-01-30T06:28:45.2059475Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 189cdeeba7b8d6e29693c9f402666b260f9cf869d1dc6008e96b56e616a15cb3
+test	Initialize containers	2026-01-30T06:28:45.2183010Z healthy
+test	Initialize containers	2026-01-30T06:28:45.2200272Z mysql service is healthy.
+test	Initialize containers	2026-01-30T06:28:45.2200932Z ##[endgroup]
+test	Run actions/checkout@v3	﻿2026-01-30T06:28:45.2447654Z ##[group]Run actions/checkout@v3
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2448191Z with:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2448377Z   repository: yuanweize/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2448744Z   token: ***
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2448916Z   ssh-strict: true
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2449105Z   persist-credentials: true
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2449318Z   clean: true
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2449505Z   sparse-checkout-cone-mode: true
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2449726Z   fetch-depth: 1
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2449887Z   fetch-tags: false
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2450056Z   lfs: false
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2450205Z   submodules: false
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2450389Z   set-safe-directory: true
+test	Run actions/checkout@v3	2026-01-30T06:28:45.2450754Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3286285Z Syncing repository: yuanweize/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3287619Z ##[group]Getting Git version info
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3287994Z Working directory is '/home/runner/work/FormVault/FormVault'
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3288527Z [command]/usr/bin/git version
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3351995Z git version 2.52.0
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3378070Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3391659Z Temporarily overriding HOME='/home/runner/work/_temp/6146b08a-dc03-4c7e-b751-455ebfc9d47e' before making global git config changes
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3392438Z Adding repository directory to the temporary git global config as a safe directory
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3395236Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/FormVault/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3430279Z Deleting the contents of '/home/runner/work/FormVault/FormVault'
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3433841Z ##[group]Initializing the repository
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3436995Z [command]/usr/bin/git init /home/runner/work/FormVault/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3535299Z hint: Using 'master' as the name for the initial branch. This default branch name
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3536049Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3536875Z hint: to use in all of your new repositories, which will suppress this warning,
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3537505Z hint: call:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3537790Z hint:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3538203Z hint: 	git config --global init.defaultBranch <name>
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3538715Z hint:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3539157Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3539931Z hint: 'development'. The just-created branch can be renamed via this command:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3540532Z hint:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3540835Z hint: 	git branch -m <name>
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3541206Z hint:
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3541567Z hint: Disable this message with "git config set advice.defaultBranchName false"
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3542089Z Initialized empty Git repository in /home/runner/work/FormVault/FormVault/.git/
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3548781Z [command]/usr/bin/git remote add origin https://github.com/yuanweize/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3577995Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3580931Z ##[group]Disabling automatic garbage collection
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3581452Z [command]/usr/bin/git config --local gc.auto 0
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3605386Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3605759Z ##[group]Setting up auth
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3610597Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3636178Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3954952Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Run actions/checkout@v3	2026-01-30T06:28:45.3979486Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test	Run actions/checkout@v3	2026-01-30T06:28:45.4190674Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+test	Run actions/checkout@v3	2026-01-30T06:28:45.4221379Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:45.4221905Z ##[group]Fetching the repository
+test	Run actions/checkout@v3	2026-01-30T06:28:45.4229423Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +0138a8c625adc0bc028b5f4684756f3074e9f137:refs/remotes/origin/main
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5675801Z remote: Enumerating objects: 224, done.        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5676725Z remote: Counting objects:   0% (1/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5677450Z remote: Counting objects:   1% (3/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5678101Z remote: Counting objects:   2% (5/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5678580Z remote: Counting objects:   3% (7/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5679058Z remote: Counting objects:   4% (9/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5679584Z remote: Counting objects:   5% (12/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5680110Z remote: Counting objects:   6% (14/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5680484Z remote: Counting objects:   7% (16/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5680779Z remote: Counting objects:   8% (18/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5681070Z remote: Counting objects:   9% (21/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5681351Z remote: Counting objects:  10% (23/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5681621Z remote: Counting objects:  11% (25/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5681883Z remote: Counting objects:  12% (27/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5682186Z remote: Counting objects:  13% (30/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5682478Z remote: Counting objects:  14% (32/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5682761Z remote: Counting objects:  15% (34/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5683029Z remote: Counting objects:  16% (36/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5683294Z remote: Counting objects:  17% (39/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5683564Z remote: Counting objects:  18% (41/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5683833Z remote: Counting objects:  19% (43/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5684369Z remote: Counting objects:  20% (45/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5684634Z remote: Counting objects:  21% (48/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5684906Z remote: Counting objects:  22% (50/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5685183Z remote: Counting objects:  23% (52/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5685455Z remote: Counting objects:  24% (54/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5685734Z remote: Counting objects:  25% (56/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5686001Z remote: Counting objects:  26% (59/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5686266Z remote: Counting objects:  27% (61/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5686553Z remote: Counting objects:  28% (63/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5686827Z remote: Counting objects:  29% (65/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5687275Z remote: Counting objects:  30% (68/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5687546Z remote: Counting objects:  31% (70/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5687811Z remote: Counting objects:  32% (72/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5688417Z remote: Counting objects:  33% (74/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5688796Z remote: Counting objects:  34% (77/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5689066Z remote: Counting objects:  35% (79/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5689340Z remote: Counting objects:  36% (81/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5689600Z remote: Counting objects:  37% (83/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5689865Z remote: Counting objects:  38% (86/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5690132Z remote: Counting objects:  39% (88/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5690393Z remote: Counting objects:  40% (90/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5690817Z remote: Counting objects:  41% (92/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5691090Z remote: Counting objects:  42% (95/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5691364Z remote: Counting objects:  43% (97/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5691636Z remote: Counting objects:  44% (99/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5692039Z remote: Counting objects:  45% (101/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5692470Z remote: Counting objects:  46% (104/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5692745Z remote: Counting objects:  47% (106/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5693019Z remote: Counting objects:  48% (108/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5693475Z remote: Counting objects:  49% (110/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5693764Z remote: Counting objects:  50% (112/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5694217Z remote: Counting objects:  51% (115/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5694495Z remote: Counting objects:  52% (117/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5694765Z remote: Counting objects:  53% (119/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5695035Z remote: Counting objects:  54% (121/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5695311Z remote: Counting objects:  55% (124/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5695603Z remote: Counting objects:  56% (126/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5695876Z remote: Counting objects:  57% (128/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5696148Z remote: Counting objects:  58% (130/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5696419Z remote: Counting objects:  59% (133/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5696694Z remote: Counting objects:  60% (135/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5696958Z remote: Counting objects:  61% (137/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5697230Z remote: Counting objects:  62% (139/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5697510Z remote: Counting objects:  63% (142/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5697788Z remote: Counting objects:  64% (144/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5698060Z remote: Counting objects:  65% (146/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5698469Z remote: Counting objects:  66% (148/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5698749Z remote: Counting objects:  67% (151/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5699016Z remote: Counting objects:  68% (153/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5699296Z remote: Counting objects:  69% (155/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5699703Z remote: Counting objects:  70% (157/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5699981Z remote: Counting objects:  71% (160/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5700252Z remote: Counting objects:  72% (162/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5700523Z remote: Counting objects:  73% (164/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5700805Z remote: Counting objects:  74% (166/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5701077Z remote: Counting objects:  75% (168/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5701357Z remote: Counting objects:  76% (171/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5701628Z remote: Counting objects:  77% (173/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5701901Z remote: Counting objects:  78% (175/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5702166Z remote: Counting objects:  79% (177/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5702444Z remote: Counting objects:  80% (180/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5702719Z remote: Counting objects:  81% (182/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5702987Z remote: Counting objects:  82% (184/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5703259Z remote: Counting objects:  83% (186/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5703525Z remote: Counting objects:  84% (189/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5704105Z remote: Counting objects:  85% (191/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5704382Z remote: Counting objects:  86% (193/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5704651Z remote: Counting objects:  87% (195/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5704928Z remote: Counting objects:  88% (198/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5705228Z remote: Counting objects:  89% (200/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5705518Z remote: Counting objects:  90% (202/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5705802Z remote: Counting objects:  91% (204/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5706089Z remote: Counting objects:  92% (207/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5706372Z remote: Counting objects:  93% (209/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5706838Z remote: Counting objects:  94% (211/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5707127Z remote: Counting objects:  95% (213/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5707418Z remote: Counting objects:  96% (216/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5707703Z remote: Counting objects:  97% (218/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5708109Z remote: Counting objects:  98% (220/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5708411Z remote: Counting objects:  99% (222/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5708693Z remote: Counting objects: 100% (224/224)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5709013Z remote: Counting objects: 100% (224/224), done.        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5709500Z remote: Compressing objects:   0% (1/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5709807Z remote: Compressing objects:   1% (3/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5710099Z remote: Compressing objects:   2% (5/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5710406Z remote: Compressing objects:   3% (7/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5710723Z remote: Compressing objects:   4% (9/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5711024Z remote: Compressing objects:   5% (11/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5711338Z remote: Compressing objects:   6% (13/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5717402Z remote: Compressing objects:   7% (15/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5726643Z remote: Compressing objects:   8% (17/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5734790Z remote: Compressing objects:   9% (19/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5765234Z remote: Compressing objects:  10% (21/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5765582Z remote: Compressing objects:  11% (24/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5766082Z remote: Compressing objects:  12% (26/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5766417Z remote: Compressing objects:  13% (28/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5766729Z remote: Compressing objects:  14% (30/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5767360Z remote: Compressing objects:  15% (32/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5773065Z remote: Compressing objects:  16% (34/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5777721Z remote: Compressing objects:  17% (36/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5784863Z remote: Compressing objects:  18% (38/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5789723Z remote: Compressing objects:  19% (40/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5791839Z remote: Compressing objects:  20% (42/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.5798557Z remote: Compressing objects:  21% (45/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9835923Z remote: Compressing objects:  22% (47/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9836437Z remote: Compressing objects:  23% (49/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9850456Z remote: Compressing objects:  24% (51/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9852225Z remote: Compressing objects:  25% (53/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9859641Z remote: Compressing objects:  26% (55/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9891416Z remote: Compressing objects:  27% (57/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9897210Z remote: Compressing objects:  28% (59/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9910431Z remote: Compressing objects:  29% (61/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9931456Z remote: Compressing objects:  30% (63/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9948593Z remote: Compressing objects:  31% (66/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9961288Z remote: Compressing objects:  32% (68/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9969875Z remote: Compressing objects:  33% (70/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:45.9985616Z remote: Compressing objects:  34% (72/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0003162Z remote: Compressing objects:  35% (74/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0013356Z remote: Compressing objects:  36% (76/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0017571Z remote: Compressing objects:  37% (78/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0028695Z remote: Compressing objects:  38% (80/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0039214Z remote: Compressing objects:  39% (82/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0058232Z remote: Compressing objects:  40% (84/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0076286Z remote: Compressing objects:  41% (87/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0088559Z remote: Compressing objects:  42% (89/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0089645Z remote: Compressing objects:  43% (91/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0090259Z remote: Compressing objects:  44% (93/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0090744Z remote: Compressing objects:  45% (95/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0097934Z remote: Compressing objects:  46% (97/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0102431Z remote: Compressing objects:  47% (99/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0102949Z remote: Compressing objects:  48% (101/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0110097Z remote: Compressing objects:  49% (103/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0122842Z remote: Compressing objects:  50% (105/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0131714Z remote: Compressing objects:  51% (108/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0144155Z remote: Compressing objects:  52% (110/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0147050Z remote: Compressing objects:  53% (112/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0155865Z remote: Compressing objects:  54% (114/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0161444Z remote: Compressing objects:  55% (116/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0170253Z remote: Compressing objects:  56% (118/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0176387Z remote: Compressing objects:  57% (120/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0181283Z remote: Compressing objects:  58% (122/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0187223Z remote: Compressing objects:  59% (124/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0195127Z remote: Compressing objects:  60% (126/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0198044Z remote: Compressing objects:  61% (129/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0198626Z remote: Compressing objects:  62% (131/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0199405Z remote: Compressing objects:  63% (133/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0200167Z remote: Compressing objects:  64% (135/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0200727Z remote: Compressing objects:  65% (137/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0201260Z remote: Compressing objects:  66% (139/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0202043Z remote: Compressing objects:  67% (141/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0202624Z remote: Compressing objects:  68% (143/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0203409Z remote: Compressing objects:  69% (145/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0204202Z remote: Compressing objects:  70% (147/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0204774Z remote: Compressing objects:  71% (150/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0205528Z remote: Compressing objects:  72% (152/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0206072Z remote: Compressing objects:  73% (154/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0206781Z remote: Compressing objects:  74% (156/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0207458Z remote: Compressing objects:  75% (158/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0208415Z remote: Compressing objects:  76% (160/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0208916Z remote: Compressing objects:  77% (162/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0211994Z remote: Compressing objects:  78% (164/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0212565Z remote: Compressing objects:  79% (166/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0213318Z remote: Compressing objects:  80% (168/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0213848Z remote: Compressing objects:  81% (171/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0214763Z remote: Compressing objects:  82% (173/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0215317Z remote: Compressing objects:  83% (175/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0217786Z remote: Compressing objects:  84% (177/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0218398Z remote: Compressing objects:  85% (179/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0219212Z remote: Compressing objects:  86% (181/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0220133Z remote: Compressing objects:  87% (183/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0220996Z remote: Compressing objects:  88% (185/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0221546Z remote: Compressing objects:  89% (187/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0222076Z remote: Compressing objects:  90% (189/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0222605Z remote: Compressing objects:  91% (192/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0223113Z remote: Compressing objects:  92% (194/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0223638Z remote: Compressing objects:  93% (196/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0224370Z remote: Compressing objects:  94% (198/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0224894Z remote: Compressing objects:  95% (200/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0225715Z remote: Compressing objects:  96% (202/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0226246Z remote: Compressing objects:  97% (204/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0226784Z remote: Compressing objects:  98% (206/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0227324Z remote: Compressing objects:  99% (208/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0227867Z remote: Compressing objects: 100% (210/210)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0228383Z remote: Compressing objects: 100% (210/210), done.        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0272205Z Receiving objects:   0% (1/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0272953Z Receiving objects:   1% (3/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0273321Z Receiving objects:   2% (5/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0274365Z Receiving objects:   3% (7/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0277207Z Receiving objects:   4% (9/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0278643Z Receiving objects:   5% (12/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0279035Z Receiving objects:   6% (14/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0279411Z Receiving objects:   7% (16/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0280267Z Receiving objects:   8% (18/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0280864Z Receiving objects:   9% (21/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0283472Z Receiving objects:  10% (23/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0284348Z Receiving objects:  11% (25/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0284737Z Receiving objects:  12% (27/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0285093Z Receiving objects:  13% (30/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0285465Z Receiving objects:  14% (32/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0287484Z Receiving objects:  15% (34/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0288676Z Receiving objects:  16% (36/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0289091Z Receiving objects:  17% (39/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0289796Z Receiving objects:  18% (41/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0291287Z Receiving objects:  19% (43/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0292584Z Receiving objects:  20% (45/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0294986Z Receiving objects:  21% (48/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0295565Z Receiving objects:  22% (50/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0295948Z Receiving objects:  23% (52/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0297098Z Receiving objects:  24% (54/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0297469Z Receiving objects:  25% (56/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0299067Z Receiving objects:  26% (59/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0299883Z Receiving objects:  27% (61/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0300856Z Receiving objects:  28% (63/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0304303Z Receiving objects:  29% (65/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0306541Z Receiving objects:  30% (68/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0306975Z Receiving objects:  31% (70/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0307572Z Receiving objects:  32% (72/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0309901Z Receiving objects:  33% (74/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0312932Z Receiving objects:  34% (77/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0313509Z Receiving objects:  35% (79/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0314216Z Receiving objects:  36% (81/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0316818Z Receiving objects:  37% (83/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0317400Z Receiving objects:  38% (86/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0319210Z Receiving objects:  39% (88/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0320624Z Receiving objects:  40% (90/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0324239Z Receiving objects:  41% (92/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0327028Z Receiving objects:  42% (95/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0329540Z Receiving objects:  43% (97/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0332136Z Receiving objects:  44% (99/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0335235Z Receiving objects:  45% (101/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0335639Z Receiving objects:  46% (104/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0336034Z Receiving objects:  47% (106/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0337616Z Receiving objects:  48% (108/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0338203Z Receiving objects:  49% (110/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0509156Z Receiving objects:  50% (112/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0512326Z Receiving objects:  51% (115/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0512889Z Receiving objects:  52% (117/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0513372Z Receiving objects:  53% (119/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0602254Z Receiving objects:  54% (121/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0602780Z Receiving objects:  55% (124/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0603181Z Receiving objects:  56% (126/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0603565Z Receiving objects:  57% (128/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0604119Z Receiving objects:  58% (130/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0607056Z Receiving objects:  59% (133/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0610050Z Receiving objects:  60% (135/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0610663Z Receiving objects:  61% (137/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0611608Z Receiving objects:  62% (139/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0611989Z Receiving objects:  63% (142/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0612393Z Receiving objects:  64% (144/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0616821Z Receiving objects:  65% (146/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0617342Z Receiving objects:  66% (148/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0619341Z Receiving objects:  67% (151/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0619818Z Receiving objects:  68% (153/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0620336Z Receiving objects:  69% (155/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0620765Z Receiving objects:  70% (157/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0621239Z Receiving objects:  71% (160/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0622227Z Receiving objects:  72% (162/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0622701Z Receiving objects:  73% (164/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0623214Z Receiving objects:  74% (166/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0623638Z Receiving objects:  75% (168/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0626001Z Receiving objects:  76% (171/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0627636Z Receiving objects:  77% (173/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0628040Z Receiving objects:  78% (175/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0629721Z Receiving objects:  79% (177/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0631912Z Receiving objects:  80% (180/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0633167Z Receiving objects:  81% (182/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0634194Z Receiving objects:  82% (184/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0635849Z Receiving objects:  83% (186/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0638290Z Receiving objects:  84% (189/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0640419Z Receiving objects:  85% (191/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0641939Z Receiving objects:  86% (193/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0643777Z Receiving objects:  87% (195/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0644922Z Receiving objects:  88% (198/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0646041Z Receiving objects:  89% (200/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0646736Z Receiving objects:  90% (202/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0647632Z Receiving objects:  91% (204/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.0648207Z Receiving objects:  92% (207/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.1149695Z Receiving objects:  93% (209/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.1152152Z Receiving objects:  94% (211/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.1152781Z Receiving objects:  95% (213/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5078678Z Receiving objects:  96% (216/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5079520Z remote: Total 224 (delta 6), reused 83 (delta 0), pack-reused 0 (from 0)        
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5101812Z Receiving objects:  97% (218/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5102952Z Receiving objects:  98% (220/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5104347Z Receiving objects:  99% (222/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5104842Z Receiving objects: 100% (224/224)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5105356Z Receiving objects: 100% (224/224), 629.19 KiB | 1.27 MiB/s, done.
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5114897Z Resolving deltas:   0% (0/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5115500Z Resolving deltas:  16% (1/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5116475Z Resolving deltas:  33% (2/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5116997Z Resolving deltas:  50% (3/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5117776Z Resolving deltas:  66% (4/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5636606Z Resolving deltas:  83% (5/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5637283Z Resolving deltas: 100% (6/6)
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5637523Z Resolving deltas: 100% (6/6), done.
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5704273Z From https://github.com/yuanweize/FormVault
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5705051Z  * [new ref]         0138a8c625adc0bc028b5f4684756f3074e9f137 -> origin/main
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5739749Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5740081Z ##[group]Determining the checkout info
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5742777Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5743313Z ##[group]Checking out the ref
+test	Run actions/checkout@v3	2026-01-30T06:28:46.5747243Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+test	Run actions/checkout@v3	2026-01-30T06:28:46.6242555Z Switched to a new branch 'main'
+test	Run actions/checkout@v3	2026-01-30T06:28:46.6244575Z branch 'main' set up to track 'origin/main'.
+test	Run actions/checkout@v3	2026-01-30T06:28:46.6253528Z ##[endgroup]
+test	Run actions/checkout@v3	2026-01-30T06:28:46.6292422Z [command]/usr/bin/git log -1 --format='%H'
+test	Run actions/checkout@v3	2026-01-30T06:28:46.6314570Z '0138a8c625adc0bc028b5f4684756f3074e9f137'
+test	Set up Python 3.11	﻿2026-01-30T06:28:46.6520087Z ##[group]Run actions/setup-python@v4
+test	Set up Python 3.11	2026-01-30T06:28:46.6520379Z with:
+test	Set up Python 3.11	2026-01-30T06:28:46.6520548Z   python-version: 3.11
+test	Set up Python 3.11	2026-01-30T06:28:46.6520742Z   cache: pip
+test	Set up Python 3.11	2026-01-30T06:28:46.6520908Z   check-latest: false
+test	Set up Python 3.11	2026-01-30T06:28:46.6521211Z   token: ***
+test	Set up Python 3.11	2026-01-30T06:28:46.6521389Z   update-environment: true
+test	Set up Python 3.11	2026-01-30T06:28:46.6521609Z   allow-prereleases: false
+test	Set up Python 3.11	2026-01-30T06:28:46.6521800Z ##[endgroup]
+test	Set up Python 3.11	2026-01-30T06:28:46.8180484Z ##[group]Installed versions
+test	Set up Python 3.11	2026-01-30T06:28:46.8286583Z Successfully set up CPython (3.11.14)
+test	Set up Python 3.11	2026-01-30T06:28:46.8287270Z ##[endgroup]
+test	Set up Python 3.11	2026-01-30T06:28:46.9091802Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+test	Set up Python 3.11	2026-01-30T06:28:48.4374998Z /home/runner/.cache/pip
+test	Set up Python 3.11	2026-01-30T06:28:48.5547994Z Cache hit for: setup-python-Linux-24.04-Ubuntu-python-3.11.14-pip-87d9b08b177158834fe2effcf2bf3217dc10e4ba6fd6481242e20d3e2e2e5454
+test	Set up Python 3.11	2026-01-30T06:28:49.0009958Z Received 61992050 of 61992050 (100.0%), 154.8 MBs/sec
+test	Set up Python 3.11	2026-01-30T06:28:49.0010661Z Cache Size: ~59 MB (61992050 B)
+test	Set up Python 3.11	2026-01-30T06:28:49.0042351Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a18829c4-5e0e-44a1-9676-f5dae24f21c7/cache.tzst -P -C /home/runner/work/FormVault/FormVault --use-compress-program unzstd
+test	Set up Python 3.11	2026-01-30T06:28:49.1363387Z Cache restored successfully
+test	Set up Python 3.11	2026-01-30T06:28:49.1485997Z Cache restored from key: setup-python-Linux-24.04-Ubuntu-python-3.11.14-pip-87d9b08b177158834fe2effcf2bf3217dc10e4ba6fd6481242e20d3e2e2e5454
+test	Install dependencies	﻿2026-01-30T06:28:49.1642431Z ##[group]Run python -m pip install --upgrade pip
+test	Install dependencies	2026-01-30T06:28:49.1642874Z [36;1mpython -m pip install --upgrade pip[0m
+test	Install dependencies	2026-01-30T06:28:49.1643193Z [36;1mpip install -r requirements.txt[0m
+test	Install dependencies	2026-01-30T06:28:49.1681623Z shell: /usr/bin/bash -e {0}
+test	Install dependencies	2026-01-30T06:28:49.1681883Z env:
+test	Install dependencies	2026-01-30T06:28:49.1682132Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Install dependencies	2026-01-30T06:28:49.1682562Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Install dependencies	2026-01-30T06:28:49.1682975Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Install dependencies	2026-01-30T06:28:49.1683350Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Install dependencies	2026-01-30T06:28:49.1683727Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Install dependencies	2026-01-30T06:28:49.1684400Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Install dependencies	2026-01-30T06:28:49.1684706Z ##[endgroup]
+test	Install dependencies	2026-01-30T06:28:50.4017776Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (25.3)
+test	Install dependencies	2026-01-30T06:28:51.0159903Z Collecting fastapi>=0.104.1 (from -r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:51.0176336Z   Using cached fastapi-0.128.0-py3-none-any.whl.metadata (30 kB)
+test	Install dependencies	2026-01-30T06:28:51.0581474Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:51.0596240Z   Using cached uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+test	Install dependencies	2026-01-30T06:28:51.1694756Z Collecting pydantic>=2.5.0 (from -r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:51.1710726Z   Using cached pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+test	Install dependencies	2026-01-30T06:28:51.1876050Z Collecting pydantic-settings>=2.1.0 (from -r requirements.txt (line 5))
+test	Install dependencies	2026-01-30T06:28:51.1890895Z   Using cached pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+test	Install dependencies	2026-01-30T06:28:51.4457561Z Collecting sqlalchemy>=2.0.23 (from -r requirements.txt (line 8))
+test	Install dependencies	2026-01-30T06:28:51.4476003Z   Using cached sqlalchemy-2.0.46-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+test	Install dependencies	2026-01-30T06:28:51.4747339Z Collecting alembic>=1.13.1 (from -r requirements.txt (line 9))
+test	Install dependencies	2026-01-30T06:28:51.4761036Z   Using cached alembic-1.18.3-py3-none-any.whl.metadata (7.2 kB)
+test	Install dependencies	2026-01-30T06:28:51.4887316Z Collecting pymysql>=1.1.1 (from -r requirements.txt (line 10))
+test	Install dependencies	2026-01-30T06:28:51.4900819Z   Using cached pymysql-1.1.2-py3-none-any.whl.metadata (4.3 kB)
+test	Install dependencies	2026-01-30T06:28:51.5621375Z Collecting psycopg2-binary>=2.9.9 (from -r requirements.txt (line 11))
+test	Install dependencies	2026-01-30T06:28:51.5636650Z   Using cached psycopg2_binary-2.9.11-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:51.7332520Z Collecting cryptography>=44.0.1 (from -r requirements.txt (line 12))
+test	Install dependencies	2026-01-30T06:28:51.7348997Z   Using cached cryptography-46.0.4-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
+test	Install dependencies	2026-01-30T06:28:51.7492356Z Collecting python-jose>=3.3.0 (from python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:51.7505805Z   Using cached python_jose-3.5.0-py2.py3-none-any.whl.metadata (5.5 kB)
+test	Install dependencies	2026-01-30T06:28:51.7607659Z Collecting passlib>=1.7.4 (from passlib[bcrypt]>=1.7.4->-r requirements.txt (line 16))
+test	Install dependencies	2026-01-30T06:28:51.7620534Z   Using cached passlib-1.7.4-py2.py3-none-any.whl.metadata (1.7 kB)
+test	Install dependencies	2026-01-30T06:28:51.7721494Z Collecting python-multipart>=0.0.22 (from -r requirements.txt (line 17))
+test	Install dependencies	2026-01-30T06:28:51.7734366Z   Using cached python_multipart-0.0.22-py3-none-any.whl.metadata (1.8 kB)
+test	Install dependencies	2026-01-30T06:28:51.7841244Z Collecting email-validator>=2.1.0 (from -r requirements.txt (line 20))
+test	Install dependencies	2026-01-30T06:28:51.7854280Z   Using cached email_validator-2.3.0-py3-none-any.whl.metadata (26 kB)
+test	Install dependencies	2026-01-30T06:28:51.7981003Z Collecting aiosmtplib>=3.0.1 (from -r requirements.txt (line 21))
+test	Install dependencies	2026-01-30T06:28:51.7993723Z   Using cached aiosmtplib-5.1.0-py3-none-any.whl.metadata (3.6 kB)
+test	Install dependencies	2026-01-30T06:28:51.8128015Z Collecting jinja2>=3.1.6 (from -r requirements.txt (line 22))
+test	Install dependencies	2026-01-30T06:28:51.8140737Z   Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+test	Install dependencies	2026-01-30T06:28:51.8498471Z Collecting uvloop>=0.19.0 (from -r requirements.txt (line 25))
+test	Install dependencies	2026-01-30T06:28:51.8513774Z   Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:51.8795604Z Collecting httptools>=0.6.1 (from -r requirements.txt (line 26))
+test	Install dependencies	2026-01-30T06:28:51.8814732Z   Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+test	Install dependencies	2026-01-30T06:28:51.9054448Z Collecting redis>=5.0.1 (from -r requirements.txt (line 27))
+test	Install dependencies	2026-01-30T06:28:51.9067514Z   Using cached redis-7.1.0-py3-none-any.whl.metadata (12 kB)
+test	Install dependencies	2026-01-30T06:28:51.9208070Z Collecting prometheus-client>=0.19.0 (from -r requirements.txt (line 28))
+test	Install dependencies	2026-01-30T06:28:51.9220822Z   Using cached prometheus_client-0.24.1-py3-none-any.whl.metadata (2.1 kB)
+test	Install dependencies	2026-01-30T06:28:51.9321409Z Collecting python-magic>=0.4.27 (from -r requirements.txt (line 31))
+test	Install dependencies	2026-01-30T06:28:51.9334312Z   Using cached python_magic-0.4.27-py2.py3-none-any.whl.metadata (5.8 kB)
+test	Install dependencies	2026-01-30T06:28:52.1104346Z Collecting pillow>=10.3.0 (from -r requirements.txt (line 32))
+test	Install dependencies	2026-01-30T06:28:52.1119836Z   Using cached pillow-12.1.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (8.8 kB)
+test	Install dependencies	2026-01-30T06:28:52.1282648Z Collecting python-dotenv>=1.0.0 (from -r requirements.txt (line 35))
+test	Install dependencies	2026-01-30T06:28:52.1296068Z   Using cached python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+test	Install dependencies	2026-01-30T06:28:52.1452578Z Collecting click>=8.1.7 (from -r requirements.txt (line 36))
+test	Install dependencies	2026-01-30T06:28:52.1466583Z   Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.1771287Z Collecting pytest>=7.4.3 (from -r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:52.1785413Z   Using cached pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.1972127Z Collecting pytest-asyncio>=0.21.1 (from -r requirements.txt (line 40))
+test	Install dependencies	2026-01-30T06:28:52.1985529Z   Using cached pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.2123504Z Collecting pytest-cov>=4.1.0 (from -r requirements.txt (line 41))
+test	Install dependencies	2026-01-30T06:28:52.2136337Z   Using cached pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+test	Install dependencies	2026-01-30T06:28:52.2308592Z Collecting httpx>=0.25.1 (from -r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:52.2321447Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.2797657Z Collecting black>=23.11.0 (from -r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:52.2812202Z   Using cached black-26.1.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (88 kB)
+test	Install dependencies	2026-01-30T06:28:52.3132184Z Collecting isort>=5.12.0 (from -r requirements.txt (line 46))
+test	Install dependencies	2026-01-30T06:28:52.3144857Z   Using cached isort-7.0.0-py3-none-any.whl.metadata (11 kB)
+test	Install dependencies	2026-01-30T06:28:52.3326463Z Collecting flake8>=6.1.0 (from -r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:52.3340155Z   Using cached flake8-7.3.0-py2.py3-none-any.whl.metadata (3.8 kB)
+test	Install dependencies	2026-01-30T06:28:52.4327340Z Collecting mypy>=1.7.0 (from -r requirements.txt (line 48))
+test	Install dependencies	2026-01-30T06:28:52.4344497Z   Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+test	Install dependencies	2026-01-30T06:28:52.4596052Z Collecting safety>=2.3.5 (from -r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:52.4609622Z   Using cached safety-3.7.0-py3-none-any.whl.metadata (11 kB)
+test	Install dependencies	2026-01-30T06:28:52.4765765Z Collecting bandit>=1.7.5 (from -r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:52.4778894Z   Using cached bandit-1.9.3-py3-none-any.whl.metadata (7.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.4931495Z Collecting structlog>=23.1.0 (from -r requirements.txt (line 53))
+test	Install dependencies	2026-01-30T06:28:52.4944558Z   Using cached structlog-25.5.0-py3-none-any.whl.metadata (9.5 kB)
+test	Install dependencies	2026-01-30T06:28:52.5241413Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5254586Z   Using cached starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.5540039Z Collecting typing-extensions>=4.8.0 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5554849Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.5635433Z Collecting annotated-doc>=0.0.2 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5648934Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.5830937Z Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5844491Z   Using cached anyio-4.12.1-py3-none-any.whl.metadata (4.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.6006138Z Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.6020005Z   Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+test	Install dependencies	2026-01-30T06:28:52.6199380Z Collecting h11>=0.8 (from uvicorn>=0.24.0->uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:52.6212559Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.6301541Z Collecting annotated-types>=0.6.0 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:52.6314675Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+test	Install dependencies	2026-01-30T06:28:53.3278494Z Collecting pydantic-core==2.41.5 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:53.3294557Z   Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:53.3410050Z Collecting typing-inspection>=0.4.2 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:53.3423498Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.4645895Z Collecting greenlet>=1 (from sqlalchemy>=2.0.23->-r requirements.txt (line 8))
+test	Install dependencies	2026-01-30T06:28:53.4660949Z   Using cached greenlet-3.3.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.4962846Z Collecting Mako (from alembic>=1.13.1->-r requirements.txt (line 9))
+test	Install dependencies	2026-01-30T06:28:53.4976363Z   Using cached mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+test	Install dependencies	2026-01-30T06:28:53.6005943Z Collecting cffi>=2.0.0 (from cryptography>=44.0.1->-r requirements.txt (line 12))
+test	Install dependencies	2026-01-30T06:28:53.6021720Z   Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.6155694Z Collecting ecdsa!=0.15 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6168744Z   Using cached ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+test	Install dependencies	2026-01-30T06:28:53.6320932Z Collecting rsa!=4.1.1,!=4.4,<5.0,>=4.0 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6334277Z   Using cached rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.6510442Z Collecting pyasn1>=0.5.0 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6523732Z   Using cached pyasn1-0.6.2-py3-none-any.whl.metadata (8.4 kB)
+test	Install dependencies	2026-01-30T06:28:53.6688285Z Collecting dnspython>=2.0.0 (from email-validator>=2.1.0->-r requirements.txt (line 20))
+test	Install dependencies	2026-01-30T06:28:53.6701368Z   Using cached dnspython-2.8.0-py3-none-any.whl.metadata (5.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.7810892Z Collecting MarkupSafe>=2.0 (from jinja2>=3.1.6->-r requirements.txt (line 22))
+test	Install dependencies	2026-01-30T06:28:53.7826250Z   Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.8009598Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8022319Z   Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:53.8166245Z Collecting packaging>=22 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8179437Z   Using cached packaging-26.0-py3-none-any.whl.metadata (3.3 kB)
+test	Install dependencies	2026-01-30T06:28:53.8278840Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8291818Z   Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+test	Install dependencies	2026-01-30T06:28:53.8467417Z Collecting pygments>=2.7.2 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8480214Z   Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.1985427Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->-r requirements.txt (line 41))
+test	Install dependencies	2026-01-30T06:28:54.2001879Z   Using cached coverage-7.13.2-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.2310153Z Collecting certifi (from httpx>=0.25.1->-r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:54.2324307Z   Using cached certifi-2026.1.4-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.2488658Z Collecting httpcore==1.* (from httpx>=0.25.1->-r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:54.2501722Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+test	Install dependencies	2026-01-30T06:28:54.2689181Z Collecting mypy-extensions>=0.4.3 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.2702159Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.2801949Z Collecting pathspec>=1.0.0 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.2814994Z   Using cached pathspec-1.0.4-py3-none-any.whl.metadata (13 kB)
+test	Install dependencies	2026-01-30T06:28:54.3004458Z Collecting platformdirs>=2 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.3017075Z   Using cached platformdirs-4.5.1-py3-none-any.whl.metadata (12 kB)
+test	Install dependencies	2026-01-30T06:28:54.3163000Z Collecting pytokens>=0.3.0 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.3176751Z   Using cached pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.3292694Z Collecting mccabe<0.8.0,>=0.7.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3305844Z   Using cached mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+test	Install dependencies	2026-01-30T06:28:54.3410565Z Collecting pycodestyle<2.15.0,>=2.14.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3423453Z   Using cached pycodestyle-2.14.0-py2.py3-none-any.whl.metadata (4.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.3537492Z Collecting pyflakes<3.5.0,>=3.4.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3550859Z   Using cached pyflakes-3.4.0-py2.py3-none-any.whl.metadata (3.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.4489839Z Collecting librt>=0.6.2 (from mypy>=1.7.0->-r requirements.txt (line 48))
+test	Install dependencies	2026-01-30T06:28:54.4506118Z   Using cached librt-0.7.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+test	Install dependencies	2026-01-30T06:28:54.4674647Z Collecting authlib>=1.2.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.4688099Z   Using cached authlib-1.6.6-py2.py3-none-any.whl.metadata (9.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.4861268Z Collecting dparse>=0.6.4 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.5631125Z   Using cached dparse-0.6.4-py3-none-any.whl.metadata (5.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.5830541Z Collecting filelock<4.0,>=3.16.1 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.5844911Z   Using cached filelock-3.20.3-py3-none-any.whl.metadata (2.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.6203779Z Collecting marshmallow>=3.15.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6217481Z   Using cached marshmallow-4.2.1-py3-none-any.whl.metadata (7.4 kB)
+test	Install dependencies	2026-01-30T06:28:54.6358406Z Collecting nltk>=3.9 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6371616Z   Using cached nltk-3.9.2-py3-none-any.whl.metadata (3.2 kB)
+test	Install dependencies	2026-01-30T06:28:54.6788571Z Collecting requests (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6801983Z   Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:54.8069499Z Collecting ruamel-yaml>=0.17.21 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8084965Z   Using cached ruamel_yaml-0.19.1-py3-none-any.whl.metadata (16 kB)
+test	Install dependencies	2026-01-30T06:28:54.8216838Z Collecting safety-schemas==0.0.16 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8230237Z   Using cached safety_schemas-0.0.16-py3-none-any.whl.metadata (1.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.8400447Z Collecting tenacity>=8.1.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8422302Z   Using cached tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+test	Install dependencies	2026-01-30T06:28:54.8591034Z Collecting tomlkit (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8604164Z   Using cached tomlkit-0.14.0-py3-none-any.whl.metadata (2.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.8768329Z Collecting typer>=0.16.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8781093Z   Using cached typer-0.21.1-py3-none-any.whl.metadata (16 kB)
+test	Install dependencies	2026-01-30T06:28:54.9212769Z Collecting PyYAML>=5.3.1 (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9225953Z   Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+test	Install dependencies	2026-01-30T06:28:54.9432844Z Collecting stevedore>=1.20.0 (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9446451Z   Using cached stevedore-5.6.0-py3-none-any.whl.metadata (2.3 kB)
+test	Install dependencies	2026-01-30T06:28:54.9824862Z Collecting rich (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9838286Z   Using cached rich-14.3.1-py3-none-any.whl.metadata (18 kB)
+test	Install dependencies	2026-01-30T06:28:55.0017810Z Collecting pycparser (from cffi>=2.0.0->cryptography>=44.0.1->-r requirements.txt (line 12))
+test	Install dependencies	2026-01-30T06:28:55.0030504Z   Using cached pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+test	Install dependencies	2026-01-30T06:28:55.0240371Z Collecting six>=1.9.0 (from ecdsa!=0.15->python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:55.0253310Z   Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+test	Install dependencies	2026-01-30T06:28:55.0606157Z Collecting joblib (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.0619162Z   Using cached joblib-1.5.3-py3-none-any.whl.metadata (5.5 kB)
+test	Install dependencies	2026-01-30T06:28:55.3889823Z Collecting regex>=2021.8.3 (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.3905632Z   Using cached regex-2026.1.15-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+test	Install dependencies	2026-01-30T06:28:55.4226015Z Collecting tqdm (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.4239570Z   Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+test	Install dependencies	2026-01-30T06:28:55.5635610Z Collecting bcrypt>=3.1.0 (from passlib[bcrypt]>=1.7.4->-r requirements.txt (line 16))
+test	Install dependencies	2026-01-30T06:28:55.5651088Z   Using cached bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)
+test	Install dependencies	2026-01-30T06:28:55.6294697Z Collecting shellingham>=1.3.0 (from typer>=0.16.0->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.6308388Z   Using cached shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+test	Install dependencies	2026-01-30T06:28:55.6576549Z Collecting markdown-it-py>=2.2.0 (from rich->bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:55.6589968Z   Using cached markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:55.6764616Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:55.6777139Z   Using cached mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+test	Install dependencies	2026-01-30T06:28:55.7657936Z Collecting watchfiles>=0.13 (from uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:55.7672033Z   Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:55.8515050Z Collecting websockets>=10.4 (from uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:55.8533411Z   Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+test	Install dependencies	2026-01-30T06:28:55.9543876Z Collecting charset_normalizer<4,>=2 (from requests->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.9559250Z   Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+test	Install dependencies	2026-01-30T06:28:55.9872774Z Collecting urllib3<3,>=1.21.1 (from requests->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.9886406Z   Using cached urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+test	Install dependencies	2026-01-30T06:28:56.0094506Z Using cached fastapi-0.128.0-py3-none-any.whl (103 kB)
+test	Install dependencies	2026-01-30T06:28:56.0108202Z Using cached starlette-0.50.0-py3-none-any.whl (74 kB)
+test	Install dependencies	2026-01-30T06:28:56.0121541Z Using cached anyio-4.12.1-py3-none-any.whl (113 kB)
+test	Install dependencies	2026-01-30T06:28:56.0135563Z Using cached uvicorn-0.40.0-py3-none-any.whl (68 kB)
+test	Install dependencies	2026-01-30T06:28:56.0148973Z Using cached pydantic-2.12.5-py3-none-any.whl (463 kB)
+test	Install dependencies	2026-01-30T06:28:56.0165703Z Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+test	Install dependencies	2026-01-30T06:28:56.0193213Z Using cached pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+test	Install dependencies	2026-01-30T06:28:56.0207332Z Using cached sqlalchemy-2.0.46-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+test	Install dependencies	2026-01-30T06:28:56.0244307Z Using cached alembic-1.18.3-py3-none-any.whl (262 kB)
+test	Install dependencies	2026-01-30T06:28:56.0259316Z Using cached pymysql-1.1.2-py3-none-any.whl (45 kB)
+test	Install dependencies	2026-01-30T06:28:56.0273144Z Using cached psycopg2_binary-2.9.11-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+test	Install dependencies	2026-01-30T06:28:56.0315935Z Using cached cryptography-46.0.4-cp311-abi3-manylinux_2_34_x86_64.whl (4.5 MB)
+test	Install dependencies	2026-01-30T06:28:56.0359574Z Using cached python_jose-3.5.0-py2.py3-none-any.whl (34 kB)
+test	Install dependencies	2026-01-30T06:28:56.0372923Z Using cached rsa-4.9.1-py3-none-any.whl (34 kB)
+test	Install dependencies	2026-01-30T06:28:56.0386382Z Using cached passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+test	Install dependencies	2026-01-30T06:28:56.0403025Z Using cached python_multipart-0.0.22-py3-none-any.whl (24 kB)
+test	Install dependencies	2026-01-30T06:28:56.0416379Z Using cached email_validator-2.3.0-py3-none-any.whl (35 kB)
+test	Install dependencies	2026-01-30T06:28:56.0429558Z Using cached aiosmtplib-5.1.0-py3-none-any.whl (27 kB)
+test	Install dependencies	2026-01-30T06:28:56.0443031Z Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+test	Install dependencies	2026-01-30T06:28:56.0457611Z Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+test	Install dependencies	2026-01-30T06:28:56.0498049Z Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+test	Install dependencies	2026-01-30T06:28:56.0513769Z Using cached redis-7.1.0-py3-none-any.whl (354 kB)
+test	Install dependencies	2026-01-30T06:28:56.0529558Z Using cached prometheus_client-0.24.1-py3-none-any.whl (64 kB)
+test	Install dependencies	2026-01-30T06:28:56.0543380Z Using cached python_magic-0.4.27-py2.py3-none-any.whl (13 kB)
+test	Install dependencies	2026-01-30T06:28:56.0556992Z Using cached pillow-12.1.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.0 MB)
+test	Install dependencies	2026-01-30T06:28:56.0618669Z Using cached python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+test	Install dependencies	2026-01-30T06:28:56.0631747Z Using cached click-8.3.1-py3-none-any.whl (108 kB)
+test	Install dependencies	2026-01-30T06:28:56.0645797Z Using cached pytest-9.0.2-py3-none-any.whl (374 kB)
+test	Install dependencies	2026-01-30T06:28:56.0661166Z Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+test	Install dependencies	2026-01-30T06:28:56.0674658Z Using cached pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+test	Install dependencies	2026-01-30T06:28:56.0687726Z Using cached pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+test	Install dependencies	2026-01-30T06:28:56.0700651Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+test	Install dependencies	2026-01-30T06:28:56.0714177Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.0728182Z Using cached black-26.1.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+test	Install dependencies	2026-01-30T06:28:56.0753122Z Using cached isort-7.0.0-py3-none-any.whl (94 kB)
+test	Install dependencies	2026-01-30T06:28:56.0766937Z Using cached flake8-7.3.0-py2.py3-none-any.whl (57 kB)
+test	Install dependencies	2026-01-30T06:28:56.0780367Z Using cached mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:56.0793340Z Using cached pycodestyle-2.14.0-py2.py3-none-any.whl (31 kB)
+test	Install dependencies	2026-01-30T06:28:56.0806660Z Using cached pyflakes-3.4.0-py2.py3-none-any.whl (63 kB)
+test	Install dependencies	2026-01-30T06:28:56.0820404Z Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+test	Install dependencies	2026-01-30T06:28:56.0933695Z Using cached safety-3.7.0-py3-none-any.whl (312 kB)
+test	Install dependencies	2026-01-30T06:28:56.0948963Z Using cached safety_schemas-0.0.16-py3-none-any.whl (39 kB)
+test	Install dependencies	2026-01-30T06:28:56.0961676Z Using cached filelock-3.20.3-py3-none-any.whl (16 kB)
+test	Install dependencies	2026-01-30T06:28:56.0974408Z Using cached bandit-1.9.3-py3-none-any.whl (134 kB)
+test	Install dependencies	2026-01-30T06:28:56.0988004Z Using cached structlog-25.5.0-py3-none-any.whl (72 kB)
+test	Install dependencies	2026-01-30T06:28:56.1000971Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+test	Install dependencies	2026-01-30T06:28:56.1013592Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+test	Install dependencies	2026-01-30T06:28:56.1026377Z Using cached authlib-1.6.6-py2.py3-none-any.whl (244 kB)
+test	Install dependencies	2026-01-30T06:28:56.1040989Z Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
+test	Install dependencies	2026-01-30T06:28:56.1055355Z Using cached coverage-7.13.2-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (251 kB)
+test	Install dependencies	2026-01-30T06:28:56.1069452Z Using cached dnspython-2.8.0-py3-none-any.whl (331 kB)
+test	Install dependencies	2026-01-30T06:28:56.1084245Z Using cached dparse-0.6.4-py3-none-any.whl (11 kB)
+test	Install dependencies	2026-01-30T06:28:56.1096929Z Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+test	Install dependencies	2026-01-30T06:28:56.1110603Z Using cached greenlet-3.3.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+test	Install dependencies	2026-01-30T06:28:56.1127231Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+test	Install dependencies	2026-01-30T06:28:56.1140078Z Using cached idna-3.11-py3-none-any.whl (71 kB)
+test	Install dependencies	2026-01-30T06:28:56.1153290Z Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+test	Install dependencies	2026-01-30T06:28:56.1166428Z Using cached librt-0.7.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (188 kB)
+test	Install dependencies	2026-01-30T06:28:56.1180363Z Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+test	Install dependencies	2026-01-30T06:28:56.1192670Z Using cached marshmallow-4.2.1-py3-none-any.whl (48 kB)
+test	Install dependencies	2026-01-30T06:28:56.1205720Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+test	Install dependencies	2026-01-30T06:28:56.1218244Z Using cached nltk-3.9.2-py3-none-any.whl (1.5 MB)
+test	Install dependencies	2026-01-30T06:28:56.1241736Z Using cached packaging-26.0-py3-none-any.whl (74 kB)
+test	Install dependencies	2026-01-30T06:28:56.1255060Z Using cached bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl (278 kB)
+test	Install dependencies	2026-01-30T06:28:56.1269521Z Using cached pathspec-1.0.4-py3-none-any.whl (55 kB)
+test	Install dependencies	2026-01-30T06:28:56.1282622Z Using cached platformdirs-4.5.1-py3-none-any.whl (18 kB)
+test	Install dependencies	2026-01-30T06:28:56.1295432Z Using cached pyasn1-0.6.2-py3-none-any.whl (83 kB)
+test	Install dependencies	2026-01-30T06:28:56.1308533Z Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+test	Install dependencies	2026-01-30T06:28:56.1330093Z Using cached pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (260 kB)
+test	Install dependencies	2026-01-30T06:28:56.1344931Z Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+test	Install dependencies	2026-01-30T06:28:56.1363680Z Using cached regex-2026.1.15-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (800 kB)
+test	Install dependencies	2026-01-30T06:28:56.1381687Z Using cached ruamel_yaml-0.19.1-py3-none-any.whl (118 kB)
+test	Install dependencies	2026-01-30T06:28:56.1395795Z Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+test	Install dependencies	2026-01-30T06:28:56.1408795Z Using cached stevedore-5.6.0-py3-none-any.whl (54 kB)
+test	Install dependencies	2026-01-30T06:28:56.1422487Z Using cached tenacity-9.1.2-py3-none-any.whl (28 kB)
+test	Install dependencies	2026-01-30T06:28:56.1435666Z Using cached typer-0.21.1-py3-none-any.whl (47 kB)
+test	Install dependencies	2026-01-30T06:28:56.1449324Z Using cached rich-14.3.1-py3-none-any.whl (309 kB)
+test	Install dependencies	2026-01-30T06:28:56.1464611Z Using cached markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+test	Install dependencies	2026-01-30T06:28:56.1478212Z Using cached mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+test	Install dependencies	2026-01-30T06:28:56.1491347Z Using cached shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+test	Install dependencies	2026-01-30T06:28:56.1504498Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+test	Install dependencies	2026-01-30T06:28:56.1518132Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+test	Install dependencies	2026-01-30T06:28:56.1531642Z Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+test	Install dependencies	2026-01-30T06:28:56.1548483Z Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (184 kB)
+test	Install dependencies	2026-01-30T06:28:56.1562486Z Using cached certifi-2026.1.4-py3-none-any.whl (152 kB)
+test	Install dependencies	2026-01-30T06:28:56.1576601Z Using cached joblib-1.5.3-py3-none-any.whl (309 kB)
+test	Install dependencies	2026-01-30T06:28:56.1591678Z Using cached mako-1.3.10-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.1605288Z Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+test	Install dependencies	2026-01-30T06:28:56.1618420Z Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+test	Install dependencies	2026-01-30T06:28:56.1632332Z Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (151 kB)
+test	Install dependencies	2026-01-30T06:28:56.1646650Z Using cached urllib3-2.6.3-py3-none-any.whl (131 kB)
+test	Install dependencies	2026-01-30T06:28:56.1660549Z Using cached tomlkit-0.14.0-py3-none-any.whl (39 kB)
+test	Install dependencies	2026-01-30T06:28:56.1673888Z Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.4109787Z Installing collected packages: passlib, websockets, uvloop, urllib3, typing-extensions, tqdm, tomlkit, tenacity, structlog, stevedore, six, shellingham, ruamel-yaml, regex, redis, PyYAML, pytokens, python-multipart, python-magic, python-dotenv, pymysql, pygments, pyflakes, pycparser, pycodestyle, pyasn1, psycopg2-binary, prometheus-client, pluggy, platformdirs, pillow, pathspec, packaging, mypy-extensions, mdurl, mccabe, marshmallow, MarkupSafe, librt, joblib, isort, iniconfig, idna, httptools, h11, greenlet, filelock, dnspython, coverage, click, charset_normalizer, certifi, bcrypt, annotated-types, annotated-doc, aiosmtplib, uvicorn, typing-inspection, sqlalchemy, rsa, requests, pytest, pydantic-core, nltk, mypy, markdown-it-py, Mako, jinja2, httpcore, flake8, email-validator, ecdsa, dparse, cffi, black, anyio, watchfiles, starlette, rich, python-jose, pytest-cov, pytest-asyncio, pydantic, httpx, cryptography, alembic, typer, safety-schemas, pydantic-settings, fastapi, bandit, authlib, safety
+test	Install dependencies	2026-01-30T06:29:05.4573718Z 
+test	Install dependencies	2026-01-30T06:29:05.4618828Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 PyYAML-6.0.3 aiosmtplib-5.1.0 alembic-1.18.3 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.1 authlib-1.6.6 bandit-1.9.3 bcrypt-5.0.0 black-26.1.0 certifi-2026.1.4 cffi-2.0.0 charset_normalizer-3.4.4 click-8.3.1 coverage-7.13.2 cryptography-46.0.4 dnspython-2.8.0 dparse-0.6.4 ecdsa-0.19.1 email-validator-2.3.0 fastapi-0.128.0 filelock-3.20.3 flake8-7.3.0 greenlet-3.3.1 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 isort-7.0.0 jinja2-3.1.6 joblib-1.5.3 librt-0.7.8 markdown-it-py-4.0.0 marshmallow-4.2.1 mccabe-0.7.0 mdurl-0.1.2 mypy-1.19.1 mypy-extensions-1.1.0 nltk-3.9.2 packaging-26.0 passlib-1.7.4 pathspec-1.0.4 pillow-12.1.0 platformdirs-4.5.1 pluggy-1.6.0 prometheus-client-0.24.1 psycopg2-binary-2.9.11 pyasn1-0.6.2 pycodestyle-2.14.0 pycparser-3.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pyflakes-3.4.0 pygments-2.19.2 pymysql-1.1.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 python-jose-3.5.0 python-magic-0.4.27 python-multipart-0.0.22 pytokens-0.4.1 redis-7.1.0 regex-2026.1.15 requests-2.32.5 rich-14.3.1 rsa-4.9.1 ruamel-yaml-0.19.1 safety-3.7.0 safety-schemas-0.0.16 shellingham-1.5.4 six-1.17.0 sqlalchemy-2.0.46 starlette-0.50.0 stevedore-5.6.0 structlog-25.5.0 tenacity-9.1.2 tomlkit-0.14.0 tqdm-4.67.1 typer-0.21.1 typing-extensions-4.15.0 typing-inspection-0.4.2 urllib3-2.6.3 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-16.0
+test	Create test environment file	﻿2026-01-30T06:29:06.1502223Z ##[group]Run echo "DATABASE_URL=***127.0.0.1:3306/formvault_test" > .env.test
+test	Create test environment file	2026-01-30T06:29:06.1502999Z [36;1mecho "DATABASE_URL=***127.0.0.1:3306/formvault_test" > .env.test[0m
+test	Create test environment file	2026-01-30T06:29:06.1503376Z [36;1mecho "TESTING=true" >> .env.test[0m
+test	Create test environment file	2026-01-30T06:29:06.1537460Z shell: /usr/bin/bash -e {0}
+test	Create test environment file	2026-01-30T06:29:06.1537693Z env:
+test	Create test environment file	2026-01-30T06:29:06.1537948Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1538379Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Create test environment file	2026-01-30T06:29:06.1538774Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539154Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539555Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539922Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Create test environment file	2026-01-30T06:29:06.1540213Z ##[endgroup]
+test	Lint with flake8	﻿2026-01-30T06:29:06.1613895Z ##[group]Run # stop the build if there are Python syntax errors or undefined names
+test	Lint with flake8	2026-01-30T06:29:06.1614663Z [36;1m# stop the build if there are Python syntax errors or undefined names[0m
+test	Lint with flake8	2026-01-30T06:29:06.1615141Z [36;1mflake8 . --count --select=E9,F63,F7,F82 --show-source --statistics[0m
+test	Lint with flake8	2026-01-30T06:29:06.1615637Z [36;1m# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide[0m
+test	Lint with flake8	2026-01-30T06:29:06.1616190Z [36;1mflake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics[0m
+test	Lint with flake8	2026-01-30T06:29:06.1645576Z shell: /usr/bin/bash -e {0}
+test	Lint with flake8	2026-01-30T06:29:06.1645807Z env:
+test	Lint with flake8	2026-01-30T06:29:06.1646049Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1646643Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Lint with flake8	2026-01-30T06:29:06.1647058Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1647428Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1647822Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1648182Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Lint with flake8	2026-01-30T06:29:06.1648478Z ##[endgroup]
+test	Lint with flake8	2026-01-30T06:29:07.3060295Z 0
+test	Lint with flake8	2026-01-30T06:29:08.0061831Z ./alembic/env.py:14:1: E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0062597Z ./alembic/env.py:15:1: F401 'app.models.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0063133Z ./alembic/env.py:15:1: F401 'app.models.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0063842Z ./alembic/env.py:15:1: F401 'app.models.EmailExport' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0064735Z ./alembic/env.py:15:1: F401 'app.models.AuditLog' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0065453Z ./alembic/env.py:15:1: E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0066188Z ./app/api/v1/endpoints/admin.py:9:1: F401 'sqlalchemy.or_' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0066923Z ./app/api/v1/endpoints/applications.py:11:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0067537Z ./app/api/v1/endpoints/applications.py:240:5: F841 local variable 'total' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0068477Z ./app/api/v1/endpoints/applications.py:583:1: C901 'export_application' is too complex (13)
+test	Lint with flake8	2026-01-30T06:29:08.0069284Z ./app/api/v1/endpoints/applications.py:699:128: E501 line too long (134 > 127 characters)
+test	Lint with flake8	2026-01-30T06:29:08.0069815Z ./app/api/v1/endpoints/files.py:8:1: F401 'fastapi.HTTPException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0070314Z ./app/api/v1/endpoints/files.py:19:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0070850Z ./app/api/v1/endpoints/files.py:29:1: F401 'app.schemas.base.ResponseBase' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0071489Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.FileSizeException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0072494Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.FileTypeException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0073291Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.ApplicationNotFoundException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0074352Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.DatabaseException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0075098Z ./app/api/v1/endpoints/health.py:13:1: F401 'app.schemas.base.ResponseBase' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0075625Z ./app/main.py:8:1: F401 'fastapi.HTTPException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0076119Z ./app/middleware/audit.py:15:1: F401 '..core.exceptions.FormVaultException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0076625Z ./app/middleware/security.py:13:1: F401 'hashlib' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0077069Z ./app/middleware/security.py:15:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0077587Z ./app/middleware/security.py:17:1: F401 'fastapi.security.HTTPBearer' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0078140Z ./app/middleware/security.py:23:1: F401 'urllib.parse.quote' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0079487Z ./app/middleware/security.py:363:30: F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0080208Z ./app/models/application.py:7:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0080968Z ./app/models/application.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0081750Z ./app/models/application.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0082520Z ./app/models/audit_log.py:8:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0083250Z ./app/models/audit_log.py:8:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0084195Z ./app/models/email_export.py:7:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0084935Z ./app/models/email_export.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0085413Z ./app/models/email_export.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0085878Z ./app/models/file.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0086308Z ./app/models/file.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0086764Z ./app/models/file.py:11:1: F401 'sqlalchemy.dialects.mysql.TEXT' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0087232Z ./app/schemas/base.py:8:1: F401 'pydantic.validator' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0087671Z ./app/schemas/file.py:8:1: F401 'pydantic.validator' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0088100Z ./app/schemas/file.py:9:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0088554Z ./app/services/email_service.py:10:1: F401 'datetime.timedelta' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0089077Z ./app/services/email_service.py:15:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0089553Z ./app/services/email_service.py:17:1: F401 'jinja2.Template' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090006Z ./app/services/email_service.py:18:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090466Z ./app/services/email_service.py:24:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090952Z ./app/services/email_service.py:184:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0091397Z ./app/services/email_service.py:186:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0091834Z ./app/services/email_service.py:198:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0092255Z ./app/services/email_service.py:200:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0092685Z ./app/services/email_service.py:202:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0093114Z ./app/services/email_service.py:204:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0093563Z ./app/services/error_tracking.py:8:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0094266Z ./app/services/file_service.py:11:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0094794Z ./app/services/file_service.py:134:9: F841 local variable 'e' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0095289Z ./app/services/file_storage.py:14:1: F401 'shutil' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0095710Z ./app/services/file_storage.py:15:1: F401 'mimetypes' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0096166Z ./app/services/file_storage.py:17:1: F401 'typing.BinaryIO' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0096621Z ./app/services/file_storage.py:18:1: F401 'uuid.uuid4' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0097013Z ./app/utils/db_helpers.py:256:39: W291 trailing whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0097393Z ./app/utils/sql_security.py:9:1: F401 'typing.Union' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0097848Z ./app/utils/sql_security.py:15:5: F401 'sqlalchemy.orm.Session' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0098360Z ./app/utils/validation.py:17:5: F401 'email_validator.validate_email' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0098908Z ./app/utils/validation.py:17:5: F401 'email_validator.EmailNotValidError' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0099450Z ./app/utils/validation.py:148:5: F811 redefinition of unused 'validate_email' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0100166Z ./app/utils/validation.py:158:17: F811 redefinition of unused 'EmailNotValidError' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0100763Z ./app/utils/validation.py:240:5: C901 'InputValidator.validate_date_of_birth' is too complex (11)
+test	Lint with flake8	2026-01-30T06:29:08.0101353Z ./scripts/init_test_db.py:11:1: F403 'from app.models import *' used; unable to detect undefined names
+test	Lint with flake8	2026-01-30T06:29:08.0101898Z ./scripts/init_test_db.py:11:1: F401 'app.models.*' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0102389Z ./scripts/init_test_db.py:24:5: F841 local variable 'SessionLocal' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0102889Z ./tests/test_admin_dashboard.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0103456Z ./tests/test_admin_dashboard.py:6:1: F401 'datetime.timedelta' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0104194Z ./tests/test_admin_dashboard.py:12:1: F401 'app.models.application.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0104770Z ./tests/test_admin_dashboard.py:13:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0105335Z ./tests/test_admin_dashboard.py:14:1: F401 'app.models.email_export.EmailExport' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0105914Z ./tests/test_admin_dashboard.py:15:1: F401 'app.models.audit_log.AuditLog' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0106429Z ./tests/test_api_initialization.py:8:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0106878Z ./tests/test_api_initialization.py:11:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0107400Z ./tests/test_api_initialization.py:196:9: F841 local variable 'tags' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0108014Z ./tests/test_api_initialization.py:231:13: F841 local variable 'schema_found' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0108575Z ./tests/test_applications_api.py:12:1: F401 'datetime.date' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0109064Z ./tests/test_applications_api.py:12:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0109574Z ./tests/test_applications_api.py:13:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110053Z ./tests/test_applications_api.py:14:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110487Z ./tests/test_applications_api.py:415:9: F401 'threading' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110931Z ./tests/test_audit_middleware.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0111399Z ./tests/test_audit_middleware.py:6:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0111904Z ./tests/test_audit_middleware.py:7:1: F401 'fastapi.Response' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0112436Z ./tests/test_audit_middleware.py:123:9: F841 local variable 'response' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0112985Z ./tests/test_email_service.py:8:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0113474Z ./tests/test_email_service.py:8:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0114156Z ./tests/test_error_handling.py:10:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0114629Z ./tests/test_error_handling.py:11:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115034Z ./tests/test_error_tracking.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115490Z ./tests/test_file_service.py:6:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115949Z ./tests/test_file_storage.py:7:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0116447Z ./tests/test_file_storage.py:15:1: F401 'app.core.exceptions.FileUploadException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0116976Z ./tests/test_files_api_integration.py:7:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0117456Z ./tests/test_files_api_integration.py:9:1: F401 'pathlib.Path' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0117985Z ./tests/test_files_api_integration.py:18:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0118656Z ./tests/test_files_api_integration.py:355:31: F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0119138Z ./tests/test_integration_workflows.py:6:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0119659Z ./tests/test_integration_workflows.py:11:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0120196Z ./tests/test_integration_workflows.py:13:1: F401 'app.main.app' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0120738Z ./tests/test_integration_workflows.py:14:1: F401 'app.database.get_db' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0121365Z ./tests/test_integration_workflows.py:64:17: F841 local variable 'student_id_file_id' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0122181Z ./tests/test_integration_workflows.py:81:17: F841 local variable 'passport_file_id' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0122756Z ./tests/test_integration_workflows.py:302:9: F401 'time' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0123200Z ./tests/test_models.py:6:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0123665Z ./tests/test_performance_monitor.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0124262Z 2     C901 'export_application' is too complex (13)
+test	Lint with flake8	2026-01-30T06:29:08.0124563Z 2     E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0124839Z 1     E501 line too long (134 > 127 characters)
+test	Lint with flake8	2026-01-30T06:29:08.0125144Z 84    F401 'app.models.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0125517Z 1     F403 'from app.models import *' used; unable to detect undefined names
+test	Lint with flake8	2026-01-30T06:29:08.0125866Z 2     F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0126177Z 2     F811 redefinition of unused 'validate_email' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0126544Z 8     F841 local variable 'total' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0126840Z 1     W291 trailing whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0127079Z 6     W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0127312Z 109
+test	Format check with black	﻿2026-01-30T06:29:08.0271901Z ##[group]Run black . --check
+test	Format check with black	2026-01-30T06:29:08.0272186Z [36;1mblack . --check[0m
+test	Format check with black	2026-01-30T06:29:08.0305021Z shell: /usr/bin/bash -e {0}
+test	Format check with black	2026-01-30T06:29:08.0305248Z env:
+test	Format check with black	2026-01-30T06:29:08.0305491Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0305913Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Format check with black	2026-01-30T06:29:08.0306316Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0306679Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0307036Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0307398Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Format check with black	2026-01-30T06:29:08.0307699Z ##[endgroup]
+test	Format check with black	2026-01-30T06:29:09.1818828Z All done! ✨ 🍰 ✨
+test	Format check with black	2026-01-30T06:29:09.1819188Z 69 files would be left unchanged.
+test	Type check with mypy	﻿2026-01-30T06:29:09.2109331Z ##[group]Run mypy . --ignore-missing-imports
+test	Type check with mypy	2026-01-30T06:29:09.2109736Z [36;1mmypy . --ignore-missing-imports[0m
+test	Type check with mypy	2026-01-30T06:29:09.2142540Z shell: /usr/bin/bash -e {0}
+test	Type check with mypy	2026-01-30T06:29:09.2142780Z env:
+test	Type check with mypy	2026-01-30T06:29:09.2143017Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2143445Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Type check with mypy	2026-01-30T06:29:09.2143877Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2144459Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2144815Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2145173Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Type check with mypy	2026-01-30T06:29:09.2145476Z ##[endgroup]
+test	Type check with mypy	2026-01-30T06:29:20.8499040Z alembic/env.py:75: error: Unsupported target for indexed assignment ("dict[str, str] | None")  [index]
+test	Type check with mypy	2026-01-30T06:29:20.8500619Z alembic/env.py:78: error: Argument 1 to "engine_from_config" has incompatible type "dict[str, str] | None"; expected "dict[str, Any]"  [arg-type]
+test	Type check with mypy	2026-01-30T06:29:21.3871882Z app/schemas/base.py:102: error: Function is missing a return type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3873193Z app/schemas/base.py:102: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3874710Z app/schemas/base.py:106: error: Unexpected keyword argument "data" for "PaginatedResponse"  [call-arg]
+test	Type check with mypy	2026-01-30T06:29:21.3941058Z app/core/config.py:59: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3942070Z app/core/config.py:67: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3942998Z app/core/config.py:75: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3944464Z app/core/config.py:83: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3945596Z app/core/config.py:89: error: Extra keys ("env_file", "case_sensitive") for TypedDict "ConfigDict"  [typeddict-unknown-key]
+test	Type check with mypy	2026-01-30T06:29:21.4200286Z app/schemas/email_export.py:32: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4201393Z app/schemas/email_export.py:42: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4414080Z app/schemas/application.py:37: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4415234Z app/schemas/application.py:57: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4416304Z app/schemas/application.py:65: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4417334Z app/schemas/application.py:77: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4418385Z app/schemas/application.py:101: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4419473Z app/schemas/application.py:125: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4420526Z app/schemas/application.py:204: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.7235834Z tests/test_integration_workflows.py:128: error: Incompatible types in assignment (expression has type "list[File]", variable has type "dict[str, tuple[str, BufferedReader[_BufferedReaderStream], str]]")  [assignment]
+test	Type check with mypy	2026-01-30T06:29:21.7237731Z tests/test_integration_workflows.py:260: error: Too many arguments for "EmailRetryService"  [call-arg]
+test	Type check with mypy	2026-01-30T06:29:21.7238920Z tests/test_integration_workflows.py:263: error: "EmailRetryService" has no attribute "process_pending_exports"  [attr-defined]
+test	Type check with mypy	2026-01-30T06:29:21.7240249Z tests/test_integration_workflows.py:271: error: Item "None" of "EmailExport | None" has no attribute "status"  [union-attr]
+test	Type check with mypy	2026-01-30T06:29:21.7241601Z tests/test_integration_workflows.py:272: error: Item "None" of "EmailExport | None" has no attribute "retry_count"  [union-attr]
+test	Type check with mypy	2026-01-30T06:29:21.7257792Z tests/test_integration_workflows.py:424: error: Incompatible types in assignment (expression has type "list[File]", variable has type "dict[str, tuple[str, BufferedReader[_BufferedReaderStream], str]]")  [assignment]
+test	Type check with mypy	2026-01-30T06:29:21.7654457Z Found 25 errors in 6 files (checked 69 source files)
+test	Type check with mypy	2026-01-30T06:29:21.7991505Z ##[error]Process completed with exit code 1.
+test	Wait for MySQL to be ready	﻿2026-01-30T06:29:21.8034837Z ##[group]Run sleep 10  # Give MySQL service time to fully initialize
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8035575Z [36;1msleep 10  # Give MySQL service time to fully initialize[0m
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067410Z shell: /usr/bin/bash -e {0}
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067636Z env:
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067878Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8068292Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8068701Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069051Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069400Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069757Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8070049Z ##[endgroup]
+test	Initialize test database	﻿2026-01-30T06:29:31.8193501Z ##[group]Run python scripts/init_test_db.py
+test	Initialize test database	2026-01-30T06:29:31.8193855Z [36;1mpython scripts/init_test_db.py[0m
+test	Initialize test database	2026-01-30T06:29:31.8226250Z shell: /usr/bin/bash -e {0}
+test	Initialize test database	2026-01-30T06:29:31.8226487Z env:
+test	Initialize test database	2026-01-30T06:29:31.8226736Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8227147Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Initialize test database	2026-01-30T06:29:31.8227575Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8227939Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8228496Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8228853Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Initialize test database	2026-01-30T06:29:31.8229236Z   PYTHONPATH: /home/runner/work/FormVault/FormVault/backend
+test	Initialize test database	2026-01-30T06:29:31.8229900Z   DATABASE_URL: ***127.0.0.1:3306/formvault_test
+test	Initialize test database	2026-01-30T06:29:31.8230168Z ##[endgroup]
+test	Initialize test database	2026-01-30T06:29:32.2946124Z Creating database tables using: mysql+pymysql://test_user:test...
+test	Initialize test database	2026-01-30T06:29:32.2946883Z Database tables created successfully!
+test	Run tests with pytest	﻿2026-01-30T06:29:32.3417179Z ##[group]Run pytest --cov=app --cov-report=xml --cov-fail-under=0  # Temporarily disable coverage threshold to see actual test results
+test	Run tests with pytest	2026-01-30T06:29:32.3418112Z [36;1mpytest --cov=app --cov-report=xml --cov-fail-under=0  # Temporarily disable coverage threshold to see actual test results[0m
+test	Run tests with pytest	2026-01-30T06:29:32.3450350Z shell: /usr/bin/bash -e {0}
+test	Run tests with pytest	2026-01-30T06:29:32.3450589Z env:
+test	Run tests with pytest	2026-01-30T06:29:32.3450840Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3451270Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Run tests with pytest	2026-01-30T06:29:32.3451675Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452038Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452389Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452747Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Run tests with pytest	2026-01-30T06:29:32.3453121Z   PYTHONPATH: /home/runner/work/FormVault/FormVault/backend
+test	Run tests with pytest	2026-01-30T06:29:32.3454127Z   DATABASE_URL: ***127.0.0.1:3306/formvault_test
+test	Run tests with pytest	2026-01-30T06:29:32.3454417Z   TESTING: true
+test	Run tests with pytest	2026-01-30T06:29:32.3454594Z ##[endgroup]
+test	Run tests with pytest	2026-01-30T06:29:35.2401957Z ============================= test session starts ==============================
+test	Run tests with pytest	2026-01-30T06:29:35.2402763Z platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0
+test	Run tests with pytest	2026-01-30T06:29:35.2403491Z rootdir: /home/runner/work/FormVault/FormVault/backend
+test	Run tests with pytest	2026-01-30T06:29:35.2404284Z configfile: pytest.ini
+test	Run tests with pytest	2026-01-30T06:29:35.2404700Z plugins: cov-7.0.0, asyncio-1.3.0, anyio-4.12.1
+test	Run tests with pytest	2026-01-30T06:29:35.2405637Z asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+test	Run tests with pytest	2026-01-30T06:29:35.2406564Z collected 239 items
+test	Run tests with pytest	2026-01-30T06:29:35.2406767Z 
+test	Run tests with pytest	2026-01-30T06:29:37.8083722Z tests/test_admin_dashboard.py FF...FF.FFF.                               [  5%]
+test	Run tests with pytest	2026-01-30T06:29:47.0161904Z tests/test_api_initialization.py ..F..FF..F.F..                          [ 10%]
+test	Run tests with pytest	2026-01-30T06:29:53.9066727Z tests/test_applications_api.py EEEFEEEFEEF..E                            [ 16%]
+test	Run tests with pytest	2026-01-30T06:29:53.9657489Z tests/test_audit_middleware.py ............                              [ 21%]
+test	Run tests with pytest	2026-01-30T06:29:54.2177523Z tests/test_email_export_api.py ....FFF..FFFF...                          [ 28%]
+test	Run tests with pytest	2026-01-30T06:29:54.7412229Z tests/test_email_service.py .....F...F........                           [ 35%]
+test	Run tests with pytest	2026-01-30T06:29:57.7971654Z tests/test_error_handling.py ...F..........                              [ 41%]
+test	Run tests with pytest	2026-01-30T06:29:57.8517810Z tests/test_error_tracking.py ...............                             [ 48%]
+test	Run tests with pytest	2026-01-30T06:29:57.9699852Z tests/test_file_service.py EEEEEFFFFFFFFFFFFFFFF                         [ 56%]
+test	Run tests with pytest	2026-01-30T06:40:32.7417253Z tests/test_file_storage.py .........
+test	Run tests with pytest	2026-01-30T06:40:32.7594921Z ##[error]The operation was canceled.
+test	Complete job	﻿2026-01-30T06:40:32.7975747Z Cleaning up orphan processes

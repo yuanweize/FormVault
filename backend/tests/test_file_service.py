@@ -56,7 +56,7 @@ class TestFileService:
         upload_file = UploadFile(
             filename="test.jpg",
             file=file_obj,
-            content_type="image/jpeg",
+            headers={"content-type": "image/jpeg"},
             size=len(jpeg_data),
         )
         return upload_file
@@ -86,10 +86,10 @@ class TestFileService:
 
     @pytest.mark.asyncio
     async def test_upload_file_success(
-        self, mock_db, mock_request, valid_upload_file, mock_application
+        self, mock_db, mock_request, valid_upload_file, mock_application, file_service
     ):
         """Test successful file upload."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -130,10 +130,10 @@ class TestFileService:
 
     @pytest.mark.asyncio
     async def test_upload_file_without_application_id(
-        self, mock_db, mock_request, valid_upload_file
+        self, mock_db, mock_request, valid_upload_file, file_service
     ):
         """Test file upload without application ID."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_storage.validate_file.return_value = None
@@ -161,10 +161,10 @@ class TestFileService:
 
     @pytest.mark.asyncio
     async def test_upload_file_application_not_found(
-        self, mock_db, mock_request, valid_upload_file
+        self, mock_db, mock_request, valid_upload_file, file_service
     ):
         """Test file upload with non-existent application ID."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = None
@@ -185,10 +185,10 @@ class TestFileService:
 
     @pytest.mark.asyncio
     async def test_upload_file_storage_failure(
-        self, mock_db, mock_request, valid_upload_file
+        self, mock_db, mock_request, valid_upload_file, file_service
     ):
         """Test file upload with storage failure."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_storage.validate_file.return_value = None
@@ -209,10 +209,10 @@ class TestFileService:
 
     @pytest.mark.asyncio
     async def test_upload_file_database_failure(
-        self, mock_db, mock_request, valid_upload_file
+        self, mock_db, mock_request, valid_upload_file, file_service
     ):
         """Test file upload with database failure."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_storage.validate_file.return_value = None
@@ -238,9 +238,9 @@ class TestFileService:
         # Should clean up stored file
         mock_storage.delete_file.assert_called_once_with("encrypted_filename.jpg")
 
-    def test_get_file_success(self, mock_db, mock_file_record):
+    def test_get_file_success(self, mock_db, mock_file_record, file_service):
         """Test successful file retrieval."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -258,9 +258,9 @@ class TestFileService:
         assert result.file_size == 1000
         assert result.mime_type == "image/jpeg"
 
-    def test_get_file_not_found(self, mock_db):
+    def test_get_file_not_found(self, mock_db, file_service):
         """Test file retrieval with non-existent file."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_db.query.return_value.filter.return_value.first.return_value = None
@@ -271,9 +271,9 @@ class TestFileService:
 
         assert exc_info.value.details["file_id"] == "nonexistent-id"
 
-    def test_list_files_no_filters(self, mock_db, mock_file_record):
+    def test_list_files_no_filters(self, mock_db, mock_file_record, file_service):
         """Test listing files without filters."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_query = Mock()
@@ -297,9 +297,9 @@ class TestFileService:
             100
         )
 
-    def test_list_files_with_filters(self, mock_db, mock_file_record):
+    def test_list_files_with_filters(self, mock_db, mock_file_record, file_service):
         """Test listing files with filters."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_query = Mock()
@@ -328,9 +328,9 @@ class TestFileService:
             50
         )
 
-    def test_delete_file_success(self, mock_db, mock_request, mock_file_record):
+    def test_delete_file_success(self, mock_db, mock_request, mock_file_record, file_service):
         """Test successful file deletion."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -349,9 +349,9 @@ class TestFileService:
         mock_db.delete.assert_called_once_with(mock_file_record)
         mock_db.commit.assert_called_once()
 
-    def test_delete_file_not_found(self, mock_db, mock_request):
+    def test_delete_file_not_found(self, mock_db, mock_request, file_service):
         """Test deletion of non-existent file."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_db.query.return_value.filter.return_value.first.return_value = None
@@ -362,9 +362,9 @@ class TestFileService:
 
         assert exc_info.value.details["file_id"] == "nonexistent-id"
 
-    def test_delete_file_database_error(self, mock_db, mock_request, mock_file_record):
+    def test_delete_file_database_error(self, mock_db, mock_request, mock_file_record, file_service):
         """Test file deletion with database error."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -380,9 +380,9 @@ class TestFileService:
         assert "Failed to delete file" in str(exc_info.value)
         mock_db.rollback.assert_called_once()
 
-    def test_verify_file_integrity_success(self, mock_db, mock_file_record):
+    def test_verify_file_integrity_success(self, mock_db, mock_file_record, file_service):
         """Test successful file integrity verification."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -401,9 +401,9 @@ class TestFileService:
             "encrypted_filename.jpg", "sha256:abcdef123456"
         )
 
-    def test_verify_file_integrity_file_not_found(self, mock_db):
+    def test_verify_file_integrity_file_not_found(self, mock_db, file_service):
         """Test file integrity verification with non-existent file."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_db.query.return_value.filter.return_value.first.return_value = None
@@ -412,9 +412,9 @@ class TestFileService:
         with pytest.raises(FileNotFoundException):
             service.verify_file_integrity(mock_db, "nonexistent-id")
 
-    def test_get_file_path_success(self, mock_db, mock_file_record):
+    def test_get_file_path_success(self, mock_db, mock_file_record, file_service):
         """Test successful file path retrieval."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -431,9 +431,9 @@ class TestFileService:
         # Verify storage call
         mock_storage.get_file_path.assert_called_once_with("encrypted_filename.jpg")
 
-    def test_get_file_path_file_not_found(self, mock_db):
+    def test_get_file_path_file_not_found(self, mock_db, file_service):
         """Test file path retrieval with non-existent file."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_db.query.return_value.filter.return_value.first.return_value = None
@@ -442,9 +442,9 @@ class TestFileService:
         with pytest.raises(FileNotFoundException):
             service.get_file_path(mock_db, "nonexistent-id")
 
-    def test_get_file_path_storage_not_found(self, mock_db, mock_file_record):
+    def test_get_file_path_storage_not_found(self, mock_db, mock_file_record, file_service):
         """Test file path retrieval when file not found in storage."""
-        service, mock_storage = self.file_service()
+        service, mock_storage = file_service
 
         # Setup mocks
         mock_db.query.return_value.filter.return_value.first.return_value = (
@@ -458,9 +458,9 @@ class TestFileService:
         # Verify result
         assert result is None
 
-    def test_get_client_ip_forwarded_for(self, mock_request):
+    def test_get_client_ip_forwarded_for(self, mock_request, file_service):
         """Test client IP extraction from X-Forwarded-For header."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_request.headers = {"x-forwarded-for": "192.168.1.1, 10.0.0.1"}
@@ -471,9 +471,9 @@ class TestFileService:
         # Verify result (should take first IP)
         assert result == "192.168.1.1"
 
-    def test_get_client_ip_real_ip(self, mock_request):
+    def test_get_client_ip_real_ip(self, mock_request, file_service):
         """Test client IP extraction from X-Real-IP header."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_request.headers = {"x-real-ip": "192.168.1.1"}
@@ -484,9 +484,9 @@ class TestFileService:
         # Verify result
         assert result == "192.168.1.1"
 
-    def test_get_client_ip_direct(self, mock_request):
+    def test_get_client_ip_direct(self, mock_request, file_service):
         """Test client IP extraction from direct client."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock (no forwarded headers)
         mock_request.headers = {}
@@ -498,9 +498,9 @@ class TestFileService:
         # Verify result
         assert result == "127.0.0.1"
 
-    def test_get_client_ip_no_client(self, mock_request):
+    def test_get_client_ip_no_client(self, mock_request, file_service):
         """Test client IP extraction when no client info available."""
-        service, _ = self.file_service()
+        service, _ = file_service
 
         # Setup mock
         mock_request.headers = {}

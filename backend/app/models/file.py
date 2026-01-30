@@ -53,9 +53,9 @@ class File(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_application_id", "application_id"),
-        Index("idx_file_type", "file_type"),
-        Index("idx_created_at", "created_at"),
+        Index("idx_files_application_id", "application_id"),
+        Index("idx_files_file_type", "file_type"),
+        Index("idx_files_created_at", "created_at"),
     )
 
     def __repr__(self) -> str:

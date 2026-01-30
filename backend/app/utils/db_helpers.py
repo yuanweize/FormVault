@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import text
 
-from ..database import SessionLocal, engine
+from app import database
 from ..models import AuditLog
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ def get_db_session():
             # Use db session
             pass
     """
-    db = SessionLocal()
+    db = database.SessionLocal()
     try:
         yield db
         db.commit()
@@ -45,7 +45,7 @@ def check_database_connection() -> bool:
         bool: True if connection is successful, False otherwise
     """
     try:
-        with engine.connect() as connection:
+        with database.engine.connect() as connection:
             connection.execute(text("SELECT 1"))
         return True
     except SQLAlchemyError as e:
@@ -61,13 +61,13 @@ def get_database_info() -> Dict[str, Any]:
         Dict containing database info
     """
     try:
-        with engine.connect() as connection:
+        with database.engine.connect() as connection:
             # Get database version
             result = connection.execute(text("SELECT VERSION()"))
             version = result.scalar()
 
             # Get connection pool info
-            pool = engine.pool
+            pool = database.engine.pool
 
             return {
                 "database_version": version,
@@ -213,7 +213,7 @@ def execute_raw_sql(query: str, params: Optional[Dict] = None) -> Any:
         Query result
     """
     try:
-        with engine.connect() as connection:
+        with database.engine.connect() as connection:
             result = connection.execute(text(query), params or {})
             return result.fetchall()
     except SQLAlchemyError as e:

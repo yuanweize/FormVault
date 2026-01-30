@@ -1,0 +1,500 @@
+test	Install dependencies	2026-01-30T06:28:52.1104346Z Collecting pillow>=10.3.0 (from -r requirements.txt (line 32))
+test	Install dependencies	2026-01-30T06:28:52.1119836Z   Using cached pillow-12.1.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (8.8 kB)
+test	Install dependencies	2026-01-30T06:28:52.1282648Z Collecting python-dotenv>=1.0.0 (from -r requirements.txt (line 35))
+test	Install dependencies	2026-01-30T06:28:52.1296068Z   Using cached python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+test	Install dependencies	2026-01-30T06:28:52.1452578Z Collecting click>=8.1.7 (from -r requirements.txt (line 36))
+test	Install dependencies	2026-01-30T06:28:52.1466583Z   Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.1771287Z Collecting pytest>=7.4.3 (from -r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:52.1785413Z   Using cached pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.1972127Z Collecting pytest-asyncio>=0.21.1 (from -r requirements.txt (line 40))
+test	Install dependencies	2026-01-30T06:28:52.1985529Z   Using cached pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.2123504Z Collecting pytest-cov>=4.1.0 (from -r requirements.txt (line 41))
+test	Install dependencies	2026-01-30T06:28:52.2136337Z   Using cached pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+test	Install dependencies	2026-01-30T06:28:52.2308592Z Collecting httpx>=0.25.1 (from -r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:52.2321447Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.2797657Z Collecting black>=23.11.0 (from -r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:52.2812202Z   Using cached black-26.1.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (88 kB)
+test	Install dependencies	2026-01-30T06:28:52.3132184Z Collecting isort>=5.12.0 (from -r requirements.txt (line 46))
+test	Install dependencies	2026-01-30T06:28:52.3144857Z   Using cached isort-7.0.0-py3-none-any.whl.metadata (11 kB)
+test	Install dependencies	2026-01-30T06:28:52.3326463Z Collecting flake8>=6.1.0 (from -r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:52.3340155Z   Using cached flake8-7.3.0-py2.py3-none-any.whl.metadata (3.8 kB)
+test	Install dependencies	2026-01-30T06:28:52.4327340Z Collecting mypy>=1.7.0 (from -r requirements.txt (line 48))
+test	Install dependencies	2026-01-30T06:28:52.4344497Z   Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+test	Install dependencies	2026-01-30T06:28:52.4596052Z Collecting safety>=2.3.5 (from -r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:52.4609622Z   Using cached safety-3.7.0-py3-none-any.whl.metadata (11 kB)
+test	Install dependencies	2026-01-30T06:28:52.4765765Z Collecting bandit>=1.7.5 (from -r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:52.4778894Z   Using cached bandit-1.9.3-py3-none-any.whl.metadata (7.1 kB)
+test	Install dependencies	2026-01-30T06:28:52.4931495Z Collecting structlog>=23.1.0 (from -r requirements.txt (line 53))
+test	Install dependencies	2026-01-30T06:28:52.4944558Z   Using cached structlog-25.5.0-py3-none-any.whl.metadata (9.5 kB)
+test	Install dependencies	2026-01-30T06:28:52.5241413Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5254586Z   Using cached starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.5540039Z Collecting typing-extensions>=4.8.0 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5554849Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.5635433Z Collecting annotated-doc>=0.0.2 (from fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5648934Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+test	Install dependencies	2026-01-30T06:28:52.5830937Z Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.5844491Z   Using cached anyio-4.12.1-py3-none-any.whl.metadata (4.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.6006138Z Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi>=0.104.1->-r requirements.txt (line 2))
+test	Install dependencies	2026-01-30T06:28:52.6020005Z   Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+test	Install dependencies	2026-01-30T06:28:52.6199380Z Collecting h11>=0.8 (from uvicorn>=0.24.0->uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:52.6212559Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+test	Install dependencies	2026-01-30T06:28:52.6301541Z Collecting annotated-types>=0.6.0 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:52.6314675Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+test	Install dependencies	2026-01-30T06:28:53.3278494Z Collecting pydantic-core==2.41.5 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:53.3294557Z   Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:53.3410050Z Collecting typing-inspection>=0.4.2 (from pydantic>=2.5.0->-r requirements.txt (line 4))
+test	Install dependencies	2026-01-30T06:28:53.3423498Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.4645895Z Collecting greenlet>=1 (from sqlalchemy>=2.0.23->-r requirements.txt (line 8))
+test	Install dependencies	2026-01-30T06:28:53.4660949Z   Using cached greenlet-3.3.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.4962846Z Collecting Mako (from alembic>=1.13.1->-r requirements.txt (line 9))
+test	Install dependencies	2026-01-30T06:28:53.4976363Z   Using cached mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+test	Install dependencies	2026-01-30T06:28:53.6005943Z Collecting cffi>=2.0.0 (from cryptography>=44.0.1->-r requirements.txt (line 12))
+test	Install dependencies	2026-01-30T06:28:53.6021720Z   Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.6155694Z Collecting ecdsa!=0.15 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6168744Z   Using cached ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+test	Install dependencies	2026-01-30T06:28:53.6320932Z Collecting rsa!=4.1.1,!=4.4,<5.0,>=4.0 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6334277Z   Using cached rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+test	Install dependencies	2026-01-30T06:28:53.6510442Z Collecting pyasn1>=0.5.0 (from python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:53.6523732Z   Using cached pyasn1-0.6.2-py3-none-any.whl.metadata (8.4 kB)
+test	Install dependencies	2026-01-30T06:28:53.6688285Z Collecting dnspython>=2.0.0 (from email-validator>=2.1.0->-r requirements.txt (line 20))
+test	Install dependencies	2026-01-30T06:28:53.6701368Z   Using cached dnspython-2.8.0-py3-none-any.whl.metadata (5.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.7810892Z Collecting MarkupSafe>=2.0 (from jinja2>=3.1.6->-r requirements.txt (line 22))
+test	Install dependencies	2026-01-30T06:28:53.7826250Z   Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+test	Install dependencies	2026-01-30T06:28:53.8009598Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8022319Z   Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:53.8166245Z Collecting packaging>=22 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8179437Z   Using cached packaging-26.0-py3-none-any.whl.metadata (3.3 kB)
+test	Install dependencies	2026-01-30T06:28:53.8278840Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8291818Z   Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+test	Install dependencies	2026-01-30T06:28:53.8467417Z Collecting pygments>=2.7.2 (from pytest>=7.4.3->-r requirements.txt (line 39))
+test	Install dependencies	2026-01-30T06:28:53.8480214Z   Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.1985427Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->-r requirements.txt (line 41))
+test	Install dependencies	2026-01-30T06:28:54.2001879Z   Using cached coverage-7.13.2-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.2310153Z Collecting certifi (from httpx>=0.25.1->-r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:54.2324307Z   Using cached certifi-2026.1.4-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.2488658Z Collecting httpcore==1.* (from httpx>=0.25.1->-r requirements.txt (line 42))
+test	Install dependencies	2026-01-30T06:28:54.2501722Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+test	Install dependencies	2026-01-30T06:28:54.2689181Z Collecting mypy-extensions>=0.4.3 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.2702159Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.2801949Z Collecting pathspec>=1.0.0 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.2814994Z   Using cached pathspec-1.0.4-py3-none-any.whl.metadata (13 kB)
+test	Install dependencies	2026-01-30T06:28:54.3004458Z Collecting platformdirs>=2 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.3017075Z   Using cached platformdirs-4.5.1-py3-none-any.whl.metadata (12 kB)
+test	Install dependencies	2026-01-30T06:28:54.3163000Z Collecting pytokens>=0.3.0 (from black>=23.11.0->-r requirements.txt (line 45))
+test	Install dependencies	2026-01-30T06:28:54.3176751Z   Using cached pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.3292694Z Collecting mccabe<0.8.0,>=0.7.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3305844Z   Using cached mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+test	Install dependencies	2026-01-30T06:28:54.3410565Z Collecting pycodestyle<2.15.0,>=2.14.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3423453Z   Using cached pycodestyle-2.14.0-py2.py3-none-any.whl.metadata (4.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.3537492Z Collecting pyflakes<3.5.0,>=3.4.0 (from flake8>=6.1.0->-r requirements.txt (line 47))
+test	Install dependencies	2026-01-30T06:28:54.3550859Z   Using cached pyflakes-3.4.0-py2.py3-none-any.whl.metadata (3.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.4489839Z Collecting librt>=0.6.2 (from mypy>=1.7.0->-r requirements.txt (line 48))
+test	Install dependencies	2026-01-30T06:28:54.4506118Z   Using cached librt-0.7.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+test	Install dependencies	2026-01-30T06:28:54.4674647Z Collecting authlib>=1.2.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.4688099Z   Using cached authlib-1.6.6-py2.py3-none-any.whl.metadata (9.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.4861268Z Collecting dparse>=0.6.4 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.5631125Z   Using cached dparse-0.6.4-py3-none-any.whl.metadata (5.5 kB)
+test	Install dependencies	2026-01-30T06:28:54.5830541Z Collecting filelock<4.0,>=3.16.1 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.5844911Z   Using cached filelock-3.20.3-py3-none-any.whl.metadata (2.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.6203779Z Collecting marshmallow>=3.15.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6217481Z   Using cached marshmallow-4.2.1-py3-none-any.whl.metadata (7.4 kB)
+test	Install dependencies	2026-01-30T06:28:54.6358406Z Collecting nltk>=3.9 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6371616Z   Using cached nltk-3.9.2-py3-none-any.whl.metadata (3.2 kB)
+test	Install dependencies	2026-01-30T06:28:54.6788571Z Collecting requests (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.6801983Z   Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:54.8069499Z Collecting ruamel-yaml>=0.17.21 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8084965Z   Using cached ruamel_yaml-0.19.1-py3-none-any.whl.metadata (16 kB)
+test	Install dependencies	2026-01-30T06:28:54.8216838Z Collecting safety-schemas==0.0.16 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8230237Z   Using cached safety_schemas-0.0.16-py3-none-any.whl.metadata (1.1 kB)
+test	Install dependencies	2026-01-30T06:28:54.8400447Z Collecting tenacity>=8.1.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8422302Z   Using cached tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+test	Install dependencies	2026-01-30T06:28:54.8591034Z Collecting tomlkit (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8604164Z   Using cached tomlkit-0.14.0-py3-none-any.whl.metadata (2.8 kB)
+test	Install dependencies	2026-01-30T06:28:54.8768329Z Collecting typer>=0.16.0 (from safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:54.8781093Z   Using cached typer-0.21.1-py3-none-any.whl.metadata (16 kB)
+test	Install dependencies	2026-01-30T06:28:54.9212769Z Collecting PyYAML>=5.3.1 (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9225953Z   Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+test	Install dependencies	2026-01-30T06:28:54.9432844Z Collecting stevedore>=1.20.0 (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9446451Z   Using cached stevedore-5.6.0-py3-none-any.whl.metadata (2.3 kB)
+test	Install dependencies	2026-01-30T06:28:54.9824862Z Collecting rich (from bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:54.9838286Z   Using cached rich-14.3.1-py3-none-any.whl.metadata (18 kB)
+test	Install dependencies	2026-01-30T06:28:55.0017810Z Collecting pycparser (from cffi>=2.0.0->cryptography>=44.0.1->-r requirements.txt (line 12))
+test	Install dependencies	2026-01-30T06:28:55.0030504Z   Using cached pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+test	Install dependencies	2026-01-30T06:28:55.0240371Z Collecting six>=1.9.0 (from ecdsa!=0.15->python-jose>=3.3.0->python-jose[cryptography]>=3.3.0->-r requirements.txt (line 15))
+test	Install dependencies	2026-01-30T06:28:55.0253310Z   Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+test	Install dependencies	2026-01-30T06:28:55.0606157Z Collecting joblib (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.0619162Z   Using cached joblib-1.5.3-py3-none-any.whl.metadata (5.5 kB)
+test	Install dependencies	2026-01-30T06:28:55.3889823Z Collecting regex>=2021.8.3 (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.3905632Z   Using cached regex-2026.1.15-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+test	Install dependencies	2026-01-30T06:28:55.4226015Z Collecting tqdm (from nltk>=3.9->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.4239570Z   Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+test	Install dependencies	2026-01-30T06:28:55.5635610Z Collecting bcrypt>=3.1.0 (from passlib[bcrypt]>=1.7.4->-r requirements.txt (line 16))
+test	Install dependencies	2026-01-30T06:28:55.5651088Z   Using cached bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)
+test	Install dependencies	2026-01-30T06:28:55.6294697Z Collecting shellingham>=1.3.0 (from typer>=0.16.0->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.6308388Z   Using cached shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+test	Install dependencies	2026-01-30T06:28:55.6576549Z Collecting markdown-it-py>=2.2.0 (from rich->bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:55.6589968Z   Using cached markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:55.6764616Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->bandit>=1.7.5->-r requirements.txt (line 52))
+test	Install dependencies	2026-01-30T06:28:55.6777139Z   Using cached mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+test	Install dependencies	2026-01-30T06:28:55.7657936Z Collecting watchfiles>=0.13 (from uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:55.7672033Z   Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+test	Install dependencies	2026-01-30T06:28:55.8515050Z Collecting websockets>=10.4 (from uvicorn[standard]>=0.24.0->-r requirements.txt (line 3))
+test	Install dependencies	2026-01-30T06:28:55.8533411Z   Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+test	Install dependencies	2026-01-30T06:28:55.9543876Z Collecting charset_normalizer<4,>=2 (from requests->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.9559250Z   Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+test	Install dependencies	2026-01-30T06:28:55.9872774Z Collecting urllib3<3,>=1.21.1 (from requests->safety>=2.3.5->-r requirements.txt (line 51))
+test	Install dependencies	2026-01-30T06:28:55.9886406Z   Using cached urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+test	Install dependencies	2026-01-30T06:28:56.0094506Z Using cached fastapi-0.128.0-py3-none-any.whl (103 kB)
+test	Install dependencies	2026-01-30T06:28:56.0108202Z Using cached starlette-0.50.0-py3-none-any.whl (74 kB)
+test	Install dependencies	2026-01-30T06:28:56.0121541Z Using cached anyio-4.12.1-py3-none-any.whl (113 kB)
+test	Install dependencies	2026-01-30T06:28:56.0135563Z Using cached uvicorn-0.40.0-py3-none-any.whl (68 kB)
+test	Install dependencies	2026-01-30T06:28:56.0148973Z Using cached pydantic-2.12.5-py3-none-any.whl (463 kB)
+test	Install dependencies	2026-01-30T06:28:56.0165703Z Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+test	Install dependencies	2026-01-30T06:28:56.0193213Z Using cached pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+test	Install dependencies	2026-01-30T06:28:56.0207332Z Using cached sqlalchemy-2.0.46-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+test	Install dependencies	2026-01-30T06:28:56.0244307Z Using cached alembic-1.18.3-py3-none-any.whl (262 kB)
+test	Install dependencies	2026-01-30T06:28:56.0259316Z Using cached pymysql-1.1.2-py3-none-any.whl (45 kB)
+test	Install dependencies	2026-01-30T06:28:56.0273144Z Using cached psycopg2_binary-2.9.11-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+test	Install dependencies	2026-01-30T06:28:56.0315935Z Using cached cryptography-46.0.4-cp311-abi3-manylinux_2_34_x86_64.whl (4.5 MB)
+test	Install dependencies	2026-01-30T06:28:56.0359574Z Using cached python_jose-3.5.0-py2.py3-none-any.whl (34 kB)
+test	Install dependencies	2026-01-30T06:28:56.0372923Z Using cached rsa-4.9.1-py3-none-any.whl (34 kB)
+test	Install dependencies	2026-01-30T06:28:56.0386382Z Using cached passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+test	Install dependencies	2026-01-30T06:28:56.0403025Z Using cached python_multipart-0.0.22-py3-none-any.whl (24 kB)
+test	Install dependencies	2026-01-30T06:28:56.0416379Z Using cached email_validator-2.3.0-py3-none-any.whl (35 kB)
+test	Install dependencies	2026-01-30T06:28:56.0429558Z Using cached aiosmtplib-5.1.0-py3-none-any.whl (27 kB)
+test	Install dependencies	2026-01-30T06:28:56.0443031Z Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+test	Install dependencies	2026-01-30T06:28:56.0457611Z Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+test	Install dependencies	2026-01-30T06:28:56.0498049Z Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+test	Install dependencies	2026-01-30T06:28:56.0513769Z Using cached redis-7.1.0-py3-none-any.whl (354 kB)
+test	Install dependencies	2026-01-30T06:28:56.0529558Z Using cached prometheus_client-0.24.1-py3-none-any.whl (64 kB)
+test	Install dependencies	2026-01-30T06:28:56.0543380Z Using cached python_magic-0.4.27-py2.py3-none-any.whl (13 kB)
+test	Install dependencies	2026-01-30T06:28:56.0556992Z Using cached pillow-12.1.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.0 MB)
+test	Install dependencies	2026-01-30T06:28:56.0618669Z Using cached python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+test	Install dependencies	2026-01-30T06:28:56.0631747Z Using cached click-8.3.1-py3-none-any.whl (108 kB)
+test	Install dependencies	2026-01-30T06:28:56.0645797Z Using cached pytest-9.0.2-py3-none-any.whl (374 kB)
+test	Install dependencies	2026-01-30T06:28:56.0661166Z Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+test	Install dependencies	2026-01-30T06:28:56.0674658Z Using cached pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+test	Install dependencies	2026-01-30T06:28:56.0687726Z Using cached pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+test	Install dependencies	2026-01-30T06:28:56.0700651Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+test	Install dependencies	2026-01-30T06:28:56.0714177Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.0728182Z Using cached black-26.1.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+test	Install dependencies	2026-01-30T06:28:56.0753122Z Using cached isort-7.0.0-py3-none-any.whl (94 kB)
+test	Install dependencies	2026-01-30T06:28:56.0766937Z Using cached flake8-7.3.0-py2.py3-none-any.whl (57 kB)
+test	Install dependencies	2026-01-30T06:28:56.0780367Z Using cached mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+test	Install dependencies	2026-01-30T06:28:56.0793340Z Using cached pycodestyle-2.14.0-py2.py3-none-any.whl (31 kB)
+test	Install dependencies	2026-01-30T06:28:56.0806660Z Using cached pyflakes-3.4.0-py2.py3-none-any.whl (63 kB)
+test	Install dependencies	2026-01-30T06:28:56.0820404Z Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+test	Install dependencies	2026-01-30T06:28:56.0933695Z Using cached safety-3.7.0-py3-none-any.whl (312 kB)
+test	Install dependencies	2026-01-30T06:28:56.0948963Z Using cached safety_schemas-0.0.16-py3-none-any.whl (39 kB)
+test	Install dependencies	2026-01-30T06:28:56.0961676Z Using cached filelock-3.20.3-py3-none-any.whl (16 kB)
+test	Install dependencies	2026-01-30T06:28:56.0974408Z Using cached bandit-1.9.3-py3-none-any.whl (134 kB)
+test	Install dependencies	2026-01-30T06:28:56.0988004Z Using cached structlog-25.5.0-py3-none-any.whl (72 kB)
+test	Install dependencies	2026-01-30T06:28:56.1000971Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+test	Install dependencies	2026-01-30T06:28:56.1013592Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+test	Install dependencies	2026-01-30T06:28:56.1026377Z Using cached authlib-1.6.6-py2.py3-none-any.whl (244 kB)
+test	Install dependencies	2026-01-30T06:28:56.1040989Z Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
+test	Install dependencies	2026-01-30T06:28:56.1055355Z Using cached coverage-7.13.2-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (251 kB)
+test	Install dependencies	2026-01-30T06:28:56.1069452Z Using cached dnspython-2.8.0-py3-none-any.whl (331 kB)
+test	Install dependencies	2026-01-30T06:28:56.1084245Z Using cached dparse-0.6.4-py3-none-any.whl (11 kB)
+test	Install dependencies	2026-01-30T06:28:56.1096929Z Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+test	Install dependencies	2026-01-30T06:28:56.1110603Z Using cached greenlet-3.3.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+test	Install dependencies	2026-01-30T06:28:56.1127231Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+test	Install dependencies	2026-01-30T06:28:56.1140078Z Using cached idna-3.11-py3-none-any.whl (71 kB)
+test	Install dependencies	2026-01-30T06:28:56.1153290Z Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+test	Install dependencies	2026-01-30T06:28:56.1166428Z Using cached librt-0.7.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (188 kB)
+test	Install dependencies	2026-01-30T06:28:56.1180363Z Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+test	Install dependencies	2026-01-30T06:28:56.1192670Z Using cached marshmallow-4.2.1-py3-none-any.whl (48 kB)
+test	Install dependencies	2026-01-30T06:28:56.1205720Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+test	Install dependencies	2026-01-30T06:28:56.1218244Z Using cached nltk-3.9.2-py3-none-any.whl (1.5 MB)
+test	Install dependencies	2026-01-30T06:28:56.1241736Z Using cached packaging-26.0-py3-none-any.whl (74 kB)
+test	Install dependencies	2026-01-30T06:28:56.1255060Z Using cached bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl (278 kB)
+test	Install dependencies	2026-01-30T06:28:56.1269521Z Using cached pathspec-1.0.4-py3-none-any.whl (55 kB)
+test	Install dependencies	2026-01-30T06:28:56.1282622Z Using cached platformdirs-4.5.1-py3-none-any.whl (18 kB)
+test	Install dependencies	2026-01-30T06:28:56.1295432Z Using cached pyasn1-0.6.2-py3-none-any.whl (83 kB)
+test	Install dependencies	2026-01-30T06:28:56.1308533Z Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+test	Install dependencies	2026-01-30T06:28:56.1330093Z Using cached pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (260 kB)
+test	Install dependencies	2026-01-30T06:28:56.1344931Z Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+test	Install dependencies	2026-01-30T06:28:56.1363680Z Using cached regex-2026.1.15-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (800 kB)
+test	Install dependencies	2026-01-30T06:28:56.1381687Z Using cached ruamel_yaml-0.19.1-py3-none-any.whl (118 kB)
+test	Install dependencies	2026-01-30T06:28:56.1395795Z Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+test	Install dependencies	2026-01-30T06:28:56.1408795Z Using cached stevedore-5.6.0-py3-none-any.whl (54 kB)
+test	Install dependencies	2026-01-30T06:28:56.1422487Z Using cached tenacity-9.1.2-py3-none-any.whl (28 kB)
+test	Install dependencies	2026-01-30T06:28:56.1435666Z Using cached typer-0.21.1-py3-none-any.whl (47 kB)
+test	Install dependencies	2026-01-30T06:28:56.1449324Z Using cached rich-14.3.1-py3-none-any.whl (309 kB)
+test	Install dependencies	2026-01-30T06:28:56.1464611Z Using cached markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+test	Install dependencies	2026-01-30T06:28:56.1478212Z Using cached mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+test	Install dependencies	2026-01-30T06:28:56.1491347Z Using cached shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+test	Install dependencies	2026-01-30T06:28:56.1504498Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+test	Install dependencies	2026-01-30T06:28:56.1518132Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+test	Install dependencies	2026-01-30T06:28:56.1531642Z Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+test	Install dependencies	2026-01-30T06:28:56.1548483Z Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (184 kB)
+test	Install dependencies	2026-01-30T06:28:56.1562486Z Using cached certifi-2026.1.4-py3-none-any.whl (152 kB)
+test	Install dependencies	2026-01-30T06:28:56.1576601Z Using cached joblib-1.5.3-py3-none-any.whl (309 kB)
+test	Install dependencies	2026-01-30T06:28:56.1591678Z Using cached mako-1.3.10-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.1605288Z Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+test	Install dependencies	2026-01-30T06:28:56.1618420Z Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+test	Install dependencies	2026-01-30T06:28:56.1632332Z Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (151 kB)
+test	Install dependencies	2026-01-30T06:28:56.1646650Z Using cached urllib3-2.6.3-py3-none-any.whl (131 kB)
+test	Install dependencies	2026-01-30T06:28:56.1660549Z Using cached tomlkit-0.14.0-py3-none-any.whl (39 kB)
+test	Install dependencies	2026-01-30T06:28:56.1673888Z Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+test	Install dependencies	2026-01-30T06:28:56.4109787Z Installing collected packages: passlib, websockets, uvloop, urllib3, typing-extensions, tqdm, tomlkit, tenacity, structlog, stevedore, six, shellingham, ruamel-yaml, regex, redis, PyYAML, pytokens, python-multipart, python-magic, python-dotenv, pymysql, pygments, pyflakes, pycparser, pycodestyle, pyasn1, psycopg2-binary, prometheus-client, pluggy, platformdirs, pillow, pathspec, packaging, mypy-extensions, mdurl, mccabe, marshmallow, MarkupSafe, librt, joblib, isort, iniconfig, idna, httptools, h11, greenlet, filelock, dnspython, coverage, click, charset_normalizer, certifi, bcrypt, annotated-types, annotated-doc, aiosmtplib, uvicorn, typing-inspection, sqlalchemy, rsa, requests, pytest, pydantic-core, nltk, mypy, markdown-it-py, Mako, jinja2, httpcore, flake8, email-validator, ecdsa, dparse, cffi, black, anyio, watchfiles, starlette, rich, python-jose, pytest-cov, pytest-asyncio, pydantic, httpx, cryptography, alembic, typer, safety-schemas, pydantic-settings, fastapi, bandit, authlib, safety
+test	Install dependencies	2026-01-30T06:29:05.4573718Z 
+test	Install dependencies	2026-01-30T06:29:05.4618828Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 PyYAML-6.0.3 aiosmtplib-5.1.0 alembic-1.18.3 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.1 authlib-1.6.6 bandit-1.9.3 bcrypt-5.0.0 black-26.1.0 certifi-2026.1.4 cffi-2.0.0 charset_normalizer-3.4.4 click-8.3.1 coverage-7.13.2 cryptography-46.0.4 dnspython-2.8.0 dparse-0.6.4 ecdsa-0.19.1 email-validator-2.3.0 fastapi-0.128.0 filelock-3.20.3 flake8-7.3.0 greenlet-3.3.1 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 isort-7.0.0 jinja2-3.1.6 joblib-1.5.3 librt-0.7.8 markdown-it-py-4.0.0 marshmallow-4.2.1 mccabe-0.7.0 mdurl-0.1.2 mypy-1.19.1 mypy-extensions-1.1.0 nltk-3.9.2 packaging-26.0 passlib-1.7.4 pathspec-1.0.4 pillow-12.1.0 platformdirs-4.5.1 pluggy-1.6.0 prometheus-client-0.24.1 psycopg2-binary-2.9.11 pyasn1-0.6.2 pycodestyle-2.14.0 pycparser-3.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pyflakes-3.4.0 pygments-2.19.2 pymysql-1.1.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 python-jose-3.5.0 python-magic-0.4.27 python-multipart-0.0.22 pytokens-0.4.1 redis-7.1.0 regex-2026.1.15 requests-2.32.5 rich-14.3.1 rsa-4.9.1 ruamel-yaml-0.19.1 safety-3.7.0 safety-schemas-0.0.16 shellingham-1.5.4 six-1.17.0 sqlalchemy-2.0.46 starlette-0.50.0 stevedore-5.6.0 structlog-25.5.0 tenacity-9.1.2 tomlkit-0.14.0 tqdm-4.67.1 typer-0.21.1 typing-extensions-4.15.0 typing-inspection-0.4.2 urllib3-2.6.3 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-16.0
+test	Create test environment file	﻿2026-01-30T06:29:06.1502223Z ##[group]Run echo "DATABASE_URL=***127.0.0.1:3306/formvault_test" > .env.test
+test	Create test environment file	2026-01-30T06:29:06.1502999Z [36;1mecho "DATABASE_URL=***127.0.0.1:3306/formvault_test" > .env.test[0m
+test	Create test environment file	2026-01-30T06:29:06.1503376Z [36;1mecho "TESTING=true" >> .env.test[0m
+test	Create test environment file	2026-01-30T06:29:06.1537460Z shell: /usr/bin/bash -e {0}
+test	Create test environment file	2026-01-30T06:29:06.1537693Z env:
+test	Create test environment file	2026-01-30T06:29:06.1537948Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1538379Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Create test environment file	2026-01-30T06:29:06.1538774Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539154Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539555Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Create test environment file	2026-01-30T06:29:06.1539922Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Create test environment file	2026-01-30T06:29:06.1540213Z ##[endgroup]
+test	Lint with flake8	﻿2026-01-30T06:29:06.1613895Z ##[group]Run # stop the build if there are Python syntax errors or undefined names
+test	Lint with flake8	2026-01-30T06:29:06.1614663Z [36;1m# stop the build if there are Python syntax errors or undefined names[0m
+test	Lint with flake8	2026-01-30T06:29:06.1615141Z [36;1mflake8 . --count --select=E9,F63,F7,F82 --show-source --statistics[0m
+test	Lint with flake8	2026-01-30T06:29:06.1615637Z [36;1m# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide[0m
+test	Lint with flake8	2026-01-30T06:29:06.1616190Z [36;1mflake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics[0m
+test	Lint with flake8	2026-01-30T06:29:06.1645576Z shell: /usr/bin/bash -e {0}
+test	Lint with flake8	2026-01-30T06:29:06.1645807Z env:
+test	Lint with flake8	2026-01-30T06:29:06.1646049Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1646643Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Lint with flake8	2026-01-30T06:29:06.1647058Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1647428Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1647822Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Lint with flake8	2026-01-30T06:29:06.1648182Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Lint with flake8	2026-01-30T06:29:06.1648478Z ##[endgroup]
+test	Lint with flake8	2026-01-30T06:29:07.3060295Z 0
+test	Lint with flake8	2026-01-30T06:29:08.0061831Z ./alembic/env.py:14:1: E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0062597Z ./alembic/env.py:15:1: F401 'app.models.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0063133Z ./alembic/env.py:15:1: F401 'app.models.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0063842Z ./alembic/env.py:15:1: F401 'app.models.EmailExport' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0064735Z ./alembic/env.py:15:1: F401 'app.models.AuditLog' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0065453Z ./alembic/env.py:15:1: E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0066188Z ./app/api/v1/endpoints/admin.py:9:1: F401 'sqlalchemy.or_' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0066923Z ./app/api/v1/endpoints/applications.py:11:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0067537Z ./app/api/v1/endpoints/applications.py:240:5: F841 local variable 'total' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0068477Z ./app/api/v1/endpoints/applications.py:583:1: C901 'export_application' is too complex (13)
+test	Lint with flake8	2026-01-30T06:29:08.0069284Z ./app/api/v1/endpoints/applications.py:699:128: E501 line too long (134 > 127 characters)
+test	Lint with flake8	2026-01-30T06:29:08.0069815Z ./app/api/v1/endpoints/files.py:8:1: F401 'fastapi.HTTPException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0070314Z ./app/api/v1/endpoints/files.py:19:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0070850Z ./app/api/v1/endpoints/files.py:29:1: F401 'app.schemas.base.ResponseBase' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0071489Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.FileSizeException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0072494Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.FileTypeException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0073291Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.ApplicationNotFoundException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0074352Z ./app/api/v1/endpoints/files.py:31:1: F401 'app.core.exceptions.DatabaseException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0075098Z ./app/api/v1/endpoints/health.py:13:1: F401 'app.schemas.base.ResponseBase' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0075625Z ./app/main.py:8:1: F401 'fastapi.HTTPException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0076119Z ./app/middleware/audit.py:15:1: F401 '..core.exceptions.FormVaultException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0076625Z ./app/middleware/security.py:13:1: F401 'hashlib' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0077069Z ./app/middleware/security.py:15:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0077587Z ./app/middleware/security.py:17:1: F401 'fastapi.security.HTTPBearer' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0078140Z ./app/middleware/security.py:23:1: F401 'urllib.parse.quote' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0079487Z ./app/middleware/security.py:363:30: F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0080208Z ./app/models/application.py:7:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0080968Z ./app/models/application.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0081750Z ./app/models/application.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0082520Z ./app/models/audit_log.py:8:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0083250Z ./app/models/audit_log.py:8:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0084195Z ./app/models/email_export.py:7:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0084935Z ./app/models/email_export.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0085413Z ./app/models/email_export.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0085878Z ./app/models/file.py:9:1: F401 'sqlalchemy.String' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0086308Z ./app/models/file.py:9:1: F401 'sqlalchemy.DateTime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0086764Z ./app/models/file.py:11:1: F401 'sqlalchemy.dialects.mysql.TEXT' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0087232Z ./app/schemas/base.py:8:1: F401 'pydantic.validator' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0087671Z ./app/schemas/file.py:8:1: F401 'pydantic.validator' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0088100Z ./app/schemas/file.py:9:1: F401 'typing.Optional' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0088554Z ./app/services/email_service.py:10:1: F401 'datetime.timedelta' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0089077Z ./app/services/email_service.py:15:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0089553Z ./app/services/email_service.py:17:1: F401 'jinja2.Template' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090006Z ./app/services/email_service.py:18:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090466Z ./app/services/email_service.py:24:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0090952Z ./app/services/email_service.py:184:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0091397Z ./app/services/email_service.py:186:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0091834Z ./app/services/email_service.py:198:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0092255Z ./app/services/email_service.py:200:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0092685Z ./app/services/email_service.py:202:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0093114Z ./app/services/email_service.py:204:1: W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0093563Z ./app/services/error_tracking.py:8:1: F401 'typing.List' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0094266Z ./app/services/file_service.py:11:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0094794Z ./app/services/file_service.py:134:9: F841 local variable 'e' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0095289Z ./app/services/file_storage.py:14:1: F401 'shutil' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0095710Z ./app/services/file_storage.py:15:1: F401 'mimetypes' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0096166Z ./app/services/file_storage.py:17:1: F401 'typing.BinaryIO' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0096621Z ./app/services/file_storage.py:18:1: F401 'uuid.uuid4' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0097013Z ./app/utils/db_helpers.py:256:39: W291 trailing whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0097393Z ./app/utils/sql_security.py:9:1: F401 'typing.Union' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0097848Z ./app/utils/sql_security.py:15:5: F401 'sqlalchemy.orm.Session' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0098360Z ./app/utils/validation.py:17:5: F401 'email_validator.validate_email' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0098908Z ./app/utils/validation.py:17:5: F401 'email_validator.EmailNotValidError' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0099450Z ./app/utils/validation.py:148:5: F811 redefinition of unused 'validate_email' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0100166Z ./app/utils/validation.py:158:17: F811 redefinition of unused 'EmailNotValidError' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0100763Z ./app/utils/validation.py:240:5: C901 'InputValidator.validate_date_of_birth' is too complex (11)
+test	Lint with flake8	2026-01-30T06:29:08.0101353Z ./scripts/init_test_db.py:11:1: F403 'from app.models import *' used; unable to detect undefined names
+test	Lint with flake8	2026-01-30T06:29:08.0101898Z ./scripts/init_test_db.py:11:1: F401 'app.models.*' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0102389Z ./scripts/init_test_db.py:24:5: F841 local variable 'SessionLocal' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0102889Z ./tests/test_admin_dashboard.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0103456Z ./tests/test_admin_dashboard.py:6:1: F401 'datetime.timedelta' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0104194Z ./tests/test_admin_dashboard.py:12:1: F401 'app.models.application.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0104770Z ./tests/test_admin_dashboard.py:13:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0105335Z ./tests/test_admin_dashboard.py:14:1: F401 'app.models.email_export.EmailExport' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0105914Z ./tests/test_admin_dashboard.py:15:1: F401 'app.models.audit_log.AuditLog' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0106429Z ./tests/test_api_initialization.py:8:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0106878Z ./tests/test_api_initialization.py:11:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0107400Z ./tests/test_api_initialization.py:196:9: F841 local variable 'tags' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0108014Z ./tests/test_api_initialization.py:231:13: F841 local variable 'schema_found' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0108575Z ./tests/test_applications_api.py:12:1: F401 'datetime.date' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0109064Z ./tests/test_applications_api.py:12:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0109574Z ./tests/test_applications_api.py:13:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110053Z ./tests/test_applications_api.py:14:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110487Z ./tests/test_applications_api.py:415:9: F401 'threading' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0110931Z ./tests/test_audit_middleware.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0111399Z ./tests/test_audit_middleware.py:6:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0111904Z ./tests/test_audit_middleware.py:7:1: F401 'fastapi.Response' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0112436Z ./tests/test_audit_middleware.py:123:9: F841 local variable 'response' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0112985Z ./tests/test_email_service.py:8:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0113474Z ./tests/test_email_service.py:8:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0114156Z ./tests/test_error_handling.py:10:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0114629Z ./tests/test_error_handling.py:11:1: F401 'json' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115034Z ./tests/test_error_tracking.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115490Z ./tests/test_file_service.py:6:1: F401 'unittest.mock.AsyncMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0115949Z ./tests/test_file_storage.py:7:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0116447Z ./tests/test_file_storage.py:15:1: F401 'app.core.exceptions.FileUploadException' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0116976Z ./tests/test_files_api_integration.py:7:1: F401 'os' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0117456Z ./tests/test_files_api_integration.py:9:1: F401 'pathlib.Path' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0117985Z ./tests/test_files_api_integration.py:18:1: F401 'app.models.file.File' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0118656Z ./tests/test_files_api_integration.py:355:31: F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0119138Z ./tests/test_integration_workflows.py:6:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0119659Z ./tests/test_integration_workflows.py:11:1: F401 'unittest.mock.MagicMock' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0120196Z ./tests/test_integration_workflows.py:13:1: F401 'app.main.app' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0120738Z ./tests/test_integration_workflows.py:14:1: F401 'app.database.get_db' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0121365Z ./tests/test_integration_workflows.py:64:17: F841 local variable 'student_id_file_id' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0122181Z ./tests/test_integration_workflows.py:81:17: F841 local variable 'passport_file_id' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0122756Z ./tests/test_integration_workflows.py:302:9: F401 'time' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0123200Z ./tests/test_models.py:6:1: F401 'datetime.datetime' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0123665Z ./tests/test_performance_monitor.py:5:1: F401 'pytest' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0124262Z 2     C901 'export_application' is too complex (13)
+test	Lint with flake8	2026-01-30T06:29:08.0124563Z 2     E402 module level import not at top of file
+test	Lint with flake8	2026-01-30T06:29:08.0124839Z 1     E501 line too long (134 > 127 characters)
+test	Lint with flake8	2026-01-30T06:29:08.0125144Z 84    F401 'app.models.Application' imported but unused
+test	Lint with flake8	2026-01-30T06:29:08.0125517Z 1     F403 'from app.models import *' used; unable to detect undefined names
+test	Lint with flake8	2026-01-30T06:29:08.0125866Z 2     F541 f-string is missing placeholders
+test	Lint with flake8	2026-01-30T06:29:08.0126177Z 2     F811 redefinition of unused 'validate_email' from line 17
+test	Lint with flake8	2026-01-30T06:29:08.0126544Z 8     F841 local variable 'total' is assigned to but never used
+test	Lint with flake8	2026-01-30T06:29:08.0126840Z 1     W291 trailing whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0127079Z 6     W293 blank line contains whitespace
+test	Lint with flake8	2026-01-30T06:29:08.0127312Z 109
+test	Format check with black	﻿2026-01-30T06:29:08.0271901Z ##[group]Run black . --check
+test	Format check with black	2026-01-30T06:29:08.0272186Z [36;1mblack . --check[0m
+test	Format check with black	2026-01-30T06:29:08.0305021Z shell: /usr/bin/bash -e {0}
+test	Format check with black	2026-01-30T06:29:08.0305248Z env:
+test	Format check with black	2026-01-30T06:29:08.0305491Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0305913Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Format check with black	2026-01-30T06:29:08.0306316Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0306679Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0307036Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Format check with black	2026-01-30T06:29:08.0307398Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Format check with black	2026-01-30T06:29:08.0307699Z ##[endgroup]
+test	Format check with black	2026-01-30T06:29:09.1818828Z All done! ✨ 🍰 ✨
+test	Format check with black	2026-01-30T06:29:09.1819188Z 69 files would be left unchanged.
+test	Type check with mypy	﻿2026-01-30T06:29:09.2109331Z ##[group]Run mypy . --ignore-missing-imports
+test	Type check with mypy	2026-01-30T06:29:09.2109736Z [36;1mmypy . --ignore-missing-imports[0m
+test	Type check with mypy	2026-01-30T06:29:09.2142540Z shell: /usr/bin/bash -e {0}
+test	Type check with mypy	2026-01-30T06:29:09.2142780Z env:
+test	Type check with mypy	2026-01-30T06:29:09.2143017Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2143445Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Type check with mypy	2026-01-30T06:29:09.2143877Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2144459Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2144815Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Type check with mypy	2026-01-30T06:29:09.2145173Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Type check with mypy	2026-01-30T06:29:09.2145476Z ##[endgroup]
+test	Type check with mypy	2026-01-30T06:29:20.8499040Z alembic/env.py:75: error: Unsupported target for indexed assignment ("dict[str, str] | None")  [index]
+test	Type check with mypy	2026-01-30T06:29:20.8500619Z alembic/env.py:78: error: Argument 1 to "engine_from_config" has incompatible type "dict[str, str] | None"; expected "dict[str, Any]"  [arg-type]
+test	Type check with mypy	2026-01-30T06:29:21.3871882Z app/schemas/base.py:102: error: Function is missing a return type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3873193Z app/schemas/base.py:102: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3874710Z app/schemas/base.py:106: error: Unexpected keyword argument "data" for "PaginatedResponse"  [call-arg]
+test	Type check with mypy	2026-01-30T06:29:21.3941058Z app/core/config.py:59: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3942070Z app/core/config.py:67: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3942998Z app/core/config.py:75: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3944464Z app/core/config.py:83: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.3945596Z app/core/config.py:89: error: Extra keys ("env_file", "case_sensitive") for TypedDict "ConfigDict"  [typeddict-unknown-key]
+test	Type check with mypy	2026-01-30T06:29:21.4200286Z app/schemas/email_export.py:32: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4201393Z app/schemas/email_export.py:42: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4414080Z app/schemas/application.py:37: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4415234Z app/schemas/application.py:57: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4416304Z app/schemas/application.py:65: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4417334Z app/schemas/application.py:77: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4418385Z app/schemas/application.py:101: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4419473Z app/schemas/application.py:125: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.4420526Z app/schemas/application.py:204: error: Function is missing a type annotation  [no-untyped-def]
+test	Type check with mypy	2026-01-30T06:29:21.7235834Z tests/test_integration_workflows.py:128: error: Incompatible types in assignment (expression has type "list[File]", variable has type "dict[str, tuple[str, BufferedReader[_BufferedReaderStream], str]]")  [assignment]
+test	Type check with mypy	2026-01-30T06:29:21.7237731Z tests/test_integration_workflows.py:260: error: Too many arguments for "EmailRetryService"  [call-arg]
+test	Type check with mypy	2026-01-30T06:29:21.7238920Z tests/test_integration_workflows.py:263: error: "EmailRetryService" has no attribute "process_pending_exports"  [attr-defined]
+test	Type check with mypy	2026-01-30T06:29:21.7240249Z tests/test_integration_workflows.py:271: error: Item "None" of "EmailExport | None" has no attribute "status"  [union-attr]
+test	Type check with mypy	2026-01-30T06:29:21.7241601Z tests/test_integration_workflows.py:272: error: Item "None" of "EmailExport | None" has no attribute "retry_count"  [union-attr]
+test	Type check with mypy	2026-01-30T06:29:21.7257792Z tests/test_integration_workflows.py:424: error: Incompatible types in assignment (expression has type "list[File]", variable has type "dict[str, tuple[str, BufferedReader[_BufferedReaderStream], str]]")  [assignment]
+test	Type check with mypy	2026-01-30T06:29:21.7654457Z Found 25 errors in 6 files (checked 69 source files)
+test	Type check with mypy	2026-01-30T06:29:21.7991505Z ##[error]Process completed with exit code 1.
+test	Wait for MySQL to be ready	﻿2026-01-30T06:29:21.8034837Z ##[group]Run sleep 10  # Give MySQL service time to fully initialize
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8035575Z [36;1msleep 10  # Give MySQL service time to fully initialize[0m
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067410Z shell: /usr/bin/bash -e {0}
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067636Z env:
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8067878Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8068292Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8068701Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069051Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069400Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8069757Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Wait for MySQL to be ready	2026-01-30T06:29:21.8070049Z ##[endgroup]
+test	Initialize test database	﻿2026-01-30T06:29:31.8193501Z ##[group]Run python scripts/init_test_db.py
+test	Initialize test database	2026-01-30T06:29:31.8193855Z [36;1mpython scripts/init_test_db.py[0m
+test	Initialize test database	2026-01-30T06:29:31.8226250Z shell: /usr/bin/bash -e {0}
+test	Initialize test database	2026-01-30T06:29:31.8226487Z env:
+test	Initialize test database	2026-01-30T06:29:31.8226736Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8227147Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Initialize test database	2026-01-30T06:29:31.8227575Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8227939Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8228496Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Initialize test database	2026-01-30T06:29:31.8228853Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Initialize test database	2026-01-30T06:29:31.8229236Z   PYTHONPATH: /home/runner/work/FormVault/FormVault/backend
+test	Initialize test database	2026-01-30T06:29:31.8229900Z   DATABASE_URL: ***127.0.0.1:3306/formvault_test
+test	Initialize test database	2026-01-30T06:29:31.8230168Z ##[endgroup]
+test	Initialize test database	2026-01-30T06:29:32.2946124Z Creating database tables using: mysql+pymysql://test_user:test...
+test	Initialize test database	2026-01-30T06:29:32.2946883Z Database tables created successfully!
+test	Run tests with pytest	﻿2026-01-30T06:29:32.3417179Z ##[group]Run pytest --cov=app --cov-report=xml --cov-fail-under=0  # Temporarily disable coverage threshold to see actual test results
+test	Run tests with pytest	2026-01-30T06:29:32.3418112Z [36;1mpytest --cov=app --cov-report=xml --cov-fail-under=0  # Temporarily disable coverage threshold to see actual test results[0m
+test	Run tests with pytest	2026-01-30T06:29:32.3450350Z shell: /usr/bin/bash -e {0}
+test	Run tests with pytest	2026-01-30T06:29:32.3450589Z env:
+test	Run tests with pytest	2026-01-30T06:29:32.3450840Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3451270Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+test	Run tests with pytest	2026-01-30T06:29:32.3451675Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452038Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452389Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+test	Run tests with pytest	2026-01-30T06:29:32.3452747Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+test	Run tests with pytest	2026-01-30T06:29:32.3453121Z   PYTHONPATH: /home/runner/work/FormVault/FormVault/backend
+test	Run tests with pytest	2026-01-30T06:29:32.3454127Z   DATABASE_URL: ***127.0.0.1:3306/formvault_test
+test	Run tests with pytest	2026-01-30T06:29:32.3454417Z   TESTING: true
+test	Run tests with pytest	2026-01-30T06:29:32.3454594Z ##[endgroup]
+test	Run tests with pytest	2026-01-30T06:29:35.2401957Z ============================= test session starts ==============================
+test	Run tests with pytest	2026-01-30T06:29:35.2402763Z platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0
+test	Run tests with pytest	2026-01-30T06:29:35.2403491Z rootdir: /home/runner/work/FormVault/FormVault/backend
+test	Run tests with pytest	2026-01-30T06:29:35.2404284Z configfile: pytest.ini
+test	Run tests with pytest	2026-01-30T06:29:35.2404700Z plugins: cov-7.0.0, asyncio-1.3.0, anyio-4.12.1
+test	Run tests with pytest	2026-01-30T06:29:35.2405637Z asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+test	Run tests with pytest	2026-01-30T06:29:35.2406564Z collected 239 items
+test	Run tests with pytest	2026-01-30T06:29:35.2406767Z 
+test	Run tests with pytest	2026-01-30T06:29:37.8083722Z tests/test_admin_dashboard.py FF...FF.FFF.                               [  5%]
+test	Run tests with pytest	2026-01-30T06:29:47.0161904Z tests/test_api_initialization.py ..F..FF..F.F..                          [ 10%]
+test	Run tests with pytest	2026-01-30T06:29:53.9066727Z tests/test_applications_api.py EEEFEEEFEEF..E                            [ 16%]
+test	Run tests with pytest	2026-01-30T06:29:53.9657489Z tests/test_audit_middleware.py ............                              [ 21%]
+test	Run tests with pytest	2026-01-30T06:29:54.2177523Z tests/test_email_export_api.py ....FFF..FFFF...                          [ 28%]
+test	Run tests with pytest	2026-01-30T06:29:54.7412229Z tests/test_email_service.py .....F...F........                           [ 35%]
+test	Run tests with pytest	2026-01-30T06:29:57.7971654Z tests/test_error_handling.py ...F..........                              [ 41%]
+test	Run tests with pytest	2026-01-30T06:29:57.8517810Z tests/test_error_tracking.py ...............                             [ 48%]
+test	Run tests with pytest	2026-01-30T06:29:57.9699852Z tests/test_file_service.py EEEEEFFFFFFFFFFFFFFFF                         [ 56%]
+test	Run tests with pytest	2026-01-30T06:40:32.7417253Z tests/test_file_storage.py .........
+test	Run tests with pytest	2026-01-30T06:40:32.7594921Z ##[error]The operation was canceled.
+test	Complete job	﻿2026-01-30T06:40:32.7975747Z Cleaning up orphan processes

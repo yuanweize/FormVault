@@ -24,12 +24,12 @@ class Application(Base):
     id = Column(VARCHAR(36), primary_key=True, default=lambda: str(uuid.uuid4()))
 
     # Unique reference number for tracking
-    reference_number = Column(VARCHAR(20), unique=True, nullable=False, index=True)
+    reference_number = Column(VARCHAR(20), unique=True, nullable=False)
 
     # Personal information
     first_name = Column(VARCHAR(100), nullable=False)
     last_name = Column(VARCHAR(100), nullable=False)
-    email = Column(VARCHAR(255), nullable=False, index=True)
+    email = Column(VARCHAR(255), nullable=False)
     phone = Column(VARCHAR(20), nullable=True)
 
     # Address information
@@ -61,7 +61,7 @@ class Application(Base):
     )
 
     # Timestamps
-    created_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False, index=True)
+    created_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
     updated_at = Column(
         TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
     )
@@ -79,10 +79,10 @@ class Application(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_reference_number", "reference_number"),
-        Index("idx_email", "email"),
-        Index("idx_created_at", "created_at"),
-        Index("idx_status", "status"),
+        Index("idx_apps_reference_number", "reference_number"),
+        Index("idx_apps_email", "email"),
+        Index("idx_apps_created_at", "created_at"),
+        Index("idx_apps_status", "status"),
     )
 
     def __repr__(self) -> str:

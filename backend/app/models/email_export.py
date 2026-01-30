@@ -52,10 +52,10 @@ class EmailExport(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_application_id", "application_id"),
-        Index("idx_status", "status"),
-        Index("idx_created_at", "created_at"),
-        Index("idx_recipient_email", "recipient_email"),
+        Index("idx_exports_application_id", "application_id"),
+        Index("idx_exports_status", "status"),
+        Index("idx_exports_created_at", "created_at"),
+        Index("idx_exports_recipient_email", "recipient_email"),
     )
 
     def __repr__(self) -> str:

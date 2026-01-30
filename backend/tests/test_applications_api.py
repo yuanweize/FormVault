@@ -7,53 +7,16 @@ functionality of the FormVault Insurance Portal API.
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 from datetime import date, datetime
 from unittest.mock import patch, MagicMock
 import json
 
-from app.main import app
-from app.database import Base, get_db
 from app.models.application import Application
 from app.models.file import File
 from app.models.audit_log import AuditLog
 
-# Test database setup
-TEST_DATABASE_URL = "sqlite:///:memory:"
-engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-def override_get_db():
-    """Override database dependency for testing."""
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
-
-
-app.dependency_overrides[get_db] = override_get_db
-
-
-@pytest.fixture
-def db_session():
-    """Create a test database session."""
-    Base.metadata.create_all(bind=engine)
-    session = TestingSessionLocal()
-    try:
-        yield session
-    finally:
-        session.close()
-        Base.metadata.drop_all(bind=engine)
-
-
-@pytest.fixture
-def client():
-    """Create a test client."""
-    return TestClient(app)
-
+# Removed local DB setup and dependency overrides to avoid conflicts with conftest.py
 
 @pytest.fixture
 def sample_application_data():
@@ -79,10 +42,24 @@ def sample_application_data():
 
 
 @pytest.fixture
-def sample_file(db_session):
+def sample_file(db: Session):
     """Create a sample file for testing."""
+    # Create a dummy application first to satisfy foreign key
+    app = Application(
+        id="test-app-id-for-file",
+        reference_number="FV-FILE-TEST",
+        first_name="File",
+        last_name="Owner",
+        email="file.owner@example.com",
+        insurance_type="health",
+        status="draft"
+    )
+    db.add(app)
+    db.flush()
+
     file_obj = File(
         id="test-file-id-123",
+        application_id=app.id,
         file_type="student_id",
         original_filename="student_id.jpg",
         stored_filename="stored_student_id.jpg",
@@ -91,9 +68,9 @@ def sample_file(db_session):
         file_hash="abc123hash",
         upload_ip="192.168.1.1",
     )
-    db_session.add(file_obj)
-    db_session.commit()
-    db_session.refresh(file_obj)
+    db.add(file_obj)
+    db.commit()
+    db.refresh(file_obj)
     return file_obj
 
 
@@ -101,10 +78,13 @@ class TestApplicationCreation:
     """Test cases for application creation endpoint."""
 
     def test_create_application_success(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test successful application creation."""
         response = client.post("/api/v1/applications/", json=sample_application_data)
+
+        if response.status_code != 201:
+            print(f"DEBUG_ERROR: {response.text}")
 
         assert response.status_code == 201
         data = response.json()
@@ -127,7 +107,7 @@ class TestApplicationCreation:
 
         # Verify database record was created
         application = (
-            db_session.query(Application).filter(Application.id == data["id"]).first()
+            db.query(Application).filter(Application.id == data["id"]).first()
         )
         assert application is not None
         assert application.first_name == "John"
@@ -137,7 +117,7 @@ class TestApplicationCreation:
 
         # Verify audit log was created
         audit_log = (
-            db_session.query(AuditLog)
+            db.query(AuditLog)
             .filter(
                 AuditLog.application_id == data["id"],
                 AuditLog.action == "application.created",
@@ -150,7 +130,7 @@ class TestApplicationCreation:
         assert audit_log.details["email"] == "john.doe@example.com"
 
     def test_create_application_with_files(
-        self, client, db_session, sample_application_data, sample_file
+        self, client, db, sample_application_data, sample_file
     ):
         """Test application creation with file attachments."""
         # Add file reference to application data
@@ -168,12 +148,12 @@ class TestApplicationCreation:
         assert data["files"][0]["original_filename"] == "student_id.jpg"
 
         # Verify file is linked to application in database
-        db_session.refresh(sample_file)
+        db.refresh(sample_file)
         assert sample_file.application_id == data["id"]
 
         # Verify audit log includes file count
         audit_log = (
-            db_session.query(AuditLog)
+            db.query(AuditLog)
             .filter(
                 AuditLog.application_id == data["id"],
                 AuditLog.action == "application.created",
@@ -183,7 +163,7 @@ class TestApplicationCreation:
         assert audit_log.details["files_attached"] == 1
 
     def test_create_application_invalid_file_reference(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test application creation with invalid file reference."""
         # Add invalid file reference
@@ -197,10 +177,10 @@ class TestApplicationCreation:
         assert "Invalid student ID file reference" in data["error"]["message"]
 
         # Verify no application was created
-        applications = db_session.query(Application).all()
+        applications = db.query(Application).all()
         assert len(applications) == 0
 
-    def test_create_application_validation_errors(self, client, db_session):
+    def test_create_application_validation_errors(self, client, db):
         """Test application creation with validation errors."""
         invalid_data = {
             "personal_info": {
@@ -228,10 +208,10 @@ class TestApplicationCreation:
         assert "details" in data["error"]
 
         # Verify no application was created
-        applications = db_session.query(Application).all()
+        applications = db.query(Application).all()
         assert len(applications) == 0
 
-    def test_create_application_missing_required_fields(self, client, db_session):
+    def test_create_application_missing_required_fields(self, client, db):
         """Test application creation with missing required fields."""
         incomplete_data = {
             "personal_info": {
@@ -248,11 +228,11 @@ class TestApplicationCreation:
         assert "error" in data
 
         # Verify no application was created
-        applications = db_session.query(Application).all()
+        applications = db.query(Application).all()
         assert len(applications) == 0
 
     def test_create_application_duplicate_email_handling(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test handling of duplicate email addresses."""
         # Create first application
@@ -267,12 +247,12 @@ class TestApplicationCreation:
         assert response2.status_code == 201
 
         # Verify both applications exist
-        applications = db_session.query(Application).all()
+        applications = db.query(Application).all()
         assert len(applications) == 2
 
     @patch("app.utils.db_helpers.create_audit_log")
     def test_create_application_audit_log_failure(
-        self, mock_audit_log, client, db_session, sample_application_data
+        self, mock_audit_log, client, db, sample_application_data
     ):
         """Test application creation when audit logging fails."""
         # Mock audit log creation to return None (failure)
@@ -286,12 +266,12 @@ class TestApplicationCreation:
 
         # Verify application was created
         application = (
-            db_session.query(Application).filter(Application.id == data["id"]).first()
+            db.query(Application).filter(Application.id == data["id"]).first()
         )
         assert application is not None
 
     def test_create_application_request_headers_logging(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test that request headers are properly logged in audit trail."""
         headers = {"User-Agent": "TestClient/1.0", "X-Forwarded-For": "192.168.1.100"}
@@ -305,7 +285,7 @@ class TestApplicationCreation:
 
         # Verify audit log captures user agent
         audit_log = (
-            db_session.query(AuditLog)
+            db.query(AuditLog)
             .filter(
                 AuditLog.application_id == data["id"],
                 AuditLog.action == "application.created",
@@ -316,7 +296,7 @@ class TestApplicationCreation:
         assert audit_log.user_agent == "TestClient/1.0"
 
     def test_create_application_phone_validation(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test phone number validation."""
         # Test valid phone numbers
@@ -348,7 +328,7 @@ class TestApplicationCreation:
             assert response.status_code == 422
 
     def test_create_application_age_validation(
-        self, client, db_session, sample_application_data
+        self, client, db, sample_application_data
     ):
         """Test age validation for date of birth."""
         # Test valid age (18+)
@@ -409,7 +389,7 @@ class TestApplicationCreationErrorHandling:
 class TestApplicationCreationPerformance:
     """Test cases for performance aspects of application creation."""
 
-    def test_create_multiple_applications_concurrently(self, client, db_session):
+    def test_create_multiple_applications_concurrently(self, client, db):
         """Test creating multiple applications to verify no race conditions."""
         import concurrent.futures
         import threading
@@ -446,7 +426,7 @@ class TestApplicationCreationPerformance:
         assert success_count == 5
 
         # Verify all applications are in database
-        applications = db_session.query(Application).all()
+        applications = db.query(Application).all()
         assert len(applications) == 5
 
         # Verify all reference numbers are unique
