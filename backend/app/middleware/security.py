@@ -76,7 +76,7 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         """Process request through security checks."""
 
         # Skip security checks for health endpoint
-        if request.url.path == "/health":
+        if request.url.path in ["/health", "/api/v1/health"]:
             return await call_next(request)
 
         try:
@@ -189,6 +189,10 @@ class SecurityMiddleware(BaseHTTPMiddleware):
 
         # Validate headers
         for header_name, header_value in request.headers.items():
+            # Allow Accept: */* (common in automated requests/browsers) which triggers SQL injection check for */
+            if header_name.lower() == "accept" and header_value == "*/*":
+                continue
+
             if self._contains_suspicious_content(header_value):
                 logger.warning(
                     "Suspicious header detected",
