@@ -268,6 +268,7 @@ class TestCompleteApplicationWorkflow:
                 .filter(EmailExport.application_id == application_id)
                 .first()
             )
+            assert email_export is not None
             assert email_export.status == "sent"
             assert email_export.retry_count == 2
 
@@ -421,5 +422,7 @@ class TestErrorRecovery:
             os.unlink(temp_file.name)
 
             # Verify no file record was created in database
-            files = db.query(File).filter(File.application_id == application_id).all()
-            assert len(files) == 0
+            db_files = (
+                db.query(File).filter(File.application_id == application_id).all()
+            )
+            assert len(db_files) == 0
