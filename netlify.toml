@@ -1,0 +1,31 @@
+# Netlify Configuration for FormVault Frontend
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # Base directory (Monorepo: frontend folder)
+  base = "frontend"
+  # Build output directory (relative to base)
+  publish = "build"
+  # Build command
+  command = "npm install && npm run build"
+
+[build.environment]
+  # Node version for build
+  NODE_VERSION = "18"
+  # Disable ESLint during build (handled by CI)
+  DISABLE_ESLINT_PLUGIN = "true"
+
+# SPA redirect for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
