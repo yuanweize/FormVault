@@ -67,9 +67,23 @@ async def setup_submit(
             "request": request, 
             "error": "Passwords do not match"
         })
+
+    # Validate password length for bcrypt (max 72 bytes)
+    if len(password.encode('utf-8')) > 72:
+        return templates.TemplateResponse("setup.html", {
+            "request": request,
+            "error": "Password is too long (max 72 characters)"
+        })
     
     # Create Admin
-    hashed_pw = pwd_context.hash(password)
+    try:
+        hashed_pw = pwd_context.hash(password)
+    except Exception as e:
+        logger.error(f"Password hashing error: {e}")
+        return templates.TemplateResponse("setup.html", {
+            "request": request,
+            "error": "Error processing password. Please try a simpler one."
+        })
     new_admin = AdminUser(username=username, password_hash=hashed_pw)
     db.add(new_admin)
     db.commit()

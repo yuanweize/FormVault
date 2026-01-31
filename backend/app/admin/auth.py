@@ -20,9 +20,12 @@ class AdminAuth(AuthenticationBackend):
         db: Session = SessionLocal()
         try:
             user = db.query(AdminUser).filter(AdminUser.username == username).first()
-            if user and pwd_context.verify(password, user.password_hash):
-                request.session.update({"token": f"db-user-{user.id}"})
-                return True
+            try:
+                if user and pwd_context.verify(password, user.password_hash):
+                    request.session.update({"token": f"db-user-{user.id}"})
+                    return True
+            except Exception:
+                pass # Password likely too long or invalid encoding
         except Exception:
             pass # Fallback if DB not ready or error
         finally:

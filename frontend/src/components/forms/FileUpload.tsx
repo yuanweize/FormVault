@@ -357,17 +357,17 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           p: { xs: 3, sm: 4 },
           textAlign: 'center',
           cursor: disabled ? 'not-allowed' : 'pointer',
-          backgroundColor: isDragOver ? 'action.hover' : 'background.paper',
+          backgroundColor: isDragOver ? 'action.hover' : 'background.default', // Subtle background
           opacity: disabled ? 0.6 : 1,
-          transition: 'all 0.2s ease-in-out',
-          minHeight: { xs: '200px', sm: 'auto' },
+          transition: 'border-color 0.2s, background-color 0.2s',
+          minHeight: { xs: '180px', sm: 'auto' }, // Slightly reduced height
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           '&:hover': {
             borderColor: disabled ? 'grey.300' : 'primary.main',
-            backgroundColor: disabled ? 'background.paper' : 'action.hover',
+            backgroundColor: disabled ? 'background.default' : 'action.selected', // More visible hover
           },
         }}
       >

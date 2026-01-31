@@ -133,7 +133,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="firstName"
               control={control}
@@ -176,7 +176,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="lastName"
               control={control}
@@ -214,7 +214,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="email"
               control={control}
@@ -245,7 +245,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="phone"
               control={control}
@@ -276,7 +276,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <DateField
               name="dateOfBirth"
               control={control}
@@ -309,7 +309,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth error={!!errors.insuranceType} disabled={isLoading} size="medium">
               <InputLabel id="insurance-type-label">
                 {t('forms.personalInfo.fields.insuranceType')}

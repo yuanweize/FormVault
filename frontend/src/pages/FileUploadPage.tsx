@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Paper } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FileUploadForm } from '../components/forms/FileUploadForm';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
@@ -64,12 +64,14 @@ export function FileUploadPage() {
         <WorkflowProgressIndicator sx={{ mb: 4 }} />
 
         {/* Single Form Instance handling both files */}
-        <FileUploadForm
-          initialFiles={uploadedFiles}
-          onFileUpload={handleFileUpload}
-          onFileRemove={handleFileRemove}
-          onSubmit={handleFormSubmit}
-        />
+        <Paper elevation={2} sx={{ p: 4, borderRadius: 2 }}>
+          <FileUploadForm
+            initialFiles={uploadedFiles}
+            onFileUpload={handleFileUpload}
+            onFileRemove={handleFileRemove}
+            onSubmit={handleFormSubmit}
+          />
+        </Paper>
       </Box>
     </Container>
   );

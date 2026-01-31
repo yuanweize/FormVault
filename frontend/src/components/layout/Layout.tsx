@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -17,16 +17,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       }}
     >
       <Header />
-      <Box
+      <Container
         component="main"
+        maxWidth="lg"
         sx={{
           flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
+          py: { xs: 2, md: 4 },
+          px: { xs: 2, md: 0 }, // minimal padding on mobile, none on desktop (Container handles margins)
         }}
       >
         {children}
-      </Box>
+      </Container>
       <Footer />
     </Box>
   );
