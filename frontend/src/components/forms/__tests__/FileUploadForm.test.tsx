@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
-import FileUploadForm from '../FileUploadForm';
+import { FileUploadForm } from '../FileUploadForm';
 import { UploadedFile } from '../FileUpload';
 
 const theme = createTheme();
@@ -84,7 +84,7 @@ describe('FileUploadForm Component', () => {
       });
     });
 
-    it('enables continue button when student ID is uploaded', async () => {
+    it('remains disabled when only student ID is uploaded', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
 
@@ -100,11 +100,11 @@ describe('FileUploadForm Component', () => {
 
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
-        expect(continueButton).not.toBeDisabled();
+        expect(continueButton).toBeDisabled();
       });
     });
 
-    it('enables continue button when passport is uploaded', async () => {
+    it('remains disabled when only passport is uploaded', async () => {
       const user = userEvent.setup();
       renderWithProviders(<FileUploadForm />);
 
@@ -120,7 +120,7 @@ describe('FileUploadForm Component', () => {
 
       await waitFor(() => {
         const continueButton = screen.getByRole('button', { name: /continue/i });
-        expect(continueButton).not.toBeDisabled();
+        expect(continueButton).toBeDisabled();
       });
     });
 
@@ -173,7 +173,7 @@ describe('FileUploadForm Component', () => {
       renderWithProviders(
         <FileUploadForm
           onSubmit={mockOnSubmit}
-          initialFiles={{ studentId: studentIdFile }}
+          initialFiles={{ studentId: studentIdFile, passport: passportFile }}
         />
       );
 
@@ -191,7 +191,7 @@ describe('FileUploadForm Component', () => {
     it('navigates to review page when no onSubmit provided', async () => {
       const user = userEvent.setup();
       renderWithProviders(
-        <FileUploadForm initialFiles={{ studentId: studentIdFile }} />
+        <FileUploadForm initialFiles={{ studentId: studentIdFile, passport: passportFile }} />
       );
 
       const continueButton = screen.getByRole('button', { name: /continue/i });
@@ -211,7 +211,7 @@ describe('FileUploadForm Component', () => {
           onSubmit={async () => {
             throw new Error(errorMessage);
           }}
-          initialFiles={{ studentId: studentIdFile }}
+          initialFiles={{ studentId: studentIdFile, passport: passportFile }}
         />
       );
 

@@ -6,38 +6,26 @@ import {
   Typography,
   Alert,
   Paper,
-  Stepper,
-  Step,
-  StepLabel,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import FileUpload, { UploadedFile } from './FileUpload';
 
 interface FileUploadFormProps {
-  onSubmit?: (files: { studentId?: UploadedFile; passport?: UploadedFile }) => void;
   initialFiles?: {
     studentId?: UploadedFile;
     passport?: UploadedFile;
   };
-  error?: string | null;
-  fileType?: string; // Add fileType to interface to match usage
-  onFileUpload?: (file: File, fileType: any) => Promise<UploadedFile | null>; // Match page usage
-  onFileRemove?: (fileType: any) => void;
-  uploadedFile?: UploadedFile | null;
-  isUploading?: boolean;
-  uploadProgress?: number;
+  onFileUpload?: (file: File, fileType: 'student_id' | 'passport') => Promise<UploadedFile | null>;
+  onFileRemove?: (fileType: 'student_id' | 'passport') => void;
+  onSubmit?: (files: { studentId?: UploadedFile; passport?: UploadedFile }) => void;
 }
 
 export const FileUploadForm: React.FC<FileUploadFormProps> = ({
-  onSubmit,
   initialFiles,
-  error,
-  onFileUpload, // Destructure this
+  onFileUpload,
   onFileRemove,
-  uploadedFile,
-  isUploading,
-  uploadProgress,
+  onSubmit,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -51,163 +39,159 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const createUploadHandler = useCallback((type: 'student_id' | 'passport') => {
-    return async (file: File): Promise<UploadedFile> => {
-      if (onFileUpload) {
-        const result = await onFileUpload(file, type);
-        if (result) return result;
-        throw new Error('Upload failed');
-      }
-      // Fallback or error if no handler
-      throw new Error('No upload handler provided');
-    };
+  // Handlers for Student ID
+  const createStudentIdUploadHandler = useCallback(async (file: File): Promise<UploadedFile> => {
+    if (onFileUpload) {
+      const result = await onFileUpload(file, 'student_id');
+      if (result) return result;
+      throw new Error('Upload failed');
+    }
+    throw new Error('No upload handler');
   }, [onFileUpload]);
 
-  const handleStudentIdUpload = useCallback((file: UploadedFile) => {
+  const handleStudentIdSuccess = useCallback((file: UploadedFile) => {
     setStudentIdFile(file);
-    setErrors(prev => prev.filter(error => !error.toLowerCase().includes('student')));
+    setErrors(prev => prev.filter(e => !e.toLowerCase().includes('student')));
   }, []);
 
-  const handlePassportUpload = useCallback((file: UploadedFile) => {
-    setPassportFile(file);
-    setErrors(prev => prev.filter(error => !error.toLowerCase().includes('passport')));
-  }, []);
-
-  const handleStudentIdError = useCallback((error: string) => {
-    setErrors(prev => [...prev.filter(e => !e.includes('student')), `Student ID: ${error}`]);
-  }, []);
-
-  const handlePassportError = useCallback((error: string) => {
-    setErrors(prev => [...prev.filter(e => !e.includes('passport')), `Passport: ${error}`]);
-  }, []);
-
-  const handleStudentIdRemove = useCallback((fileId: string) => {
+  const handleStudentIdRemove = useCallback(() => {
     setStudentIdFile(null);
+    if (onFileRemove) onFileRemove('student_id');
+  }, [onFileRemove]);
+
+  // Handlers for Passport
+  const createPassportUploadHandler = useCallback(async (file: File): Promise<UploadedFile> => {
+    if (onFileUpload) {
+      const result = await onFileUpload(file, 'passport');
+      if (result) return result;
+      throw new Error('Upload failed');
+    }
+    throw new Error('No upload handler');
+  }, [onFileUpload]);
+
+  const handlePassportSuccess = useCallback((file: UploadedFile) => {
+    setPassportFile(file);
+    setErrors(prev => prev.filter(e => !e.toLowerCase().includes('passport')));
   }, []);
 
-  const handlePassportRemove = useCallback((fileId: string) => {
+  const handlePassportRemove = useCallback(() => {
     setPassportFile(null);
-  }, []);
+    if (onFileRemove) onFileRemove('passport');
+  }, [onFileRemove]);
+
+  // Navigation / Submit
+  const handleBack = useCallback(() => {
+    navigate('/personal-info');
+  }, [navigate]);
 
   const handleSubmit = useCallback(async () => {
     setIsSubmitting(true);
     setErrors([]);
 
+    if (!studentIdFile || !passportFile) {
+      setErrors([t('fileUpload.errors.allFilesRequired') || 'Please upload both files.']);
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Validate that at least one file is uploaded
-      if (!studentIdFile && !passportFile) {
-        setErrors([t('fileUpload.errors.noFilesUploaded')]);
-        return;
-      }
-
-      const files = {
-        studentId: studentIdFile || undefined,
-        passport: passportFile || undefined,
-      };
-
       if (onSubmit) {
-        await onSubmit(files);
-      } else {
-        // Default behavior: navigate to next step
-        navigate('/review');
+        await onSubmit({ studentId: studentIdFile, passport: passportFile });
       }
-    } catch (error) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : t('fileUpload.errors.submitFailed');
-      setErrors([errorMessage]);
+      // Always navigate on success (or let parent handle it via onSubmit promise)
+      // Here we assume if no error, we proceed
+      navigate('/review');
+    } catch (err) {
+      setErrors(['Submission failed. Please try again.']);
     } finally {
       setIsSubmitting(false);
     }
   }, [studentIdFile, passportFile, onSubmit, navigate, t]);
 
-  const handleBack = useCallback(() => {
-    navigate('/personal-info');
-  }, [navigate]);
-
-  const canSubmit = studentIdFile || passportFile;
+  const canSubmit = studentIdFile && passportFile;
 
   return (
-    <Box maxWidth="md" mx="auto" p={3}>
+    <Box>
       <Typography variant="h4" component="h1" gutterBottom align="center">
         {t('fileUpload.title')}
       </Typography>
 
-      <Typography variant="body1" color="text.secondary" paragraph align="center">
+      <Typography variant="body1" color="text.secondary" paragraph align="center" sx={{ mb: 4 }}>
         {t('fileUpload.description')}
       </Typography>
 
-      {(errors.length > 0 || error) && (
+      {errors.length > 0 && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          <Typography variant="body2">
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
             {t('fileUpload.errors.title')}
           </Typography>
-          <ul style={{ margin: '8px 0 0 0', paddingLeft: '20px' }}>
-            {error && <li>{error}</li>}
-            {errors.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
+          <ul style={{ margin: '8px 0 0 0', paddingLeft: 20 }}>
+            {errors.map((e, i) => <li key={i}>{e}</li>)}
           </ul>
         </Alert>
       )}
 
-      <Grid container spacing={4}>
+      <Grid container spacing={3}>
+        {/* Student ID Column */}
         <Grid item xs={12} md={6}>
-          <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
+          <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h6" gutterBottom>
+              {t('forms.fileUpload.studentId.label')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              {t('forms.fileUpload.studentId.description')}
+            </Typography>
             <FileUpload
               fileType="student_id"
-              onUploadSuccess={handleStudentIdUpload}
-              onUploadError={handleStudentIdError}
+              onUploadSuccess={handleStudentIdSuccess}
+              onUploadError={(msg) => setErrors(p => [...p, msg])}
               onFileRemove={handleStudentIdRemove}
               uploadedFile={studentIdFile}
-              disabled={isSubmitting}
-              customUploadHandler={onFileUpload ? createUploadHandler('student_id') : undefined}
+              customUploadHandler={onFileUpload ? createStudentIdUploadHandler : undefined}
             />
           </Paper>
         </Grid>
 
+        {/* Passport Column */}
         <Grid item xs={12} md={6}>
-          <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
+          <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h6" gutterBottom>
+              {t('forms.fileUpload.passport.label')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              {t('forms.fileUpload.passport.description')}
+            </Typography>
             <FileUpload
               fileType="passport"
-              onUploadSuccess={handlePassportUpload}
-              onUploadError={handlePassportError}
+              onUploadSuccess={handlePassportSuccess}
+              onUploadError={(msg) => setErrors(p => [...p, msg])}
               onFileRemove={handlePassportRemove}
               uploadedFile={passportFile}
-              disabled={isSubmitting}
-              customUploadHandler={onFileUpload ? createUploadHandler('passport') : undefined}
+              customUploadHandler={onFileUpload ? createPassportUploadHandler : undefined}
             />
           </Paper>
         </Grid>
       </Grid>
 
-      <Box display="flex" justifyContent="space-between" mt={4}>
+      {/* Action Buttons */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
         <Button
           variant="outlined"
           onClick={handleBack}
-          disabled={isSubmitting}
           size="large"
         >
           {t('common.back')}
         </Button>
-
         <Button
           variant="contained"
           onClick={handleSubmit}
           disabled={!canSubmit || isSubmitting}
           size="large"
+          sx={{ minWidth: 150 }}
         >
           {isSubmitting ? t('common.submitting') : t('common.continue')}
         </Button>
       </Box>
-
-      <Box mt={3}>
-        <Typography variant="body2" color="text.secondary" align="center">
-          {t('fileUpload.requirements')}
-        </Typography>
-      </Box>
     </Box>
   );
 };
-
-export default FileUploadForm;

@@ -128,6 +128,10 @@ npm start
 cd backend
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+
+# 3. Setup Admin Account
+# Open your browser and visit:
+# http://localhost:8000/setup
 ```
 
 ---
@@ -198,6 +202,21 @@ Deploy the full stack with a single click:
 **Legend:**
 - 🔄 Auto — Automatically provided by the platform
 - 🔧 Manual — You must configure this manually
+
+---
+
+## ⚙️ Configuration & Admin
+
+### 🧙‍♂️ First-Run Setup
+This application features a **Setup Wizard** to create your initial Administrator account.
+- **URL**: `/setup` (e.g., `https://your-api.com/setup`)
+- **Action**: Create your username and secure password.
+
+### 🔑  Admin Dashboard
+Access the **No-Code Admin Panel** at `/admin` to:
+- **Manage Data**: View, edit, and delete applications and files.
+- **Configure System**: Use the **System Configuration** view to switch between Local and S3 storage dynamically.
+- **S3 Support**: Compatible with AWS S3, Oracle Cloud, and others. Simply enter your keys in the UI—no restart required.
 
 ---
 

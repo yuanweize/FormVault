@@ -23,6 +23,12 @@ from app.middleware.security import SecurityMiddleware
 from app.middleware.audit import AuditMiddleware
 from app.services.error_tracking import track_error
 
+from starlette.middleware.sessions import SessionMiddleware
+from sqladmin import Admin
+from app.database import engine
+from app.admin.auth import authentication_backend
+from app.admin.views import ApplicationAdmin, FileAdmin, EmailExportAdmin, AuditLogAdmin, SystemConfigAdmin
+
 # Configure structured logging
 logger = structlog.get_logger(__name__)
 
@@ -37,6 +43,22 @@ app = FastAPI(
     docs_url="/docs" if settings.DEBUG else None,
     redoc_url="/redoc" if settings.DEBUG else None,
 )
+
+# Admin Interface Initialization
+admin = Admin(
+    app, 
+    engine, 
+    authentication_backend=authentication_backend,
+    title="FormVault Admin"
+)
+admin.add_view(ApplicationAdmin)
+admin.add_view(FileAdmin)
+admin.add_view(EmailExportAdmin)
+admin.add_view(AuditLogAdmin)
+admin.add_view(SystemConfigAdmin)
+
+# Session Middleware (Required for Admin Auth)
+app.add_middleware(SessionMiddleware, secret_key=settings.ADMIN_SECRET_KEY)
 
 
 # Audit Middleware (should be first to capture all requests)
@@ -245,6 +267,9 @@ async def health_check() -> Dict[str, Any]:
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")
 
+# Include Setup Router (Mounted at root)
+from app.api.setup import router as setup_router
+app.include_router(setup_router)
 
 # Application startup event
 @app.on_event("startup")

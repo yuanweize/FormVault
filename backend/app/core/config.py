@@ -39,6 +39,20 @@ class Settings(BaseModel):
     SMTP_USE_TLS: bool = True
     FROM_EMAIL: str = "noreply@formvault.com"
 
+    # S3 Storage settings (Oracle/AWS Compatible)
+    STORAGE_TYPE: str = "local"  # 'local' or 's3'
+    S3_ENDPOINT: Optional[str] = None
+    S3_BUCKET: Optional[str] = None
+    S3_ACCESS_KEY: Optional[str] = None
+    S3_SECRET_KEY: Optional[str] = None
+    S3_REGION: str = "us-east-1"
+    S3_PRESIGNED_EXPIRATION: int = 3600  # 1 hour
+
+    # Admin Dashboard credentials
+    ADMIN_USERNAME: str = "admin"
+    ADMIN_PASSWORD: str = "change_me_in_production"
+    ADMIN_SECRET_KEY: str = "admin-session-secret-key"
+
     # Security settings
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     ALGORITHM: str = "HS256"

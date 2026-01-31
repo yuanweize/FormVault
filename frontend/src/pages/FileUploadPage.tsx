@@ -1,16 +1,15 @@
 /**
  * File Upload Page Component
  * 
- * This page handles file uploads for student ID and passport documents
- * with workflow integration and progress tracking.
+ * This page handles single instance of FileUploadForm which manages both
+ * Student ID and Passport uploads.
  */
 
 import React, { useEffect } from 'react';
-import { Box, Typography, Container, Grid, Card, CardContent, Alert } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FileUploadForm } from '../components/forms/FileUploadForm';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
-import { WorkflowNavigation } from '../components/workflow/WorkflowNavigation';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { useFileUpload } from '../hooks/useFiles';
 import { FileType, UploadedFile } from '../types';
@@ -21,20 +20,20 @@ export function FileUploadPage() {
     state,
     setUploadedFile,
     removeUploadedFile,
-    completeStep,
-    goToNextStep
+    goToNextStep,
+    completeStep
   } = useApplicationWorkflowContext();
 
   const studentIdUpload = useFileUpload();
   const passportUpload = useFileUpload();
 
   const { uploadedFiles } = state;
-  const hasRequiredFiles = uploadedFiles.studentId && uploadedFiles.passport;
 
-  // Utilize useEffect to handle navigation after state update to avoid stale closure issues
+  // Utilize useEffect to handle navigation after state update
   useEffect(() => {
     if (state.currentStep === 'file-upload' && state.completedSteps.includes('file-upload')) {
-      goToNextStep();
+      // goToNextStep(); // Triggered by submit, but if we reload and are complete, maybe validation?
+      // Actually handled by submitting
     }
   }, [state.currentStep, state.completedSteps, goToNextStep]);
 
@@ -53,17 +52,9 @@ export function FileUploadPage() {
     removeUploadedFile(fileType === 'student_id' ? 'studentId' : 'passport');
   };
 
-  const handleNext = async (): Promise<boolean> => {
-    if (!hasRequiredFiles) {
-      return false;
-    }
-
-    // Mark this step as completed
+  const handleFormSubmit = async (files: { studentId?: UploadedFile; passport?: UploadedFile }) => {
     completeStep('file-upload');
-
-    // Return false to prevent WorkflowNavigation from calling goToNextStep immediately
-    // Navigation will be handled by useEffect once state updates
-    return false;
+    goToNextStep();
   };
 
   return (
@@ -72,86 +63,13 @@ export function FileUploadPage() {
         {/* Progress Indicator */}
         <WorkflowProgressIndicator sx={{ mb: 4 }} />
 
-        {/* Page Header */}
-        <Box sx={{ mb: 4, textAlign: 'center' }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {t('pages.fileUpload.title')}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {t('pages.fileUpload.subtitle')}
-          </Typography>
-        </Box>
-
-        {/* Upload Instructions */}
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <Typography variant="body2">
-            {t('pages.fileUpload.instructions')}
-          </Typography>
-        </Alert>
-
-        {/* File Upload Forms */}
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {t('forms.fileUpload.studentId.label')}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {t('forms.fileUpload.studentId.description')}
-                </Typography>
-                <FileUploadForm
-                  fileType="student_id"
-                  onFileUpload={handleFileUpload}
-                  onFileRemove={handleFileRemove}
-                  uploadedFile={uploadedFiles.studentId}
-                  isUploading={studentIdUpload.uploading}
-                  uploadProgress={studentIdUpload.progress}
-                  error={studentIdUpload.error}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {t('forms.fileUpload.passport.label')}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {t('forms.fileUpload.passport.description')}
-                </Typography>
-                <FileUploadForm
-                  fileType="passport"
-                  onFileUpload={handleFileUpload}
-                  onFileRemove={handleFileRemove}
-                  uploadedFile={uploadedFiles.passport}
-                  isUploading={passportUpload.uploading}
-                  uploadProgress={passportUpload.progress}
-                  error={passportUpload.error}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        {/* Completion Status */}
-        {hasRequiredFiles && (
-          <Alert severity="success" sx={{ mt: 3 }}>
-            <Typography variant="body2">
-              {t('pages.fileUpload.allFilesUploaded')}
-            </Typography>
-          </Alert>
-        )}
-
-        {/* Navigation */}
-        <Box sx={{ mt: 4 }}>
-          <WorkflowNavigation
-            onNext={handleNext}
-            nextLabel={hasRequiredFiles ? t('pages.fileUpload.proceedToReview') as string : undefined}
-          />
-        </Box>
+        {/* Single Form Instance handling both files */}
+        <FileUploadForm
+          initialFiles={uploadedFiles}
+          onFileUpload={handleFileUpload}
+          onFileRemove={handleFileRemove}
+          onSubmit={handleFormSubmit}
+        />
       </Box>
     </Container>
   );

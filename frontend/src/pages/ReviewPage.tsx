@@ -109,7 +109,7 @@ export function ReviewPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }} data-testid="review-page">
+    <Box sx={{ maxWidth: 800, mx: 'auto' }} data-testid="review-page">
       {/* Progress Indicator */}
       <WorkflowProgressIndicator sx={{ mb: 4 }} />
 

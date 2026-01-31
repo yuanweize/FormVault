@@ -77,7 +77,7 @@ export function SuccessPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Progress Indicator */}
       <Box sx={{ mb: 4 }}>
         <WorkflowProgressIndicator />
