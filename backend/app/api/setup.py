@@ -30,16 +30,24 @@ router = APIRouter()
 async def setup_page(request: Request, db: Session = Depends(get_db)):
     """Serve the First-Run Setup Wizard."""
     try:
+        logger.info(f"Accessing Setup Page. Template Dir: {TEMPLATE_DIR}")
         # Check if setup is already done
-        user_count = db.query(AdminUser).count()
-        if user_count > 0:
-            return RedirectResponse(url="/admin/login", status_code=303)
+        try:
+             user_count = db.query(AdminUser).count()
+             if user_count > 0:
+                 logger.info("Admin user exists, redirecting to login")
+                 return RedirectResponse(url="/admin/login", status_code=303)
+        except Exception as db_err:
+             logger.warning(f"Database error during setup check (ignoring for fresh install): {db_err}")
+             # If table doesn't exist yet, we still want to show setup? 
+             # No, if table doesn't exist, we likely need migrations. 
+             # But let's proceed to show setup page anyway if we can, or let it fail.
+             pass
             
         return templates.TemplateResponse("setup.html", {"request": request})
     except Exception as e:
         logger.error(f"Error serving setup page: {e}", exc_info=True)
-        # Fallback raw HTML if template fails
-        return HTMLResponse(content=f"<h1>Setup Error</h1><p>{str(e)}</p>", status_code=500)
+        return HTMLResponse(content=f"<h1>Setup Error</h1><p>Detailed Error: {str(e)}</p><p>Template Dir: {TEMPLATE_DIR}</p>", status_code=500)
 
 @router.post("/setup")
 async def setup_submit(
