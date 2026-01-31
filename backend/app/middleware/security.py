@@ -190,8 +190,9 @@ class SecurityMiddleware(BaseHTTPMiddleware):
 
         # Validate headers
         for header_name, header_value in request.headers.items():
-            # Allow Accept: */* (common in automated requests/browsers) which triggers SQL injection check for */
-            if header_name.lower() == "accept" and header_value == "*/*":
+            # Skip Accept header validation as it often contains */* (MIME types)
+            # which triggers the SQL injection check for "*/" (comment end)
+            if header_name.lower() == "accept":
                 continue
 
             if self._contains_suspicious_content(header_value):
