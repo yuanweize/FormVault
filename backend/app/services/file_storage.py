@@ -70,29 +70,24 @@ class SecureFileStorage:
         self.upload_dir.mkdir(exist_ok=True, mode=0o750)
 
     def _get_or_create_encryption_key(self) -> bytes:
-        """Get or create encryption key for filename encryption."""
-        key_file = self.upload_dir / ".encryption_key"
-
-        if key_file.exists():
-            with open(key_file, "rb") as f:
-                return f.read()
-        else:
-            # Generate new key
-            password = self.settings.SECRET_KEY.encode()
-            salt = secrets.token_bytes(16)
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(),
-                length=32,
-                salt=salt,
-                iterations=100000,
-            )
-            key = base64.urlsafe_b64encode(kdf.derive(password))
-
-            # Store key securely
-            with open(key_file, "wb") as f:
-                f.write(key)
-            os.chmod(key_file, 0o600)  # Read-only for owner
-            return key
+        """Get encryption key derived deterministically from SECRET_KEY (Stateless)."""
+        # Use a fixed salt to ensure the key is consistent across restarts without disk persistence
+        # In a real production scenario, this salt could also be an env var, but hardcoding ensures
+        # we don't lose access to files if the container restarts.
+        salt = b"formvault_stateless_salt_v1"
+        
+        # Derive 32-byte key from the SECRET_KEY
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=100000,
+        )
+        # We start with the configured secret key
+        password = self.settings.SECRET_KEY.encode()
+        
+        # Return the derived key in URL-safe base64 format (required by Fernet)
+        return base64.urlsafe_b64encode(kdf.derive(password))
 
     def validate_file(self, file: UploadFile) -> None:
         """Validate uploaded file for security and compliance."""

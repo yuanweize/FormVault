@@ -36,6 +36,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
+import { FileUploadForm } from '../components/forms/FileUploadForm';
 
 export function SuccessPage() {
   const { t } = useTranslation();

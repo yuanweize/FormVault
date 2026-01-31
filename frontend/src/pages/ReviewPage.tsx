@@ -39,6 +39,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
+import { FileUploadForm } from '../components/forms/FileUploadForm';
 import { WorkflowNavigation } from '../components/workflow/WorkflowNavigation';
 import { fileService } from '../services/fileService';
 
