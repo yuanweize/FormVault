@@ -69,38 +69,55 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     onSubmit(data);
   };
 
+  const onError = (errors: any) => {
+    console.error('Form Validation Failed:', errors);
+    // Find first error and scroll to it
+    const firstErrorKey = Object.keys(errors)[0];
+    if (firstErrorKey) {
+      // Try to find element by name attribute (standard Mui TextField)
+      const element = document.querySelector(`[name="${firstErrorKey}"]`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (element as HTMLElement).focus();
+      }
+    }
+  };
+
   return (
     <Paper
-      elevation={2}
+      elevation={3} // Better elevation for premium feel
       sx={{
-        p: { xs: 2, sm: 3, md: 4 },
+        p: { xs: 2, sm: 3, md: 5 }, // More padding
         mx: { xs: 0, sm: 'auto' },
         maxWidth: '100%',
+        borderRadius: 3, // Rounder corners
       }}
     >
       <Typography
-        variant="h5"
+        variant="h4" // Larger title
         gutterBottom
         sx={{
-          fontSize: { xs: '1.25rem', sm: '1.5rem' },
+          fontWeight: 700,
+          fontSize: { xs: '1.5rem', sm: '2rem' },
           textAlign: { xs: 'center', sm: 'left' },
+          color: 'primary.main',
         }}
       >
         {t('forms.personalInfo.title')}
       </Typography>
       <Typography
-        variant="body2"
+        variant="body1" // Larger body text
         color="text.secondary"
         paragraph
         sx={{
           textAlign: { xs: 'center', sm: 'left' },
-          mb: { xs: 2, sm: 3 },
+          mb: { xs: 3, sm: 4 },
         }}
       >
         {t('forms.personalInfo.subtitle')}
       </Typography>
 
-      <Box component="form" onSubmit={handleSubmit(onFormSubmit)} noValidate>
+      <Box component="form" onSubmit={handleSubmit(onFormSubmit, onError)} noValidate>
         <Grid container spacing={{ xs: 2, sm: 3 }}>
           {/* Personal Details Section */}
           <Grid item xs={12}>

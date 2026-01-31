@@ -8,19 +8,37 @@ from pathlib import Path
 from app.database import get_db
 from app.models.system import AdminUser
 
-router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+import logging
+import os
+
+logger = logging.getLogger(__name__)
+
+# Robust Template Path Resolution
+# Assuming this file is at backend/app/api/setup.py
+# We want backend/app/templates
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = BASE_DIR / "templates"
+
+if not TEMPLATE_DIR.exists():
+    logger.critical(f"Template directory not found at: {TEMPLATE_DIR}")
+
+templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @router.get("/setup", response_class=HTMLResponse)
 async def setup_page(request: Request, db: Session = Depends(get_db)):
     """Serve the First-Run Setup Wizard."""
-    # Check if setup is already done
-    user_count = db.query(AdminUser).count()
-    if user_count > 0:
-        return RedirectResponse(url="/admin/login", status_code=303)
-        
-    return templates.TemplateResponse("setup.html", {"request": request})
+    try:
+        # Check if setup is already done
+        user_count = db.query(AdminUser).count()
+        if user_count > 0:
+            return RedirectResponse(url="/admin/login", status_code=303)
+            
+        return templates.TemplateResponse("setup.html", {"request": request})
+    except Exception as e:
+        logger.error(f"Error serving setup page: {e}", exc_info=True)
+        # Fallback raw HTML if template fails
+        return HTMLResponse(content=f"<h1>Setup Error</h1><p>{str(e)}</p>", status_code=500)
 
 @router.post("/setup")
 async def setup_submit(

@@ -213,7 +213,7 @@ uvicorn app.main:app --reload
 - **操作**: 设置您的管理员用户名和密码。
 
 ### 🔑  管理控制台 (Admin Dashboard)
-访问 `/admin` 进入 **无代码管理面板**：
+访问 **后端 API 地址** 的 `/admin` 路径进入 **无代码管理面板**（例如 `https://api.yoursite.com/admin`）：
 - **数据管理**: 查看、编辑、删除申请和文件。
 - **系统配置**: 点击 **System Configuration** 可动态切换本地存储和 S3 存储。
 - **S3 支持**: 兼容 AWS S3、Oracle Cloud 等。直接在界面输入密钥即可生效，无需重启服务。

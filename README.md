@@ -213,7 +213,7 @@ This application features a **Setup Wizard** to create your initial Administrato
 - **Action**: Create your username and secure password.
 
 ### 🔑  Admin Dashboard
-Access the **No-Code Admin Panel** at `/admin` to:
+Access the **No-Code Admin Panel** at `/admin` on your **Backend API URL** (e.g., `https://api.your-model.com/admin`):
 - **Manage Data**: View, edit, and delete applications and files.
 - **Configure System**: Use the **System Configuration** view to switch between Local and S3 storage dynamically.
 - **S3 Support**: Compatible with AWS S3, Oracle Cloud, and others. Simply enter your keys in the UI—no restart required.
