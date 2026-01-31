@@ -27,7 +27,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from sqladmin import Admin
 from app.database import engine
 from app.admin.auth import authentication_backend
-from app.admin.views import ApplicationAdmin, FileAdmin, EmailExportAdmin, AuditLogAdmin, SystemConfigAdmin
+from app.admin.views import ApplicationAdmin, FileAdmin, EmailExportAdmin, AuditLogAdmin, SystemConfigAdmin, AdminUserAdmin
 
 # Configure structured logging
 logger = structlog.get_logger(__name__)
@@ -56,6 +56,7 @@ admin.add_view(FileAdmin)
 admin.add_view(EmailExportAdmin)
 admin.add_view(AuditLogAdmin)
 admin.add_view(SystemConfigAdmin)
+admin.add_view(AdminUserAdmin)
 
 # Session Middleware (Required for Admin Auth)
 app.add_middleware(SessionMiddleware, secret_key=settings.ADMIN_SECRET_KEY)

@@ -24,7 +24,7 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
     name = "System Configuration ⚙️"
     icon = "fa-solid fa-gears"
     
-    can_create = True # Allow creating the singleton
+    can_create = True 
     can_delete = False
     
     column_list = [SystemConfig.storage_provider, SystemConfig.s3_endpoint, SystemConfig.updated_at]
@@ -42,6 +42,56 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
     form_args = dict(
         storage_provider=dict(choices=["local", "s3"], label="Storage Provider (local/s3)")
     )
+
+    async def on_model_change(self, data, model, is_created, request):
+        # Enforce Singleton Pattern
+        if is_created:
+            # Check if any config exists
+            with request.state.db_session_factory() as session:
+                existing = session.query(SystemConfig).first()
+                if existing:
+                    # Instead of creating new, prevent it or update existing?
+                    # Admin UI generic create usually assumes new ID. 
+                    # Raising error is safest to prevent duplicate confusing rows.
+                    raise Exception("System Configuration already exists. Please edit the existing one.")
+        return await super().on_model_change(data, model, is_created, request)
+
+
+from ..models.system import AdminUser
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+class AdminUserAdmin(ModelView, model=AdminUser):
+    name = "Admin Users 👤"
+    name_plural = "Admin Users"
+    icon = "fa-solid fa-users-gear"
+    
+    column_list = [AdminUser.username, AdminUser.created_at]
+    form_columns = [AdminUser.username, AdminUser.password_hash]
+    
+    # Use PasswordField effectively
+    form_overrides = dict(password_hash=PasswordField)
+    form_args = dict(password_hash=dict(label="Password (Leave empty to keep unchanged)"))
+
+    async def on_model_change(self, data, model, is_created, request):
+        password = data.get("password_hash")
+        
+        if is_created:
+             if not password:
+                 raise Exception("Password is required for new users.")
+             data["password_hash"] = pwd_context.hash(password)
+        else:
+            # Update mode
+            if password:
+                # User entered new password
+                data["password_hash"] = pwd_context.hash(password)
+            else:
+                # Empty password field means "do not change"
+                # We need to remove it from data to avoid overwriting with empty string/None
+                del data["password_hash"]
+                
+        return await super().on_model_change(data, model, is_created, request)
 
 class FileAdmin(ModelView, model=File):
     column_list = [
