@@ -10,7 +10,15 @@ class ApplicationAdmin(ModelView, model=Application):
     column_list = [
         Application.reference_number,
         Application.status,
-# ... (existing code) ...
+        Application.first_name,
+        Application.last_name,
+        Application.insurance_type,
+        Application.created_at
+    ]
+    column_searchable_list = [Application.reference_number, Application.email, Application.last_name]
+    column_sortable_list = [Application.created_at, Application.status]
+    column_default_sort = ("created_at", True)
+    icon = "fa-solid fa-file-invoice"
 
 class SystemConfigAdmin(ModelView, model=SystemConfig):
     name = "System Configuration ⚙️"
@@ -34,15 +42,6 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
     form_args = dict(
         storage_provider=dict(choices=["local", "s3"], label="Storage Provider (local/s3)")
     )
-        Application.first_name,
-        Application.last_name,
-        Application.insurance_type,
-        Application.created_at
-    ]
-    column_searchable_list = [Application.reference_number, Application.email, Application.last_name]
-    column_sortable_list = [Application.created_at, Application.status]
-    column_default_sort = ("created_at", True)
-    icon = "fa-solid fa-file-invoice"
 
 class FileAdmin(ModelView, model=File):
     column_list = [
