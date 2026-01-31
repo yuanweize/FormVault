@@ -98,14 +98,6 @@ class SecurityMiddleware(BaseHTTPMiddleware):
             # 2. Input sanitization and validation
             await self._validate_request_input(request)
 
-            # 3. Process request
-            response = await call_next(request)
-
-            # 4. Add security headers
-            self._add_security_headers(response)
-
-            return response
-
         except HTTPException:
             raise
         except Exception as e:
@@ -125,6 +117,14 @@ class SecurityMiddleware(BaseHTTPMiddleware):
                     }
                 },
             )
+
+        # 3. Process request (Outside of security error handling)
+        response = await call_next(request)
+
+        # 4. Add security headers
+        self._add_security_headers(response)
+
+        return response
 
     async def _check_rate_limit(self, request: Request) -> bool:
         """Check if request is within rate limits."""

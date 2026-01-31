@@ -12,7 +12,7 @@ from alembic import context
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from app.database import Base
-from app.models import Application, File, EmailExport, AuditLog
+from app.models import Application, File, EmailExport, AuditLog, AdminUser, SystemConfig
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
