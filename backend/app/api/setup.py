@@ -34,7 +34,19 @@ async def setup_page(request: Request, db: Session = Depends(get_db)):
         # Check if setup is already done
         try:
              user_count = db.query(AdminUser).count()
+             
+             # Diagnostic Logging
              if user_count > 0:
+                 users = db.query(AdminUser).all()
+                 logger.warning(f"Setup found existing users: {[u.username for u in users]}")
+
+                 # Emergency Reset Hook (Temporary for debugging)
+                 if request.query_params.get("force_reset") == "true":
+                     logger.warning("Emergency Reset: Deleting all admin users to allow setup.")
+                     db.query(AdminUser).delete()
+                     db.commit()
+                     return templates.TemplateResponse("setup.html", {"request": request})
+
                  logger.info("Admin user exists, redirecting to login")
                  return RedirectResponse(url="/admin/login", status_code=303)
         except Exception as db_err:
