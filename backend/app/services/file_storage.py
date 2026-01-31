@@ -39,18 +39,51 @@ class SecureFileStorage:
 
     def __init__(self):
         self.settings = get_settings()
+        
+        # Default to settings/env, but override from DB if available
         self.storage_type = self.settings.STORAGE_TYPE.lower()
-        self.upload_dir = Path(self.settings.UPLOAD_DIR)
         
         # Encryption setup
+        self.upload_dir = Path(self.settings.UPLOAD_DIR)
         self._encryption_key = self._get_or_create_encryption_key()
         self._cipher = Fernet(self._encryption_key)
 
-        # S3 Setup
+        # Dynamic Config (DB) Handling
+        from ..database import SessionLocal
+        from ..models.system import SystemConfig
+        
         self.s3_client = None
-        if self.storage_type == "s3":
+        db_config = None
+        
+        try:
+            with SessionLocal() as db:
+                db_config = db.query(SystemConfig).filter(SystemConfig.id == 1).first()
+        except Exception as e:
+            logger.warning(f"Failed to read SystemConfig from DB: {e}")
+
+        # If DB config exists, use it to determine storage provider & keys
+        if db_config:
+            self.storage_type = db_config.storage_provider.lower() if db_config.storage_provider else "local"
+            
+            if self.storage_type == "s3":
+                try:
+                    self.s3_client = boto3.client(
+                        "s3",
+                        endpoint_url=db_config.s3_endpoint or self.settings.S3_ENDPOINT,
+                        aws_access_key_id=db_config.s3_access_key or self.settings.S3_ACCESS_KEY,
+                        aws_secret_access_key=db_config.s3_secret_key or self.settings.S3_SECRET_KEY,
+                        region_name=db_config.s3_region or self.settings.S3_REGION,
+                    )
+                    logger.info("S3 Storage initialized from DB Configuration")
+                except Exception as e:
+                    logger.error(f"Failed to initialize S3 client from DB config: {e}. Falling back to Local.")
+                    self.storage_type = "local"
+        
+        # Fallback to Environment Variables if S3 not initialized yet and env specifies S3
+        if self.storage_type == "s3" and not self.s3_client:
+             # Try env vars
             if not all([self.settings.S3_ACCESS_KEY, self.settings.S3_SECRET_KEY, self.settings.S3_BUCKET]):
-                logger.warning("S3 configured but credentials missing. Falling back to local storage.")
+                logger.warning("S3 configured in Env but credentials missing. Falling back to local storage.")
                 self.storage_type = "local"
             else:
                 try:
@@ -61,9 +94,9 @@ class SecureFileStorage:
                         aws_secret_access_key=self.settings.S3_SECRET_KEY,
                         region_name=self.settings.S3_REGION,
                     )
-                    logger.info("S3 Storage initialized successfully")
+                    logger.info("S3 Storage initialized from Environment Variables")
                 except Exception as e:
-                    logger.error(f"Failed to initialize S3 client: {e}")
+                    logger.error(f"Failed to initialize S3 client from Env: {e}")
                     self.storage_type = "local"
 
         # Ensure local dir exists (always needed for key storage or fallback)

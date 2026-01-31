@@ -24,6 +24,7 @@ if not TEMPLATE_DIR.exists():
 
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+router = APIRouter()
 
 @router.get("/setup", response_class=HTMLResponse)
 async def setup_page(request: Request, db: Session = Depends(get_db)):
