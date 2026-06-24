@@ -14,7 +14,7 @@ cryptography==44.0.1
 # Security
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.22
+python-multipart==0.0.26
 
 # Email
 aiosmtplib==3.0.1
