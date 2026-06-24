@@ -9,7 +9,7 @@ sqlalchemy>=2.0.23
 alembic>=1.13.1
 pymysql>=1.1.1
 psycopg2-binary>=2.9.9
-cryptography>=44.0.1
+cryptography>=48.0.1
 
 # Security
 python-jose[cryptography]>=3.3.0
