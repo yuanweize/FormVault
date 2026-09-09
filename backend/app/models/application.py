@@ -130,13 +130,13 @@ class Application(Base):
         index=True,
     )
     disclosure_bundle_id = Column(
-        Integer,
+        String(36),
         ForeignKey("disclosure_bundle_snapshots.id", ondelete="SET NULL"),
         nullable=True,
         index=True,
     )
     handoff_consent_id = Column(
-        Integer,
+        String(36),
         ForeignKey(
             "partner_handoff_consents.id",
             ondelete="SET NULL",

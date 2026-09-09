@@ -425,13 +425,13 @@ def auto_upgrade_schema(bind_engine):
                 if "disclosure_bundle_id" not in app_cols:
                     conn.execute(
                         text(
-                            "ALTER TABLE applications ADD COLUMN disclosure_bundle_id INT NULL"
+                            "ALTER TABLE applications ADD COLUMN disclosure_bundle_id VARCHAR(36) NULL"
                         )
                     )
                 if "handoff_consent_id" not in app_cols:
                     conn.execute(
                         text(
-                            "ALTER TABLE applications ADD COLUMN handoff_consent_id INT NULL"
+                            "ALTER TABLE applications ADD COLUMN handoff_consent_id VARCHAR(36) NULL"
                         )
                     )
                 if "quoted_price_czk" not in app_cols:
