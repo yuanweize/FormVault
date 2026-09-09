@@ -4,6 +4,10 @@ FROM --platform=$BUILDPLATFORM node:18-alpine AS builder
 # Set working directory
 WORKDIR /app
 
+# Optimize network and build settings
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+ENV CYPRESS_INSTALL_BINARY=0
+
 # Copy package files
 COPY package*.json ./
 
