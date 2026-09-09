@@ -156,19 +156,32 @@ async def download_file(
     Only accessible by authorized administrators / underwriters.
     """
     # Decrypt content and fetch DB record
-    decrypted_bytes, db_file = file_service.get_decrypted_content(db=db, file_id=file_id)
+    decrypted_bytes, db_file = file_service.get_decrypted_content(
+        db=db, file_id=file_id
+    )
 
     # If company partner, verify row-level tenant boundary
     if admin.get("role") == "company_partner" and admin.get("company_id"):
         from app.models.application import Application
+
         if db_file.application_id:
-            app_record = db.query(Application).filter(Application.id == db_file.application_id).first()
-            if app_record and app_record.insurance_company_id != admin.get("company_id"):
-                raise HTTPException(status_code=403, detail="Cross-tenant access forbidden for underwriter.")
+            app_record = (
+                db.query(Application)
+                .filter(Application.id == db_file.application_id)
+                .first()
+            )
+            if app_record and app_record.insurance_company_id != admin.get(
+                "company_id"
+            ):
+                raise HTTPException(
+                    status_code=403,
+                    detail="Cross-tenant access forbidden for underwriter.",
+                )
 
     # Audit logging for security compliance
     try:
         from app.utils.db_helpers import create_audit_log
+
         user_ip = request.client.host if request.client else None
         user_agent = request.headers.get("user-agent")
         create_audit_log(
@@ -239,7 +252,8 @@ async def get_validation_rules(
     """
     current_settings = config.get_settings()
     return FileValidationSchema(
-        max_size=current_settings.MAX_FILE_SIZE, allowed_types=current_settings.ALLOWED_FILE_TYPES
+        max_size=current_settings.MAX_FILE_SIZE,
+        allowed_types=current_settings.ALLOWED_FILE_TYPES,
     )
 
 

@@ -7,7 +7,7 @@ secure file storage with database operations.
 
 import inspect
 import logging
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from uuid import uuid4
 from datetime import datetime
 
@@ -342,7 +342,9 @@ class FileService:
         if not db_file:
             raise FileNotFoundException(file_id)
 
-        decrypted_bytes = self.storage.read_and_decrypt_file(db_file.stored_filename, db=db)
+        decrypted_bytes = self.storage.read_and_decrypt_file(
+            db_file.stored_filename, db=db
+        )
         return decrypted_bytes, db_file
 
     def _get_client_ip(self, request: Request) -> Optional[str]:

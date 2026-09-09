@@ -393,7 +393,9 @@ class TestSecureFileStorage:
 
     def test_aes_gcm_encryption_and_decryption(self, storage):
         """Test AES-256-GCM authenticated encryption and decryption."""
-        original_data = b"Highly sensitive passport copy and personal underwriting data 12345"
+        original_data = (
+            b"Highly sensitive passport copy and personal underwriting data 12345"
+        )
         encrypted = storage.encrypt_content(original_data)
 
         # Must start with standard magic header
@@ -412,9 +414,13 @@ class TestSecureFileStorage:
         assert result == legacy_data
 
     @pytest.mark.asyncio
-    async def test_save_file_writes_aes_gcm_ciphertext_and_decrypts(self, storage, valid_jpeg_file):
+    async def test_save_file_writes_aes_gcm_ciphertext_and_decrypts(
+        self, storage, valid_jpeg_file
+    ):
         """Test that save_file writes AES-256-GCM ciphertext to disk and read_and_decrypt_file restores it."""
-        stored_filename, file_hash, file_size = await storage.save_file(valid_jpeg_file, "file-123")
+        stored_filename, file_hash, file_size = await storage.save_file(
+            valid_jpeg_file, "file-123"
+        )
 
         # Check raw file on disk is encrypted
         file_path = storage.get_file_path(stored_filename)

@@ -24,6 +24,7 @@ class TestEmailService:
     def email_service_instance(self):
         """Create EmailService instance for testing."""
         from app.core.config import Settings
+
         svc = EmailService()
         svc.settings = Settings(
             SMTP_HOST="smtp.example.com",

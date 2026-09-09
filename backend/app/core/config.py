@@ -102,7 +102,9 @@ class Settings(BaseSettings):
             os.makedirs(v, exist_ok=True)
         return v
 
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", case_sensitive=True, extra="ignore"
+    )
 
 
 @lru_cache()

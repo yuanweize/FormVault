@@ -25,6 +25,7 @@ engine_kwargs = {
 
 if DATABASE_URL.startswith("sqlite"):
     from sqlalchemy.pool import StaticPool
+
     connect_args["check_same_thread"] = False
     engine_kwargs["poolclass"] = StaticPool
     engine_kwargs["connect_args"] = connect_args
@@ -39,9 +40,11 @@ engine = create_engine(DATABASE_URL, **engine_kwargs)
 # Create SessionLocal class for database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 # Create declarative base for models
 class Base(DeclarativeBase):
     pass
+
 
 # Metadata for migrations
 metadata = MetaData()

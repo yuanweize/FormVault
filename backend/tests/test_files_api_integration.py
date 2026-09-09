@@ -26,6 +26,7 @@ class TestFilesAPIIntegration:
         """Create test database."""
         # Use in-memory SQLite with StaticPool and check_same_thread=False
         from sqlalchemy.pool import StaticPool
+
         engine = create_engine(
             "sqlite:///:memory:",
             echo=False,

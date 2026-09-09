@@ -302,9 +302,21 @@ async def _get_application_stats(
 
     return {
         "total": total_apps if isinstance(total_apps, int) else 0,
-        "by_status": {status: count for status, count in status_counts} if isinstance(status_counts, (list, tuple)) else {},
-        "by_insurance_type": {ins_type: count for ins_type, count in type_counts} if isinstance(type_counts, (list, tuple)) else {},
-        "by_language": {lang: count for lang, count in language_counts} if isinstance(language_counts, (list, tuple)) else {},
+        "by_status": (
+            {status: count for status, count in status_counts}
+            if isinstance(status_counts, (list, tuple))
+            else {}
+        ),
+        "by_insurance_type": (
+            {ins_type: count for ins_type, count in type_counts}
+            if isinstance(type_counts, (list, tuple))
+            else {}
+        ),
+        "by_language": (
+            {lang: count for lang, count in language_counts}
+            if isinstance(language_counts, (list, tuple))
+            else {}
+        ),
     }
 
 
@@ -350,7 +362,11 @@ async def _get_file_stats(
 
     return {
         "total_files": _safe_int(total_files),
-        "by_type": {file_type: count for file_type, count in type_counts} if isinstance(type_counts, (list, tuple)) else {},
+        "by_type": (
+            {file_type: count for file_type, count in type_counts}
+            if isinstance(type_counts, (list, tuple))
+            else {}
+        ),
         "total_size_bytes": _safe_int(total_size),
         "average_size_bytes": _safe_int(avg_size),
     }
@@ -390,13 +406,15 @@ async def _get_email_stats(
 
     t_exports = total_exports if isinstance(total_exports, int) else 0
     s_exports = successful_exports if isinstance(successful_exports, int) else 0
-    success_rate = (
-        (s_exports / t_exports * 100) if t_exports > 0 else 0
-    )
+    success_rate = (s_exports / t_exports * 100) if t_exports > 0 else 0
 
     return {
         "total_exports": t_exports,
-        "by_status": {status: count for status, count in status_counts} if isinstance(status_counts, (list, tuple)) else {},
+        "by_status": (
+            {status: count for status, count in status_counts}
+            if isinstance(status_counts, (list, tuple))
+            else {}
+        ),
         "success_rate": round(success_rate, 2),
     }
 
@@ -435,8 +453,14 @@ async def _get_activity_stats(
     )
 
     return {
-        "total_activities": total_activities if isinstance(total_activities, int) else 0,
-        "by_action": {action: count for action, count in action_counts} if isinstance(action_counts, (list, tuple)) else {},
+        "total_activities": (
+            total_activities if isinstance(total_activities, int) else 0
+        ),
+        "by_action": (
+            {action: count for action, count in action_counts}
+            if isinstance(action_counts, (list, tuple))
+            else {}
+        ),
         "unique_ip_addresses": unique_ips if isinstance(unique_ips, int) else 0,
     }
 
@@ -462,8 +486,19 @@ async def _get_daily_application_stats(
         for item in daily_stats:
             try:
                 date_val, count = item
-                d_str = date_val.isoformat() if hasattr(date_val, "isoformat") else str(date_val)
-                results.append({"date": d_str, "applications": int(count) if isinstance(count, (int, float)) else 0})
+                d_str = (
+                    date_val.isoformat()
+                    if hasattr(date_val, "isoformat")
+                    else str(date_val)
+                )
+                results.append(
+                    {
+                        "date": d_str,
+                        "applications": (
+                            int(count) if isinstance(count, (int, float)) else 0
+                        ),
+                    }
+                )
             except (ValueError, TypeError):
                 continue
     return results

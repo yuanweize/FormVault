@@ -13,11 +13,26 @@ import re
 import pytest
 
 FORBIDDEN_PATTERNS = [
-    (r"hardware[- ]grade", "Exaggerated claim: 'hardware-grade' is non-verifiable marketing fluff"),
-    (r"zero[- ]knowledge", "Exaggerated claim: 'zero-knowledge' conflicts with server-side processing & DPA handoff"),
-    (r"military[- ]grade", "Exaggerated claim: 'military-grade' is forbidden marketing hyperbole"),
-    (r"national insurance database", "Fictitious claim: Czech health insurance is registered in underwriter systems, not a national database"),
-    (r"co[- ]compliance", "Legally invalid: Act No. 170/2018 Coll. defines broker supervision over tipař, not co-compliance"),
+    (
+        r"hardware[- ]grade",
+        "Exaggerated claim: 'hardware-grade' is non-verifiable marketing fluff",
+    ),
+    (
+        r"zero[- ]knowledge",
+        "Exaggerated claim: 'zero-knowledge' conflicts with server-side processing & DPA handoff",
+    ),
+    (
+        r"military[- ]grade",
+        "Exaggerated claim: 'military-grade' is forbidden marketing hyperbole",
+    ),
+    (
+        r"national insurance database",
+        "Fictitious claim: Czech health insurance is registered in underwriter systems, not a national database",
+    ),
+    (
+        r"co[- ]compliance",
+        "Legally invalid: Act No. 170/2018 Coll. defines broker supervision over tipař, not co-compliance",
+    ),
 ]
 
 # Paths to scan
@@ -38,7 +53,9 @@ def get_files_to_scan():
         if os.path.exists(base):
             for root, _, filenames in os.walk(base):
                 for f in filenames:
-                    if f.endswith((".tsx", ".ts", ".jsx", ".js", ".json", ".py", ".html", ".md")):
+                    if f.endswith(
+                        (".tsx", ".ts", ".jsx", ".js", ".json", ".py", ".html", ".md")
+                    ):
                         files.append(os.path.join(root, f))
     return files
 
@@ -65,11 +82,13 @@ def test_public_claims_scanner():
             matches = list(re.finditer(pattern, content, re.IGNORECASE))
             for match in matches:
                 # Calculate line number
-                line_num = content[:match.start()].count("\n") + 1
+                line_num = content[: match.start()].count("\n") + 1
                 violations.append(
                     f"{file_path}:{line_num} -> Found '{match.group(0)}': {explanation}"
                 )
 
     if violations:
         msg = "\n".join(violations)
-        pytest.fail(f"Regulatory & Public Claims Scanner detected {len(violations)} violation(s):\n{msg}")
+        pytest.fail(
+            f"Regulatory & Public Claims Scanner detected {len(violations)} violation(s):\n{msg}"
+        )

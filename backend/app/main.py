@@ -76,74 +76,206 @@ def auto_upgrade_schema(bind_engine):
             if "system_config" in table_names:
                 cfg_cols = {c["name"] for c in inspector.get_columns("system_config")}
                 if "site_title" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_title VARCHAR(150) DEFAULT 'FormVault Insurance | Czech Health & Travel Insurance' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN site_title VARCHAR(150) DEFAULT 'FormVault Insurance | Czech Health & Travel Insurance' NOT NULL"
+                        )
+                    )
                 if "site_description" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_description VARCHAR(255) DEFAULT 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN site_description VARCHAR(255) DEFAULT 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' NULL"
+                        )
+                    )
                 if "site_icon_url" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_icon_url VARCHAR(255) DEFAULT '/favicon.svg' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN site_icon_url VARCHAR(255) DEFAULT '/favicon.svg' NOT NULL"
+                        )
+                    )
                 if "support_email" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN support_email VARCHAR(100) DEFAULT 'insurance@hktse.eu.org' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN support_email VARCHAR(100) DEFAULT 'insurance@hktse.eu.org' NOT NULL"
+                        )
+                    )
                 if "crisp_website_id" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_website_id VARCHAR(100) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN crisp_website_id VARCHAR(100) NULL"
+                        )
+                    )
                 if "crisp_custom_color" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_custom_color VARCHAR(50) DEFAULT 'blue' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN crisp_custom_color VARCHAR(50) DEFAULT 'blue' NULL"
+                        )
+                    )
                 if "broker_legal_disclosure" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN broker_legal_disclosure VARCHAR(255) DEFAULT 'HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN broker_legal_disclosure VARCHAR(255) DEFAULT 'HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).' NULL"
+                        )
+                    )
                 if "production_ingress_name" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN production_ingress_name VARCHAR(100) DEFAULT 'Cloudflare Tunnel' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN production_ingress_name VARCHAR(100) DEFAULT 'Cloudflare Tunnel' NULL"
+                        )
+                    )
                 if "primary_domain" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN primary_domain VARCHAR(150) DEFAULT 'insure.hktse.eu.org' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN primary_domain VARCHAR(150) DEFAULT 'insure.hktse.eu.org' NULL"
+                        )
+                    )
                 if "secondary_domain" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN secondary_domain VARCHAR(150) DEFAULT 'pojisteni.hktse.eu.org' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN secondary_domain VARCHAR(150) DEFAULT 'pojisteni.hktse.eu.org' NULL"
+                        )
+                    )
                 if "form_profile_config" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN form_profile_config TEXT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN form_profile_config TEXT NULL"
+                        )
+                    )
                 if "features_config" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN features_config TEXT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN features_config TEXT NULL"
+                        )
+                    )
 
                 # Compliance & Governance scope fields
                 if "business_scope_mode" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN business_scope_mode VARCHAR(30) DEFAULT 'LEAD_ONLY' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN business_scope_mode VARCHAR(30) DEFAULT 'LEAD_ONLY' NOT NULL"
+                        )
+                    )
                 if "operator_legal_name" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_legal_name VARCHAR(100) DEFAULT 'HKTSE s.r.o.' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN operator_legal_name VARCHAR(100) DEFAULT 'HKTSE s.r.o.' NOT NULL"
+                        )
+                    )
                 if "operator_ico" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_ico VARCHAR(20) DEFAULT '10858032' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN operator_ico VARCHAR(20) DEFAULT '10858032' NOT NULL"
+                        )
+                    )
                 if "operator_role" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_role VARCHAR(50) DEFAULT 'tipar' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN operator_role VARCHAR(50) DEFAULT 'tipar' NOT NULL"
+                        )
+                    )
                 if "operator_website_url" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_website_url VARCHAR(255) DEFAULT 'https://hktse.eu.org' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN operator_website_url VARCHAR(255) DEFAULT 'https://hktse.eu.org' NOT NULL"
+                        )
+                    )
                 if "partner_name" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_name VARCHAR(100) DEFAULT 'České pojištění a.s.' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN partner_name VARCHAR(100) DEFAULT 'České pojištění a.s.' NULL"
+                        )
+                    )
                 if "partner_ico" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_ico VARCHAR(20) DEFAULT '24729007' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN partner_ico VARCHAR(20) DEFAULT '24729007' NULL"
+                        )
+                    )
                 if "partner_role" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_role VARCHAR(50) DEFAULT 'makler' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN partner_role VARCHAR(50) DEFAULT 'makler' NULL"
+                        )
+                    )
                 if "partner_cnb_id" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_cnb_id VARCHAR(50) DEFAULT '24729007' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN partner_cnb_id VARCHAR(50) DEFAULT '24729007' NULL"
+                        )
+                    )
                 if "partner_website_url" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_website_url VARCHAR(255) DEFAULT 'https://ceskepojisteni.cz' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN partner_website_url VARCHAR(255) DEFAULT 'https://ceskepojisteni.cz' NULL"
+                        )
+                    )
                 if "relationship_status" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN relationship_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"
+                        )
+                    )
                 if "relationship_valid_from" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_valid_from DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN relationship_valid_from DATETIME NULL"
+                        )
+                    )
                 if "relationship_valid_until" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_valid_until DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN relationship_valid_until DATETIME NULL"
+                        )
+                    )
                 if "relationship_verified_at" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_verified_at DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN relationship_verified_at DATETIME NULL"
+                        )
+                    )
                 if "public_wording_approved" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN public_wording_approved BOOLEAN DEFAULT TRUE NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN public_wording_approved BOOLEAN DEFAULT TRUE NOT NULL"
+                        )
+                    )
                 if "dpa_status" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN dpa_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"
+                        )
+                    )
                 if "dpa_valid_from" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_valid_from DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN dpa_valid_from DATETIME NULL"
+                        )
+                    )
                 if "dpa_valid_until" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_valid_until DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN dpa_valid_until DATETIME NULL"
+                        )
+                    )
                 if "lead_only_fallback_url" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN lead_only_fallback_url VARCHAR(255) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN lead_only_fallback_url VARCHAR(255) NULL"
+                        )
+                    )
 
                 # Smoothly sanitize legacy unlicensed wording in existing rows
                 try:
-                    conn.execute(text("UPDATE system_config SET site_title = 'FormVault Insurance | Czech Health & Travel Insurance' WHERE site_title LIKE '%Official Broker%'"))
-                    conn.execute(text("UPDATE system_config SET site_description = 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' WHERE site_description LIKE '%Licensed insurance brokerage%'"))
+                    conn.execute(
+                        text(
+                            "UPDATE system_config SET site_title = 'FormVault Insurance | Czech Health & Travel Insurance' WHERE site_title LIKE '%Official Broker%'"
+                        )
+                    )
+                    conn.execute(
+                        text(
+                            "UPDATE system_config SET site_description = 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' WHERE site_description LIKE '%Licensed insurance brokerage%'"
+                        )
+                    )
                 except Exception:
                     pass
 
@@ -151,73 +283,189 @@ def auto_upgrade_schema(bind_engine):
             if "admin_users" in table_names:
                 user_cols = {c["name"] for c in inspector.get_columns("admin_users")}
                 if "role" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN role VARCHAR(30) DEFAULT 'super_admin' NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE admin_users ADD COLUMN role VARCHAR(30) DEFAULT 'super_admin' NOT NULL"
+                        )
+                    )
                 if "company_id" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN company_id INT NULL"))
+                    conn.execute(
+                        text("ALTER TABLE admin_users ADD COLUMN company_id INT NULL")
+                    )
                 if "is_active" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN is_active BOOLEAN DEFAULT TRUE NOT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE admin_users ADD COLUMN is_active BOOLEAN DEFAULT TRUE NOT NULL"
+                        )
+                    )
                 if "display_name" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN display_name VARCHAR(100) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE admin_users ADD COLUMN display_name VARCHAR(100) NULL"
+                        )
+                    )
                 if "email" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN email VARCHAR(100) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE admin_users ADD COLUMN email VARCHAR(100) NULL"
+                        )
+                    )
                 if "last_login_at" not in user_cols:
-                    conn.execute(text("ALTER TABLE admin_users ADD COLUMN last_login_at DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE admin_users ADD COLUMN last_login_at DATETIME NULL"
+                        )
+                    )
 
             # 3. applications (Underwriting & Provenance Snapshots)
             if "applications" in table_names:
                 app_cols = {c["name"] for c in inspector.get_columns("applications")}
                 if "insurance_company_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN insurance_company_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN insurance_company_id INT NULL"
+                        )
+                    )
                 if "insurance_plan_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN insurance_plan_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN insurance_plan_id INT NULL"
+                        )
+                    )
                 if "gender" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN gender VARCHAR(10) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN gender VARCHAR(10) NULL"
+                        )
+                    )
                 if "nationality" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN nationality VARCHAR(50) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN nationality VARCHAR(50) NULL"
+                        )
+                    )
                 if "place_of_birth" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN place_of_birth VARCHAR(100) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN place_of_birth VARCHAR(100) NULL"
+                        )
+                    )
                 if "passport_number" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN passport_number VARCHAR(50) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN passport_number VARCHAR(50) NULL"
+                        )
+                    )
                 if "passport_expiry_date" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN passport_expiry_date DATE NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN passport_expiry_date DATE NULL"
+                        )
+                    )
                 if "passport_issued_by" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN passport_issued_by VARCHAR(50) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN passport_issued_by VARCHAR(50) NULL"
+                        )
+                    )
                 if "insurance_commencement_date" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN insurance_commencement_date DATE NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN insurance_commencement_date DATE NULL"
+                        )
+                    )
                 if "insurance_duration_months" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN insurance_duration_months INT DEFAULT 12 NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN insurance_duration_months INT DEFAULT 12 NULL"
+                        )
+                    )
                 if "type_of_stay" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN type_of_stay VARCHAR(50) DEFAULT 'student' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN type_of_stay VARCHAR(50) DEFAULT 'student' NULL"
+                        )
+                    )
                 if "study_confirmation_file_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN study_confirmation_file_id VARCHAR(36) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN study_confirmation_file_id VARCHAR(36) NULL"
+                        )
+                    )
                 if "custom_fields_data" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN custom_fields_data TEXT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN custom_fields_data TEXT NULL"
+                        )
+                    )
                 if "regulatory_mode_snapshot" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN regulatory_mode_snapshot VARCHAR(30) DEFAULT 'LEAD_ONLY' NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN regulatory_mode_snapshot VARCHAR(30) DEFAULT 'LEAD_ONLY' NULL"
+                        )
+                    )
                 if "product_version_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN product_version_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN product_version_id INT NULL"
+                        )
+                    )
                 if "price_book_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN price_book_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN price_book_id INT NULL"
+                        )
+                    )
                 if "form_recipe_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN form_recipe_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN form_recipe_id INT NULL"
+                        )
+                    )
                 if "disclosure_bundle_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN disclosure_bundle_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN disclosure_bundle_id INT NULL"
+                        )
+                    )
                 if "handoff_consent_id" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN handoff_consent_id INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN handoff_consent_id INT NULL"
+                        )
+                    )
                 if "quoted_price_czk" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN quoted_price_czk INT NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN quoted_price_czk INT NULL"
+                        )
+                    )
                 if "deleted_at" not in app_cols:
-                    conn.execute(text("ALTER TABLE applications ADD COLUMN deleted_at DATETIME NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE applications ADD COLUMN deleted_at DATETIME NULL"
+                        )
+                    )
 
             # 4. audit_logs (Tamper-Evident Chaining)
             if "audit_logs" in table_names:
                 audit_cols = {c["name"] for c in inspector.get_columns("audit_logs")}
                 if "sequence" not in audit_cols:
-                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN sequence INT NULL"))
+                    conn.execute(
+                        text("ALTER TABLE audit_logs ADD COLUMN sequence INT NULL")
+                    )
                 if "prev_hash" not in audit_cols:
-                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN prev_hash VARCHAR(64) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE audit_logs ADD COLUMN prev_hash VARCHAR(64) NULL"
+                        )
+                    )
                 if "entry_hash" not in audit_cols:
-                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN entry_hash VARCHAR(64) NULL"))
+                    conn.execute(
+                        text(
+                            "ALTER TABLE audit_logs ADD COLUMN entry_hash VARCHAR(64) NULL"
+                        )
+                    )
 
             conn.commit()
     except Exception as exc:
@@ -236,6 +484,7 @@ async def lifespan(app: FastAPI):
         try:
             with SessionLocal() as db:
                 from .services.seed_service import seed_demo_defaults
+
                 seed_demo_defaults(db)
         except Exception as seed_err:
             logger.warning(f"Default seed population skipped: {seed_err}")
@@ -257,8 +506,8 @@ app = FastAPI(
 
 admin_templates_dir = os.path.join(os.path.dirname(__file__), "templates")
 admin = FormVaultAdmin(
-    app, 
-    engine, 
+    app,
+    engine,
     authentication_backend=authentication_backend,
     title="FormVault Broker Admin",
     logo_url="/favicon.svg",
@@ -300,6 +549,7 @@ app.add_middleware(
 
 # Proxy Headers Middleware (Trust X-Forwarded-Proto and X-Forwarded-For from Cloudflare / Nginx)
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
@@ -322,7 +572,9 @@ async def check_first_run_setup(request: Request, call_next):
     automatically redirect any request to /admin (including /admin/login) to /setup.
     """
     path = request.url.path
-    if (path == "/admin" or path.startswith("/admin/")) and not path.startswith("/admin/statics"):
+    if (path == "/admin" or path.startswith("/admin/")) and not path.startswith(
+        "/admin/statics"
+    ):
         from app.database import SessionLocal
         from app.models.system import AdminUser
 
@@ -563,6 +815,7 @@ async def custom_docs(request: Request):
     current_settings = config.get_settings()
     if current_settings.DEBUG:
         from fastapi.openapi.docs import get_swagger_ui_html
+
         return get_swagger_ui_html(
             openapi_url=app.openapi_url or "/openapi.json",
             title=app.title + " - Swagger UI",
@@ -577,6 +830,7 @@ async def custom_redoc(request: Request):
     current_settings = config.get_settings()
     if current_settings.DEBUG:
         from fastapi.openapi.docs import get_redoc_html
+
         return get_redoc_html(
             openapi_url=app.openapi_url or "/openapi.json",
             title=app.title + " - ReDoc",
@@ -590,6 +844,7 @@ app.include_router(api_router, prefix="/api/v1")
 
 # Include Setup Router (Mounted at root)
 from app.api.setup import router as setup_router
+
 app.include_router(setup_router)
 
 

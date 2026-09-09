@@ -53,7 +53,9 @@ class InsuranceCompany(Base):
     )
 
     # Relationships
-    plans = relationship("InsurancePlan", back_populates="company", cascade="all, delete-orphan")
+    plans = relationship(
+        "InsurancePlan", back_populates="company", cascade="all, delete-orphan"
+    )
 
     def __str__(self):
         return f"{self.name} ({self.code})"
@@ -67,12 +69,18 @@ class InsurancePlan(Base):
     __tablename__ = "insurance_plans"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    company_id = Column(Integer, ForeignKey("insurance_companies.id", ondelete="CASCADE"), nullable=False)
+    company_id = Column(
+        Integer,
+        ForeignKey("insurance_companies.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     name = Column(String(150), nullable=False)
     category = Column(String(100), nullable=False, index=True)
     price_amount = Column(Float, nullable=False, default=0.0)
     currency = Column(String(10), default="CZK", nullable=False)
-    billing_period = Column(String(50), default="year", nullable=False)  # year, month, total
+    billing_period = Column(
+        String(50), default="year", nullable=False
+    )  # year, month, total
     coverage_summary = Column(String(255), nullable=False)
     badge = Column(String(50), nullable=True)  # "Best Value", "Required for Visa", etc.
     features = Column(Text, nullable=True)  # JSON or newline-separated bullet points

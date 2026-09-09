@@ -34,14 +34,18 @@ class EvidenceRecord(Base):
     __tablename__ = "evidence_records"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
-    evidence_type = Column(String(50), nullable=False, index=True)  # contract, price_list, dpa, license_filing
+    evidence_type = Column(
+        String(50), nullable=False, index=True
+    )  # contract, price_list, dpa, license_filing
     title = Column(String(150), nullable=False)
     source_entity = Column(String(100), nullable=False)  # e.g. "České pojištění a.s."
     source_date = Column(DateTime, nullable=True)
     valid_from = Column(DateTime, nullable=True)
     valid_until = Column(DateTime, nullable=True)
     sha256 = Column(String(64), nullable=False, index=True)
-    storage_reference = Column(String(255), nullable=True)  # e.g. "vault://evidence/dpa_2026.pdf"
+    storage_reference = Column(
+        String(255), nullable=True
+    )  # e.g. "vault://evidence/dpa_2026.pdf"
     verification_status = Column(
         String(30), default="HISTORICAL", nullable=False, index=True
     )  # HISTORICAL, PENDING_CONFIRMATION, VERIFIED, SUPERSEDED, EXPIRED, DISABLED
@@ -49,7 +53,9 @@ class EvidenceRecord(Base):
     verified_by = Column(String(100), nullable=True)
     notes = Column(Text, nullable=True)
 
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
     updated_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),
@@ -70,7 +76,11 @@ class ProductVersion(Base):
     __tablename__ = "product_versions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    company_id = Column(Integer, ForeignKey("insurance_companies.id", ondelete="CASCADE"), nullable=False)
+    company_id = Column(
+        Integer,
+        ForeignKey("insurance_companies.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     product_name = Column(String(150), nullable=False)
     product_code = Column(String(50), nullable=False, index=True)
     version = Column(String(30), nullable=False)  # e.g. "2025-08-15"
@@ -79,12 +89,20 @@ class ProductVersion(Base):
     status = Column(
         String(30), default="HISTORICAL", nullable=False, index=True
     )  # HISTORICAL, PENDING_CONFIRMATION, VERIFIED, EXPIRED, DISABLED
-    evidence_id = Column(String(36), ForeignKey("evidence_records.id", ondelete="SET NULL"), nullable=True)
+    evidence_id = Column(
+        String(36),
+        ForeignKey("evidence_records.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     currency = Column(String(10), default="CZK", nullable=False)
     coverage_summary = Column(Text, nullable=False)
-    eligibility_config = Column(Text, nullable=True)  # JSON for age/duration eligibility
+    eligibility_config = Column(
+        Text, nullable=True
+    )  # JSON for age/duration eligibility
 
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
     updated_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),
@@ -129,7 +147,9 @@ class PriceBook(Base):
     __tablename__ = "price_books"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    product_version_id = Column(Integer, ForeignKey("product_versions.id", ondelete="CASCADE"), nullable=False)
+    product_version_id = Column(
+        Integer, ForeignKey("product_versions.id", ondelete="CASCADE"), nullable=False
+    )
     name = Column(String(100), default="Standard Price Book", nullable=False)
     book_code = Column(String(50), nullable=True)
     version = Column(String(30), default="1.0.0", nullable=False)
@@ -137,17 +157,27 @@ class PriceBook(Base):
     valid_until = Column(DateTime, nullable=True)
     effective_from = Column(DateTime, nullable=True)
     effective_until = Column(DateTime, nullable=True)
-    status = Column(String(30), default="HISTORICAL", nullable=False, index=True)  # HISTORICAL, VERIFIED, EXPIRED
+    status = Column(
+        String(30), default="HISTORICAL", nullable=False, index=True
+    )  # HISTORICAL, VERIFIED, EXPIRED
     currency = Column(String(10), default="CZK", nullable=False)
-    evidence_id = Column(String(36), ForeignKey("evidence_records.id", ondelete="SET NULL"), nullable=True)
+    evidence_id = Column(
+        String(36),
+        ForeignKey("evidence_records.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     source_document_name = Column(String(150), nullable=True)
 
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
     # Relationships
     product_version = relationship("ProductVersion", back_populates="price_books")
     evidence = relationship("EvidenceRecord")
-    rates = relationship("PriceRate", back_populates="price_book", cascade="all, delete-orphan")
+    rates = relationship(
+        "PriceRate", back_populates="price_book", cascade="all, delete-orphan"
+    )
 
 
 class PriceRate(Base):
@@ -158,13 +188,19 @@ class PriceRate(Base):
     __tablename__ = "price_rates"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    price_book_id = Column(Integer, ForeignKey("price_books.id", ondelete="CASCADE"), nullable=False)
+    price_book_id = Column(
+        Integer, ForeignKey("price_books.id", ondelete="CASCADE"), nullable=False
+    )
     plan_variant = Column(String(100), default="Standard", nullable=False)
     age_min = Column(Integer, default=0, nullable=False)
     age_max = Column(Integer, default=100, nullable=False)
     duration_months = Column(Integer, default=12, nullable=False)
-    target_group = Column(String(50), default="student", nullable=False)  # student, adult
-    stay_type = Column(String(50), default="student", nullable=False)  # student, standard, employee
+    target_group = Column(
+        String(50), default="student", nullable=False
+    )  # student, adult
+    stay_type = Column(
+        String(50), default="student", nullable=False
+    )  # student, standard, employee
     sports_category = Column(String(50), default="none", nullable=False)
     amount_czk = Column(Float, nullable=True)
     base_premium = Column(Float, default=0.0, nullable=False)
@@ -186,10 +222,14 @@ class FormRecipe(Base):
     version = Column(String(30), default="1.0.0", nullable=False)
     recipe_version = Column(String(30), default="1.0.0", nullable=False)
     status = Column(String(30), default="VERIFIED", nullable=False)
-    schema_json = Column(Text, nullable=True)  # JSON field definitions, rules, document requirements
+    schema_json = Column(
+        Text, nullable=True
+    )  # JSON field definitions, rules, document requirements
     schema_definition = Column(Text, nullable=True)
     is_active = Column(Boolean, default=True, nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
 
 class QuestionnaireVersion(Base):
@@ -201,12 +241,18 @@ class QuestionnaireVersion(Base):
     __tablename__ = "questionnaire_versions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    company_id = Column(Integer, ForeignKey("insurance_companies.id", ondelete="CASCADE"), nullable=False)
+    company_id = Column(
+        Integer,
+        ForeignKey("insurance_companies.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     questionnaire_type = Column(String(50), default="health", nullable=False)
     version = Column(String(30), nullable=False)
     questions_json = Column(Text, nullable=False)
     status = Column(String(30), default="PENDING_CONFIRMATION", nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
 
 class LegalDocumentVersion(Base):
@@ -217,11 +263,17 @@ class LegalDocumentVersion(Base):
     __tablename__ = "legal_document_versions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    document_type = Column(String(50), default="terms", nullable=False, index=True)  # IPID, VPP, Terms, PrivacyNotice
+    document_type = Column(
+        String(50), default="terms", nullable=False, index=True
+    )  # IPID, VPP, Terms, PrivacyNotice
     doc_type = Column(String(50), default="terms", nullable=True)
     version = Column(String(30), nullable=False)
     title = Column(String(150), nullable=False)
-    sha256 = Column(String(64), default="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", nullable=False)
+    sha256 = Column(
+        String(64),
+        default="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        nullable=False,
+    )
     content_sha256 = Column(String(64), nullable=True)
     content_markdown = Column(Text, nullable=True)
     valid_from = Column(DateTime, nullable=False)
@@ -245,7 +297,9 @@ class DisclosureBundleSnapshot(Base):
     vpp_version_id = Column(Integer, nullable=True)
     terms_version = Column(String(30), nullable=False)
     privacy_notice_version = Column(String(30), nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
 
 class PartnerHandoffConsent(Base):
@@ -257,7 +311,9 @@ class PartnerHandoffConsent(Base):
     __tablename__ = "partner_handoff_consents"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
-    application_id = Column(String(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=True)
+    application_id = Column(
+        String(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=True
+    )
     recipient = Column(String(100), default="České pojištění a.s.", nullable=False)
     recipient_role = Column(String(50), default="makler", nullable=False)
     purpose = Column(
@@ -265,11 +321,15 @@ class PartnerHandoffConsent(Base):
         default="Mediation of Czech foreigners health insurance and contract preparation",
         nullable=False,
     )
-    data_categories = Column(Text, default="contact_info, identity_details, stay_parameters", nullable=False)
+    data_categories = Column(
+        Text, default="contact_info, identity_details, stay_parameters", nullable=False
+    )
     consent_text_version = Column(String(30), default="v1.0", nullable=False)
     ip_address = Column(String(45), nullable=True)
     user_agent = Column(Text, nullable=True)
-    consented_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    consented_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
     withdrawn_at = Column(DateTime, nullable=True)
 
 
@@ -283,7 +343,9 @@ class PrivacyRequest(Base):
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
     reference_number = Column(String(50), nullable=True, index=True)
-    request_type = Column(String(50), nullable=False)  # access, rectification, erasure, portability
+    request_type = Column(
+        String(50), nullable=False
+    )  # access, rectification, erasure, portability
     controller_scope = Column(
         String(50), default="HKTSE_PROCESSOR_FOR_BROKER", nullable=False
     )  # HKTSE_PROCESSOR_FOR_BROKER, HKTSE_CONTROLLER_PLATFORM
@@ -292,7 +354,9 @@ class PrivacyRequest(Base):
     details = Column(Text, nullable=True)
     status = Column(String(30), default="RECEIVED", nullable=False, index=True)
     assigned_to = Column(String(50), nullable=True)
-    received_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    received_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
     deadline_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc) + timedelta(days=30),
@@ -312,10 +376,14 @@ class SecurityIncident(Base):
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
     incident_title = Column(String(150), nullable=False)
-    severity = Column(String(20), default="MEDIUM", nullable=False)  # LOW, MEDIUM, HIGH, CRITICAL
+    severity = Column(
+        String(20), default="MEDIUM", nullable=False
+    )  # LOW, MEDIUM, HIGH, CRITICAL
     status = Column(String(30), default="DETECTED", nullable=False, index=True)
     description = Column(Text, nullable=False)
-    detected_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    detected_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
     controller_notification_deadline = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc) + timedelta(hours=24),

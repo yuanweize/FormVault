@@ -24,7 +24,7 @@ def get_current_admin(request: Request) -> dict:
     user_id = request.session.get("user_id")
     token = request.session.get("token")
     role = request.session.get("role")
-    
+
     # Fail-close security: unauthenticated or corrupted session returns no role
     if not user_id or not token or not role:
         return {
@@ -62,13 +62,15 @@ class AdminAuth(AuthenticationBackend):
                     db.commit()
 
                     role = user.role or "super_admin"
-                    request.session.update({
-                        "token": f"db-user-{user.id}",
-                        "user_id": str(user.id),
-                        "username": user.username,
-                        "role": role,
-                        "company_id": user.company_id,
-                    })
+                    request.session.update(
+                        {
+                            "token": f"db-user-{user.id}",
+                            "user_id": str(user.id),
+                            "username": user.username,
+                            "role": role,
+                            "company_id": user.company_id,
+                        }
+                    )
                     return True
             except Exception:
                 pass  # Password likely too long or invalid encoding
@@ -79,13 +81,15 @@ class AdminAuth(AuthenticationBackend):
 
         # 2. Fallback to Env Vars (Safety Net / Initial Bootstrap)
         if username == settings.ADMIN_USERNAME and password == settings.ADMIN_PASSWORD:
-            request.session.update({
-                "token": "admin-token",
-                "user_id": "env-admin",
-                "username": settings.ADMIN_USERNAME,
-                "role": "super_admin",
-                "company_id": None,
-            })
+            request.session.update(
+                {
+                    "token": "admin-token",
+                    "user_id": "env-admin",
+                    "username": settings.ADMIN_USERNAME,
+                    "role": "super_admin",
+                    "company_id": None,
+                }
+            )
             return True
 
         return False
@@ -121,4 +125,3 @@ class AdminAuth(AuthenticationBackend):
 
 
 authentication_backend = AdminAuth(secret_key=settings.ADMIN_SECRET_KEY)
-

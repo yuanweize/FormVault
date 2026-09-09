@@ -45,7 +45,9 @@ class EmailExport(Base):
     retry_count = Column(Integer, default=0, nullable=False)
 
     # Timestamp
-    created_at = Column(TIMESTAMP, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        TIMESTAMP, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
 
     # Relationships
     application = relationship("Application", back_populates="email_exports")

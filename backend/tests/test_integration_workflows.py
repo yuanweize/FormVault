@@ -284,7 +284,10 @@ class TestCompleteApplicationWorkflow:
             response = client.post(
                 f"/api/v1/applications/{application_id}/export", json=export_data
             )
-            assert response.status_code in (201, 202)  # Accepted for retry or created with retry status
+            assert response.status_code in (
+                201,
+                202,
+            )  # Accepted for retry or created with retry status
 
             # Simulate retry service processing
             from app.services.email_retry_service import EmailRetryService
@@ -342,7 +345,9 @@ class TestConcurrentOperations:
 
         def upload_file(file_type, file_name):
             with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
-                temp_file.write(b"\xff\xd8\xff\xe0" + f"content for {file_name}".encode())
+                temp_file.write(
+                    b"\xff\xd8\xff\xe0" + f"content for {file_name}".encode()
+                )
                 temp_file.flush()
 
                 with open(temp_file.name, "rb") as f:

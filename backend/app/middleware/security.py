@@ -85,7 +85,9 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         if request.method == "OPTIONS":
             response = Response(status_code=200)
             response.headers["access-control-allow-origin"] = "*"
-            response.headers["access-control-allow-methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response.headers["access-control-allow-methods"] = (
+                "GET, POST, PUT, DELETE, OPTIONS"
+            )
             response.headers["access-control-allow-headers"] = "*"
             self._add_security_headers(response)
             return response
@@ -228,9 +230,17 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         for header_name, header_value in request.headers.items():
             # Skip validation for specific standard headers that often contain special characters
             header_lower = header_name.lower()
-            if header_lower in ["accept", "content-type", "cookie", "referer", "user-agent", "host", "origin"]:
-                 continue
-            
+            if header_lower in [
+                "accept",
+                "content-type",
+                "cookie",
+                "referer",
+                "user-agent",
+                "host",
+                "origin",
+            ]:
+                continue
+
             if self._contains_suspicious_content(header_value):
                 logger.warning(
                     "Suspicious header detected",
@@ -344,6 +354,7 @@ class SecurityMiddleware(BaseHTTPMiddleware):
 
 class CSRFProtection:
     """CSRF protection utilities."""
+
     csrf_tokens: Set[str] = csrf_tokens
 
     @staticmethod

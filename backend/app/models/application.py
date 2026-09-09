@@ -6,7 +6,17 @@ import uuid
 from datetime import datetime
 from typing import List, Optional
 
-from sqlalchemy import Column, String, Date, DateTime, Enum, Index, Integer, ForeignKey, Text
+from sqlalchemy import (
+    Column,
+    String,
+    Date,
+    DateTime,
+    Enum,
+    Index,
+    Integer,
+    ForeignKey,
+    Text,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import VARCHAR, TIMESTAMP
 
@@ -49,24 +59,42 @@ class Application(Base):
 
     # Underwriting Partner & Plan Binding
     insurance_company_id = Column(
-        Integer, ForeignKey("insurance_companies.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("insurance_companies.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     insurance_plan_id = Column(
-        Integer, ForeignKey("insurance_plans.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("insurance_plans.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
 
     # Detailed Underwriting & Passport Information (České pojištění / PVZP / Slavia standard)
     gender = Column(VARCHAR(10), nullable=True)  # Male / Female
-    nationality = Column(VARCHAR(50), nullable=True)  # Country of citizenship (e.g. China)
+    nationality = Column(
+        VARCHAR(50), nullable=True
+    )  # Country of citizenship (e.g. China)
     place_of_birth = Column(VARCHAR(100), nullable=True)  # City, Country
     passport_number = Column(VARCHAR(50), nullable=True)
     passport_expiry_date = Column(Date, nullable=True)
-    passport_issued_by = Column(VARCHAR(50), nullable=True)  # State which issued the passport
+    passport_issued_by = Column(
+        VARCHAR(50), nullable=True
+    )  # State which issued the passport
     insurance_commencement_date = Column(Date, nullable=True)  # Date of commencement
-    insurance_duration_months = Column(Integer, default=12, nullable=True)  # Duration in months (e.g. 12, 24, 36)
-    type_of_stay = Column(VARCHAR(50), default="student", nullable=True)  # student, adult, employee
-    study_confirmation_file_id = Column(VARCHAR(36), nullable=True)  # Potvrzení o studiu scan reference
-    custom_fields_data = Column(Text, nullable=True)  # Configurable recipe custom fields (JSON)
+    insurance_duration_months = Column(
+        Integer, default=12, nullable=True
+    )  # Duration in months (e.g. 12, 24, 36)
+    type_of_stay = Column(
+        VARCHAR(50), default="student", nullable=True
+    )  # student, adult, employee
+    study_confirmation_file_id = Column(
+        VARCHAR(36), nullable=True
+    )  # Potvrzení o studiu scan reference
+    custom_fields_data = Column(
+        Text, nullable=True
+    )  # Configurable recipe custom fields (JSON)
 
     # Application status
     status = Column(
@@ -84,20 +112,37 @@ class Application(Base):
     # Regulatory & Versioned Snapshots (Evidence-backed provenance)
     regulatory_mode_snapshot = Column(VARCHAR(30), default="LEAD_ONLY", nullable=True)
     product_version_id = Column(
-        Integer, ForeignKey("product_versions.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("product_versions.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     price_book_id = Column(
-        Integer, ForeignKey("price_books.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("price_books.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     form_recipe_id = Column(
-        Integer, ForeignKey("form_recipes.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("form_recipes.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     disclosure_bundle_id = Column(
-        Integer, ForeignKey("disclosure_bundle_snapshots.id", ondelete="SET NULL"), nullable=True, index=True
+        Integer,
+        ForeignKey("disclosure_bundle_snapshots.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     handoff_consent_id = Column(
         Integer,
-        ForeignKey("partner_handoff_consents.id", ondelete="SET NULL", use_alter=True, name="fk_apps_handoff_consent"),
+        ForeignKey(
+            "partner_handoff_consents.id",
+            ondelete="SET NULL",
+            use_alter=True,
+            name="fk_apps_handoff_consent",
+        ),
         nullable=True,
         index=True,
     )
@@ -116,17 +161,19 @@ class Application(Base):
     product_version = relationship("ProductVersion", foreign_keys=[product_version_id])
     price_book = relationship("PriceBook", foreign_keys=[price_book_id])
     form_recipe = relationship("FormRecipe", foreign_keys=[form_recipe_id])
-    disclosure_bundle = relationship("DisclosureBundleSnapshot", foreign_keys=[disclosure_bundle_id])
-    handoff_consent = relationship("PartnerHandoffConsent", foreign_keys=[handoff_consent_id])
+    disclosure_bundle = relationship(
+        "DisclosureBundleSnapshot", foreign_keys=[disclosure_bundle_id]
+    )
+    handoff_consent = relationship(
+        "PartnerHandoffConsent", foreign_keys=[handoff_consent_id]
+    )
     files = relationship(
         "File", back_populates="application", cascade="all, delete-orphan"
     )
     email_exports = relationship(
         "EmailExport", back_populates="application", cascade="all, delete-orphan"
     )
-    audit_logs = relationship(
-        "AuditLog", back_populates="application"
-    )
+    audit_logs = relationship("AuditLog", back_populates="application")
 
     # Indexes
     __table_args__ = (

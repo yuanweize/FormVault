@@ -25,6 +25,7 @@ class TestEmailExportAPI:
     def client(self, mock_db_session):
         """Create test client with mocked DB session."""
         from app.database import get_db
+
         app.dependency_overrides[get_db] = lambda: mock_db_session
         yield TestClient(app)
         app.dependency_overrides.pop(get_db, None)

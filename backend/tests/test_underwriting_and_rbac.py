@@ -15,7 +15,9 @@ client = TestClient(app)
 
 def test_verify_crisp_api_validation():
     # 1. Invalid UUID format
-    res_bad = client.post("/api/v1/portal/verify-crisp", json={"website_id": "invalid-uuid-123"})
+    res_bad = client.post(
+        "/api/v1/portal/verify-crisp", json={"website_id": "invalid-uuid-123"}
+    )
     assert res_bad.status_code == 200
     data_bad = res_bad.json()
     assert data_bad["valid"] is False
@@ -23,7 +25,9 @@ def test_verify_crisp_api_validation():
 
     # 2. Valid UUID structure format
     valid_uuid = "168677e2-0aa6-45ec-a486-83855b18c6f4"
-    res_valid = client.post("/api/v1/portal/verify-crisp", json={"website_id": valid_uuid})
+    res_valid = client.post(
+        "/api/v1/portal/verify-crisp", json={"website_id": valid_uuid}
+    )
     assert res_valid.status_code == 200
     data_valid = res_valid.json()
     assert data_valid["valid"] is True
@@ -61,7 +65,7 @@ def test_create_application_with_czech_underwriting_fields(db):
                 "city": "Praha",
                 "state": "Praha 10",
                 "zip_code": "10100",
-                "country": "Czech Republic"
+                "country": "Czech Republic",
             },
             "date_of_birth": "2001-05-15",
             "insurance_type": "health",
@@ -69,7 +73,7 @@ def test_create_application_with_czech_underwriting_fields(db):
             "nationality": "CZECH",
             "place_of_birth": "Prague",
             "passport_number": "CZ98765432",
-            "type_of_stay": "student"
+            "type_of_stay": "student",
         },
         "insurance_type": "health",
         "gender": "male",
@@ -78,7 +82,7 @@ def test_create_application_with_czech_underwriting_fields(db):
         "passport_number": "CZ98765432",
         "insurance_commencement_date": "2026-10-01",
         "insurance_duration_months": 12,
-        "type_of_stay": "student"
+        "type_of_stay": "student",
     }
 
     res = client.post("/api/v1/applications/", json=payload)

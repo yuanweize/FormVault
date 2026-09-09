@@ -38,7 +38,10 @@ def test_polyform_license_and_commercial_notice_exist():
         license_txt = f.read()
     assert "PolyForm Noncommercial License 1.0.0" in license_txt
     assert "for any noncommercial purpose" in license_txt
-    assert "Any noncommercial purpose is any purpose that is not a commercial purpose" in license_txt
+    assert (
+        "Any noncommercial purpose is any purpose that is not a commercial purpose"
+        in license_txt
+    )
 
     with open(commercial_path, "r", encoding="utf-8") as f:
         commercial_txt = f.read()
@@ -118,7 +121,7 @@ def test_audit_log_cryptographic_hash_chain(db: Session):
 def test_product_versioning_and_historical_protection(db: Session):
     """Verify that historical or unverified product versions cannot be actively valid."""
     now = datetime.now(timezone.utc)
-    
+
     # Active valid version
     pv_active = ProductVersion(
         company_id=1,

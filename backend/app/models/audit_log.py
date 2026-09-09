@@ -144,7 +144,9 @@ class AuditLog(Base):
         Create a cryptographically chained audit log linked to the latest sequence.
         """
         last_log = db.query(cls).order_by(cls.id.desc()).first()
-        prev_seq = last_log.sequence if (last_log and last_log.sequence is not None) else 0
+        prev_seq = (
+            last_log.sequence if (last_log and last_log.sequence is not None) else 0
+        )
         prev_h = last_log.entry_hash if last_log else None
         seq = prev_seq + 1
 

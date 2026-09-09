@@ -64,7 +64,9 @@ class PortalPublicConfigSchema(BaseModel):
     site_description: Optional[str] = None
     site_icon_url: str = "/favicon.svg"
     support_email: str
-    broker_legal_disclosure: Optional[str] = "HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary)."
+    broker_legal_disclosure: Optional[str] = (
+        "HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary)."
+    )
     production_ingress_name: Optional[str] = "Cloudflare Tunnel"
     primary_domain: Optional[str] = "insure.hktse.eu.org"
     secondary_domain: Optional[str] = "pojisteni.hktse.eu.org"

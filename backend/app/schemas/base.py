@@ -15,7 +15,8 @@ class TimestampMixin(BaseModel):
     """Mixin for models with timestamp fields."""
 
     created_at: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc), description="Creation timestamp"
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="Creation timestamp",
     )
     updated_at: Optional[datetime] = Field(None, description="Last update timestamp")
 
@@ -26,7 +27,8 @@ class ResponseBase(BaseModel):
     success: bool = Field(True, description="Indicates if the request was successful")
     message: Optional[str] = Field(None, description="Optional response message")
     timestamp: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc), description="Response timestamp"
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="Response timestamp",
     )
 
 

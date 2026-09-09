@@ -43,6 +43,7 @@ class EmailRetryService:
     def process_pending_exports(self) -> None:
         """Process pending exports synchronously for testing and manual invocations."""
         import inspect
+
         db = self.db or next(get_db())
         try:
             exports = (
@@ -51,7 +52,10 @@ class EmailRetryService:
                 .all()
             )
             for export in exports:
-                while export.status in ["pending", "retry"] and (export.retry_count or 0) < self.max_retries:
+                while (
+                    export.status in ["pending", "retry"]
+                    and (export.retry_count or 0) < self.max_retries
+                ):
                     try:
                         res = email_service.send_application_export(
                             application=export.application,
@@ -63,8 +67,13 @@ class EmailRetryService:
                                 loop = asyncio.get_event_loop()
                                 if loop.is_running():
                                     import concurrent.futures
-                                    with concurrent.futures.ThreadPoolExecutor() as executor:
-                                        success = executor.submit(asyncio.run, res).result()
+
+                                    with (
+                                        concurrent.futures.ThreadPoolExecutor() as executor
+                                    ):
+                                        success = executor.submit(
+                                            asyncio.run, res
+                                        ).result()
                                 else:
                                     success = loop.run_until_complete(res)
                             except RuntimeError:
@@ -74,7 +83,10 @@ class EmailRetryService:
 
                         if success:
                             export.mark_as_sent()
-                            if export.application and export.application.status == "submitted":
+                            if (
+                                export.application
+                                and export.application.status == "submitted"
+                            ):
                                 export.application.status = "exported"
                             break
                         else:

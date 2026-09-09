@@ -94,9 +94,7 @@ async def track_application_status(
     email = track_data.email.strip().lower()
 
     application = (
-        db.query(Application)
-        .filter(Application.reference_number == ref)
-        .first()
+        db.query(Application).filter(Application.reference_number == ref).first()
     )
 
     if not application or (application.email or "").strip().lower() != email:
@@ -154,7 +152,9 @@ async def track_application_status(
         success=True,
         reference_number=application.reference_number,
         status=application.status,
-        status_label=status_labels.get(application.status, application.status.capitalize()),
+        status_label=status_labels.get(
+            application.status, application.status.capitalize()
+        ),
         insurance_type=(application.insurance_type or "health").capitalize(),
         masked_name=_mask_name(application.first_name, application.last_name),
         masked_email=_mask_email(application.email),
@@ -860,7 +860,13 @@ async def export_application(
                 "recipient_email": export_request.recipient_email,
                 "insurance_company": export_request.insurance_company,
                 "status": email_export.status,
-                "files_count": len(application.files) if isinstance(getattr(application, "files", None), (list, tuple, set)) else 0,
+                "files_count": (
+                    len(application.files)
+                    if isinstance(
+                        getattr(application, "files", None), (list, tuple, set)
+                    )
+                    else 0
+                ),
             },
         )
 
@@ -878,7 +884,12 @@ async def export_application(
             message=f"Email export {'completed successfully' if email_export.is_sent else 'initiated and will be retried if failed'}",
         )
 
-    except (ApplicationNotFoundException, ValidationException, HTTPException, DatabaseException):
+    except (
+        ApplicationNotFoundException,
+        ValidationException,
+        HTTPException,
+        DatabaseException,
+    ):
         raise
     except SQLAlchemyError as e:
         db.rollback()
@@ -963,7 +974,12 @@ async def get_export_history(
             message="Export history retrieved successfully",
         )
 
-    except (ApplicationNotFoundException, ValidationException, HTTPException, DatabaseException):
+    except (
+        ApplicationNotFoundException,
+        ValidationException,
+        HTTPException,
+        DatabaseException,
+    ):
         raise
     except SQLAlchemyError as e:
         logger.error(

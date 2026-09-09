@@ -28,7 +28,7 @@ def reencrypt_legacy_files():
     try:
         files = db.query(File).all()
         logger.info(f"Scanning {len(files)} files for AES-256-GCM compliance...")
-        
+
         upgraded_count = 0
         already_encrypted_count = 0
         failed_count = 0
@@ -39,8 +39,7 @@ def reencrypt_legacy_files():
                 # Read raw stored bytes from local or S3
                 if storage.storage_type == "s3" and storage.s3_client:
                     response = storage.s3_client.get_object(
-                        Bucket=storage.settings.S3_BUCKET,
-                        Key=stored_name
+                        Bucket=storage.settings.S3_BUCKET, Key=stored_name
                     )
                     raw_data = response["Body"].read()
                 else:
@@ -76,7 +75,9 @@ def reencrypt_legacy_files():
                 file_record.file_hash = hashlib.sha256(raw_data).hexdigest()
                 file_record.file_size = len(raw_data)
                 upgraded_count += 1
-                logger.info(f"Successfully upgraded file {file_record.id} ({file_record.original_filename}) to AES-256-GCM")
+                logger.info(
+                    f"Successfully upgraded file {file_record.id} ({file_record.original_filename}) to AES-256-GCM"
+                )
 
             except Exception as e:
                 logger.error(f"Error processing file {file_record.id}: {e}")

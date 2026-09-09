@@ -109,9 +109,15 @@ def create_audit_log(
         prev_h = None
         try:
             last_log = db.query(AuditLog).order_by(AuditLog.id.desc()).first()
-            if last_log and hasattr(last_log, "sequence") and isinstance(last_log.sequence, int):
+            if (
+                last_log
+                and hasattr(last_log, "sequence")
+                and isinstance(last_log.sequence, int)
+            ):
                 prev_seq = last_log.sequence
-                if hasattr(last_log, "entry_hash") and isinstance(last_log.entry_hash, str):
+                if hasattr(last_log, "entry_hash") and isinstance(
+                    last_log.entry_hash, str
+                ):
                     prev_h = last_log.entry_hash
         except Exception as query_err:
             logger.warning(f"Could not query last audit log: {query_err}")
@@ -131,7 +137,9 @@ def create_audit_log(
         db.add(audit_log)
         db.flush()  # Get the ID without committing
 
-        logger.info(f"Audit log created: {action} (ID: {getattr(audit_log, 'id', None)}, Seq: {seq})")
+        logger.info(
+            f"Audit log created: {action} (ID: {getattr(audit_log, 'id', None)}, Seq: {seq})"
+        )
         return audit_log
 
     except Exception as e:

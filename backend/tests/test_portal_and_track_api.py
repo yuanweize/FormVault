@@ -82,7 +82,10 @@ def test_application_track_email_mismatch_fails(db):
         },
     )
     assert response.status_code == 404
-    assert "mismatch" in response.json().get("message", "").lower() or response.status_code == 404
+    assert (
+        "mismatch" in response.json().get("message", "").lower()
+        or response.status_code == 404
+    )
 
 
 def test_portal_public_config(db):
@@ -125,4 +128,3 @@ def test_portal_gdpr_request(db):
     assert data["success"] is True
     assert "GDPR-" in data["ticket_id"]
     assert "30 calendar days" in data["message"]
-

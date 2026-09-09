@@ -42,6 +42,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # 1. Application Operations Category
 # ==========================================
 
+
 class ApplicationAdmin(ModelView, model=Application):
     name = "Application"
     name_plural = "Applications"
@@ -176,14 +177,18 @@ class FileAdmin(ModelView, model=File):
         admin = get_current_admin(request)
         stmt = select(File)
         if admin["role"] == "company_partner" and admin.get("company_id"):
-            stmt = stmt.join(Application).where(Application.insurance_company_id == admin["company_id"])
+            stmt = stmt.join(Application).where(
+                Application.insurance_company_id == admin["company_id"]
+            )
         return stmt
 
     def count_query(self, request: Request):
         admin = get_current_admin(request)
         stmt = select(func.count(File.id)).select_from(File)
         if admin["role"] == "company_partner" and admin.get("company_id"):
-            stmt = stmt.join(Application).where(Application.insurance_company_id == admin["company_id"])
+            stmt = stmt.join(Application).where(
+                Application.insurance_company_id == admin["company_id"]
+            )
         return stmt
 
     async def check_can_delete(self, request: Request, model) -> bool:
@@ -228,6 +233,7 @@ class EmailExportAdmin(ModelView, model=EmailExport):
 # 2. Broker & Partners Category
 # ==========================================
 
+
 class InsuranceCompanyAdmin(ModelView, model=InsuranceCompany):
     name = "Partner Company"
     name_plural = "Partner Companies"
@@ -251,7 +257,11 @@ class InsuranceCompanyAdmin(ModelView, model=InsuranceCompany):
         InsuranceCompany.updated_at: "Last Modified",
     }
     column_searchable_list = [InsuranceCompany.name, InsuranceCompany.code]
-    column_sortable_list = [InsuranceCompany.display_order, InsuranceCompany.name, InsuranceCompany.is_active]
+    column_sortable_list = [
+        InsuranceCompany.display_order,
+        InsuranceCompany.name,
+        InsuranceCompany.is_active,
+    ]
     column_default_sort = ("display_order", False)
     form_columns = [
         InsuranceCompany.name,
@@ -321,8 +331,16 @@ class InsurancePlanAdmin(ModelView, model=InsurancePlan):
         InsurancePlan.is_featured: "Featured",
         InsurancePlan.is_active: "Active",
     }
-    column_searchable_list = [InsurancePlan.name, InsurancePlan.category, InsurancePlan.badge]
-    column_sortable_list = [InsurancePlan.display_order, InsurancePlan.price_amount, InsurancePlan.is_active]
+    column_searchable_list = [
+        InsurancePlan.name,
+        InsurancePlan.category,
+        InsurancePlan.badge,
+    ]
+    column_sortable_list = [
+        InsurancePlan.display_order,
+        InsurancePlan.price_amount,
+        InsurancePlan.is_active,
+    ]
     column_default_sort = ("display_order", False)
     form_columns = [
         InsurancePlan.company,
@@ -417,6 +435,7 @@ class AgencyBannerAdmin(ModelView, model=AgencyBanner):
 # 3. System & Security Category
 # ==========================================
 
+
 class SystemConfigAdmin(ModelView, model=SystemConfig):
     name = "System Configuration"
     name_plural = "System Configuration"
@@ -501,16 +520,28 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
     form_args = dict(
         business_scope_mode=dict(
             choices=[
-                ("LEAD_ONLY", "LEAD_ONLY (Safest Default: Neutral info & lead inquiry intake only, no passport uploads)"),
-                ("ASSISTED_APPLICATION", "ASSISTED_APPLICATION (Full digital passport upload & dossier ingestion under verified broker DPA)"),
-                ("REGULATED_DISTRIBUTION", "REGULATED_DISTRIBUTION (Disabled in source-available distribution)"),
+                (
+                    "LEAD_ONLY",
+                    "LEAD_ONLY (Safest Default: Neutral info & lead inquiry intake only, no passport uploads)",
+                ),
+                (
+                    "ASSISTED_APPLICATION",
+                    "ASSISTED_APPLICATION (Full digital passport upload & dossier ingestion under verified broker DPA)",
+                ),
+                (
+                    "REGULATED_DISTRIBUTION",
+                    "REGULATED_DISTRIBUTION (Disabled in source-available distribution)",
+                ),
             ],
             label="Regulatory Scope & Feature Gate",
             description="Controls public functionality according to legal authorizations. Default LEAD_ONLY collects basic inquiries. ASSISTED_APPLICATION requires: active cooperation agreement + active DPA + approved workflow scope + verified product version + verified form recipe.",
         ),
         operator_role=dict(
             choices=[
-                ("tipar", "Tipař (Lead introducer / referral entity per Act No. 170/2018 Coll.)"),
+                (
+                    "tipar",
+                    "Tipař (Lead introducer / referral entity per Act No. 170/2018 Coll.)",
+                ),
                 ("technology_provider", "Technology & IT Workflow Provider"),
                 ("broker", "Licensed Broker (Requires ČNB registry filing)"),
             ],
@@ -545,7 +576,10 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         ),
         dpa_status=dict(
             choices=[
-                ("VERIFIED", "VERIFIED (Bilateral DPA signed on 2026-03-02, České pojištění as controller)"),
+                (
+                    "VERIFIED",
+                    "VERIFIED (Bilateral DPA signed on 2026-03-02, České pojištění as controller)",
+                ),
                 ("PENDING", "PENDING (Draft DPA pending signatures)"),
                 ("EXPIRED", "EXPIRED (DPA expired or terminated)"),
             ],
@@ -637,7 +671,9 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
             with self.session_maker() as session:
                 existing = session.query(SystemConfig).first()
                 if existing:
-                    raise Exception("System Configuration already exists. Please edit the existing entry.")
+                    raise Exception(
+                        "System Configuration already exists. Please edit the existing entry."
+                    )
         return await super().on_model_change(data, model, is_created, request)
 
 
@@ -680,9 +716,18 @@ class AdminUserAdmin(ModelView, model=AdminUser):
         role=dict(
             choices=[
                 ("super_admin", "Super Administrator (Full System & User Control)"),
-                ("broker_agent", "Broker Agent / Underwriter (All Applications & Plans)"),
-                ("company_partner", "Insurance Company Partner (Designated Company Only)"),
-                ("compliance_auditor", "Compliance Auditor (Read-Only Audit & Applications)"),
+                (
+                    "broker_agent",
+                    "Broker Agent / Underwriter (All Applications & Plans)",
+                ),
+                (
+                    "company_partner",
+                    "Insurance Company Partner (Designated Company Only)",
+                ),
+                (
+                    "compliance_auditor",
+                    "Compliance Auditor (Read-Only Audit & Applications)",
+                ),
             ],
             label="Assigned Role",
             description="Predefined role determining system privileges and data isolation.",
@@ -692,9 +737,15 @@ class AdminUserAdmin(ModelView, model=AdminUser):
             description="Required if role is 'Insurance Company Partner'. Limits user to this company's applications and plans.",
         ),
         password_hash=dict(label="Password (Leave empty to keep current password)"),
-        display_name=dict(label="Display Name / Contact Name", description="e.g. Viktoriia Chuvakova (PVZP Underwriting)"),
+        display_name=dict(
+            label="Display Name / Contact Name",
+            description="e.g. Viktoriia Chuvakova (PVZP Underwriting)",
+        ),
         email=dict(label="Contact Email"),
-        is_active=dict(label="Account Active", description="Uncheck to immediately suspend access without deleting history."),
+        is_active=dict(
+            label="Account Active",
+            description="Uncheck to immediately suspend access without deleting history.",
+        ),
     )
 
     def is_accessible(self, request: Request) -> bool:
@@ -707,12 +758,16 @@ class AdminUserAdmin(ModelView, model=AdminUser):
         role = data.get("role")
         company = data.get("company")
         if role == "company_partner" and not company:
-            raise Exception("An Insurance Company Partner account MUST be assigned to an Insurance Company.")
+            raise Exception(
+                "An Insurance Company Partner account MUST be assigned to an Insurance Company."
+            )
 
         password = data.get("password_hash")
         if is_created:
             if not password:
-                raise Exception("Password is required for newly created administrators.")
+                raise Exception(
+                    "Password is required for newly created administrators."
+                )
             data["password_hash"] = pwd_context.hash(password)
         else:
             if password:
@@ -750,15 +805,24 @@ class AuditLogAdmin(ModelView, model=AuditLog):
     column_default_sort = ("created_at", True)
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
 
 # ==========================================
 # 4. Regulatory & Compliance Category
 # ==========================================
+
 
 class EvidenceRecordAdmin(ModelView, model=EvidenceRecord):
     name = "Contract & Evidence Record"
@@ -799,7 +863,10 @@ class EvidenceRecordAdmin(ModelView, model=EvidenceRecord):
         verification_status=dict(
             choices=[
                 ("VERIFIED", "VERIFIED (Current active authorized document)"),
-                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION (Pending counter-signing)"),
+                (
+                    "PENDING_CONFIRMATION",
+                    "PENDING_CONFIRMATION (Pending counter-signing)",
+                ),
                 ("HISTORICAL", "HISTORICAL (Superceded or archived document)"),
                 ("EXPIRED", "EXPIRED (Past expiration date)"),
                 ("DISABLED", "DISABLED (Suspended)"),
@@ -809,10 +876,16 @@ class EvidenceRecordAdmin(ModelView, model=EvidenceRecord):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
 
 class ProductVersionAdmin(ModelView, model=ProductVersion):
@@ -836,8 +909,14 @@ class ProductVersionAdmin(ModelView, model=ProductVersion):
         status=dict(
             choices=[
                 ("VERIFIED", "VERIFIED (Actively quotable in portal)"),
-                ("HISTORICAL", "HISTORICAL (Reference only; strictly forbidden from public quotation)"),
-                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION (Draft version under review)"),
+                (
+                    "HISTORICAL",
+                    "HISTORICAL (Reference only; strictly forbidden from public quotation)",
+                ),
+                (
+                    "PENDING_CONFIRMATION",
+                    "PENDING_CONFIRMATION (Draft version under review)",
+                ),
                 ("EXPIRED", "EXPIRED (Validity window ended)"),
                 ("DISABLED", "DISABLED (Deactivated)"),
             ],
@@ -846,10 +925,18 @@ class ProductVersionAdmin(ModelView, model=ProductVersion):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
 
 class PriceBookAdmin(ModelView, model=PriceBook):
@@ -881,10 +968,18 @@ class PriceBookAdmin(ModelView, model=PriceBook):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
 
 class PriceRateAdmin(ModelView, model=PriceRate):
@@ -901,10 +996,18 @@ class PriceRateAdmin(ModelView, model=PriceRate):
     ]
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "broker_agent",
+            "compliance_auditor",
+        )
 
 
 class FormRecipeAdmin(ModelView, model=FormRecipe):
@@ -920,10 +1023,16 @@ class FormRecipeAdmin(ModelView, model=FormRecipe):
     ]
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
 
 class LegalDocumentVersionAdmin(ModelView, model=LegalDocumentVersion):
@@ -964,10 +1073,16 @@ class LegalDocumentVersionAdmin(ModelView, model=LegalDocumentVersion):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
 
 class PartnerHandoffConsentAdmin(ModelView, model=PartnerHandoffConsent):
@@ -988,10 +1103,16 @@ class PartnerHandoffConsentAdmin(ModelView, model=PartnerHandoffConsent):
     can_delete = False
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
 
 class PrivacyRequestAdmin(ModelView, model=PrivacyRequest):
@@ -1034,10 +1155,16 @@ class PrivacyRequestAdmin(ModelView, model=PrivacyRequest):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
 
 class SecurityIncidentAdmin(ModelView, model=SecurityIncident):
@@ -1063,7 +1190,10 @@ class SecurityIncidentAdmin(ModelView, model=SecurityIncident):
                 ("LOW", "LOW (Minor anomaly, no breach)"),
                 ("MEDIUM", "MEDIUM (Restricted impact)"),
                 ("HIGH", "HIGH (Potential data disclosure, urgent audit)"),
-                ("CRITICAL", "CRITICAL (Immediate DPO & supervisory reporting required)"),
+                (
+                    "CRITICAL",
+                    "CRITICAL (Immediate DPO & supervisory reporting required)",
+                ),
             ],
             label="Severity Level",
         ),
@@ -1079,8 +1209,13 @@ class SecurityIncidentAdmin(ModelView, model=SecurityIncident):
     )
 
     def is_accessible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )
 
     def is_visible(self, request: Request) -> bool:
-        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
-
+        return get_current_admin(request)["role"] in (
+            "super_admin",
+            "compliance_auditor",
+        )

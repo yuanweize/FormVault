@@ -60,37 +60,52 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
 
     return PortalPublicConfigSchema(
         success=True,
-        site_title=config.site_title or "FormVault Insurance | Czech Health & Travel Insurance",
+        site_title=config.site_title
+        or "FormVault Insurance | Czech Health & Travel Insurance",
         site_description=config.site_description,
         site_icon_url=config.site_icon_url or "/favicon.svg",
         support_email=config.support_email or "insurance@hktse.eu.org",
         broker_legal_disclosure=getattr(config, "broker_legal_disclosure", None)
         or "HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).",
-        production_ingress_name=getattr(config, "production_ingress_name", None) or "Cloudflare Tunnel",
+        production_ingress_name=getattr(config, "production_ingress_name", None)
+        or "Cloudflare Tunnel",
         primary_domain=getattr(config, "primary_domain", None) or "insure.hktse.eu.org",
-        secondary_domain=getattr(config, "secondary_domain", None) or "pojisteni.hktse.eu.org",
+        secondary_domain=getattr(config, "secondary_domain", None)
+        or "pojisteni.hktse.eu.org",
         crisp_website_id=config.crisp_website_id,
         crisp_custom_color=config.crisp_custom_color or "blue",
         form_profile_config=getattr(config, "form_profile_config", None),
         features_config=getattr(config, "features_config", None),
-        business_scope_mode=getattr(config, "business_scope_mode", "LEAD_ONLY") or "LEAD_ONLY",
-        operator_legal_name=getattr(config, "operator_legal_name", "HKTSE s.r.o.") or "HKTSE s.r.o.",
+        business_scope_mode=getattr(config, "business_scope_mode", "LEAD_ONLY")
+        or "LEAD_ONLY",
+        operator_legal_name=getattr(config, "operator_legal_name", "HKTSE s.r.o.")
+        or "HKTSE s.r.o.",
         operator_ico=getattr(config, "operator_ico", "10858032") or "10858032",
         operator_role=getattr(config, "operator_role", "tipar") or "tipar",
-        operator_website_url=getattr(config, "operator_website_url", "https://hktse.eu.org") or "https://hktse.eu.org",
-        partner_name=getattr(config, "partner_name", "České pojištění a.s.") or "České pojištění a.s.",
+        operator_website_url=getattr(
+            config, "operator_website_url", "https://hktse.eu.org"
+        )
+        or "https://hktse.eu.org",
+        partner_name=getattr(config, "partner_name", "České pojištění a.s.")
+        or "České pojištění a.s.",
         partner_ico=getattr(config, "partner_ico", "24729007") or "24729007",
         partner_role=getattr(config, "partner_role", "makler") or "makler",
         partner_cnb_id=getattr(config, "partner_cnb_id", "24729007") or "24729007",
-        partner_website_url=getattr(config, "partner_website_url", "https://ceskepojisteni.cz") or "https://ceskepojisteni.cz",
-        relationship_status=getattr(config, "relationship_status", "VERIFIED") or "VERIFIED",
+        partner_website_url=getattr(
+            config, "partner_website_url", "https://ceskepojisteni.cz"
+        )
+        or "https://ceskepojisteni.cz",
+        relationship_status=getattr(config, "relationship_status", "VERIFIED")
+        or "VERIFIED",
         dpa_status=getattr(config, "dpa_status", "VERIFIED") or "VERIFIED",
         lead_only_fallback_url=getattr(config, "lead_only_fallback_url", None),
     )
 
 
 @router.post("/verify-crisp", response_model=CrispVerifyResponseSchema)
-def verify_crisp_website_id(payload: CrispVerifyRequestSchema) -> CrispVerifyResponseSchema:
+def verify_crisp_website_id(
+    payload: CrispVerifyRequestSchema,
+) -> CrispVerifyResponseSchema:
     """
     Validate and verify a Crisp Live Chat Website ID.
     Performs UUID format validation and queries Crisp API to verify existence and online status.
@@ -103,7 +118,9 @@ def verify_crisp_website_id(payload: CrispVerifyRequestSchema) -> CrispVerifyRes
         )
 
     # Validate UUID format (e.g. 168677e2-0aa6-45ec-a486-83855b18c6f4)
-    uuid_pattern = r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    uuid_pattern = (
+        r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    )
     if not re.match(uuid_pattern, key):
         return CrispVerifyResponseSchema(
             valid=False,
@@ -157,7 +174,6 @@ def verify_crisp_website_id(payload: CrispVerifyRequestSchema) -> CrispVerifyRes
             valid=True,  # UUID format valid, could not reach crisp servers
             message=f"UUID format is valid ({key}), but could not connect to Crisp servers ({e}).",
         )
-
 
 
 @router.get("/showcase", response_model=PortalShowcaseResponseSchema)

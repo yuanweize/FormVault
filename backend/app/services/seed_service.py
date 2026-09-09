@@ -76,7 +76,10 @@ def seed_demo_defaults(db: Session) -> None:
     # 2. Seed Baseline Legal Document Versions if absent
     terms_doc = (
         db.query(LegalDocumentVersion)
-        .filter(LegalDocumentVersion.doc_type == "terms", LegalDocumentVersion.version == "1.0.0")
+        .filter(
+            LegalDocumentVersion.doc_type == "terms",
+            LegalDocumentVersion.version == "1.0.0",
+        )
         .first()
     )
     if not terms_doc:
@@ -105,7 +108,10 @@ def seed_demo_defaults(db: Session) -> None:
 
     privacy_doc = (
         db.query(LegalDocumentVersion)
-        .filter(LegalDocumentVersion.doc_type == "privacy", LegalDocumentVersion.version == "1.0.0")
+        .filter(
+            LegalDocumentVersion.doc_type == "privacy",
+            LegalDocumentVersion.version == "1.0.0",
+        )
         .first()
     )
     if not privacy_doc:
@@ -133,16 +139,24 @@ def seed_demo_defaults(db: Session) -> None:
         db.add(privacy_doc)
 
     # 3. Check DEMO_DATA environment variable
-    demo_enabled = os.environ.get("DEMO_DATA", "true").lower() not in ("false", "0", "no")
+    demo_enabled = os.environ.get("DEMO_DATA", "true").lower() not in (
+        "false",
+        "0",
+        "no",
+    )
     if not demo_enabled:
         db.commit()
-        logger.info("DEMO_DATA is disabled; skipped seeding demonstration partners and plans.")
+        logger.info(
+            "DEMO_DATA is disabled; skipped seeding demonstration partners and plans."
+        )
         return
 
     # 4. Seed Baseline Evidence Record
     contract_evidence = (
         db.query(EvidenceRecord)
-        .filter(EvidenceRecord.title == "Smlouva o obchodní spolupráci - Tipařská činnost")
+        .filter(
+            EvidenceRecord.title == "Smlouva o obchodní spolupráci - Tipařská činnost"
+        )
         .first()
     )
     if not contract_evidence:
@@ -179,7 +193,9 @@ def seed_demo_defaults(db: Session) -> None:
         pvzp.rating = "Leading Czech Underwriter / 5,000+ Contracted Clinics"
         pvzp.is_active = True
 
-    slavia = db.query(InsuranceCompany).filter(InsuranceCompany.code == "SLAVIA").first()
+    slavia = (
+        db.query(InsuranceCompany).filter(InsuranceCompany.code == "SLAVIA").first()
+    )
     if not slavia:
         slavia = InsuranceCompany(
             name="Slavia Pojišťovna a.s.",
@@ -213,7 +229,11 @@ def seed_demo_defaults(db: Session) -> None:
         sv.is_active = True
 
     # Safely deactivate un-contracted mock companies if they exist
-    unpartnered = db.query(InsuranceCompany).filter(InsuranceCompany.code.in_(["MAXIMA", "UNIQA"])).all()
+    unpartnered = (
+        db.query(InsuranceCompany)
+        .filter(InsuranceCompany.code.in_(["MAXIMA", "UNIQA"]))
+        .all()
+    )
     for comp in unpartnered:
         comp.is_active = False
 
@@ -355,7 +375,9 @@ def seed_demo_defaults(db: Session) -> None:
         db.add_all(rates)
 
     db.commit()
-    logger.info("Compliance defaults and demonstration templates synchronized successfully.")
+    logger.info(
+        "Compliance defaults and demonstration templates synchronized successfully."
+    )
 
 
 # Backward compatibility alias

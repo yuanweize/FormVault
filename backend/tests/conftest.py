@@ -42,6 +42,7 @@ def patch_db_objects(engine):
     TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     from app.main import admin
+
     orig_admin_engine = admin.engine
     orig_admin_session_maker = admin.session_maker
     orig_view_session_makers = [getattr(v, "session_maker", None) for v in admin._views]

@@ -43,7 +43,11 @@ class FormVaultAdmin(Admin):
             with self.session_maker() as session:
                 from ..models.application import Application
                 from ..models.file import File
-                from ..models.partner import InsuranceCompany, InsurancePlan, AgencyBanner
+                from ..models.partner import (
+                    InsuranceCompany,
+                    InsurancePlan,
+                    AgencyBanner,
+                )
                 from ..models.audit_log import AuditLog
                 from ..models.system import SystemConfig
 
@@ -90,4 +94,6 @@ class FormVaultAdmin(Admin):
             "subtitle": "FormVault Czech Insurance Brokerage Console",
             "stats": stats,
         }
-        return await self.templates.TemplateResponse(request, "sqladmin/index.html", context)
+        return await self.templates.TemplateResponse(
+            request, "sqladmin/index.html", context
+        )

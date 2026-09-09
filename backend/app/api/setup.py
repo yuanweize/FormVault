@@ -26,6 +26,7 @@ templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 router = APIRouter()
 
+
 @router.get("/setup", response_class=HTMLResponse)
 async def setup_page(request: Request, db: Session = Depends(get_db)):
     """Serve the First-Run Setup Wizard."""
@@ -33,21 +34,29 @@ async def setup_page(request: Request, db: Session = Depends(get_db)):
         logger.info(f"Accessing Setup Page. Template Dir: {TEMPLATE_DIR}")
         # Check if setup is already done
         try:
-             user_count = db.query(AdminUser).count()
-             if user_count > 0:
-                 logger.info("Admin user exists, redirecting to login")
-                 return RedirectResponse(url="/admin/login", status_code=303)
+            user_count = db.query(AdminUser).count()
+            if user_count > 0:
+                logger.info("Admin user exists, redirecting to login")
+                return RedirectResponse(url="/admin/login", status_code=303)
         except Exception as db_err:
-             logger.warning(f"Database error during setup check (ignoring for fresh install): {db_err}")
-             # If table doesn't exist yet, we still want to show setup? 
-             # No, if table doesn't exist, we likely need migrations. 
-             # But let's proceed to show setup page anyway if we can, or let it fail.
-             pass
-            
-        return templates.TemplateResponse(request=request, name="setup.html", context={})
+            logger.warning(
+                f"Database error during setup check (ignoring for fresh install): {db_err}"
+            )
+            # If table doesn't exist yet, we still want to show setup?
+            # No, if table doesn't exist, we likely need migrations.
+            # But let's proceed to show setup page anyway if we can, or let it fail.
+            pass
+
+        return templates.TemplateResponse(
+            request=request, name="setup.html", context={}
+        )
     except Exception as e:
         logger.error(f"Error serving setup page: {e}", exc_info=True)
-        return HTMLResponse(content=f"<h1>Setup Error</h1><p>Detailed Error: {str(e)}</p><p>Template Dir: {TEMPLATE_DIR}</p>", status_code=500)
+        return HTMLResponse(
+            content=f"<h1>Setup Error</h1><p>Detailed Error: {str(e)}</p><p>Template Dir: {TEMPLATE_DIR}</p>",
+            status_code=500,
+        )
+
 
 @router.post("/setup")
 async def setup_submit(
@@ -55,32 +64,38 @@ async def setup_submit(
     username: str = Form(...),
     password: str = Form(...),
     confirm_password: str = Form(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     """Handle Setup Form Submission."""
     # Security: Verify again
     if db.query(AdminUser).count() > 0:
-         return RedirectResponse(url="/admin/login", status_code=303)
+        return RedirectResponse(url="/admin/login", status_code=303)
 
     if password != confirm_password:
-        return templates.TemplateResponse(request=request, name="setup.html", context={
-            "error": "Passwords do not match"
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="setup.html",
+            context={"error": "Passwords do not match"},
+        )
 
     # Validate password length for bcrypt (max 72 bytes)
-    if len(password.encode('utf-8')) > 72:
-        return templates.TemplateResponse(request=request, name="setup.html", context={
-            "error": "Password is too long (max 72 characters)"
-        })
-    
+    if len(password.encode("utf-8")) > 72:
+        return templates.TemplateResponse(
+            request=request,
+            name="setup.html",
+            context={"error": "Password is too long (max 72 characters)"},
+        )
+
     # Create Admin
     try:
         hashed_pw = pwd_context.hash(password)
     except Exception as e:
         logger.error(f"Password hashing error: {e}")
-        return templates.TemplateResponse(request=request, name="setup.html", context={
-            "error": "Error processing password. Please try a simpler one."
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="setup.html",
+            context={"error": "Error processing password. Please try a simpler one."},
+        )
     new_admin = AdminUser(username=username, password_hash=hashed_pw)
     db.add(new_admin)
     db.commit()

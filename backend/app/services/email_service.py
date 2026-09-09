@@ -439,7 +439,9 @@ FormVault Insurance Portal
             )
 
             msg = MIMEMultipart("alternative")
-            msg["Subject"] = f"Application Confirmation: [{application.reference_number}] - FormVault Insurance"
+            msg["Subject"] = (
+                f"Application Confirmation: [{application.reference_number}] - FormVault Insurance"
+            )
             msg["From"] = self.settings.FROM_EMAIL
             msg["To"] = application.email
 

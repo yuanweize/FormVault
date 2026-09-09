@@ -45,10 +45,10 @@ class SecureFileStorage:
 
     def __init__(self):
         self.settings = get_settings()
-        
+
         # Default to settings/env, but override from DB if available
         self.storage_type = self.settings.STORAGE_TYPE.lower()
-        
+
         # Encryption setup
         self.upload_dir = Path(self.settings.UPLOAD_DIR)
         self._encryption_key = self._get_or_create_encryption_key()
@@ -57,10 +57,10 @@ class SecureFileStorage:
         # Dynamic Config (DB) Handling
         from ..database import SessionLocal
         from ..models.system import SystemConfig
-        
+
         self.s3_client = None
         db_config = None
-        
+
         try:
             with SessionLocal() as db:
                 db_config = db.query(SystemConfig).filter(SystemConfig.id == 1).first()
@@ -69,27 +69,43 @@ class SecureFileStorage:
 
         # If DB config exists, use it to determine storage provider & keys
         if db_config:
-            self.storage_type = db_config.storage_provider.lower() if db_config.storage_provider else "local"
-            
+            self.storage_type = (
+                db_config.storage_provider.lower()
+                if db_config.storage_provider
+                else "local"
+            )
+
             if self.storage_type == "s3":
                 try:
                     self.s3_client = boto3.client(
                         "s3",
                         endpoint_url=db_config.s3_endpoint or self.settings.S3_ENDPOINT,
-                        aws_access_key_id=db_config.s3_access_key or self.settings.S3_ACCESS_KEY,
-                        aws_secret_access_key=db_config.s3_secret_key or self.settings.S3_SECRET_KEY,
+                        aws_access_key_id=db_config.s3_access_key
+                        or self.settings.S3_ACCESS_KEY,
+                        aws_secret_access_key=db_config.s3_secret_key
+                        or self.settings.S3_SECRET_KEY,
                         region_name=db_config.s3_region or self.settings.S3_REGION,
                     )
                     logger.info("S3 Storage initialized from DB Configuration")
                 except Exception as e:
-                    logger.error(f"Failed to initialize S3 client from DB config: {e}. Falling back to Local.")
+                    logger.error(
+                        f"Failed to initialize S3 client from DB config: {e}. Falling back to Local."
+                    )
                     self.storage_type = "local"
-        
+
         # Fallback to Environment Variables if S3 not initialized yet and env specifies S3
         if self.storage_type == "s3" and not self.s3_client:
-             # Try env vars
-            if not all([self.settings.S3_ACCESS_KEY, self.settings.S3_SECRET_KEY, self.settings.S3_BUCKET]):
-                logger.warning("S3 configured in Env but credentials missing. Falling back to local storage.")
+            # Try env vars
+            if not all(
+                [
+                    self.settings.S3_ACCESS_KEY,
+                    self.settings.S3_SECRET_KEY,
+                    self.settings.S3_BUCKET,
+                ]
+            ):
+                logger.warning(
+                    "S3 configured in Env but credentials missing. Falling back to local storage."
+                )
                 self.storage_type = "local"
             else:
                 try:
@@ -208,19 +224,31 @@ class SecureFileStorage:
         file.file.seek(original_position)
 
         suspicious_patterns = [
-            b"<script", b"javascript:", b"vbscript:", b"onload=", b"onerror=",
-            b"<?php", b"<%", b"exec(", b"system(", b"shell_exec(",
+            b"<script",
+            b"javascript:",
+            b"vbscript:",
+            b"onload=",
+            b"onerror=",
+            b"<?php",
+            b"<%",
+            b"exec(",
+            b"system(",
+            b"shell_exec(",
         ]
 
         header_lower = header.lower()
         for pattern in suspicious_patterns:
             if pattern in header_lower:
                 logger.warning(f"Suspicious pattern detected in file: {file.filename}")
-                raise MalwareDetectedException(f"Suspicious content detected: {pattern.decode('utf-8', errors='ignore')}")
+                raise MalwareDetectedException(
+                    f"Suspicious content detected: {pattern.decode('utf-8', errors='ignore')}"
+                )
 
         self._validate_file_signature(header, file.content_type, file.filename)
 
-    def _validate_file_signature(self, header: bytes, content_type: str, filename: Optional[str]) -> None:
+    def _validate_file_signature(
+        self, header: bytes, content_type: str, filename: Optional[str]
+    ) -> None:
         """Validate file signature."""
         signatures = {
             "image/jpeg": [b"\xff\xd8\xff"],
@@ -230,8 +258,13 @@ class SecureFileStorage:
         if content_type in signatures:
             valid_signatures = signatures[content_type]
             if not any(header.startswith(sig) for sig in valid_signatures):
-                logger.warning(f"File signature mismatch for {filename}: {content_type}")
-                raise FileTypeException(f"File signature doesn't match declared type: {content_type}", self.settings.ALLOWED_FILE_TYPES)
+                logger.warning(
+                    f"File signature mismatch for {filename}: {content_type}"
+                )
+                raise FileTypeException(
+                    f"File signature doesn't match declared type: {content_type}",
+                    self.settings.ALLOWED_FILE_TYPES,
+                )
 
     def generate_secure_filename(self, original_filename: str, file_id: str) -> str:
         """Generate encrypted, secure filename."""
@@ -252,23 +285,29 @@ class SecureFileStorage:
             logger.error(f"Failed to decrypt filename {encrypted_filename}: {e}")
             return encrypted_filename
 
-    async def store_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
+    async def store_file(
+        self, file: UploadFile, file_id: str, db: Optional[Session] = None
+    ) -> Tuple[str, str, int]:
         return await self.save_file(file, file_id, db)
 
-    async def save_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
+    async def save_file(
+        self, file: UploadFile, file_id: str, db: Optional[Session] = None
+    ) -> Tuple[str, str, int]:
         """Store file securely with AES-256-GCM encryption (S3 or Local)."""
         # Load Config (Dynamic)
         config = self._get_config(db)
         storage_type = config.get("storage_type", self.storage_type)
         s3_client = self.s3_client
-        
+
         # If DB config says S3, try to use it if client not ready or mismatched
         if storage_type == "s3" and config.get("s3_access_key"):
-             s3_client = self._create_s3_client_from_config(config)
+            s3_client = self._create_s3_client_from_config(config)
 
         try:
-            stored_filename = self.generate_secure_filename(file.filename or "unknown", file_id)
-            
+            stored_filename = self.generate_secure_filename(
+                file.filename or "unknown", file_id
+            )
+
             # Reset file pointer and calc hash/size on original unencrypted content
             await file.seek(0)
             hasher = hashlib.sha256()
@@ -290,21 +329,28 @@ class SecureFileStorage:
                     ContentType="application/octet-stream",
                     Metadata={
                         "x-formvault-cipher": "AES-256-GCM",
-                        "x-formvault-original-type": file.content_type or "application/octet-stream",
-                    }
+                        "x-formvault-original-type": file.content_type
+                        or "application/octet-stream",
+                    },
                 )
-                logger.info(f"File encrypted (AES-256-GCM) and stored in S3: {stored_filename}")
+                logger.info(
+                    f"File encrypted (AES-256-GCM) and stored in S3: {stored_filename}"
+                )
             else:
                 # Local Upload with encrypted content
                 file_path = self.upload_dir / stored_filename
                 if file_path.exists():
-                     stored_filename = self.generate_secure_filename(f"{secrets.token_hex(4)}_{file.filename}", file_id)
-                     file_path = self.upload_dir / stored_filename
-                
+                    stored_filename = self.generate_secure_filename(
+                        f"{secrets.token_hex(4)}_{file.filename}", file_id
+                    )
+                    file_path = self.upload_dir / stored_filename
+
                 with open(file_path, "wb") as f:
                     f.write(encrypted_content)
                 os.chmod(file_path, 0o640)
-                logger.info(f"File encrypted (AES-256-GCM) and stored locally: {stored_filename}")
+                logger.info(
+                    f"File encrypted (AES-256-GCM) and stored locally: {stored_filename}"
+                )
 
             return stored_filename, f"sha256:{file_hash}", file_size
         except Exception as e:
@@ -315,11 +361,12 @@ class SecureFileStorage:
         """Get flattened config from DB + Env Fallback."""
         config = {
             "storage_type": self.settings.STORAGE_TYPE.lower(),
-            "s3_bucket": self.settings.S3_BUCKET
+            "s3_bucket": self.settings.S3_BUCKET,
         }
-        
+
         if db:
             from ..models.system import SystemConfig
+
             try:
                 sys_conf = db.query(SystemConfig).first()
                 if sys_conf:
@@ -330,7 +377,7 @@ class SecureFileStorage:
                     config["s3_secret_key"] = sys_conf.s3_secret_key
                     config["s3_region"] = sys_conf.s3_region
             except Exception:
-                pass 
+                pass
         return config
 
     def _create_s3_client_from_config(self, config: dict):
@@ -350,8 +397,7 @@ class SecureFileStorage:
         try:
             if self.storage_type == "s3" and self.s3_client:
                 self.s3_client.delete_object(
-                    Bucket=self.settings.S3_BUCKET,
-                    Key=stored_filename
+                    Bucket=self.settings.S3_BUCKET, Key=stored_filename
                 )
                 return True
             else:
@@ -370,15 +416,17 @@ class SecureFileStorage:
             return None
         file_path = self.upload_dir / stored_filename
         return file_path if file_path.exists() else None
-    
-    def get_presigned_url(self, stored_filename: str, expiration: int = 3600) -> Optional[str]:
+
+    def get_presigned_url(
+        self, stored_filename: str, expiration: int = 3600
+    ) -> Optional[str]:
         """Get presigned URL for S3 files. Returns None for local."""
         if self.storage_type == "s3" and self.s3_client:
             try:
                 response = self.s3_client.generate_presigned_url(
-                    'get_object',
-                    Params={'Bucket': self.settings.S3_BUCKET, 'Key': stored_filename},
-                    ExpiresIn=expiration
+                    "get_object",
+                    Params={"Bucket": self.settings.S3_BUCKET, "Key": stored_filename},
+                    ExpiresIn=expiration,
                 )
                 return response
             except ClientError as e:
@@ -386,7 +434,9 @@ class SecureFileStorage:
                 return None
         return None
 
-    def read_and_decrypt_file(self, stored_filename: str, db: Optional[Session] = None) -> bytes:
+    def read_and_decrypt_file(
+        self, stored_filename: str, db: Optional[Session] = None
+    ) -> bytes:
         """
         Read file from S3 or Local storage and decrypt its AES-256-GCM ciphertext.
         Only accessible by authorized administrators / underwriters.
@@ -405,7 +455,9 @@ class SecureFileStorage:
             else:
                 file_path = self.upload_dir / stored_filename
                 if not file_path.exists():
-                    raise FileUploadException(f"Stored file not found on disk: {stored_filename}")
+                    raise FileUploadException(
+                        f"Stored file not found on disk: {stored_filename}"
+                    )
                 with open(file_path, "rb") as f:
                     raw_data = f.read()
 
@@ -429,25 +481,28 @@ class SecureFileStorage:
     def get_file_info(self, stored_filename: str) -> Optional[dict]:
         """Get file info."""
         if self.storage_type == "s3" and self.s3_client:
-             # Basic S3 HeadObject
-             try:
-                 obj = self.s3_client.head_object(Bucket=self.settings.S3_BUCKET, Key=stored_filename)
-                 return {
-                     "size": obj['ContentLength'],
-                     "modified": obj['LastModified'].timestamp(),
-                     "exists": True
-                 }
-             except ClientError:
-                 return None
+            # Basic S3 HeadObject
+            try:
+                obj = self.s3_client.head_object(
+                    Bucket=self.settings.S3_BUCKET, Key=stored_filename
+                )
+                return {
+                    "size": obj["ContentLength"],
+                    "modified": obj["LastModified"].timestamp(),
+                    "exists": True,
+                }
+            except ClientError:
+                return None
         else:
             file_path = self.get_file_path(stored_filename)
-            if not file_path: return None
+            if not file_path:
+                return None
             stat = file_path.stat()
             return {
                 "size": stat.st_size,
                 "modified": stat.st_mtime,
                 "permissions": oct(stat.st_mode)[-3:],
-                "exists": True
+                "exists": True,
             }
 
 
