@@ -6,7 +6,7 @@
   },
   "stepper": {
     "personalInfo": "個人情報",
-    "personalInfoShort": "情報",
+    "personalInfoShort": "個人情報",
     "fileUpload": "書類アップロード",
     "fileUploadShort": "ファイル",
     "review": "確認と送信",
@@ -43,62 +43,83 @@
         "secureDesc": "データは保護されています",
         "multilingual": "多言語対応",
         "multilingualDesc": "英語、中国語、日本語などに対応",
-        "mobile": "モバイル対応",
+        "mobile": "モバイル最適化",
         "mobileDesc": "どのデバイスでも申請可能"
       },
-      "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
-      "trackMyApplication": "Track My Application",
+      "authorizedBroker": "チェコ共和国・EU基準公認 保険ブローカー",
+      "trackMyApplication": "申請状況を確認する",
       "metrics": {
-        "actCompliance": "Czech OAMP Compliant",
-        "rapidApp": "Rapid Application",
-        "bankPrivacy": "Bank-Grade Privacy"
+        "actCompliance": "チェコ内務省OAMP完全準拠",
+        "rapidApp": "3分でスピード申請",
+        "bankPrivacy": "銀行レベルの機密保護"
       },
       "securityBadges": {
-        "endToEnd": "End-to-End Encrypted Storage",
-        "autoEmail": "Automatic Tracking Confirmation Email"
+        "endToEnd": "エンドツーエンド暗号化ストレージ",
+        "autoEmail": "照会コード付き自動確認メール"
       },
       "tracker": {
-        "title": "Track Application Status",
-        "subtitle": "Enter your tracking reference number and registered email address to check real-time underwriting progress.",
-        "refLabel": "Reference Number",
-        "refPlaceholder": "e.g. APP-2026-001234",
-        "emailLabel": "Registered Email",
-        "emailPlaceholder": "e.g. client@example.com",
-        "trackButton": "Track",
-        "tracking": "Tracking...",
-        "applicantName": "Applicant Name",
-        "registeredEmail": "Registered Email",
-        "lastUpdated": "Last Updated",
-        "recently": "Recently",
-        "timelineTitle": "Application Processing Timeline",
-        "currentStage": "Current Stage",
+        "title": "申請状況の追跡照会",
+        "subtitle": "申請参照番号と登録メールアドレスを入力して、現在の進行状況をリアルタイムで確認できます。",
+        "refLabel": "申請参照番号",
+        "refPlaceholder": "例：APP-2026-001234",
+        "emailLabel": "登録メールアドレス",
+        "emailPlaceholder": "例：tanaka@example.jp",
+        "trackButton": "状況を確認",
+        "tracking": "照会中...",
+        "applicantName": "申請者氏名",
+        "registeredEmail": "登録メールアドレス",
+        "lastUpdated": "最終更新",
+        "recently": "最近の履歴",
+        "timelineTitle": "申請処理のタイムライン",
+        "currentStage": "現在のステージ",
         "provideBothError": "申請照会番号と登録メールアドレスの両方を入力してください。",
         "notFoundError": "一致する申請が見つかりませんでした。照会番号と登録メールアドレスをご確認ください。",
-        "protected": "保護済み"
+        "protected": "保護済み",
+        "submittedOn": "提出日時",
+        "underwritingStatus": "引受・審査状況",
+        "policyDelivery": "保険証券発行",
+        "copyRefTooltip": "参照番号をコピー",
+        "refCopied": "参照番号をクリップボードにコピーしました！",
+        "notFoundTitle": "申請が見つかりません",
+        "notFoundDesc": "入力された参照番号またはメールアドレスに一致する記録がありません。入力内容をご確認ください。",
+        "supportNote": "チェコビザや保険に関して緊急のサポートが必要ですか？ブローカー窓口までご連絡ください：",
+        "emailUs": "メールで問い合わせ",
+        "historyTitle": "最近の照会履歴"
       },
       "plans": {
-        "badge": "Curated Coverage Tiers",
-        "title": "Recommended Insurance Plans",
-        "subtitle": "Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.",
-        "choosePlan": "Choose Plan & Apply",
-        "applyNow": "Apply Now",
-        "perYear": "/ year",
-        "perMonth": "/ month",
-        "customRate": "カスタム料金"
+        "badge": "厳選プラン",
+        "title": "チェコ共和国 認可外国人保険プラン",
+        "subtitle": "長期ビザおよび滞在許可の取得要件（チェコ外国人滞在法 第326/1999号）を100%満たす公式保険。",
+        "choosePlan": "プランを選択して申請",
+        "applyNow": "今すぐ申請する",
+        "perYear": "/ 年",
+        "perMonth": "/ 月",
+        "customRate": "カスタム料金",
+        "selectPlan": "このプランを選択",
+        "mostPopular": "一番人気",
+        "bestValue": "最もお得",
+        "coverageLimit": "医療費補償限度額",
+        "repatriation": "本国送還・緊急医療搬送",
+        "dentalEmergency": "緊急歯科治療",
+        "liabilityIncluded": "個人賠償責任保険を含む",
+        "unlimitedHospitalization": "チェコ国内での入院補償完備",
+        "schengenCovered": "全シェンゲン協定国で有効"
       },
       "partners": {
-        "badge": "Underwriting Partners",
-        "title": "Underwritten by Leading European Insurers",
-        "subtitle": "Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.",
-        "officialPortal": "Official Portal"
+        "badge": "公式提携引受会社",
+        "title": "チェコ共和国 公式保険引受会社",
+        "subtitle": "すべての保険証券はチェコ内務省（OAMP）および外国人警察の公的台帳に直接登録されます。",
+        "officialPortal": "公式ポータル"
       },
       "banner": {
-        "notice": "Notice",
-        "learnMore": "Apply Online",
+        "notice": "規制に関するお知らせ",
+        "learnMore": "オンラインで申請",
         "defaultTag": "法令遵守通知",
         "defaultTitle": "チェコ外国人滞在法（第326/1999号）準拠保険",
         "defaultSubtitle": "当代理店が発行するすべての保険証明書は、チェコ内務省（OAMP）の長期ビザおよび居住許可要件を満たしています。",
-        "defaultButton": "オンラインで申し込む"
+        "defaultButton": "オンラインで申し込む",
+        "lawCompliance": "チェコ外国人滞在法（法律番号 326/1999 Coll.）準拠保険",
+        "lawDetails": "当代理店を通じて発行されるすべての保険証書は、長期ビザおよび居住許可申請に関するチェコ内務省OAMPの最新要件を完全に満たしています。"
       }
     },
     "personalInfo": {
@@ -171,100 +192,101 @@
     "terms": {
       "badge": "チェコ民法典（法律第89/2012号）および保険販売法（法律第170/2018号）に準拠",
       "title": "利用規約",
-      "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
-      "section1Title": "1. Intermediary Scope & Broker Status",
-      "section1Content": "FormVault はチェコ保険販売法（第170/2018号）に基づき登録された保険仲介機関です。České pojištění a.s. と提携し、認定保険会社（PVZP、Slavia、SV pojišťovna）の契約仲介を行います。",
-      "section2Title": "2. Applicant Representations & Document Authenticity",
-      "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
-      "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
-      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.",
-      "section4Title": "4. Cancellations, Refunds & Visa Refusal Policy",
-      "section4Content": "In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier's contract terms.",
-      "section5Title": "5. Governing Law & Dispute Resolution",
-      "section5Content": "These terms and any agreements mediated via this platform are exclusively governed by and construed in accordance with the laws of the Czech Republic. Any disputes arising out of or in connection with our mediation services shall be subject to the exclusive jurisdiction of the competent courts of Prague, Czech Republic."
+      "subtitle": "チェコ・プラハにおいてFormVaultが提供する保険仲介サービスの利用規約。",
+      "section1Title": "1. 仲介業務および契約範囲",
+      "section1Content": "FormVaultはチェコ共和国において公認された保険仲介者として業務を行っています。本サービスは、チェコ法律第326/1999号に基づく正規引受保険会社への比較、申請サポート、契約取次を含みます。",
+      "section2Title": "2. 申請者の責任および申告内容の真実性",
+      "section2Content": "申請者は、正確かつ真正な個人情報、旅券情報、健康状態を申告するものとします。虚偽の申告は保険契約の無効およびチェコ内務省（OAMP）によるビザ却下の原因となります。",
+      "section3Title": "3. 保険証書の発行および契約成立",
+      "section3Content": "保険契約は、保険料の入金確認および保険会社による引受審査の完了をもって成立します。公式電子証明書（Potvrzení o pojištění）はメールにて送付されます。",
+      "section4Title": "4. ビザ却下時の契約解除および返金",
+      "section4Content": "在外公館またはチェコ内務省によりビザ・滞在許可が正式に却下された場合、公式却下通知書の提出により、各保険会社の解約約款に基づき返金を受ける権利を有します。",
+      "section5Title": "5. 準拠法および管轄裁判所",
+      "section5Content": "本規約および本サービスを通じて仲介される一切の契約は、チェコ共和国の法令に準拠します。一切の紛争はプラハの管轄裁判所を専属的管轄裁判所とします。"
     },
     "support": {
       "badge": "24時間365日クライアントケア＆仲介アシスタンス",
       "title": "カスタマーサポート＆ヘルプセンター",
-      "subtitle": "Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.",
-      "emailCardTitle": "Direct Email Dispatch",
-      "emailCardDesc": "For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: < 2 hours.",
-      "copyBtn": "Copy",
-      "copied": "Support email copied to clipboard: insurance@hktse.eu.org",
-      "composeEmail": "Compose Email",
-      "chatCardTitle": "Live Advisor Chat (Crisp)",
-      "chatCardDesc": "Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.",
-      "hours": "Mon - Fri: 09:00 - 18:00 CET",
-      "location": "Prague, Czechia",
-      "openChat": "Open Live Chat",
-      "chatOffline": "Live chat is initializing or currently offline. Please email us directly at insurance@hktse.eu.org",
-      "faqTitle": "Frequently Asked Questions",
-      "faqSubtitle": "Quick answers regarding foreign insurance requirements in the Czech Republic.",
+      "subtitle": "保険の申請、チェコビザの必要書類、保険金請求、または専任アドバイザーとのオンラインチャットをご利用いただけます。",
+      "emailCardTitle": "メールでのお問い合わせ",
+      "emailCardDesc": "保険証券の照会、大使館提出書類の確認、ビザ却下時の返金申請など。平均返答時間：2時間以内。",
+      "copyBtn": "コピー",
+      "copied": "サポートメールをコピーしました：insurance@hktse.eu.org",
+      "composeEmail": "メールを作成する",
+      "chatCardTitle": "アドバイザーチャット（Crisp）",
+      "chatCardDesc": "英語・中国語・チェコ語対応の公認保険スペシャリストと直接対話できます。欧州営業時間内に即時対応。",
+      "hours": "月 - 金: 09:00 - 18:00 CET（欧州時間）",
+      "location": "チェコ共和国 プラハ",
+      "openChat": "ライブチャットを開始",
+      "chatOffline": "ライブチャットは初期化中または現在オフラインです。insurance@hktse.eu.org まで直接メールをお送りください。",
+      "faqTitle": "よくあるご質問（FAQ）",
+      "faqSubtitle": "チェコ共和国における外国人向け保険に関する主な回答。",
       "faqs": {
-        "q1": "How fast will I receive my official insurance certificate after submission?",
-        "a1": "Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.",
-        "q2": "Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?",
-        "a2": "はい。当代理店ネットワーク（PVZP、Slavia、SV pojišťovna）を通じて発行されるすべての保険は、チェコ外国人滞在法（第326/1999号）に完全準拠し、最大10,000,000 CZKの総合医療保険（KZPC）を提供します。",
-        "q3": "What should I do if my visa application is refused by the Embassy?",
-        "a3": "If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.",
-        "q4": "How does medical claim reimbursement and direct billing work in Czechia?",
-        "a4": "For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.",
-        "q5": "Why are passport and student verification documents required?",
-        "a5": "Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings)."
-      }
+        "q1": "申請後、公式な保険証書はどれくらいで届きますか？",
+        "a1": "お支払いと引受確認完了後、通常1〜4営業時間以内に電子保険証明書（Potvrzení o pojištění）が発行され、ビザ申請用契約番号付きPDFが登録メール宛に届きます。",
+        "q2": "保険はチェコ内務省（OAMP）に100%承認されますか？",
+        "a2": "はい。当代理店が取り扱う保険はチェコ外国人滞在法（第326/1999号）に完全準拠し、内務省の公式中央台帳に登録されます。",
+        "q3": "大使館でビザが却下された場合はどうなりますか？",
+        "a3": "万が一ビザや滞在許可が却下された場合は、大使館またはOAMPからの正式な却下通知書のコピーを insurance@hktse.eu.org に送付いただくことで、保険料の解約・返金手続きを行います。",
+        "q4": "チェコ現地での医療費直接請求やキャッシュレス診療はどう利用しますか？",
+        "a4": "保険会社の提携病院（プラハのモトール病院、FNKV、VFN、ブルノのFNなど）では、保険カードを提示するだけでキャッシュレスで受診できます。非提携機関の場合は一旦立て替えて領収書と診断書を提出すれば、14日以内に払い戻されます。",
+        "q5": "なぜパスポートと学生証の提出が必要なのですか？",
+        "a5": "チェコの保険業法により、内務省登録のために外国人の本人確認が義務付けられています。また、学生証の提出により学生割引料金（最大30%オフ）が適用されます。"
+      },
+      "connectingChat": "アドバイザーに接続中..."
     },
     "privacy": {
       "badge": "EU一般データ保護規則（GDPR）およびチェコ法第110/2019号に完全準拠",
       "title": "プライバシーポリシーとデータ保護",
-      "subtitle": "Official declaration of how FormVault Insurance collects, processes, encrypts, and protects personal identity data for Czech Republic and European Union insurance applications.",
-      "section1Title": "1. Data Controller Identification",
-      "section1Content": "The data controller responsible for the processing of your personal data is FormVault Insurance Brokerage Services (operating in Prague, Czech Republic). For any inquiries regarding data protection or to contact our Data Protection Officer (DPO), please email: insurance@hktse.eu.org.",
-      "section2Title": "2. Purpose of Data Processing & Legal Basis",
-      "section2Intro": "We collect and process your identity details (Name, Date of Birth, Passport/ID copy, Student Status, Address) strictly for the following purposes:",
-      "section2Item1": "Binding and issuing health, travel, and student insurance policies with licensed underwriters;",
-      "section2Item2": "Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);",
-      "section2Item3": "Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.",
-      "section2Legal": "Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).",
-      "section3Title": "3. Hardware-Grade Encryption & Zero-Knowledge Storage",
-      "section3Content": "All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.",
-      "section4Title": "4. Your Rights Under GDPR (Articles 15-22)",
-      "section4Intro": "As an applicant, you possess the following enforceable statutory rights:",
-      "section4Item1": "Right of Access (Art. 15): Request a copy of all personal records we hold about you;",
-      "section4Item2": "Right to Rectification (Art. 16): Correct any incomplete or erroneous personal details;",
-      "section4Item3": "Right to Erasure / \"Right to be Forgotten\" (Art. 17): Request deletion of submitted documents where statutory retention periods permit;",
-      "section4Item4": "Right to Data Portability (Art. 20): Receive your structured data in standard machine-readable JSON/PDF.",
+      "subtitle": "チェコ共和国およびEUにおける個人情報の収集・暗号化・保護に関する公式方針。",
+      "section1Title": "1. 個人データ管理者",
+      "section1Content": "お客様の個人データを取り扱うデータ管理者は、FormVault保険仲介サービス（チェコ共和国プラハ）です。プライバシーに関するお問い合わせまたはDPO窓口：insurance@hktse.eu.org",
+      "section2Title": "2. データ処理の目的および法的根拠",
+      "section2Intro": "当社は、以下の正当な目的のためにお客様の個人情報（氏名、生年月日、旅券写し、学生証、住所等）を収集・処理します：",
+      "section2Item1": "認可保険会社との健康・旅行保険契約の締結および証券発行；",
+      "section2Item2": "チェコ外国人滞在法（法律番号 326/1999 Coll.、OAMP規制）の遵守；",
+      "section2Item3": "監査対応、不正防止、およびチェコ保険法に基づく公的アーカイブ保管。",
+      "section2Legal": "法的根拠：GDPR第6条第1項(b)（契約の履行）および第6条第1項(c)（法的義務の遵守）。",
+      "section3Title": "3. 暗号化およびゼロノウレッジ高水準セキュリティ",
+      "section3Content": "提出されたすべての旅券画像、身分証明書、個人記録は、固有のIVを用いたAES-256 GCM認証付き暗号化により保管されます。データベースは公共インターネットから隔離され、TLS 1.3通信で保護されています。",
+      "section4Title": "4. GDPRに基づくお客様の権利（第15条〜第22条）",
+      "section4Intro": "お客様にはEU法令に基づき、以下の権利が保障されています：",
+      "section4Item1": "アクセス権（第15条）：保管されている個人データの開示請求；",
+      "section4Item2": "訂正権（第16条）：不正確または不完全なデータの修正；",
+      "section4Item3": "消去権（第17条）：法令で定められた保存義務期間終了後の書類削除；",
+      "section4Item4": "データポータビリティ権（第20条）：機械可読な形式でのデータ受領。",
       "form": {
-        "title": "Exercise Your GDPR Rights",
-        "subtitle": "Submit an official data request directly to our Data Protection Officer. We will process and confirm your request within 30 calendar days as mandated by EU law.",
-        "requestAction": "Request Action",
+        "title": "GDPRに基づく権利の行使",
+        "subtitle": "当社のデータ保護責任者（DPO）宛に正式なデータ請求を送信できます。EU法に基づき30日以内に処理結果をご連絡します。",
+        "requestAction": "請求の種類",
         "types": {
-          "access": "Right of Access (Export My Data)",
-          "rectification": "Right to Rectification (Correct Errors)",
-          "erasure": "Right to Erasure (Delete My Documents)",
-          "portability": "Data Portability (Structured Machine Copy)"
+          "access": "アクセス権（データのエクスポート）",
+          "rectification": "訂正権（誤りの修正）",
+          "erasure": "消去権（提出書類の削除）",
+          "portability": "データポータビリティ（構造化コピー）"
         },
-        "fullName": "Full Legal Name",
-        "fullNamePlaceholder": "e.g. Jan Novak",
-        "registeredEmail": "Registered Email",
-        "registeredEmailPlaceholder": "e.g. jan@example.cz",
-        "refNumber": "Application Reference # (Optional)",
-        "refNumberPlaceholder": "e.g. APP-2026-001234",
-        "details": "Specific Notes / Request Details",
-        "detailsPlaceholder": "Specify which documents or corrections you are requesting...",
-        "submit": "Submit Formal GDPR Request",
-        "submitting": "Submitting...",
-        "validationError": "Please provide your full name and registered email address.",
-        "successTitle": "Request Recorded Successfully",
-        "successDesc": "Your statutory GDPR data request has been registered. Our Data Protection Officer will review and verify your identity within 30 days."
+        "fullName": "氏名（公的登録名）",
+        "fullNamePlaceholder": "例：山田 太郎",
+        "registeredEmail": "登録メールアドレス",
+        "registeredEmailPlaceholder": "例：taro@example.jp",
+        "refNumber": "申請参照番号（任意）",
+        "refNumberPlaceholder": "例：APP-2026-001234",
+        "details": "ご要望の詳細・注記",
+        "detailsPlaceholder": "対象となる書類や具体的な修正内容を記入してください...",
+        "submit": "GDPR請求を送信する",
+        "submitting": "送信中...",
+        "validationError": "氏名と登録メールアドレスを正しく入力してください。",
+        "successTitle": "請求を正常に受け付けました",
+        "successDesc": "法的請求が登録されました。データ保護責任者が本人確認を行った上で30日以内に対応いたします。"
       }
     }
   },
   "footer": {
-    "allRightsReserved": "All rights reserved.",
+    "allRightsReserved": "無断転載を禁じます。",
     "privacy": "プライバシー",
     "terms": "利用規約",
-    "support": "サポート",
-    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "support": "カスタマーサポート",
+    "brokerTitle": "FormVault 保険仲介・引受サービス",
     "brokerDesc": "チェコ共和国プラハの正規保険仲介ネットワーク。České pojištění a.s. と提携し、PVZP、Slavia、SV pojišťovna の公式認定パートナー。"
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "保存しました！",
       "sections": {
         "personal": "個人詳細",
-        "address": "住所"
+        "address": "住所",
+        "underwriting": "保険引受および契約仕様（チェコ保険登録データ）"
       },
       "fields": {
         "firstName": "名",
@@ -290,7 +313,15 @@
           "state": "都道府県",
           "zipCode": "郵便番号",
           "country": "国"
-        }
+        },
+        "gender": "性別",
+        "nationality": "国籍 / 市民権",
+        "placeOfBirth": "出生地（都市）",
+        "passportNumber": "パスポート番号",
+        "passportExpiry": "パスポート有効期限",
+        "commencementDate": "保険開始日",
+        "duration": "保険期間",
+        "typeOfStay": "チェコ滞在種別"
       },
       "insuranceType": {
         "label": "保険の種類",
@@ -395,6 +426,27 @@
       },
       "address": {
         "label": "住所"
+      },
+      "placeholders": {
+        "nationality": "例：日本、中国、アメリカ",
+        "placeOfBirth": "例：東京、大阪、プラハ",
+        "passportNumber": "例：TR1234567"
+      },
+      "genderOptions": {
+        "male": "男性",
+        "female": "女性"
+      },
+      "stayOptions": {
+        "student": "大学留学生",
+        "employment": "就労 / 労働許可",
+        "business": "自営業 / 営業許可 (Živnostenský list)",
+        "family": "家族呼び寄せ / 家族滞在"
+      },
+      "durationOptions": {
+        "m6": "6ヶ月",
+        "m12": "12ヶ月（1年間 - 標準）",
+        "m24": "24ヶ月（2年間）",
+        "m36": "36ヶ月（3年間）"
       }
     },
     "fileUpload": {
@@ -481,7 +533,13 @@
     "loading": "読み込み中...",
     "copy": "コピー",
     "notProvided": "未入力",
-    "notUploaded": "未アップロード"
+    "notUploaded": "未アップロード",
+    "close": "閉じる",
+    "selectLanguage": "言語を選択",
+    "theme": {
+      "light": "ライトモードに切り替え",
+      "dark": "ダークモードに切り替え"
+    }
   },
   "errors": {
     "general": "エラーが発生しました。",
@@ -493,11 +551,11 @@
     "goHome": "ホームに戻る"
   },
   "cookieConsent": {
-    "title": "EU GDPR & Cookie Compliance Notice",
-    "description": "We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our Privacy Policy.",
-    "acceptAll": "Accept All",
-    "essentialOnly": "Essential Only",
-    "privacyPolicy": "Privacy Policy"
+    "title": "CookieおよびGDPRプライバシー設定",
+    "description": "安全な書類送信とEU一般データ保護規則（GDPR 2016/679）遵守のため、必須Cookieを使用しています。お客様のデータはAES-256 GCMで暗号化されます。",
+    "acceptAll": "すべて同意する",
+    "essentialOnly": "必須のみ同意",
+    "privacyPolicy": "プライバシーポリシー"
   },
   "securityRail": {
     "title": "機関レベルのセキュリティレール",

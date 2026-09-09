@@ -74,7 +74,17 @@
         "currentStage": "Current Stage",
         "provideBothError": "Please provide both your Application Reference Number and registered Email.",
         "notFoundError": "No matching application found. Please verify your reference number and registered email address.",
-        "protected": "Protected"
+        "protected": "Protected",
+        "copyRefTooltip": "Copy reference code",
+        "refCopied": "Reference code copied to clipboard!",
+        "submittedOn": "Submitted On",
+        "underwritingStatus": "Underwriting Status",
+        "policyDelivery": "Policy Delivery",
+        "notFoundTitle": "Application Not Found",
+        "notFoundDesc": "No policy matches the reference number or email address provided. Please check your information.",
+        "supportNote": "Need urgent assistance with your visa application or policy? Contact our brokerage desk:",
+        "emailUs": "Email Us Directly",
+        "historyTitle": "Recent Searches"
       },
       "plans": {
         "badge": "Curated Coverage Tiers",
@@ -84,7 +94,16 @@
         "applyNow": "Apply Now",
         "perYear": "/ year",
         "perMonth": "/ month",
-        "customRate": "Custom Rate"
+        "customRate": "Custom Rate",
+        "selectPlan": "Select This Plan",
+        "mostPopular": "Most Popular",
+        "bestValue": "Best Value",
+        "coverageLimit": "Medical Coverage Limit",
+        "repatriation": "Repatriation & Medical Evacuation",
+        "dentalEmergency": "Emergency Dental Treatment",
+        "liabilityIncluded": "Personal Liability Included",
+        "unlimitedHospitalization": "Full Hospitalization in CZ",
+        "schengenCovered": "Valid Across Entire Schengen Area"
       },
       "partners": {
         "badge": "Underwriting Partners",
@@ -98,7 +117,9 @@
         "defaultTag": "Regulatory Notice",
         "defaultTitle": "Czech Foreigners Residence Act (326/1999 Coll.) Compliant Insurance",
         "defaultSubtitle": "All insurance certificates issued through our agency meet the latest OAMP Czech Ministry requirements for Long-Term Visa and Residence Permit applications.",
-        "defaultButton": "Apply Online"
+        "defaultButton": "Apply Online",
+        "lawCompliance": "Czech Foreigners Residence Act (326/1999 Coll.) Compliant Insurance",
+        "lawDetails": "All insurance certificates issued through our agency meet the latest OAMP Czech Ministry requirements for Long-Term Visa and Residence Permit applications."
       }
     },
     "personalInfo": {
@@ -211,7 +232,8 @@
         "a4": "For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.",
         "q5": "Why are passport and student verification documents required?",
         "a5": "Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings)."
-      }
+      },
+      "connectingChat": "Connecting to Underwriting Desk..."
     },
     "privacy": {
       "badge": "EU Regulation 2016/679 (GDPR) & Czech Act No. 110/2019 Coll. Compliant",
@@ -264,7 +286,7 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "support": "Support",
-    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "brokerTitle": "FormVault Insurance Brokerage Services",
     "brokerDesc": "Licensed insurance intermediary network in Prague, Czech Republic. In cooperation with České pojištění a.s., authorized partner for PVZP, Slavia & SV pojišťovna."
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "Personal information saved successfully!",
       "sections": {
         "personal": "Personal Details",
-        "address": "Address Information"
+        "address": "Address Information",
+        "underwriting": "Underwriting & Policy Specifications (Czech Registry Data)"
       },
       "fields": {
         "firstName": "First Name",
@@ -290,7 +313,15 @@
           "state": "State/Province",
           "zipCode": "ZIP/Postal Code",
           "country": "Country"
-        }
+        },
+        "gender": "Gender",
+        "nationality": "Nationality / Citizenship",
+        "placeOfBirth": "Place of Birth (City)",
+        "passportNumber": "Passport Number",
+        "passportExpiry": "Passport Expiration Date",
+        "commencementDate": "Insurance Start Date",
+        "duration": "Insurance Duration",
+        "typeOfStay": "Type of Stay in CZ"
       },
       "insuranceType": {
         "label": "Insurance Type",
@@ -395,6 +426,27 @@
             "required": "Please select a country"
           }
         }
+      },
+      "placeholders": {
+        "nationality": "e.g. CHINA, UKRAINE, INDIA",
+        "placeOfBirth": "e.g. Prague, Beijing, Kyiv",
+        "passportNumber": "e.g. EC1234567"
+      },
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "stayOptions": {
+        "student": "University Student",
+        "employment": "Employment / Work Permit",
+        "business": "Trade License / Business",
+        "family": "Family Reunification"
+      },
+      "durationOptions": {
+        "m6": "6 Months",
+        "m12": "12 Months (1 Year - Standard)",
+        "m24": "24 Months (2 Years)",
+        "m36": "36 Months (3 Years)"
       }
     },
     "fileUpload": {
@@ -481,7 +533,13 @@
     "loading": "Loading...",
     "copy": "Copy",
     "notProvided": "Not provided",
-    "notUploaded": "Not uploaded"
+    "notUploaded": "Not uploaded",
+    "close": "Close",
+    "selectLanguage": "Select Language",
+    "theme": {
+      "light": "Switch to light mode",
+      "dark": "Switch to dark mode"
+    }
   },
   "errors": {
     "general": "An error occurred. Please try again.",

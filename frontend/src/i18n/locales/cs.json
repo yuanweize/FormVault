@@ -6,7 +6,7 @@
   },
   "stepper": {
     "personalInfo": "Osobní Údaje",
-    "personalInfoShort": "Info",
+    "personalInfoShort": "Osobní údaje",
     "fileUpload": "Nahrání Dokumentů",
     "fileUploadShort": "Soubory",
     "review": "Kontrola a Odeslání",
@@ -74,7 +74,17 @@
         "currentStage": "Aktuální fáze",
         "provideBothError": "Zadejte prosím referenční číslo žádosti i registrovaný e-mail.",
         "notFoundError": "Žádná odpovídající žádost nebyla nalezena. Zkontrolujte prosím referenční číslo a registrovaný e-mail.",
-        "protected": "Chráněno"
+        "protected": "Chráněno",
+        "copyRefTooltip": "Zkopírovat referenční kód",
+        "refCopied": "Referenční kód byl zkopírován do schránky!",
+        "submittedOn": "Datum podání",
+        "underwritingStatus": "Stav schvalování (Underwriting)",
+        "policyDelivery": "Doručení pojistky",
+        "notFoundTitle": "Žádost nenalezena",
+        "notFoundDesc": "Pro zadané referenční číslo nebo e-mailovou adresu nebyla nalezena žádná pojistka. Zkontrolujte prosím zadané údaje.",
+        "supportNote": "Potřebujete urgentní pomoc s vízovou žádostí nebo pojistkou? Kontaktujte naši makléřskou kancelář:",
+        "emailUs": "Napište nám přímo na e-mail",
+        "historyTitle": "Nedávná vyhledávání"
       },
       "plans": {
         "badge": "Doporučené pojistné balíčky",
@@ -84,7 +94,16 @@
         "applyNow": "Zažádat nyní",
         "perYear": "/ rok",
         "perMonth": "/ měsíc",
-        "customRate": "Individuální sazba"
+        "customRate": "Individuální sazba",
+        "selectPlan": "Vybrat tento tarif",
+        "mostPopular": "Nejpopulárnější",
+        "bestValue": "Nejvýhodnější poměr cena/výkon",
+        "coverageLimit": "Limit pojistného plnění na léčebné výlohy",
+        "repatriation": "Repatriace a neodkladná přeprava",
+        "dentalEmergency": "Neodkladná zubní péče",
+        "liabilityIncluded": "Pojištění odpovědnosti za škodu v ceně",
+        "unlimitedHospitalization": "Komplexní ústavní hospitalizace v ČR",
+        "schengenCovered": "Platnost na celém území schengenského prostoru"
       },
       "partners": {
         "badge": "Partnerské pojišťovny",
@@ -98,7 +117,9 @@
         "defaultTag": "Zákonné oznámení",
         "defaultTitle": "Pojištění v plném souladu se zákonem o pobytu cizinců (č. 326/1999 Sb.)",
         "defaultSubtitle": "Všechna potvrzení o pojištění vydaná naší agenturou splňují nejnovější požadavky OAMP MV ČR pro žádosti o dlouhodobá víza a pobyty.",
-        "defaultButton": "Sjednat online"
+        "defaultButton": "Sjednat online",
+        "lawCompliance": "Pojištění v plném souladu se zákonem o pobytu cizinců v ČR (zák. č. 326/1999 Sb.)",
+        "lawDetails": "Všechny pojistné certifikáty vydané naší agenturou splňují nejnovější požadavky OAMP Ministerstva vnitra ČR pro dlouhodobá víza a povolení k pobytu."
       }
     },
     "personalInfo": {
@@ -211,7 +232,8 @@
         "a4": "Ve smluvních nemocnicích a klinikách (např. Motol, FNKV, VFN v Praze či FN Brno) stačí předložit průkaz pojištěnce pro bezhotovostní ošetření. V nesmluvních zařízeních uhradíte péči a s lékařskou zprávou a fakturou požádáte o proplacení do 14 dnů.",
         "q5": "Proč je vyžadován cestovní pas a potvrzení o studiu?",
         "a5": "Česká legislativa vyžaduje přesné ověření totožnosti cizince pro zápis smlouvy do registru MV ČR. Nahrání potvrzení o studiu Vám navíc zajistí studentskou slevu (až 30 % úspora)."
-      }
+      },
+      "connectingChat": "Připojování ke konzultantovi..."
     },
     "privacy": {
       "badge": "V souladu s nařízením EU 2016/679 (GDPR) a zákonem č. 110/2019 Sb.",
@@ -264,7 +286,7 @@
     "privacy": "Soukromí",
     "terms": "Podmínky",
     "support": "Podpora",
-    "brokerTitle": "FormVault Pojišťovací zprostředkovatel a upisovací služby",
+    "brokerTitle": "Zprostředkovatelské a pojišťovací služby FormVault",
     "brokerDesc": "Licencovaný zprostředkovatel pojištění v Praze, Česká republika. Ve spolupráci s České pojištění a.s., autorizovaný partner pro PVZP, Slavia a SV pojišťovnu."
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "Uloženo!",
       "sections": {
         "personal": "Osobní Detaily",
-        "address": "Adresa"
+        "address": "Adresa",
+        "underwriting": "Údaje pro sjednání pojištění (Registr pojišťoven ČR)"
       },
       "fields": {
         "firstName": "Jméno",
@@ -290,7 +313,15 @@
           "state": "Kraj/Stát",
           "zipCode": "PSČ",
           "country": "Země"
-        }
+        },
+        "gender": "Pohlaví",
+        "nationality": "Státní občanství",
+        "placeOfBirth": "Místo narození (Město)",
+        "passportNumber": "Číslo cestovního pasu",
+        "passportExpiry": "Platnost pasu do",
+        "commencementDate": "Počátek pojištění",
+        "duration": "Doba pojištění",
+        "typeOfStay": "Účel pobytu v ČR"
       },
       "insuranceType": {
         "label": "Typ Pojištění",
@@ -395,6 +426,27 @@
       },
       "address": {
         "label": "Adresa"
+      },
+      "placeholders": {
+        "nationality": "např. ČÍNA, UKRAJINA, INDIE",
+        "placeOfBirth": "např. Praha, Peking, Kyjev",
+        "passportNumber": "např. EC1234567"
+      },
+      "genderOptions": {
+        "male": "Muž",
+        "female": "Žena"
+      },
+      "stayOptions": {
+        "student": "Vysokoškolský student",
+        "employment": "Zaměstnání / Pracovní povolení",
+        "business": "Podnikání / Živnostenský list",
+        "family": "Sloučení rodiny"
+      },
+      "durationOptions": {
+        "m6": "6 měsíců",
+        "m12": "12 měsíců (1 rok - Standard)",
+        "m24": "24 měsíců (2 roky)",
+        "m36": "36 měsíců (3 roky)"
       }
     },
     "fileUpload": {
@@ -481,7 +533,13 @@
     "loading": "Načítání...",
     "copy": "Kopírovat",
     "notProvided": "Neuvedeno",
-    "notUploaded": "Nenahráno"
+    "notUploaded": "Nenahráno",
+    "close": "Zavřít",
+    "selectLanguage": "Vyberte jazyk",
+    "theme": {
+      "light": "Přepnout do světlého režimu",
+      "dark": "Přepnout do tmavého režimu"
+    }
   },
   "errors": {
     "general": "Došlo k chybě.",

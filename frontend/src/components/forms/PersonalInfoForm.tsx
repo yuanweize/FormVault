@@ -413,7 +413,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   fullWidth
                   size="medium"
                   label={t('forms.personalInfo.fields.nationality', { defaultValue: 'Nationality / Citizenship' })}
-                  placeholder="e.g. CHINA, UKRAINE, INDIA"
+                  placeholder={String(t('forms.personalInfo.placeholders.nationality', { defaultValue: 'e.g. CHINA, UKRAINE, INDIA' }))}
                   disabled={isLoading}
                 />
               )}
@@ -431,7 +431,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   fullWidth
                   size="medium"
                   label={t('forms.personalInfo.fields.placeOfBirth', { defaultValue: 'Place of Birth (City)' })}
-                  placeholder="e.g. Prague, Beijing, Kyiv"
+                  placeholder={String(t('forms.personalInfo.placeholders.placeOfBirth', { defaultValue: 'e.g. Prague, Beijing, Kyiv' }))}
                   disabled={isLoading}
                 />
               )}
@@ -449,7 +449,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                   fullWidth
                   size="medium"
                   label={t('forms.personalInfo.fields.passportNumber', { defaultValue: 'Passport Number' })}
-                  placeholder="e.g. EC1234567"
+                  placeholder={String(t('forms.personalInfo.placeholders.passportNumber', { defaultValue: 'e.g. EC1234567' }))}
                   disabled={isLoading}
                 />
               )}
@@ -471,10 +471,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                     labelId="stay-select-label"
                     label={t('forms.personalInfo.fields.typeOfStay', { defaultValue: 'Type of Stay in CZ' })}
                   >
-                    <MenuItem value="student">{t('forms.personalInfo.stayOptions.student', { defaultValue: 'University Student (Student)' })}</MenuItem>
-                    <MenuItem value="employment">{t('forms.personalInfo.stayOptions.employment', { defaultValue: 'Employment / Work Permit (Zaměstnání)' })}</MenuItem>
-                    <MenuItem value="business">{t('forms.personalInfo.stayOptions.business', { defaultValue: 'Trade License / Business (Živnostník)' })}</MenuItem>
-                    <MenuItem value="family">{t('forms.personalInfo.stayOptions.family', { defaultValue: 'Family Reunification (Sloučení rodiny)' })}</MenuItem>
+                    <MenuItem value="student">{t('forms.personalInfo.stayOptions.student', { defaultValue: 'University Student' })}</MenuItem>
+                    <MenuItem value="employment">{t('forms.personalInfo.stayOptions.employment', { defaultValue: 'Employment / Work Permit' })}</MenuItem>
+                    <MenuItem value="business">{t('forms.personalInfo.stayOptions.business', { defaultValue: 'Trade License / Business' })}</MenuItem>
+                    <MenuItem value="family">{t('forms.personalInfo.stayOptions.family', { defaultValue: 'Family Reunification' })}</MenuItem>
                   </Select>
                 )}
               />
@@ -496,10 +496,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                     labelId="duration-select-label"
                     label={t('forms.personalInfo.fields.duration', { defaultValue: 'Insurance Duration' })}
                   >
-                    <MenuItem value={6}>6 Months (Půl roku)</MenuItem>
-                    <MenuItem value={12}>12 Months / 1 Year (1 rok - Standard)</MenuItem>
-                    <MenuItem value={24}>24 Months / 2 Years (2 roky)</MenuItem>
-                    <MenuItem value={36}>36 Months / 3 Years (3 roky)</MenuItem>
+                    <MenuItem value={6}>{t('forms.personalInfo.durationOptions.m6', { defaultValue: '6 Months' })}</MenuItem>
+                    <MenuItem value={12}>{t('forms.personalInfo.durationOptions.m12', { defaultValue: '12 Months (1 Year)' })}</MenuItem>
+                    <MenuItem value={24}>{t('forms.personalInfo.durationOptions.m24', { defaultValue: '24 Months (2 Years)' })}</MenuItem>
+                    <MenuItem value={36}>{t('forms.personalInfo.durationOptions.m36', { defaultValue: '36 Months (3 Years)' })}</MenuItem>
                   </Select>
                 )}
               />

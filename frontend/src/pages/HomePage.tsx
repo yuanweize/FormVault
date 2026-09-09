@@ -297,7 +297,7 @@ const HomePage: React.FC = () => {
           <IconButton
             size="small"
             onClick={() => setBannerVisible(false)}
-            aria-label="close announcement"
+            aria-label={String(t('common.close', 'Close'))}
             sx={{
               position: 'absolute',
               top: { xs: 8, sm: 10 },

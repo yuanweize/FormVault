@@ -6,7 +6,7 @@
   },
   "stepper": {
     "personalInfo": "معلومات شخصية",
-    "personalInfoShort": "معلومات",
+    "personalInfoShort": "البيانات الشخصية",
     "fileUpload": "تحميل المستندات",
     "fileUploadShort": "ملفات",
     "review": "مراجعة وإرسال",
@@ -43,62 +43,83 @@
         "secureDesc": "بياناتك محمية",
         "multilingual": "دعم متعدد اللغات",
         "multilingualDesc": "متوفر بالإنجليزية والصينية والعربية وغيرها",
-        "mobile": "متوافق مع الجوال",
+        "mobile": "متوافق مع الأجهزة المحمولة",
         "mobileDesc": "أكمل طلبك على أي جهاز"
       },
-      "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
-      "trackMyApplication": "Track My Application",
+      "authorizedBroker": "وسيط تأمين أوروبي معتمد • معايير جمهورية التشيك والاتحاد الأوروبي",
+      "trackMyApplication": "متابعة حالة طلبي",
       "metrics": {
-        "actCompliance": "Czech OAMP Compliant",
-        "rapidApp": "Rapid Application",
-        "bankPrivacy": "Bank-Grade Privacy"
+        "actCompliance": "معتمد لدى وزارة الداخلية التشيكية (OAMP)",
+        "rapidApp": "تقديم سريع في أقل من 3 دقائق",
+        "bankPrivacy": "خصوصية وتشفير بمستوى مصرفي"
       },
       "securityBadges": {
-        "endToEnd": "End-to-End Encrypted Storage",
-        "autoEmail": "Automatic Tracking Confirmation Email"
+        "endToEnd": "تخزين مشفر وشامل من البداية إلى النهاية",
+        "autoEmail": "بريد إلكتروني تأكيدي تلقائي مع رمز التتبع"
       },
       "tracker": {
-        "title": "Track Application Status",
-        "subtitle": "Enter your tracking reference number and registered email address to check real-time underwriting progress.",
-        "refLabel": "Reference Number",
-        "refPlaceholder": "e.g. APP-2026-001234",
-        "emailLabel": "Registered Email",
-        "emailPlaceholder": "e.g. client@example.com",
-        "trackButton": "Track",
-        "tracking": "Tracking...",
-        "applicantName": "Applicant Name",
-        "registeredEmail": "Registered Email",
-        "lastUpdated": "Last Updated",
-        "recently": "Recently",
-        "timelineTitle": "Application Processing Timeline",
-        "currentStage": "Current Stage",
+        "title": "متابعة حالة طلب التأمين",
+        "subtitle": "أدخل رقم المرجع والبريد الإلكتروني المسجل للتحقق من مرحلة المعالجة في الوقت الفعلي.",
+        "refLabel": "رقم المرجع للطلب",
+        "refPlaceholder": "مثال: APP-2026-001234",
+        "emailLabel": "البريد الإلكتروني المسجل",
+        "emailPlaceholder": "مثال: ahmed@example.com",
+        "trackButton": "تحقق من الحالة",
+        "tracking": "جاري البحث...",
+        "applicantName": "اسم مقدم الطلب",
+        "registeredEmail": "البريد الإلكتروني المسجل",
+        "lastUpdated": "آخر تحديث",
+        "recently": "عمليات البحث الأخيرة",
+        "timelineTitle": "مراحل معالجة الطلب",
+        "currentStage": "المرحلة الحالية",
         "provideBothError": "يرجى تقديم كل من الرقم المرجعي للطلب والبريد الإلكتروني المسجل.",
         "notFoundError": "لم يتم العثور على طلب مطابق. يرجى التحقق من الرقم المرجعي والبريد الإلكتروني.",
-        "protected": "محمي"
+        "protected": "محمي",
+        "submittedOn": "تاريخ التقديم",
+        "underwritingStatus": "حالة الاكتتاب",
+        "policyDelivery": "إصدار الوثيقة",
+        "copyRefTooltip": "نسخ رقم المرجع",
+        "refCopied": "تم نسخ رقم المرجع إلى الحافظة!",
+        "notFoundTitle": "لم يتم العثور على الطلب",
+        "notFoundDesc": "لم يتم العثور على وثيقة مطابقة لرقم المرجع أو البريد الإلكتروني المدخل. يرجى التحقق من البيانات.",
+        "supportNote": "هل تحتاج إلى مساعدة عاجلة بخصوص تأشيرة التشيك أو وثيقة التأمين؟ تواصل مع مكتب الوساطة لدينا:",
+        "emailUs": "راسلنا عبر البريد الإلكتروني",
+        "historyTitle": "سجل الاستعلام الأخير"
       },
       "plans": {
-        "badge": "Curated Coverage Tiers",
-        "title": "Recommended Insurance Plans",
-        "subtitle": "Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.",
-        "choosePlan": "Choose Plan & Apply",
-        "applyNow": "Apply Now",
-        "perYear": "/ year",
-        "perMonth": "/ month",
-        "customRate": "سعر مخصص"
+        "badge": "الباقات المختارة",
+        "title": "خطط التأمين المعتمدة لجمهورية التشيك",
+        "subtitle": "مطابقة بنسبة 100% لقانون إقامة الأجانب في جمهورية التشيك (القانون رقم 326/1999) للحصول على تأشيرة الإقامة الطويلة وتصريح الإقامة.",
+        "choosePlan": "اختر الخطة وقدم الآن",
+        "applyNow": "قدم الآن",
+        "perYear": "/ سنوياً",
+        "perMonth": "/ شهرياً",
+        "customRate": "سعر مخصص",
+        "selectPlan": "اختر هذه الخطة",
+        "mostPopular": "الأكثر طلباً",
+        "bestValue": "أفضل قيمة",
+        "coverageLimit": "حد التغطية الطبية",
+        "repatriation": "الإعادة إلى الوطن والإخلاء الطبي الطارئ",
+        "dentalEmergency": "علاج الأسنان في حالات الطوارئ",
+        "liabilityIncluded": "المسؤولية المدنية مشمولة",
+        "unlimitedHospitalization": "تغطية كاملة للإقامة في المستشفى بالتشيك",
+        "schengenCovered": "سارية في جميع دول منطقة شنغن"
       },
       "partners": {
-        "badge": "Underwriting Partners",
-        "title": "Underwritten by Leading European Insurers",
-        "subtitle": "Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.",
-        "officialPortal": "Official Portal"
+        "badge": "شركاء التأمين المعتمدون",
+        "title": "شركات التأمين الرسمية المعتمدة في جمهورية التشيك",
+        "subtitle": "يتم تسجيل جميع الوثائق مباشرة في السجل المركزي لوزارة الداخلية التشيكية (OAMP) وشرطة الأجانب.",
+        "officialPortal": "البوابة الرسمية"
       },
       "banner": {
-        "notice": "Notice",
-        "learnMore": "Apply Online",
+        "notice": "إشعار تنظيمي وقانوني",
+        "learnMore": "تقديم الطلب عبر الإنترنت",
         "defaultTag": "إشعار تنظيمي",
         "defaultTitle": "تأمين متوافق مع قانون إقامة الأجانب في جمهورية التشيك (رقم 326/1999)",
         "defaultSubtitle": "جميع شهادات التأمين الصادرة من خلال وكالتنا تلبي متطلبات وزارة الداخلية التشيكية (OAMP) لتأشيرات الإقامة الطويلة وتصاريح الإقامة.",
-        "defaultButton": "التقديم عبر الإنترنت"
+        "defaultButton": "التقديم عبر الإنترنت",
+        "lawCompliance": "تأمين معتمد وفقاً لقانون إقامة الأجانب التشيكي (رقم 326/1999)",
+        "lawDetails": "جميع شهادات التأمين الصادرة عبر وكالتنا تلبي أحدث المتطلبات الرسمية لوزارة الداخلية التشيكية (OAMP) لطلبات التأشيرات طويلة الأجل وتصاريح الإقامة."
       }
     },
     "personalInfo": {
@@ -171,91 +192,92 @@
     "terms": {
       "badge": "تخضع للقانون المدني التشيكي (القانون رقم 89/2012) وقانون توزيع التأمين (القانون رقم 170/2018)",
       "title": "شروط الخدمة",
-      "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
-      "section1Title": "1. Intermediary Scope & Broker Status",
-      "section1Content": "تعمل FormVault كوسيط تأميني مرخص بموجب القانون التشيكي رقم 170/2018. بالتعاون مع České pojištění a.s.، نساعدك في التعاقد مع شركات التأمين المعتمدة (PVZP وSlavia وSV pojišťovna).",
-      "section2Title": "2. Applicant Representations & Document Authenticity",
-      "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
-      "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
-      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.",
-      "section4Title": "4. Cancellations, Refunds & Visa Refusal Policy",
-      "section4Content": "In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier's contract terms.",
-      "section5Title": "5. Governing Law & Dispute Resolution",
-      "section5Content": "These terms and any agreements mediated via this platform are exclusively governed by and construed in accordance with the laws of the Czech Republic. Any disputes arising out of or in connection with our mediation services shall be subject to the exclusive jurisdiction of the competent courts of Prague, Czech Republic."
+      "subtitle": "شروط وأحكام خدمات وساطة التأمين المقدمة من FormVault في براغ، جمهورية التشيك.",
+      "section1Title": "1. موضوع الوساطة ونطاق الخدمات",
+      "section1Content": "تعمل FormVault كوسيط تأمين مرخص في جمهورية التشيك. تشمل الخدمات المقارنة والمساعدة في إعداد وتقديم طلبات التأمين الصحي لشركات التأمين المعتمدة وفقاً للقانون رقم 326/1999.",
+      "section2Title": "2. التزامات مقدم الطلب وصحة البيانات",
+      "section2Content": "يلتزم مقدم الطلب بتقديم بيانات شخصية ومعلومات جواز سفر وتاريخ صحي صحيحة ودقيقة. تقديم أي بيانات كاذبة قد يؤدي إلى بطلان وثيقة التأمين ورفض التأشيرة من قبل إدارة OAMP التشيكية.",
+      "section3Title": "3. إصدار شهادة التأمين وإتمام العقد",
+      "section3Content": "يعد عقد التأمين نافذاً فقط بعد تأكيد سداد الرسوم وموافقة الاكتتاب من قبل شركة التأمين. يتم إرسال الشهادة الإلكترونية الرسمية (Potvrzení o pojištění) مباشرة عبر البريد الإلكتروني.",
+      "section4Title": "4. حقوق الإلغاء والاسترداد في حال رفض التأشيرة",
+      "section4Content": "في حال رفض طلب التأشيرة أو تصريح الإقامة رسمياً من قبل السفارة أو OAMP، يحق لمقدم الطلب استرداد الأقساط المدفوعة وفقاً لشروط الإلغاء الخاصة بشركة التأمين وبموجب تقديم وثيقة الرفض الرسمية.",
+      "section5Title": "5. القانون الواجب التطبيق والاختصاص القضائي",
+      "section5Content": "تخضع هذه الشروط وكافة الاتفاقيات المبرمة عبر هذه المنصة حصرياً لقوانين جمهورية التشيك. وتختص المحاكم المختصة في براغ، جمهورية التشيك، حصرياً بالنظر في أي نزاع."
     },
     "support": {
       "badge": "دعم العملاء على مدار الساعة ومساعدة الوساطة",
       "title": "خدمة العملاء ومركز المساعدة",
-      "subtitle": "Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.",
-      "emailCardTitle": "Direct Email Dispatch",
-      "emailCardDesc": "For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: < 2 hours.",
-      "copyBtn": "Copy",
-      "copied": "Support email copied to clipboard: insurance@hktse.eu.org",
-      "composeEmail": "Compose Email",
-      "chatCardTitle": "Live Advisor Chat (Crisp)",
-      "chatCardDesc": "Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.",
-      "hours": "Mon - Fri: 09:00 - 18:00 CET",
-      "location": "Prague, Czechia",
-      "openChat": "Open Live Chat",
-      "chatOffline": "Live chat is initializing or currently offline. Please email us directly at insurance@hktse.eu.org",
-      "faqTitle": "Frequently Asked Questions",
-      "faqSubtitle": "Quick answers regarding foreign insurance requirements in the Czech Republic.",
+      "subtitle": "احصل على المساعدة بخصوص طلبات التأمين، متطلبات مستندات التأشيرة التشيكية، مطالبات التعويض، أو المحادثة المباشرة مع مستشار تأمين.",
+      "emailCardTitle": "المراسلة المباشرة عبر البريد الإلكتروني",
+      "emailCardDesc": "للتحقق من وثائق التأمين، استفسارات السفارة، أو تقديم طلبات الاسترداد عند الرفض. متوسط وقت الاستجابة: أقل من ساعتين.",
+      "copyBtn": "نسخ",
+      "copied": "تم نسخ بريد الدعم إلى الحافظة: insurance@hktse.eu.org",
+      "composeEmail": "إنشاء رسالة بريد إلكتروني",
+      "chatCardTitle": "محادثة مباشرة مع مستشار (Crisp)",
+      "chatCardDesc": "تواصل مباشرة مع خبير تأمين معتمد باللغات الإنجليزية أو الصينية أو التشيكية أو العربية. مساعدة فورية خلال ساعات العمل الأوروبية.",
+      "hours": "الاثنين - الجمعة: 09:00 - 18:00 بتوقيت وسط أوروبا",
+      "location": "براغ، جمهورية التشيك",
+      "openChat": "بدء المحادثة المباشرة",
+      "chatOffline": "المحادثة المباشرة قيد التهيئة أو غير متاحة حالياً. يرجى مراسلتنا مباشرة عبر: insurance@hktse.eu.org",
+      "faqTitle": "الأسئلة الشائعة",
+      "faqSubtitle": "إجابات سريعة حول متطلبات التأمين الصحي للأجانب في جمهورية التشيك.",
       "faqs": {
-        "q1": "How fast will I receive my official insurance certificate after submission?",
-        "a1": "Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.",
-        "q2": "Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?",
-        "a2": "نعم. جميع الوثائق الصادرة عبر شبكتنا (PVZP, Slavia, SV pojišťovna) متوافقة تماماً مع قانون إقامة الأجانب التشيكي برقم 326/1999، وتوفر تأميناً شاملاً يصل إلى 10,000,000 كرونة تشيكية.",
-        "q3": "What should I do if my visa application is refused by the Embassy?",
-        "a3": "If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.",
-        "q4": "How does medical claim reimbursement and direct billing work in Czechia?",
-        "a4": "For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.",
-        "q5": "Why are passport and student verification documents required?",
-        "a5": "Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings)."
-      }
+        "q1": "ما مدى سرعة استلام شهادة التأمين الرسمية بعد تقديم الطلب؟",
+        "a1": "يتم إصدار الشهادة الإلكترونية الرسمية (Potvrzení o pojištění) خلال 1 إلى 4 ساعات عمل بعد مراجعة الاكتتاب وتأكيد الدفع. ستتلقى ملف PDF المعتمد شاملاً رقم العقد المناسب لتقديمه إلى السفارة أو OAMP.",
+        "q2": "هل وثائق التأمين الصادرة مقبولة بنسبة 100% لدى وزارة الداخلية التشيكية (OAMP)؟",
+        "a2": "نعم، جميع وثائق التأمين التي نتوسط فيها متوافقة تماماً مع القانون رقم 326/1999 ومسجلة في النظام المركزي لوزارة الداخلية وشرطة الأجانب.",
+        "q3": "ماذا أفعل إذا تم رفض طلب التأشيرة من قبل السفارة؟",
+        "a3": "إذا تم رفض التأشيرة أو تصريح الإقامة رسمياً، فيحق لك استرداد المبلغ وفقاً لشروط الإلغاء. يكفي إرسال نسخة من قرار الرفض الرسمي إلى insurance@hktse.eu.org لبدء إجراءات الاسترداد.",
+        "q4": "كيف يعمل نظام السداد المباشر والتعويض الطبي في التشيك؟",
+        "a4": "في المستشفيات والمراكز المتعاقدة مع شركة التأمين (مثل مستشفى موكول، FNKV، VFN في براغ أو FN برنو)، يكفي إبراز بطاقة التأمين لتلقي العلاج دون دفع نقدي مسبق. في المرافق غير المتعاقدة، يتم دفع الفاتورة وتقديم التقرير الطبي لاسترداد المبلغ خلال 14 يوماً.",
+        "q5": "لماذا يُطلب جواز السفر ومستند إثبات الطالب؟",
+        "a5": "يفرض قانون التأمين التشيكي التحقق الصارم من هوية الرعايا الأجانب لتسجيل العقد في السجل المركزي. كما يتيح مستند الطالب الحصول على خصومات الطلاب المعتمدة (تصل إلى 30%)."
+      },
+      "connectingChat": "جاري الاتصال بمستشار التأمين..."
     },
     "privacy": {
       "badge": "متوافق مع اللائحة العامة لحماية البيانات (GDPR) والقانون التشيكي رقم 110/2019",
       "title": "سياسة الخصوصية وحماية البيانات",
-      "subtitle": "Official declaration of how FormVault Insurance collects, processes, encrypts, and protects personal identity data for Czech Republic and European Union insurance applications.",
-      "section1Title": "1. Data Controller Identification",
-      "section1Content": "The data controller responsible for the processing of your personal data is FormVault Insurance Brokerage Services (operating in Prague, Czech Republic). For any inquiries regarding data protection or to contact our Data Protection Officer (DPO), please email: insurance@hktse.eu.org.",
-      "section2Title": "2. Purpose of Data Processing & Legal Basis",
-      "section2Intro": "We collect and process your identity details (Name, Date of Birth, Passport/ID copy, Student Status, Address) strictly for the following purposes:",
-      "section2Item1": "Binding and issuing health, travel, and student insurance policies with licensed underwriters;",
-      "section2Item2": "Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);",
-      "section2Item3": "Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.",
-      "section2Legal": "Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).",
-      "section3Title": "3. Hardware-Grade Encryption & Zero-Knowledge Storage",
-      "section3Content": "All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.",
-      "section4Title": "4. Your Rights Under GDPR (Articles 15-22)",
-      "section4Intro": "As an applicant, you possess the following enforceable statutory rights:",
-      "section4Item1": "Right of Access (Art. 15): Request a copy of all personal records we hold about you;",
-      "section4Item2": "Right to Rectification (Art. 16): Correct any incomplete or erroneous personal details;",
-      "section4Item3": "Right to Erasure / \"Right to be Forgotten\" (Art. 17): Request deletion of submitted documents where statutory retention periods permit;",
-      "section4Item4": "Right to Data Portability (Art. 20): Receive your structured data in standard machine-readable JSON/PDF.",
+      "subtitle": "الإعلان الرسمي حول كيفية جمع ومعالجة وتشفير وحماية البيانات الشخصية لطلبات التأمين في التشيك والاتحاد الأوروبي.",
+      "section1Title": "1. الجهة المسؤولة عن معالجة البيانات",
+      "section1Content": "الجهة المسؤولة عن معالجة بياناتك الشخصية هي خدمات وساطة التأمين FormVault (المقر في براغ، جمهورية التشيك). لأي استفسارات تتعلق بحماية البيانات أو للتواصل مع مسؤول حماية البيانات (DPO): insurance@hktse.eu.org.",
+      "section2Title": "2. الغرض من معالجة البيانات والأساس القانوني",
+      "section2Intro": "نقوم بجمع ومعالجة بيانات الهوية الخاصة بك (الاسم، تاريخ الميلاد، صورة جواز السفر، حالة الطالب، العنوان) حصرياً للأغراض التالية:",
+      "section2Item1": "إبرام وإصدار وثائق التأمين الصحي وتأمين السفر مع شركات التأمين المرخصة؛",
+      "section2Item2": "الامتثال لقانون إقامة الأجانب في جمهورية التشيك (القانون رقم 326/1999، متطلبات OAMP)؛",
+      "section2Item3": "التدقيق والتحقق، ومنع الاحتيال، والحفظ التنظيمي بموجب قانون التأمين التشيكي.",
+      "section2Legal": "الأساس القانوني: المادة 6(1)(b) من اللائحة العامة لحماية البيانات (تنفيذ العقد) والمادة 6(1)(c) (الامتثال للالتزامات القانونية).",
+      "section3Title": "3. التشفير الفائق والتخزين الآمن المتقدم",
+      "section3Content": "يتم تشفير جميع مستندات جواز السفر وبطاقات الهوية والسجلات الشخصية أثناء التخزين باستخدام تشفير AES-256 GCM المعتمد مع متجهات تهيئة فريدة (IV). قواعد البيانات معزولة عن الإنترنت العام وتعتمد اتصالات TLS 1.3 المشفرة.",
+      "section4Title": "4. حقوقك بموجب اللائحة العامة لحماية البيانات (المواد 15-22)",
+      "section4Intro": "بصفتك مقدم طلب، تتمتع بالحقوق القانونية التالية القابلة للتنفيذ:",
+      "section4Item1": "حق الوصول (المادة 15): طلب نسخة من جميع السجلات الشخصية المحفوظة لديك لدينا؛",
+      "section4Item2": "حق التصحيح (المادة 16): تصحيح أي بيانات شخصية غير دقيقة أو غير كاملة؛",
+      "section4Item3": "حق المحو / 'الحق في النسيان' (المادة 17): طلب حذف المستندات بمجرد انتهاء فترات الحفظ القانونية الإلزامية؛",
+      "section4Item4": "حق نقل البيانات (المادة 20): استلام بياناتك المهيكلة بتنسيق قياسي قابل للقراءة آلياً.",
       "form": {
-        "title": "Exercise Your GDPR Rights",
-        "subtitle": "Submit an official data request directly to our Data Protection Officer. We will process and confirm your request within 30 calendar days as mandated by EU law.",
-        "requestAction": "Request Action",
+        "title": "ممارسة حقوقك بموجب GDPR",
+        "subtitle": "أرسل طلباً رسمياً إلى مسؤول حماية البيانات لدينا. سنقوم بمعالجة وتأكيد طلبك خلال 30 يوماً تقويمياً وفقاً لقوانين الاتحاد الأوروبي.",
+        "requestAction": "نوع الإجراء المطلوب",
         "types": {
-          "access": "Right of Access (Export My Data)",
-          "rectification": "Right to Rectification (Correct Errors)",
-          "erasure": "Right to Erasure (Delete My Documents)",
-          "portability": "Data Portability (Structured Machine Copy)"
+          "access": "حق الوصول (تصدير بياناتي)",
+          "rectification": "حق التصحيح (تعديل الأخطاء)",
+          "erasure": "حق المحو (حذف وثائقي)",
+          "portability": "حق نقل البيانات (نسخة منظمة)"
         },
-        "fullName": "Full Legal Name",
-        "fullNamePlaceholder": "e.g. Jan Novak",
-        "registeredEmail": "Registered Email",
-        "registeredEmailPlaceholder": "e.g. jan@example.cz",
-        "refNumber": "Application Reference # (Optional)",
-        "refNumberPlaceholder": "e.g. APP-2026-001234",
-        "details": "Specific Notes / Request Details",
-        "detailsPlaceholder": "Specify which documents or corrections you are requesting...",
-        "submit": "Submit Formal GDPR Request",
-        "submitting": "Submitting...",
-        "validationError": "Please provide your full name and registered email address.",
-        "successTitle": "Request Recorded Successfully",
-        "successDesc": "Your statutory GDPR data request has been registered. Our Data Protection Officer will review and verify your identity within 30 days."
+        "fullName": "الاسم القانوني الكامل",
+        "fullNamePlaceholder": "مثال: أحمد المنصوري",
+        "registeredEmail": "البريد الإلكتروني المسجل",
+        "registeredEmailPlaceholder": "مثال: ahmed@example.com",
+        "refNumber": "رقم مرجع الطلب (اختياري)",
+        "refNumberPlaceholder": "مثال: APP-2026-001234",
+        "details": "ملاحظات وتفاصيل الطلب",
+        "detailsPlaceholder": "حدد المستندات أو التصحيحات التي تطلبها بالتفصيل...",
+        "submit": "إرسال طلب GDPR رسمي",
+        "submitting": "جاري الإرسال...",
+        "validationError": "يرجى تقديم الاسم الكامل والبريد الإلكتروني المسجل.",
+        "successTitle": "تم تسجيل الطلب بنجاح",
+        "successDesc": "تم تسجيل طلب حماية البيانات الرسمي الخاص بك. سيقوم مسؤول حماية البيانات بمراجعة هويتك والرد في غضون 30 يوماً."
       }
     }
   },
@@ -263,8 +285,8 @@
     "allRightsReserved": "جميع الحقوق محفوظة.",
     "privacy": "الخصوصية",
     "terms": "الشروط",
-    "support": "الدعم",
-    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "support": "الدعم والمساعدة",
+    "brokerTitle": "خدمات وساطة واكتتاب التأمين FormVault",
     "brokerDesc": "شبكة وساطة تأمينية مرخصة في براغ، جمهورية التشيك. بالتعاون مع České pojištění a.s.، شريك معتمد لـ PVZP وSlavia وSV pojišťovna."
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "تم الحفظ!",
       "sections": {
         "personal": "تفاصيل شخصية",
-        "address": "العنوان"
+        "address": "العنوان",
+        "underwriting": "بيانات الاكتتاب وإصدار الوثيقة (سجل التأمين التشيكي)"
       },
       "fields": {
         "firstName": "الاسم الأول",
@@ -290,7 +313,15 @@
           "state": "الولاية/المقاطعة",
           "zipCode": "الرمز البريدي",
           "country": "الدولة"
-        }
+        },
+        "gender": "الجنس",
+        "nationality": "الجنسية / المواطنة",
+        "placeOfBirth": "مكان الميلاد (المدينة)",
+        "passportNumber": "رقم جواز السفر",
+        "passportExpiry": "تاريخ انتهاء جواز السفر",
+        "commencementDate": "تاريخ بدء التأمين",
+        "duration": "مدة التأمين",
+        "typeOfStay": "نوع الإقامة في التشيك"
       },
       "insuranceType": {
         "label": "نوع التأمين",
@@ -395,6 +426,27 @@
       },
       "address": {
         "label": "العنوان"
+      },
+      "placeholders": {
+        "nationality": "مثال: مصر، الإمارات، السعودية",
+        "placeOfBirth": "مثال: القاهرة، دبي، الرياض",
+        "passportNumber": "مثال: A12345678"
+      },
+      "genderOptions": {
+        "male": "ذكر",
+        "female": "أنثى"
+      },
+      "stayOptions": {
+        "student": "طالب جامعي",
+        "employment": "عمل / تصريح عمل",
+        "business": "نشاط تجاري / رخصة حرة",
+        "family": "لم شمل الأسرة"
+      },
+      "durationOptions": {
+        "m6": "6 أشهر",
+        "m12": "12 شهراً (سنة واحدة - قياسي)",
+        "m24": "24 شهراً (سنتان)",
+        "m36": "36 شهراً (3 سنوات)"
       }
     },
     "fileUpload": {
@@ -481,7 +533,13 @@
     "loading": "جاري التحميل...",
     "copy": "نسخ",
     "notProvided": "غير مقدم",
-    "notUploaded": "غير محمل"
+    "notUploaded": "غير محمل",
+    "close": "إغلاق",
+    "selectLanguage": "اختر اللغة",
+    "theme": {
+      "light": "التبديل إلى الوضع الفاتح",
+      "dark": "التبديل إلى الوضع الداكن"
+    }
   },
   "errors": {
     "general": "حدث خطأ.",
@@ -493,11 +551,11 @@
     "goHome": "العودة للرئيسية"
   },
   "cookieConsent": {
-    "title": "EU GDPR & Cookie Compliance Notice",
-    "description": "We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our Privacy Policy.",
-    "acceptAll": "Accept All",
-    "essentialOnly": "Essential Only",
-    "privacyPolicy": "Privacy Policy"
+    "title": "إشعار ملفات تعريف الارتباط والخصوصية (GDPR)",
+    "description": "نستخدم ملفات تعريف الارتباط الضرورية لضمان تقديم الطلبات بأمان والامتثال للائحة حماية البيانات العامة في الاتحاد الأوروبي (GDPR 2016/679). مستنداتك مشفرة بالكامل بتقنية AES-256 GCM.",
+    "acceptAll": "قبول الكل",
+    "essentialOnly": "الضرورية فقط",
+    "privacyPolicy": "سياسة الخصوصية"
   },
   "securityRail": {
     "title": "شريط الأمان المؤسسي",

@@ -34,7 +34,7 @@ const languages: Language[] = [
 ];
 
 const LanguageSelector: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -52,18 +52,20 @@ const LanguageSelector: React.FC = () => {
     i18n.changeLanguage(languageCode);
     if (typeof window !== 'undefined') {
       localStorage.setItem('formvault-language', languageCode);
+      localStorage.setItem('i18nextLng', languageCode);
     }
     handleClose();
   };
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const activeLangCode = (i18n.language || 'en').split('-')[0].toLowerCase();
+  const currentLanguage = languages.find(lang => lang.code === activeLangCode) || languages[0];
 
   return (
     <Box>
       <IconButton
         color="inherit"
         onClick={handleClick}
-        aria-label="select language"
+        aria-label={String(t('common.selectLanguage') && t('common.selectLanguage') !== 'common.selectLanguage' ? t('common.selectLanguage') : 'select language')}
         aria-controls={open ? 'language-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}

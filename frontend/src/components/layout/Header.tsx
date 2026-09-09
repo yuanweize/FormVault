@@ -147,12 +147,22 @@ const Header: React.FC = () => {
             gap: { xs: 1, sm: 2 },
           }}
         >
-          <Tooltip title={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+          <Tooltip
+            title={
+              mode === 'dark'
+                ? t('common.theme.light', { defaultValue: 'Switch to light mode' })
+                : t('common.theme.dark', { defaultValue: 'Switch to dark mode' })
+            }
+          >
             <IconButton
               onClick={toggleColorMode}
               color="inherit"
               size="medium"
-              aria-label="toggle dark mode"
+              aria-label={
+                String(mode === 'dark'
+                  ? t('common.theme.light', { defaultValue: 'Switch to light mode' })
+                  : t('common.theme.dark', { defaultValue: 'Switch to dark mode' }))
+              }
               sx={{
                 borderRadius: '10px',
                 border:

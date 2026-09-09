@@ -6,7 +6,7 @@
   },
   "stepper": {
     "personalInfo": "Informações Pessoais",
-    "personalInfoShort": "Info",
+    "personalInfoShort": "Dados pessoais",
     "fileUpload": "Envio de Documentos",
     "fileUploadShort": "Arquivos",
     "review": "Revisar e Enviar",
@@ -46,59 +46,80 @@
         "mobile": "Compatível com Mobile",
         "mobileDesc": "Complete sua solicitação em qualquer dispositivo"
       },
-      "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
-      "trackMyApplication": "Track My Application",
+      "authorizedBroker": "Corretor de seguros europeu autorizado • Padrões da República Checa e UE",
+      "trackMyApplication": "Consultar o estado da candidatura",
       "metrics": {
-        "actCompliance": "Czech OAMP Compliant",
-        "rapidApp": "Rapid Application",
-        "bankPrivacy": "Bank-Grade Privacy"
+        "actCompliance": "Conforme aos critérios OAMP checo",
+        "rapidApp": "Candidatura rápida < 3 min",
+        "bankPrivacy": "Privacidade de nível bancário"
       },
       "securityBadges": {
-        "endToEnd": "End-to-End Encrypted Storage",
-        "autoEmail": "Automatic Tracking Confirmation Email"
+        "endToEnd": "Armazenamento encriptado ponto a ponto",
+        "autoEmail": "Email de confirmação automático com código de rastreio"
       },
       "tracker": {
-        "title": "Track Application Status",
-        "subtitle": "Enter your tracking reference number and registered email address to check real-time underwriting progress.",
-        "refLabel": "Reference Number",
-        "refPlaceholder": "e.g. APP-2026-001234",
-        "emailLabel": "Registered Email",
-        "emailPlaceholder": "e.g. client@example.com",
-        "trackButton": "Track",
-        "tracking": "Tracking...",
-        "applicantName": "Applicant Name",
-        "registeredEmail": "Registered Email",
-        "lastUpdated": "Last Updated",
-        "recently": "Recently",
-        "timelineTitle": "Application Processing Timeline",
-        "currentStage": "Current Stage",
+        "title": "Consultar estado da candidatura",
+        "subtitle": "Introduza o número de referência e o email registado para verificar o progresso em tempo real.",
+        "refLabel": "Número de referência da candidatura",
+        "refPlaceholder": "ex. APP-2026-001234",
+        "emailLabel": "Email registado",
+        "emailPlaceholder": "ex. cliente@exemplo.pt",
+        "trackButton": "Consultar estado",
+        "tracking": "A pesquisar...",
+        "applicantName": "Nome do requerente",
+        "registeredEmail": "Email registado",
+        "lastUpdated": "Última atualização",
+        "recently": "Recente",
+        "timelineTitle": "Etapas de processamento da candidatura",
+        "currentStage": "Fase atual",
         "provideBothError": "Por favor, forneça o número de referência do pedido e o e-mail registado.",
         "notFoundError": "Nenhum pedido correspondente encontrado. Verifique o número de referência e o e-mail.",
-        "protected": "Protegido"
+        "protected": "Protegido",
+        "submittedOn": "Data de submissão",
+        "underwritingStatus": "Estado de subscrição",
+        "policyDelivery": "Emissão da apólice",
+        "copyRefTooltip": "Copiar código de referência",
+        "refCopied": "Código copiado para a área de transferência!",
+        "notFoundTitle": "Candidatura não encontrada",
+        "notFoundDesc": "Nenhuma apólice encontrada com os dados facultados. Por favor, confirme as informações.",
+        "supportNote": "Necessita de apoio urgente para o seu visto checo ou apólice? Contacte o nosso escritório:",
+        "emailUs": "Envie-nos um email",
+        "historyTitle": "Pesquisas recentes"
       },
       "plans": {
-        "badge": "Curated Coverage Tiers",
-        "title": "Recommended Insurance Plans",
-        "subtitle": "Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.",
-        "choosePlan": "Choose Plan & Apply",
-        "applyNow": "Apply Now",
-        "perYear": "/ year",
-        "perMonth": "/ month",
-        "customRate": "Taxa personalizada"
+        "badge": "Planos selecionados",
+        "title": "Planos de seguro certificados para a República Checa",
+        "subtitle": "Garantia de 100% de aceitação perante a Lei de Residência de Estrangeiros (Lei n.º 326/1999) para emissão de visto de longa duração e autorização de residência.",
+        "choosePlan": "Escolher plano e candidatar-se",
+        "applyNow": "Candidatar-se agora",
+        "perYear": "/ ano",
+        "perMonth": "/ mês",
+        "customRate": "Taxa personalizada",
+        "selectPlan": "Selecionar este plano",
+        "mostPopular": "Mais procurado",
+        "bestValue": "Melhor custo-benefício",
+        "coverageLimit": "Limite de cobertura médica",
+        "repatriation": "Repatriação e emergência médica",
+        "dentalEmergency": "Atendimento odontológico de urgência",
+        "liabilityIncluded": "Responsabilidade civil incluída",
+        "unlimitedHospitalization": "Internamento hospitalar integral",
+        "schengenCovered": "Válido em todo o Espaço Schengen"
       },
       "partners": {
-        "badge": "Underwriting Partners",
-        "title": "Underwritten by Leading European Insurers",
-        "subtitle": "Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.",
-        "officialPortal": "Official Portal"
+        "badge": "Seguradoras parceiras oficiais",
+        "title": "Seguradoras parceiras oficiais na República Checa",
+        "subtitle": "Todas as apólices são emitidas e registadas diretamente junto do Ministério do Interior checo (OAMP) e da Polícia de Estrangeiros.",
+        "officialPortal": "Portal oficial"
       },
       "banner": {
-        "notice": "Notice",
-        "learnMore": "Apply Online",
+        "notice": "Aviso Regulamentar",
+        "learnMore": "Candidatar-se online",
         "defaultTag": "Aviso regulatório",
         "defaultTitle": "Seguro em conformidade com a Lei de Residência de Estrangeiros da Chéquia (nº 326/1999)",
         "defaultSubtitle": "Todos os certificados emitidos pela nossa agência cumprem os requisitos do OAMP para vistos de longa duração e autorizações de residência.",
-        "defaultButton": "Candidatar-se online"
+        "defaultButton": "Candidatar-se online",
+        "lawCompliance": "Seguro em conformidade com a Lei de Residência de Estrangeiros da Chéquia (326/1999)",
+        "lawDetails": "Todos os certificados de seguro emitidos através da nossa agência cumprem os requisitos mais recentes do OAMP do Ministério do Interior checo para vistos e autorizações de residência."
       }
     },
     "personalInfo": {
@@ -171,91 +192,92 @@
     "terms": {
       "badge": "Regido pelo Código Civil Checo (Lei nº 89/2012) e Lei de Distribuição de Seguros (Lei nº 170/2018)",
       "title": "Termos de Serviço",
-      "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
-      "section1Title": "1. Intermediary Scope & Broker Status",
-      "section1Content": "A FormVault opera como intermediária de seguros registada nos termos da Lei Checa nº 170/2018 Coll. Em cooperação com a České pojištění a.s., intermediamos contratos com seguradoras oficiais (PVZP, Slavia e SV pojišťovna).",
-      "section2Title": "2. Applicant Representations & Document Authenticity",
-      "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
-      "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
-      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.",
-      "section4Title": "4. Cancellations, Refunds & Visa Refusal Policy",
-      "section4Content": "In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier's contract terms.",
-      "section5Title": "5. Governing Law & Dispute Resolution",
-      "section5Content": "These terms and any agreements mediated via this platform are exclusively governed by and construed in accordance with the laws of the Czech Republic. Any disputes arising out of or in connection with our mediation services shall be subject to the exclusive jurisdiction of the competent courts of Prague, Czech Republic."
+      "subtitle": "Condições de intermediação de seguros prestados pela FormVault em Praga, República Checa.",
+      "section1Title": "1. Objeto da mediação e âmbito do serviço",
+      "section1Content": "A FormVault atua como intermediária de seguros autorizada na República Checa. Os serviços abrangem a comparação, assistência ao preenchimento e encaminhamento de pedidos de seguros de saúde para seguradoras licenciadas segundo a Lei n.º 326/1999.",
+      "section2Title": "2. Responsabilidades do requerente e veracidade das declarações",
+      "section2Content": "O requerente compromete-se a fornecer dados de identificação, passaporte e histórico de saúde fidedignos. Declarações falsas podem invalidar o contrato e originar recusa do visto pelo OAMP.",
+      "section3Title": "3. Emissão do certificado e formalização da apólice",
+      "section3Content": "A apólice considera-se contratada após confirmação do pagamento e aceitação técnica pela seguradora. O certificado eletrónico oficial (Potvrzení o pojištění) será enviado por correio eletrónico.",
+      "section4Title": "4. Direito de rescisão e reembolsos por indeferimento de visto",
+      "section4Content": "Em caso de recusa formal do visto ou autorização de residência pelas autoridades consulares ou OAMP, o requerente tem direito ao reembolso de acordo com as condições da seguradora, mediante envio da prova de recusa.",
+      "section5Title": "5. Lei aplicável e foro competente",
+      "section5Content": "Os presentes termos regem-se exclusivamente pela legislação da República Checa. Qualquer litígio será dirimido pelos tribunais competentes de Praga, República Checa."
     },
     "support": {
       "badge": "Atendimento 24/7 e Assistência de Corretagem",
       "title": "Apoio ao Cliente e Centro de Ajuda",
-      "subtitle": "Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.",
-      "emailCardTitle": "Direct Email Dispatch",
-      "emailCardDesc": "For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: < 2 hours.",
-      "copyBtn": "Copy",
-      "copied": "Support email copied to clipboard: insurance@hktse.eu.org",
-      "composeEmail": "Compose Email",
-      "chatCardTitle": "Live Advisor Chat (Crisp)",
-      "chatCardDesc": "Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.",
-      "hours": "Mon - Fri: 09:00 - 18:00 CET",
-      "location": "Prague, Czechia",
-      "openChat": "Open Live Chat",
-      "chatOffline": "Live chat is initializing or currently offline. Please email us directly at insurance@hktse.eu.org",
-      "faqTitle": "Frequently Asked Questions",
-      "faqSubtitle": "Quick answers regarding foreign insurance requirements in the Czech Republic.",
+      "subtitle": "Obtenha apoio com candidaturas, requisitos de vistos checos, processos de reembolso ou converse em tempo real com um mediador.",
+      "emailCardTitle": "Comunicação direta por Email",
+      "emailCardDesc": "Para confirmação de apólice, esclarecimentos com embaixadas ou formulários de reembolso. Resposta média: < 2 horas.",
+      "copyBtn": "Copiar",
+      "copied": "Email de suporte copiado para a área de transferência: insurance@hktse.eu.org",
+      "composeEmail": "Compor Email",
+      "chatCardTitle": "Chat de Atendimento (Crisp)",
+      "chatCardDesc": "Fale em direto com um especialista em inglês, chinês ou checo. Atendimento célere durante o horário comercial europeu.",
+      "hours": "Seg - Sex: 09:00 - 18:00 CET",
+      "location": "Praga, Chéquia",
+      "openChat": "Iniciar Chat",
+      "chatOffline": "O chat ao vivo está a iniciar ou encontra-se temporariamente indisponível. Contacte-nos através de insurance@hktse.eu.org",
+      "faqTitle": "Perguntas Frequentes",
+      "faqSubtitle": "Respostas rápidas sobre as exigências de seguro de saúde para estrangeiros na Chéquia.",
       "faqs": {
-        "q1": "How fast will I receive my official insurance certificate after submission?",
-        "a1": "Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.",
-        "q2": "Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?",
-        "a2": "Sim. Todas as apólices mediadas através da nossa rede (PVZP, Slavia, SV pojišťovna) cumprem rigorosamente a Lei de Residência de Estrangeiros (Lei nº 326/1999 Coll.), com cobertura até 10.000.000 CZK.",
-        "q3": "What should I do if my visa application is refused by the Embassy?",
-        "a3": "If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.",
-        "q4": "How does medical claim reimbursement and direct billing work in Czechia?",
-        "a4": "For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.",
-        "q5": "Why are passport and student verification documents required?",
-        "a5": "Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings)."
-      }
+        "q1": "Com que rapidez recebo o certificado oficial após submissão?",
+        "a1": "Os certificados eletrónicos oficiais (Potvrzení o pojištění) são emitidos entre 1 e 4 horas úteis após a liquidação e validação. Receberá o ficheiro PDF assinado digitalmente no seu email.",
+        "q2": "As vossas apólices são 100% aceites pelo OAMP checo?",
+        "a2": "Sim, todas as apólices cumprem rigorosamente a Lei 326/1999 e são aceites pelo Ministério do Interior da República Checa.",
+        "q3": "O que fazer se o meu visto for recusado pela Embaixada?",
+        "a3": "Em caso de indeferimento oficial, basta enviar o comprovativo do OAMP/Embaixada para insurance@hktse.eu.org para solicitar o cancelamento e reembolso.",
+        "q4": "Como funciona o reembolso e comparticipação médica na Chéquia?",
+        "a4": "Nos hospitais da rede convencionada da seguradora (ex. Motol, FNKV, VFN em Praga), basta apresentar o cartão de seguro. Em clínicas privadas não convencionadas, efetue o pagamento e solicite o reembolso no prazo de 14 dias.",
+        "q5": "Por que motivo são pedidos o passaporte e o comprovativo de estudante?",
+        "a5": "A legislação checa exige a verificação inequívoca da identidade de cidadãos estrangeiros para registo central. O comprovativo de estudante garante acesso a tarifas com desconto universitário de até 30%."
+      },
+      "connectingChat": "A ligar ao mediador de seguros..."
     },
     "privacy": {
       "badge": "Em conformidade com RGPD da UE 2016/679 e Lei Checa nº 110/2019",
       "title": "Política de Privacidade e Proteção de Dados",
-      "subtitle": "Official declaration of how FormVault Insurance collects, processes, encrypts, and protects personal identity data for Czech Republic and European Union insurance applications.",
-      "section1Title": "1. Data Controller Identification",
-      "section1Content": "The data controller responsible for the processing of your personal data is FormVault Insurance Brokerage Services (operating in Prague, Czech Republic). For any inquiries regarding data protection or to contact our Data Protection Officer (DPO), please email: insurance@hktse.eu.org.",
-      "section2Title": "2. Purpose of Data Processing & Legal Basis",
-      "section2Intro": "We collect and process your identity details (Name, Date of Birth, Passport/ID copy, Student Status, Address) strictly for the following purposes:",
-      "section2Item1": "Binding and issuing health, travel, and student insurance policies with licensed underwriters;",
-      "section2Item2": "Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);",
-      "section2Item3": "Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.",
-      "section2Legal": "Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).",
-      "section3Title": "3. Hardware-Grade Encryption & Zero-Knowledge Storage",
-      "section3Content": "All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.",
-      "section4Title": "4. Your Rights Under GDPR (Articles 15-22)",
-      "section4Intro": "As an applicant, you possess the following enforceable statutory rights:",
-      "section4Item1": "Right of Access (Art. 15): Request a copy of all personal records we hold about you;",
-      "section4Item2": "Right to Rectification (Art. 16): Correct any incomplete or erroneous personal details;",
-      "section4Item3": "Right to Erasure / \"Right to be Forgotten\" (Art. 17): Request deletion of submitted documents where statutory retention periods permit;",
-      "section4Item4": "Right to Data Portability (Art. 20): Receive your structured data in standard machine-readable JSON/PDF.",
+      "subtitle": "Declaração oficial sobre recolha, tratamento, encriptação e proteção de dados para seguros na Chéquia e União Europeia.",
+      "section1Title": "1. Identificação do Responsável pelo Tratamento",
+      "section1Content": "O responsável pelo tratamento dos seus dados pessoais é o serviço de corretagem FormVault (com sede em Praga, República Checa). Para qualquer dúvida ou para contactar o Encarregado da Proteção de Dados (DPO): insurance@hktse.eu.org.",
+      "section2Title": "2. Finalidades do Tratamento e Base Jurídica",
+      "section2Intro": "Recolhemos os seus dados (Nome, Data de Nascimento, Cópia de Passaporte, Situação Académica, Morada) exclusivamente para:",
+      "section2Item1": "Contratação e emissão de seguros de saúde e viagem com seguradoras parceiras;",
+      "section2Item2": "Cumprimento das obrigações da Lei de Residência de Estrangeiros na República Checa (Lei n.º 326/1999, regras OAMP);",
+      "section2Item3": "Auditorias legais, prevenção contra fraudes e arquivo regulatório.",
+      "section2Legal": "Base jurídica: Artigo 6.º, n.º 1, alínea b) do RGPD (execução contratual) e alínea c) (obrigação legal).",
+      "section3Title": "3. Encriptação de Alta Segurança e Armazenamento Protegido",
+      "section3Content": "Todos os documentos e registos transmitidos à FormVault são protegidos em repouso com encriptação AES-256 GCM com vetores de inicialização únicos. Acesso estritamente isolado e comunicações por TLS 1.3.",
+      "section4Title": "4. Direitos do Titular dos Dados (Artigos 15.º a 22.º do RGPD)",
+      "section4Intro": "Enquanto requerente, assistem-lhe os seguintes direitos legais:",
+      "section4Item1": "Direito de Acesso (Art. 15.º): solicitar cópia dos seus dados registados;",
+      "section4Item2": "Direito de Retificação (Art. 16.º): corrigir dados incorretos ou incompletos;",
+      "section4Item3": "Direito ao Apagamento (Art. 17.º): solicitar a eliminação dos seus documentos, salvaguardados os prazos legais de conservação;",
+      "section4Item4": "Direito à Portabilidade (Art. 20.º): obter os seus dados estruturados em formato legível por máquina.",
       "form": {
-        "title": "Exercise Your GDPR Rights",
-        "subtitle": "Submit an official data request directly to our Data Protection Officer. We will process and confirm your request within 30 calendar days as mandated by EU law.",
-        "requestAction": "Request Action",
+        "title": "Exercer Direitos RGPD",
+        "subtitle": "Submeta um pedido formal ao nosso Encarregado da Proteção de Dados. Daremos seguimento no prazo máximo de 30 dias.",
+        "requestAction": "Ação pretendida",
         "types": {
-          "access": "Right of Access (Export My Data)",
-          "rectification": "Right to Rectification (Correct Errors)",
-          "erasure": "Right to Erasure (Delete My Documents)",
-          "portability": "Data Portability (Structured Machine Copy)"
+          "access": "Direito de Acesso (Exportar Dados)",
+          "rectification": "Direito de Retificação (Corrigir Erros)",
+          "erasure": "Direito ao Apagamento (Eliminar Documentos)",
+          "portability": "Portabilidade de Dados (Cópia Estruturada)"
         },
-        "fullName": "Full Legal Name",
-        "fullNamePlaceholder": "e.g. Jan Novak",
-        "registeredEmail": "Registered Email",
-        "registeredEmailPlaceholder": "e.g. jan@example.cz",
-        "refNumber": "Application Reference # (Optional)",
-        "refNumberPlaceholder": "e.g. APP-2026-001234",
-        "details": "Specific Notes / Request Details",
-        "detailsPlaceholder": "Specify which documents or corrections you are requesting...",
-        "submit": "Submit Formal GDPR Request",
-        "submitting": "Submitting...",
-        "validationError": "Please provide your full name and registered email address.",
-        "successTitle": "Request Recorded Successfully",
-        "successDesc": "Your statutory GDPR data request has been registered. Our Data Protection Officer will review and verify your identity within 30 days."
+        "fullName": "Nome Legal Completo",
+        "fullNamePlaceholder": "ex. João Silva",
+        "registeredEmail": "Email Registado",
+        "registeredEmailPlaceholder": "ex. joao@exemplo.pt",
+        "refNumber": "N.º de Referência da Candidatura (Opcional)",
+        "refNumberPlaceholder": "ex. APP-2026-001234",
+        "details": "Pormenores do Pedido",
+        "detailsPlaceholder": "Especifique que dados ou correções pretende solicitar...",
+        "submit": "Submeter Pedido RGPD",
+        "submitting": "A submeter...",
+        "validationError": "Por favor, preencha o nome completo e o email registado.",
+        "successTitle": "Pedido Registado com Sucesso",
+        "successDesc": "O seu pedido de proteção de dados foi registado. O nosso DPO irá analisar a solicitação no prazo de 30 dias."
       }
     }
   },
@@ -263,8 +285,8 @@
     "allRightsReserved": "Todos os direitos reservados.",
     "privacy": "Privacidade",
     "terms": "Termos",
-    "support": "Suporte",
-    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "support": "Apoio ao Cliente & Suporte",
+    "brokerTitle": "Serviços de Corretagem de Seguros FormVault",
     "brokerDesc": "Rede de mediação de seguros licenciada em Praga, República Checa. Em cooperação com České pojištění a.s., parceiro autorizado de PVZP, Slavia e SV pojišťovna."
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "Salvo!",
       "sections": {
         "personal": "Detalhes Pessoais",
-        "address": "Endereço"
+        "address": "Endereço",
+        "underwriting": "Dados para a subscrição da apólice (Registo de Seguros da Chéquia)"
       },
       "fields": {
         "firstName": "Nome",
@@ -290,7 +313,15 @@
           "state": "Estado",
           "zipCode": "CEP",
           "country": "País"
-        }
+        },
+        "gender": "Gênero",
+        "nationality": "Nacionalidade / Cidadania",
+        "placeOfBirth": "Local de nascimento (Cidade)",
+        "passportNumber": "Número do passaporte",
+        "passportExpiry": "Data de validade do passaporte",
+        "commencementDate": "Data de início do seguro",
+        "duration": "Duração do seguro",
+        "typeOfStay": "Tipo de permanência na Chéquia"
       },
       "insuranceType": {
         "label": "Tipo de Seguro",
@@ -395,6 +426,27 @@
       },
       "address": {
         "label": "Endereço"
+      },
+      "placeholders": {
+        "nationality": "ex. BRASIL, PORTUGAL, ANGOLA",
+        "placeOfBirth": "ex. São Paulo, Lisboa, Rio de Janeiro",
+        "passportNumber": "ex. CS123456"
+      },
+      "genderOptions": {
+        "male": "Masculino",
+        "female": "Feminino"
+      },
+      "stayOptions": {
+        "student": "Estudante universitário",
+        "employment": "Trabalho / Autorização de residência para trabalho",
+        "business": "Atividade independente / Comércio",
+        "family": "Reagrupamento familiar"
+      },
+      "durationOptions": {
+        "m6": "6 meses",
+        "m12": "12 meses (1 ano - Padrão)",
+        "m24": "24 meses (2 anos)",
+        "m36": "36 meses (3 anos)"
       }
     },
     "fileUpload": {
@@ -481,7 +533,13 @@
     "loading": "Carregando...",
     "copy": "Copiar",
     "notProvided": "Não fornecido",
-    "notUploaded": "Não enviado"
+    "notUploaded": "Não enviado",
+    "close": "Fechar",
+    "selectLanguage": "Selecionar idioma",
+    "theme": {
+      "light": "Alternar para modo claro",
+      "dark": "Alternar para modo escuro"
+    }
   },
   "errors": {
     "general": "Ocorreu um erro.",
@@ -493,11 +551,11 @@
     "goHome": "Voltar ao Início"
   },
   "cookieConsent": {
-    "title": "EU GDPR & Cookie Compliance Notice",
-    "description": "We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our Privacy Policy.",
-    "acceptAll": "Accept All",
-    "essentialOnly": "Essential Only",
-    "privacyPolicy": "Privacy Policy"
+    "title": "Aviso de Cookies e Privacidade RGPD",
+    "description": "Utilizamos cookies estritamente necessários para assegurar o envio encriptado e a conformidade com o Regulamento (UE) 2016/679 (RGPD). Os seus documentos são salvaguardados com encriptação AES-256 GCM.",
+    "acceptAll": "Aceitar todos",
+    "essentialOnly": "Apenas essenciais",
+    "privacyPolicy": "Política de Privacidade"
   },
   "securityRail": {
     "title": "Barra de segurança institucional",

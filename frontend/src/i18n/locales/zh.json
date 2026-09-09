@@ -74,7 +74,17 @@
         "currentStage": "当前处理阶段",
         "provideBothError": "请同时提供申请参考编号与注册邮箱。",
         "notFoundError": "未找到匹配的申请记录。请核对您的申请编号与注册邮箱。",
-        "protected": "受保护"
+        "protected": "受保护",
+        "copyRefTooltip": "复制申请参考号",
+        "refCopied": "申请参考号已复制到剪贴板！",
+        "submittedOn": "提交申请日期",
+        "underwritingStatus": "保司核保状态",
+        "policyDelivery": "保单签发与送达",
+        "notFoundTitle": "未找到相关申请记录",
+        "notFoundDesc": "未能检索到与该参考号或注册邮箱匹配的保单记录，请仔细核对输入信息。",
+        "supportNote": "需要签证申请或保单核发方面的紧急协助？请联系我司专属经纪团队：",
+        "emailUs": "直接发送电子邮件咨询",
+        "historyTitle": "近期查询记录"
       },
       "plans": {
         "badge": "官方精选保险套餐",
@@ -84,7 +94,16 @@
         "applyNow": "立即申请",
         "perYear": "/ 年",
         "perMonth": "/ 月",
-        "customRate": "定制报价"
+        "customRate": "定制报价",
+        "selectPlan": "选择此方案并投保",
+        "mostPopular": "最受欢迎推荐",
+        "bestValue": "性价比之选",
+        "coverageLimit": "医疗赔偿最高限额",
+        "repatriation": "紧急医疗运送与遗体送返",
+        "dentalEmergency": "紧急牙科急性治疗",
+        "liabilityIncluded": "含第三者个人责任险",
+        "unlimitedHospitalization": "捷克全境综合住院保障",
+        "schengenCovered": "全申根区多国通行有效"
       },
       "partners": {
         "badge": "承保合作保司",
@@ -98,7 +117,9 @@
         "defaultTag": "官方合规声明",
         "defaultTitle": "经捷克《外国人居留法》（第 326/1999 号法律）合规认证之官方保险",
         "defaultSubtitle": "通过我司代理签发的所有保险凭证均 100% 符合捷克内政部移民局 (OAMP) 针对长期签证与居留许可申请的最新法定承保标准。",
-        "defaultButton": "即刻在线申请"
+        "defaultButton": "即刻在线申请",
+        "lawCompliance": "符合捷克《外国人居留法》（第 326/1999 号法令）合规保险",
+        "lawDetails": "通过我司代理签发的所有保险凭单均完全符合捷克内政部难民与移民政策司（OAMP）针对长期签证与居留许可申请的最新监管要求。"
       }
     },
     "personalInfo": {
@@ -211,7 +232,8 @@
         "a4": "在与承保公司签约的公立医院与诊所（如布拉格的 Motol、FNKV、VFN 或布尔诺的 FN Brno），只需出示实体或电子保险卡即可享受免现金直付结算。若在非签约机构就诊，可先行垫付并保存病历和发票，事后提交理赔，通常 14 天内即可获得赔付。",
         "q5": "为什么必须提供护照和学生身份证明？",
         "a5": "捷克保险法律及内政部监管要求对外国公民进行严格的实名验证，以确保保单顺利完成官方备案。上传有效学生证或在读证明还可享受专属大学生优惠费率（最高可优惠 30%）。"
-      }
+      },
+      "connectingChat": "正在连接核保咨询专员..."
     },
     "privacy": {
       "badge": "符合欧盟通用数据保护条例 (GDPR) 及捷克第 110/2019 号数据处理法",
@@ -264,7 +286,7 @@
     "privacy": "隐私政策",
     "terms": "服务条款",
     "support": "支持",
-    "brokerTitle": "FormVault 保险经纪与核保代理服务中心",
+    "brokerTitle": "FormVault 保险经纪与核保服务平台",
     "brokerDesc": "捷克布拉格正规合规保险中介网络。携手 České pojištění a.s.，官方代理 PVZP、Slavia 与 SV pojišťovna 综合医疗保险。"
   },
   "forms": {
@@ -275,7 +297,8 @@
       "success": "个人信息保存成功！",
       "sections": {
         "personal": "个人详情",
-        "address": "地址信息"
+        "address": "地址信息",
+        "underwriting": "捷克保司核保与出单信息（直通监管登记）"
       },
       "fields": {
         "firstName": "名字",
@@ -290,7 +313,15 @@
           "state": "州/省",
           "zipCode": "邮政编码",
           "country": "国家"
-        }
+        },
+        "gender": "性别",
+        "nationality": "国籍 / 公民身份",
+        "placeOfBirth": "出生城市",
+        "passportNumber": "护照号码",
+        "passportExpiry": "护照到期日",
+        "commencementDate": "保单起保日期",
+        "duration": "投保期限",
+        "typeOfStay": "在捷居留身份"
       },
       "insuranceTypes": {
         "health": "健康保险",
@@ -395,6 +426,27 @@
           "life": "人寿险",
           "travel": "欧洲申根旅行险"
         }
+      },
+      "placeholders": {
+        "nationality": "例如：CHINA、UKRAINE、INDIA",
+        "placeOfBirth": "例如：北京、上海、布拉格",
+        "passportNumber": "例如：EC1234567"
+      },
+      "genderOptions": {
+        "male": "男 (Male)",
+        "female": "女 (Female)"
+      },
+      "stayOptions": {
+        "student": "大学留学生 (Student)",
+        "employment": "工作许可 / 雇员 (Employment)",
+        "business": "自雇贸易许可 (Trade License)",
+        "family": "家庭团聚 (Family Reunification)"
+      },
+      "durationOptions": {
+        "m6": "6 个月 (半年)",
+        "m12": "12 个月 (1 年标准期)",
+        "m24": "24 个月 (2 年长期期)",
+        "m36": "36 个月 (3 年全周期)"
       }
     },
     "fileUpload": {
@@ -446,7 +498,13 @@
     "loading": "加载中...",
     "copy": "复制",
     "notProvided": "未提供",
-    "notUploaded": "未上传"
+    "notUploaded": "未上传",
+    "close": "关闭",
+    "selectLanguage": "选择语言",
+    "theme": {
+      "light": "切换至明亮模式",
+      "dark": "切换至深色模式"
+    }
   },
   "errors": {
     "general": "发生错误，请重试。",
