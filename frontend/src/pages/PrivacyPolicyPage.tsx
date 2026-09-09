@@ -127,13 +127,31 @@ const PrivacyPolicyPage: React.FC = () => {
             <Stack spacing={3}>
               <Box>
                 <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-                  {t('pages.privacy.section1Title', { defaultValue: '1. Data Controller Identification' })}
+                  {t('pages.privacy.section1Title', { defaultValue: '1. Data Processing Architecture & Intermediary Role' })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
-                  {t('pages.privacy.section1Content', {
+                  {t('pages.privacy.section1Lead', {
                     defaultValue:
-                      'The data controller responsible for the processing of your personal data is FormVault Insurance Brokerage Services (operating in Prague, Czech Republic). For any inquiries regarding data protection or to contact our Data Protection Officer (DPO), please email: insurance@hktse.eu.org.',
+                      'The technical application infrastructure is operated by ',
                   })}
+                  <a
+                    href="https://hktse.eu.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#4F46E5', fontWeight: 700, textDecoration: 'none' }}
+                  >
+                    HKTSE s.r.o.
+                  </a>
+                  {' (IČO: 10858032, Municipal Court in Prague). Insurance distribution and underwriting mediation is conducted in authorized cooperation with '}
+                  <a
+                    href="https://ceskepojisteni.cz/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#4F46E5', fontWeight: 700, textDecoration: 'none' }}
+                  >
+                    České pojištění a.s.
+                  </a>
+                  {', an independent intermediary supervised by the Czech National Bank (ČNB). Underwriter partners and our platform act as joint or independent controllers under GDPR Article 26/28. For data privacy inquiries or DPO correspondence, email: insurance@hktse.eu.org.'}
                 </Typography>
               </Box>
 
@@ -182,13 +200,13 @@ const PrivacyPolicyPage: React.FC = () => {
               <Box>
                 <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
                   {t('pages.privacy.section3Title', {
-                    defaultValue: '3. Hardware-Grade Encryption & Zero-Knowledge Storage',
+                    defaultValue: '3. AES-256 GCM Storage Vault & Underwriter RBAC Isolation',
                   })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
                   {t('pages.privacy.section3Content', {
                     defaultValue:
-                      'All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.',
+                      'All uploaded passport copies, student confirmation letters, and identity records are symmetrically encrypted at rest using AES-256-GCM authenticated encryption with per-file salt and unique nonces (FV_GCM_V1 envelope). Access to decrypted records is strictly restricted through role-based access control (RBAC) to verified operational underwriters, with all review and export actions recorded in audit trails.',
                   })}
                 </Typography>
               </Box>

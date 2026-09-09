@@ -19,6 +19,7 @@ from fastapi import UploadFile
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 import base64
 from sqlalchemy.orm import Session
 
@@ -32,6 +33,11 @@ from ..core.exceptions import (
 )
 
 logger = logging.getLogger(__name__)
+
+# Standard FormVault AES-256-GCM authenticated container constants
+MAGIC_HEADER = b"FV_GCM_V1"
+SALT_LEN = 16
+NONCE_LEN = 12
 
 
 class SecureFileStorage:
@@ -101,6 +107,47 @@ class SecureFileStorage:
 
         # Ensure local dir exists (always needed for key storage or fallback)
         self.upload_dir.mkdir(exist_ok=True, mode=0o750)
+
+    def _derive_aes_key(self, salt: bytes) -> bytes:
+        """Derive 256-bit AES key using PBKDF2-HMAC-SHA256 from SECRET_KEY and per-file salt."""
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=100000,
+        )
+        return kdf.derive(self.settings.SECRET_KEY.encode("utf-8"))
+
+    def encrypt_content(self, content: bytes) -> bytes:
+        """
+        Encrypt file content with authenticated AES-256-GCM.
+        Packed format:
+          MAGIC_HEADER (9B) + Salt (16B) + Nonce (12B) + Ciphertext + Tag (16B)
+        """
+        salt = secrets.token_bytes(SALT_LEN)
+        nonce = secrets.token_bytes(NONCE_LEN)
+        key = self._derive_aes_key(salt)
+        aesgcm = AESGCM(key)
+        ciphertext_and_tag = aesgcm.encrypt(nonce, content, MAGIC_HEADER)
+        return MAGIC_HEADER + salt + nonce + ciphertext_and_tag
+
+    def decrypt_content(self, encrypted_data: bytes) -> bytes:
+        """
+        Decrypt file content authenticated with AES-256-GCM.
+        Supports dual-mode: automatically falls back to raw data if MAGIC_HEADER is absent.
+        """
+        if not encrypted_data.startswith(MAGIC_HEADER):
+            # Unencrypted legacy file fallback for smooth migration
+            return encrypted_data
+
+        hdr_len = len(MAGIC_HEADER)
+        salt = encrypted_data[hdr_len : hdr_len + SALT_LEN]
+        nonce = encrypted_data[hdr_len + SALT_LEN : hdr_len + SALT_LEN + NONCE_LEN]
+        ciphertext_and_tag = encrypted_data[hdr_len + SALT_LEN + NONCE_LEN :]
+
+        key = self._derive_aes_key(salt)
+        aesgcm = AESGCM(key)
+        return aesgcm.decrypt(nonce, ciphertext_and_tag, MAGIC_HEADER)
 
     def _get_or_create_encryption_key(self) -> bytes:
         """Get or create encryption key derived deterministically from SECRET_KEY."""
@@ -203,11 +250,13 @@ class SecureFileStorage:
             return decrypted_data.decode()
         except Exception as e:
             logger.error(f"Failed to decrypt filename {encrypted_filename}: {e}")
+            return encrypted_filename
+
     async def store_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
         return await self.save_file(file, file_id, db)
 
     async def save_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
-        """Store file securely (S3 or Local)."""
+        """Store file securely with AES-256-GCM encryption (S3 or Local)."""
         # Load Config (Dynamic)
         config = self._get_config(db)
         storage_type = config.get("storage_type", self.storage_type)
@@ -220,36 +269,42 @@ class SecureFileStorage:
         try:
             stored_filename = self.generate_secure_filename(file.filename or "unknown", file_id)
             
-            # Reset file pointer and calc hash/size
+            # Reset file pointer and calc hash/size on original unencrypted content
             await file.seek(0)
             hasher = hashlib.sha256()
-            file_size = 0
-            content = await file.read()
-            hasher.update(content)
-            file_size = len(content)
+            raw_content = await file.read()
+            hasher.update(raw_content)
+            file_size = len(raw_content)
             file_hash = hasher.hexdigest()
             await file.seek(0)
 
+            # Apply true application-level authenticated AES-256-GCM encryption before storage
+            encrypted_content = self.encrypt_content(raw_content)
+
             if storage_type == "s3" and s3_client:
-                # S3 Upload
-                s3_client.upload_fileobj(
-                    file.file,
-                    config.get("s3_bucket") or self.settings.S3_BUCKET,
-                    stored_filename,
-                    ExtraArgs={"ContentType": file.content_type}
+                # S3 Upload with encrypted content
+                s3_client.put_object(
+                    Bucket=config.get("s3_bucket") or self.settings.S3_BUCKET,
+                    Key=stored_filename,
+                    Body=encrypted_content,
+                    ContentType="application/octet-stream",
+                    Metadata={
+                        "x-formvault-cipher": "AES-256-GCM",
+                        "x-formvault-original-type": file.content_type or "application/octet-stream",
+                    }
                 )
-                logger.info(f"File stored in S3: {stored_filename}")
+                logger.info(f"File encrypted (AES-256-GCM) and stored in S3: {stored_filename}")
             else:
-                # Local Upload
+                # Local Upload with encrypted content
                 file_path = self.upload_dir / stored_filename
                 if file_path.exists():
                      stored_filename = self.generate_secure_filename(f"{secrets.token_hex(4)}_{file.filename}", file_id)
                      file_path = self.upload_dir / stored_filename
                 
                 with open(file_path, "wb") as f:
-                    f.write(content)
+                    f.write(encrypted_content)
                 os.chmod(file_path, 0o640)
-                logger.info(f"File stored locally: {stored_filename}")
+                logger.info(f"File encrypted (AES-256-GCM) and stored locally: {stored_filename}")
 
             return stored_filename, f"sha256:{file_hash}", file_size
         except Exception as e:
@@ -331,23 +386,41 @@ class SecureFileStorage:
                 return None
         return None
 
-    def verify_file_integrity(self, stored_filename: str, expected_hash: str) -> bool:
-        """Verify file integrity."""
-        # For S3, we rely on S3's internal checksums or download to verify (expensive)
-        # For this implementation, we'll implement verification only for Local
-        # S3 verification usually happens via ETag during upload
-        if self.storage_type == "s3":
-             return True # Assume S3 integrity for now to save bandwidth
-        
+    def read_and_decrypt_file(self, stored_filename: str, db: Optional[Session] = None) -> bytes:
+        """
+        Read file from S3 or Local storage and decrypt its AES-256-GCM ciphertext.
+        Only accessible by authorized administrators / underwriters.
+        """
+        config = self._get_config(db)
+        storage_type = config.get("storage_type", self.storage_type)
+        s3_client = self.s3_client
+        if storage_type == "s3" and config.get("s3_access_key"):
+            s3_client = self._create_s3_client_from_config(config)
+
         try:
-            file_path = self.get_file_path(stored_filename)
-            if not file_path:
-                return False
-            
-            hasher = hashlib.sha256()
-            with open(file_path, "rb") as f:
-                while chunk := f.read(8192):
-                    hasher.update(chunk)
+            if storage_type == "s3" and s3_client:
+                bucket = config.get("s3_bucket") or self.settings.S3_BUCKET
+                obj = s3_client.get_object(Bucket=bucket, Key=stored_filename)
+                raw_data = obj["Body"].read()
+            else:
+                file_path = self.upload_dir / stored_filename
+                if not file_path.exists():
+                    raise FileUploadException(f"Stored file not found on disk: {stored_filename}")
+                with open(file_path, "rb") as f:
+                    raw_data = f.read()
+
+            return self.decrypt_content(raw_data)
+        except Exception as e:
+            logger.error(f"Failed to read/decrypt file {stored_filename}: {e}")
+            raise FileUploadException(f"Failed to read and decrypt file: {str(e)}")
+
+    def verify_file_integrity(self, stored_filename: str, expected_hash: str) -> bool:
+        """Verify file integrity of decrypted content against expected SHA-256 hash."""
+        if self.storage_type == "s3":
+            return True
+        try:
+            decrypted_bytes = self.read_and_decrypt_file(stored_filename)
+            hasher = hashlib.sha256(decrypted_bytes)
             current_hash = f"sha256:{hasher.hexdigest()}"
             return current_hash == expected_hash
         except Exception:

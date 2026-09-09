@@ -9,8 +9,11 @@ import {
 import {
   ShieldOutlined,
   LockOutlined,
+  AdminPanelSettingsOutlined,
+  HttpsOutlined,
+  EnhancedEncryptionOutlined,
   VerifiedUserOutlined,
-  SaveOutlined,
+  AssignmentTurnedInOutlined,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -28,30 +31,44 @@ export const SecurityAssuranceRail: React.FC<SecurityAssuranceRailProps> = ({
   const badges = [
     {
       icon: <LockOutlined sx={{ fontSize: 16, color: '#10B981' }} />,
-      label: t('securityRail.aes.label', { defaultValue: 'AES-256 GCM Encrypted' }),
+      label: t('securityRail.aes.label', { defaultValue: 'AES-256 GCM Storage' }),
       tooltip: t('securityRail.aes.tooltip', {
-        defaultValue: 'All documents and form data are encrypted at rest using military-grade AES-256 GCM.',
+        defaultValue: 'Passports and attachments are symmetrically encrypted with AES-256 GCM and per-file nonces before disk storage.',
       }),
     },
     {
-      icon: <ShieldOutlined sx={{ fontSize: 16, color: '#6366F1' }} />,
-      label: t('securityRail.privacy.label', { defaultValue: 'Zero-Knowledge Privacy' }),
-      tooltip: t('securityRail.privacy.tooltip', {
-        defaultValue: 'Your sensitive personal data is strictly isolated and only accessible to authorized underwriters.',
+      icon: <AdminPanelSettingsOutlined sx={{ fontSize: 16, color: '#6366F1' }} />,
+      label: t('securityRail.rbac.label', { defaultValue: 'Strict RBAC Isolation' }),
+      tooltip: t('securityRail.rbac.tooltip', {
+        defaultValue: 'Identity files are isolated in zero-trust enclaves; decryption is restricted exclusively to authenticated underwriters.',
       }),
     },
     {
-      icon: <VerifiedUserOutlined sx={{ fontSize: 16, color: '#3B82F6' }} />,
-      label: t('securityRail.tls.label', { defaultValue: 'TLS 1.3 Active Channel' }),
+      icon: <HttpsOutlined sx={{ fontSize: 16, color: '#06B6D4' }} />,
+      label: t('securityRail.tls.label', { defaultValue: 'TLS 1.3 Strict Ingress' }),
       tooltip: t('securityRail.tls.tooltip', {
-        defaultValue: 'Secure high-assurance encrypted communication channel established.',
+        defaultValue: 'In-transit communications are enforced via Cloudflare Zero-Trust ingress with strict HSTS and PFS cipher suites.',
       }),
     },
     {
-      icon: <SaveOutlined sx={{ fontSize: 16, color: '#8B5CF6' }} />,
-      label: t('securityRail.autoSave.label', { defaultValue: 'Encrypted Auto-Save' }),
-      tooltip: t('securityRail.autoSave.tooltip', {
-        defaultValue: 'Draft changes are automatically captured in your local secure vault to prevent loss.',
+      icon: <EnhancedEncryptionOutlined sx={{ fontSize: 16, color: '#8B5CF6' }} />,
+      label: t('securityRail.session.label', { defaultValue: 'Volatile Session Sandbox' }),
+      tooltip: t('securityRail.session.tooltip', {
+        defaultValue: 'Sensitive applicant credentials exist in volatile session memory, preventing disk caching on shared workstations.',
+      }),
+    },
+    {
+      icon: <VerifiedUserOutlined sx={{ fontSize: 16, color: '#F59E0B' }} />,
+      label: t('securityRail.cnb.label', { defaultValue: 'ČNB Intermediary Co-Compliance' }),
+      tooltip: t('securityRail.cnb.tooltip', {
+        defaultValue: 'Technical infrastructure operated by HKTSE s.r.o. in authorized cooperation with České pojištění a.s. under Act No. 170/2018 Coll.',
+      }),
+    },
+    {
+      icon: <AssignmentTurnedInOutlined sx={{ fontSize: 16, color: '#EC4899' }} />,
+      label: t('securityRail.audit.label', { defaultValue: 'Tamper-Evident Audit' }),
+      tooltip: t('securityRail.audit.tooltip', {
+        defaultValue: 'Every decryption, document review, and status update generates an immutable cryptographic audit record.',
       }),
     },
   ];

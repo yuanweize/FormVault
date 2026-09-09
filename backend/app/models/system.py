@@ -42,10 +42,10 @@ class SystemConfig(Base):
     s3_secret_key = Column(String(100), nullable=True)
 
     # Portal Branding & Support Settings
-    site_title = Column(String(150), default="FormVault Insurance | Official Broker in Czechia", nullable=False)
+    site_title = Column(String(150), default="FormVault Insurance | Czech Health & Travel Insurance", nullable=False)
     site_description = Column(
         String(255),
-        default="Licensed insurance brokerage for international students and expatriates in the Czech Republic.",
+        default="Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.",
         nullable=True,
     )
     site_icon_url = Column(String(255), default="/favicon.svg", nullable=False)
@@ -56,7 +56,7 @@ class SystemConfig(Base):
     # Broker Identity & Legal Disclosure (Accurate & Compliant)
     broker_legal_disclosure = Column(
         String(255),
-        default="HKTSE s.r.o. (IČO: 10858032) in authorized cooperation with České pojištění a.s. representing PVZP, Slavia & SV pojišťovna.",
+        default="HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).",
         nullable=True,
     )
 
@@ -69,6 +69,12 @@ class SystemConfig(Base):
     form_profile_config = Column(
         Text,
         default='{"require_passport_dates": true, "require_study_confirmation": true, "require_gender": true, "require_place_of_birth": true}',
+        nullable=True,
+    )
+
+    # Configurable Features Showcase (JSON array for landing page feature cards)
+    features_config = Column(
+        Text,
         nullable=True,
     )
 

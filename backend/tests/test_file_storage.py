@@ -390,3 +390,45 @@ class TestSecureFileStorage:
                 stat = key_file.stat()
                 permissions = oct(stat.st_mode)[-3:]
                 assert permissions == "600"  # rw-------
+
+    def test_aes_gcm_encryption_and_decryption(self, storage):
+        """Test AES-256-GCM authenticated encryption and decryption."""
+        original_data = b"Highly sensitive passport copy and personal underwriting data 12345"
+        encrypted = storage.encrypt_content(original_data)
+
+        # Must start with standard magic header
+        assert encrypted.startswith(b"FV_GCM_V1")
+        # Must not contain original sensitive data in cleartext
+        assert original_data not in encrypted
+
+        # Decrypt must match original
+        decrypted = storage.decrypt_content(encrypted)
+        assert decrypted == original_data
+
+    def test_aes_gcm_legacy_dual_mode_fallback(self, storage):
+        """Test dual-mode: unencrypted legacy files without magic header return as-is."""
+        legacy_data = b"Legacy unencrypted document without header"
+        result = storage.decrypt_content(legacy_data)
+        assert result == legacy_data
+
+    @pytest.mark.asyncio
+    async def test_save_file_writes_aes_gcm_ciphertext_and_decrypts(self, storage, valid_jpeg_file):
+        """Test that save_file writes AES-256-GCM ciphertext to disk and read_and_decrypt_file restores it."""
+        stored_filename, file_hash, file_size = await storage.save_file(valid_jpeg_file, "file-123")
+
+        # Check raw file on disk is encrypted
+        file_path = storage.get_file_path(stored_filename)
+        assert file_path is not None
+        assert file_path.exists()
+        raw_disk_bytes = file_path.read_bytes()
+
+        assert raw_disk_bytes.startswith(b"FV_GCM_V1")
+
+        # Read and decrypt restores valid jpeg
+        decrypted = storage.read_and_decrypt_file(stored_filename)
+        valid_jpeg_file.file.seek(0)
+        expected_raw = valid_jpeg_file.file.read()
+        assert decrypted == expected_raw
+
+        # Integrity verification passes
+        assert storage.verify_file_integrity(stored_filename, file_hash) is True

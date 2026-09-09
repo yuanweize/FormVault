@@ -39,12 +39,12 @@
       "subtitle": "安全かつ効率的に保険申請を完了できます",
       "getStarted": "始める",
       "features": {
-        "secure": "安全な暗号化",
-        "secureDesc": "データは保護されています",
-        "multilingual": "多言語対応",
-        "multilingualDesc": "英語、中国語、日本語などに対応",
-        "mobile": "モバイル最適化",
-        "mobileDesc": "どのデバイスでも申請可能"
+        "secure": "ハードウェア級 AES-256 GCM 暗号化金庫",
+        "secureDesc": "書類ごとの一意のNonceによるミリタリーグレードの認証付き暗号化。認証された査定者のみ復号可能。",
+        "multilingual": "12言語対応スマート申請",
+        "multilingualDesc": "チェコ内務省(OAMP)の滞在許可および査証要件に完全準拠したスムーズな国際申請手続き。",
+        "mobile": "揮发性セッションサンドボックス",
+        "mobileDesc": "即時カメラ撮影とサンドボックス化されたセッション管理。終了時に機密情報は即座に消去されます。"
       },
       "authorizedBroker": "チェコ共和国・EU基準公認 保険ブローカー",
       "trackMyApplication": "申請状況を確認する",
@@ -287,7 +287,8 @@
     "terms": "利用規約",
     "support": "カスタマーサポート",
     "brokerTitle": "FormVault 保険仲介・引受サービス",
-    "brokerDesc": "チェコ共和国プラハの正規保険仲介ネットワーク。České pojištění a.s. と提携し、PVZP、Slavia、SV pojišťovna の公式認定パートナー。"
+    "brokerDesc": "チェコ共和国プラハの正規保険仲介ネットワーク。České pojištění a.s. と提携し、PVZP、Slavia、SV pojišťovna の公式認定パートナー。",
+    "techPlatformLead": "FormVault は以下によって運営されています: "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "暗号化自動保存",
       "tooltip": "入力中の内容はローカルの安全な保管庫に自動保存されます。"
+    },
+    "rbac": {
+      "label": "厳格なRBAC権限分離",
+      "tooltip": "本人確認書類はゼロトラスト領域に隔離され、復号は認証された引受査定者に厳格に制限されます。"
+    },
+    "session": {
+      "label": "揮発性セッションサンドボックス",
+      "tooltip": "機密性の高い申請者情報は揮発性セッションメモリ内のみに保持され、共有端末のディスクへのキャッシュを防ぎます。"
+    },
+    "cnb": {
+      "label": "チェコ国立銀行(ČNB)仲介協調準拠",
+      "tooltip": "HKTSE s.r.o. が運営する技術基盤であり、České pojištění a.s. との提携のもと法第170/2018号に従い運営されています。"
+    },
+    "audit": {
+      "label": "改ざん耐性監査証跡",
+      "tooltip": "すべての復号、書類審査、ステータス変更は改ざん不能な暗号化監査ログとして記録されます。"
     }
   },
   "addressAssistant": {

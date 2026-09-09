@@ -21,10 +21,23 @@ def get_current_admin(request: Request) -> dict:
       - 'company_partner': Insurance partner underwriter, scoped strictly to assigned company_id.
       - 'compliance_auditor': Regulatory auditor, read-only across all applications & audit trails.
     """
+    user_id = request.session.get("user_id")
+    token = request.session.get("token")
+    role = request.session.get("role")
+    
+    # Fail-close security: unauthenticated or corrupted session returns no role
+    if not user_id or not token or not role:
+        return {
+            "user_id": None,
+            "username": "Anonymous",
+            "role": None,
+            "company_id": None,
+        }
+
     return {
-        "user_id": request.session.get("user_id"),
+        "user_id": str(user_id),
         "username": request.session.get("username", "Unknown"),
-        "role": request.session.get("role", "super_admin"),
+        "role": role,
         "company_id": request.session.get("company_id"),
     }
 

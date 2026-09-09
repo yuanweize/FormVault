@@ -97,7 +97,7 @@ class Application(Base):
         "EmailExport", back_populates="application", cascade="all, delete-orphan"
     )
     audit_logs = relationship(
-        "AuditLog", back_populates="application", cascade="all, delete-orphan"
+        "AuditLog", back_populates="application"
     )
 
     # Indexes

@@ -39,12 +39,12 @@
       "subtitle": "安全高效地完成您的保险申请",
       "getStarted": "开始申请",
       "features": {
-        "secure": "安全加密",
-        "secureDesc": "您的数据受到行业标准加密保护",
-        "multilingual": "多语言支持",
-        "multilingualDesc": "支持英语、中文和西班牙语",
-        "mobile": "移动友好",
-        "mobileDesc": "在任何设备上完成您的申请"
+        "secure": "硬件级 AES-256 GCM 密态金库",
+        "secureDesc": "军工级认证加密与单文件专属 Nonce 隔离，严格行级权限控制，仅限授权持牌核保人透明解密。",
+        "multilingual": "12 国语系即时协同",
+        "multilingualDesc": "无缝跨国投保协同，全面适配捷克内务部 (OAMP) 外籍居留法案与跨语言标准规范校验。",
+        "mobile": "端侧沙箱与瞬时留痕",
+        "mobileDesc": "智能相机瞬时采集与会话级内存沙箱，离开发起即焚，公用电脑与移动设备均可安全秒级申办。"
       },
       "authorizedBroker": "欧洲认证保险经纪服务机构 • 符合捷克与欧盟监管标准",
       "trackMyApplication": "查询申请进度",
@@ -287,7 +287,8 @@
     "terms": "服务条款",
     "support": "支持",
     "brokerTitle": "FormVault 保险经纪与核保服务平台",
-    "brokerDesc": "捷克布拉格正规合规保险中介网络。携手 České pojištění a.s.，官方代理 PVZP、Slavia 与 SV pojišťovna 综合医疗保险。"
+    "brokerDesc": "捷克布拉格正规合规保险中介网络。携手 České pojištění a.s.，官方代理 PVZP、Slavia 与 SV pojišťovna 综合医疗保险。",
+    "techPlatformLead": "FormVault 由 "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "草稿密文自动保存",
       "tooltip": "填写过程中的修改内容会自动在本地安全密室加密暂存，防止意外丢失。"
+    },
+    "rbac": {
+      "label": "严格 RBAC 权限隔离",
+      "tooltip": "身份凭证文件存储于零信任飞地中；仅限经过验证的授权核保人执行解密。"
+    },
+    "session": {
+      "label": "瞬时会话内存沙箱",
+      "tooltip": "敏感身份凭证仅驻留于浏览器瞬时会话内存中，离开即焚，杜绝公用机房磁盘残留。"
+    },
+    "cnb": {
+      "label": "ČNB 挂靠合规中介协同",
+      "tooltip": "技术基础设施由 HKTSE s.r.o. 运营，在持牌中介 České pojištění a.s. 授权合作下遵循捷克第 170/2018 号法规运营。"
+    },
+    "audit": {
+      "label": "防篡改合规审计流水",
+      "tooltip": "每一次文件解密、保单核保与状态变更均生成不可篡改且可追溯的加密审计日志。"
     }
   },
   "addressAssistant": {

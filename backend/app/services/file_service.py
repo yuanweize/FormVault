@@ -333,6 +333,18 @@ class FileService:
         file_path = self.storage.get_file_path(db_file.stored_filename)
         return str(file_path) if file_path else None
 
+    def get_decrypted_content(self, db: Session, file_id: str) -> Tuple[bytes, File]:
+        """
+        Get decrypted file content and DB file record with AES-256-GCM authentication.
+        Only accessible by authorized administrators / underwriters.
+        """
+        db_file = db.query(File).filter(File.id == file_id).first()
+        if not db_file:
+            raise FileNotFoundException(file_id)
+
+        decrypted_bytes = self.storage.read_and_decrypt_file(db_file.stored_filename, db=db)
+        return decrypted_bytes, db_file
+
     def _get_client_ip(self, request: Request) -> Optional[str]:
         """
         Extract client IP address from request.

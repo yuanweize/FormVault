@@ -206,26 +206,64 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
   const applicationWorkflow = useApplicationWorkflow();
   const navigate = useNavigate();
 
-  // Load state from localStorage on mount
+  // Storage keys for hybrid isolation: sensitive identity data strictly in volatile sessionStorage
+  const STORAGE_KEY = 'formvault_application_workflow';
+  const SESSION_SENSITIVE_KEY = 'formvault_session_sensitive_pii';
+
+  // Load state from hybrid storage on mount
   useEffect(() => {
     try {
-      const savedState = localStorage.getItem(STORAGE_KEY);
-      if (savedState) {
-        const parsedState = JSON.parse(savedState);
-        dispatch({ type: 'LOAD_FROM_STORAGE', payload: parsedState });
+      const savedStateStr = localStorage.getItem(STORAGE_KEY);
+      const sessionSensitiveStr = sessionStorage.getItem(SESSION_SENSITIVE_KEY);
+
+      let mergedPersonalInfo = {};
+      let parsedWorkflow: any = {};
+
+      if (savedStateStr) {
+        parsedWorkflow = JSON.parse(savedStateStr);
+        if (parsedWorkflow.personalInfo) {
+          mergedPersonalInfo = { ...parsedWorkflow.personalInfo };
+        }
+      }
+
+      if (sessionSensitiveStr) {
+        try {
+          const sensitiveFields = JSON.parse(sessionSensitiveStr);
+          mergedPersonalInfo = { ...mergedPersonalInfo, ...sensitiveFields };
+        } catch (e) {
+          // ignore parsing error
+        }
+      }
+
+      if (savedStateStr || sessionSensitiveStr) {
+        dispatch({
+          type: 'LOAD_FROM_STORAGE',
+          payload: {
+            ...parsedWorkflow,
+            personalInfo: mergedPersonalInfo,
+          },
+        });
       }
     } catch (error) {
       console.warn('Failed to load workflow state from storage:', error);
     }
   }, []);
 
-  // Save state to localStorage when it changes
+  // Save state with volatile privacy sandbox when it changes
   useEffect(() => {
     try {
+      const { passportNumber, dateOfBirth, placeOfBirth, ...nonSensitiveInfo } =
+        state.personalInfo || {};
+
+      // 1. Sensitive PII strictly sandboxed in ephemeral sessionStorage (destroyed when tab closes)
+      const sensitiveData = { passportNumber, dateOfBirth, placeOfBirth };
+      sessionStorage.setItem(SESSION_SENSITIVE_KEY, JSON.stringify(sensitiveData));
+
+      // 2. Non-sensitive workflow progress safely persisted in localStorage
       const stateToSave = {
         currentStep: state.currentStep,
         completedSteps: state.completedSteps,
-        personalInfo: state.personalInfo,
+        personalInfo: nonSensitiveInfo,
         uploadedFiles: state.uploadedFiles,
         applicationId: state.applicationId,
         referenceNumber: state.referenceNumber,
@@ -401,6 +439,7 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
   const resetWorkflow = useCallback(() => {
     dispatch({ type: 'RESET_WORKFLOW' });
     localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(SESSION_SENSITIVE_KEY);
   }, []);
 
   const clearError = useCallback(() => {

@@ -24,6 +24,7 @@ from app.core.exceptions import EmailServiceException
 from app.models.application import Application
 from app.models.file import File
 from app.models.email_export import EmailExport
+from app.services.file_storage import file_storage
 
 logger = structlog.get_logger(__name__)
 
@@ -289,9 +290,10 @@ FormVault Insurance Portal
                     )
                     continue
 
-                # Read file content
+                # Read and decrypt file content with AES-256-GCM
                 with open(file_path, "rb") as f:
-                    file_content = f.read()
+                    raw_content = f.read()
+                file_content = file_storage.decrypt_content(raw_content)
 
                 # Create attachment
                 attachment = MIMEBase("application", "octet-stream")

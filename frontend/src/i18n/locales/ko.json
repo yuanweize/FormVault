@@ -39,12 +39,12 @@
       "subtitle": "안전하고 효율적으로 보험 신청을 완료하세요",
       "getStarted": "시작하기",
       "features": {
-        "secure": "안전한 암호화",
-        "secureDesc": "데이터가 보호됩니다",
-        "multilingual": "다국어 지원",
-        "multilingualDesc": "영어, 중국어, 한국어 등 지원",
-        "mobile": "모바일 환경 최적화",
-        "mobileDesc": "모든 기기에서 사용 가능"
+        "secure": "하드웨어급 AES-256 GCM 암호화 금고",
+        "secureDesc": "문서별 고유 Nonce가 적용된 군사 등급 인증 암호화. 검증된 공인 심사역에게만 복호화가 제한됩니다.",
+        "multilingual": "12개 언어 다국어 원스톱 접수",
+        "multilingualDesc": "체코 내무부(OAMP)의 체류 및 비자 요구 사항을 완벽히 충족하는 매끄러운 다국적 신청 프로세스.",
+        "mobile": "휘발성 세션 프라이버시 샌드박스",
+        "mobileDesc": "즉각적인 카메라 캡처 및 격리된 세션 관리. 세션 종료 시 민감한 신원 정보는 즉시 파기됩니다."
       },
       "authorizedBroker": "체코공화국 및 EU 표준 공인 보험 중개사",
       "trackMyApplication": "신청 진행 상황 조회",
@@ -287,7 +287,8 @@
     "terms": "이용약관",
     "support": "고객 지원 센터",
     "brokerTitle": "FormVault 보험 중개 및 인수 서비스",
-    "brokerDesc": "체코 프라하 공인 보험 중개 네트워크. České pojištění a.s.와의 협력 하에 PVZP, Slavia 및 SV pojišťovna 공식 파트너."
+    "brokerDesc": "체코 프라하 공인 보험 중개 네트워크. České pojištění a.s.와의 협력 하에 PVZP, Slavia 및 SV pojišťovna 공식 파트너.",
+    "techPlatformLead": "FormVault는 다음에 의해 운영됩니다: "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "암호화 자동 저장",
       "tooltip": "작성 중인 임시 내용은 로컬 보안 금고에 자동으로 저장됩니다."
+    },
+    "rbac": {
+      "label": "엄격한 RBAC 권한 격리",
+      "tooltip": "신원 확인 서류는 제로 트러스트 엔클레이브에 격리되며, 복호화는 인증된 심사역에게만 엄격히 제한됩니다."
+    },
+    "session": {
+      "label": "휘발성 세션 샌드박스",
+      "tooltip": "민감한 신청자 정보는 휘발성 세션 메모리에만 상주하여 공용 PC의 디스크 캐시 저장을 원천 차단합니다."
+    },
+    "cnb": {
+      "label": "체코 국립은행(ČNB) 중개 규정 준수",
+      "tooltip": "HKTSE s.r.o.가 운영하는 기술 인프라이며, 체코 법률 제170/2018호에 따라 České pojištění a.s.와의 정식 협력 하에 제공됩니다."
+    },
+    "audit": {
+      "label": "위변조 방지 감사 추적",
+      "tooltip": "모든 복호화, 서류 검토 및 상태 변경은 위변조가 불가능한 암호화 감사 기록으로 영구 보존됩니다."
     }
   },
   "addressAssistant": {

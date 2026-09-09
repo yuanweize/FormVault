@@ -39,12 +39,12 @@
       "subtitle": "Complétez votre demande d'assurance en toute sécurité",
       "getStarted": "Commencer",
       "features": {
-        "secure": "Sécurisé & Crypté",
-        "secureDesc": "Vos données sont protégées par des normes industrielles",
-        "multilingual": "Support Multilingue",
-        "multilingualDesc": "Disponible en anglais, chinois, espagnol, etc.",
-        "mobile": "Compatible Mobile",
-        "mobileDesc": "Complétez votre demande sur n'importe quel appareil"
+        "secure": "Coffre-fort AES-256 GCM de niveau matériel",
+        "secureDesc": "Chiffrement authentifié de niveau militaire avec des nonces uniques. Déchiffrement réservé aux souscripteurs certifiés.",
+        "multilingual": "Saisie multilingue en 12 langues",
+        "multilingualDesc": "Demandes transfrontalières fluides conformes aux exigences du ministère de l'Intérieur tchèque (OAMP).",
+        "mobile": "Bac à sable de session volatile",
+        "mobileDesc": "Capture instantanée par caméra et état de session isolé. Les identifiants sensibles disparaissent à la fermeture."
       },
       "authorizedBroker": "Courtier d'assurance européen agréé • Normes de la République tchèque et de l'UE",
       "trackMyApplication": "Suivre ma demande",
@@ -287,7 +287,8 @@
     "terms": "Conditions",
     "support": "Support et Assistance",
     "brokerTitle": "Services d'intermédiation en assurance FormVault",
-    "brokerDesc": "Réseau d'intermédiation en assurance agréé à Prague, République tchèque. En coopération avec České pojištění a.s., partenaire agréé pour PVZP, Slavia et SV pojišťovna."
+    "brokerDesc": "Réseau d'intermédiation en assurance agréé à Prague, République tchèque. En coopération avec České pojištění a.s., partenaire agréé pour PVZP, Slavia et SV pojišťovna.",
+    "techPlatformLead": "FormVault est exploité par "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "Sauvegarde automatique chiffrée",
       "tooltip": "Les brouillons sont automatiquement enregistrés dans votre coffre local sécurisé."
+    },
+    "rbac": {
+      "label": "Isolation stricte RBAC",
+      "tooltip": "Les fichiers d'identité sont isolés dans des enclaves zero-trust ; le déchiffrement est strictement réservé aux souscripteurs authentifiés."
+    },
+    "session": {
+      "label": "Bac à sable de session volatile",
+      "tooltip": "Les données d'identité sensibles résident dans la mémoire temporaire de session, évitant la mise en cache sur disque sur les ordinateurs partagés."
+    },
+    "cnb": {
+      "label": "Conformité d'intermédiation ČNB",
+      "tooltip": "Infrastructure technique exploitée par HKTSE s.r.o. en coopération autorisée avec České pojištění a.s. en vertu de la loi n° 170/2018 Coll."
+    },
+    "audit": {
+      "label": "Piste d'audit infalsifiable",
+      "tooltip": "Chaque déchiffrement, examen de document et mise à jour de statut génère un enregistrement d'audit cryptographique immuable."
     }
   },
   "addressAssistant": {

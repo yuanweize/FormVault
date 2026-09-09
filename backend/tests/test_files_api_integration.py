@@ -450,3 +450,34 @@ class TestFilesAPIIntegration:
         assert "image/jpeg" in result["allowed_types"]
         assert "image/png" in result["allowed_types"]
         assert "application/pdf" in result["allowed_types"]
+
+    def test_download_file_unauthenticated_forbidden(
+        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+    ):
+        """Test that unauthenticated file download is strictly forbidden (403)."""
+        files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+        data = {"file_type": "passport", "application_id": test_application.id}
+        upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
+        file_id = upload_resp.json()["id"]
+
+        # Attempt download without admin credentials
+        resp = client.get(f"/api/v1/files/{file_id}/download")
+        assert resp.status_code == 403
+        assert "strictly restricted" in resp.json()["detail"]
+
+    def test_download_file_authenticated_admin_success(
+        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+    ):
+        """Test that authenticated admin can decrypt and download document with security headers."""
+        files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+        data = {"file_type": "passport", "application_id": test_application.id}
+        upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
+        file_id = upload_resp.json()["id"]
+
+        # Provide Bearer admin token
+        headers = {"Authorization": "Bearer admin-token"}
+        resp = client.get(f"/api/v1/files/{file_id}/download", headers=headers)
+        assert resp.status_code == 200
+        assert resp.content == valid_jpeg_data
+        assert resp.headers.get("X-FormVault-Encryption") == "AES-256-GCM-Verified"
+        assert "attachment" in resp.headers.get("Content-Disposition", "")

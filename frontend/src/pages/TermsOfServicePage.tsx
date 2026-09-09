@@ -1,6 +1,5 @@
-import React from 'react';
-import { Container, Box, Typography, Paper, Divider, Stack, Chip, useTheme } from '@mui/material';
-import { GavelOutlined } from '@mui/icons-material';
+import { Container, Box, Typography, Paper, Divider, Stack, Chip, Link, useTheme } from '@mui/material';
+import { GavelOutlined, OpenInNewOutlined } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
 const TermsOfServicePage: React.FC = () => {
@@ -50,13 +49,35 @@ const TermsOfServicePage: React.FC = () => {
         <Stack spacing={4}>
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section1Title', { defaultValue: '1. Intermediary Scope & Broker Status' })}
+              {t('pages.terms.section1Title', { defaultValue: '1. Regulatory Status & Platform Architecture' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
-              {t('pages.terms.section1Content', {
+              {t('pages.terms.section1Lead', {
                 defaultValue:
-                  'FormVault functions as a registered insurance intermediary service operating under Act No. 170/2018 Coll. (Insurance Distribution Act) of the Czech Republic. In cooperation with České pojištění a.s., our platform mediates agreements between the applicant ("You") and licensed Czech underwriting carriers (including Pojišťovna VZP, a.s., Slavia pojišťovna a.s., and SV pojišťovna, a.s.). Final binding coverage is executed in accordance with each underwriter\'s General Insurance Conditions (VPP) and registered with the Czech Foreign Police / Ministry of the Interior (OAMP).',
+                  'FormVault is a specialized digital insurance intake and workflow platform operated by ',
               })}
+              <Link
+                href="https://hktse.eu.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="primary"
+                underline="hover"
+                sx={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 0.3 }}
+              >
+                HKTSE s.r.o. <OpenInNewOutlined sx={{ fontSize: 12 }} />
+              </Link>
+              {' (IČO: 10858032), registered in the Commercial Register maintained by the Municipal Court in Prague. Application intake and distribution services are performed in authorized cooperation with '}
+              <Link
+                href="https://ceskepojisteni.cz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="primary"
+                underline="hover"
+                sx={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 0.3 }}
+              >
+                České pojištění a.s. <OpenInNewOutlined sx={{ fontSize: 12 }} />
+              </Link>
+              {', an independent insurance intermediary registered with and regulated by the Czech National Bank (Česká národní banka - ČNB) pursuant to Act No. 170/2018 Coll. (Insurance Distribution Act). Policies are underwritten by authorized carriers (PVZP, Slavia, SV pojišťovna) and fully compliant with Czech Foreigners Residence Act No. 326/1999 Coll.'}
             </Typography>
           </Box>
 

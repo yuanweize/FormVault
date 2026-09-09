@@ -39,12 +39,12 @@
       "subtitle": "Complete su solicitud de seguro de manera segura y eficiente",
       "getStarted": "Comenzar",
       "features": {
-        "secure": "Seguro y Encriptado",
-        "secureDesc": "Sus datos están protegidos",
-        "multilingual": "Soporte Multilingüe",
-        "multilingualDesc": "Disponible en inglés, chino, español, etc.",
-        "mobile": "Compatible con Móvil",
-        "mobileDesc": "Complete su solicitud en cualquier dispositivo"
+        "secure": "Bóveda AES-256 GCM de grado hardware",
+        "secureDesc": "Cifrado autenticado de grado militar con nonces únicos por documento. Descifrado exclusivo para suscriptores verificados.",
+        "multilingual": "Ingreso multilingüe en 12 idiomas",
+        "multilingualDesc": "Solicitudes transfronterizas fluidas conformes con los requisitos del Ministerio del Interior checo (OAMP).",
+        "mobile": "Sandbox de sesión volátil",
+        "mobileDesc": "Captura instantánea con cámara y estado de sesión aislado. Las credenciales confidenciales desaparecen al salir."
       },
       "authorizedBroker": "Corredor de seguros europeo autorizado • Normas de la República Checa y de la UE",
       "trackMyApplication": "Seguir mi solicitud",
@@ -287,7 +287,8 @@
     "terms": "Términos",
     "support": "Atención y Soporte",
     "brokerTitle": "Servicios de intermediación de seguros FormVault",
-    "brokerDesc": "Red de intermediación de seguros autorizada en Praga, República Checa. En colaboración con České pojištění a.s., socio autorizado de PVZP, Slavia y SV pojišťovna."
+    "brokerDesc": "Red de intermediación de seguros autorizada en Praga, República Checa. En colaboración con České pojištění a.s., socio autorizado de PVZP, Slavia y SV pojišťovna.",
+    "techPlatformLead": "FormVault es operado por "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "Guardado automático cifrado",
       "tooltip": "Los cambios se guardan automáticamente en su bóveda segura local."
+    },
+    "rbac": {
+      "label": "Aislamiento estricto RBAC",
+      "tooltip": "Los archivos de identidad están aislados en enclaves zero-trust; el descifrado está restringido exclusivamente a suscriptores autenticados."
+    },
+    "session": {
+      "label": "Sandbox de sesión volátil",
+      "tooltip": "Los datos confidenciales del solicitante residen en la memoria volátil de la sesión, evitando el almacenamiento en caché en equipos compartidos."
+    },
+    "cnb": {
+      "label": "Conformidad de intermediación ČNB",
+      "tooltip": "Infraestructura técnica operada por HKTSE s.r.o. en cooperación autorizada con České pojištění a.s. según la Ley N° 170/2018 Coll."
+    },
+    "audit": {
+      "label": "Registro de auditoría inviolable",
+      "tooltip": "Cada descifrado, revisión de documentos y actualización de estado genera un registro de auditoría criptográfico inmutable."
     }
   },
   "addressAssistant": {

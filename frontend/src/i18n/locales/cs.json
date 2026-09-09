@@ -39,12 +39,12 @@
       "subtitle": "Dokončete svou žádost o pojištění bezpečně a efektivně",
       "getStarted": "Začít",
       "features": {
-        "secure": "Bezpečné a Šifrované",
-        "secureDesc": "Vaše data jsou chráněna",
-        "multilingual": "Vícejazyčná Podpora",
-        "multilingualDesc": "Dostupné v angličtině, češtině, atd.",
-        "mobile": "Vhodné pro Mobily",
-        "mobileDesc": "Dokončete žádost na jakémkoli zařízení"
+        "secure": "Hardwareový trezor AES-256 GCM",
+        "secureDesc": "Autentizované šifrování vojenské úrovně s jedinečnými nonce. Dešifrování vyhrazeno ověřeným upisovatelům.",
+        "multilingual": "Vícejazyčné podání ve 12 jazycích",
+        "multilingualDesc": "Bezproblémové mezinárodní žádosti v plném souladu s požadavky Ministerstva vnitra ČR (OAMP).",
+        "mobile": "Bezstopý relační sandbox",
+        "mobileDesc": "Okamžité snímání kamerou a sandbox relace. Citlivé identifikační údaje se při ukončení relace skartují."
       },
       "authorizedBroker": "Autorizovaný evropský pojišťovací zprostředkovatel • Normy ČR a EU",
       "trackMyApplication": "Sledovat mou žádost",
@@ -287,7 +287,8 @@
     "terms": "Podmínky",
     "support": "Podpora",
     "brokerTitle": "Zprostředkovatelské a pojišťovací služby FormVault",
-    "brokerDesc": "Licencovaný zprostředkovatel pojištění v Praze, Česká republika. Ve spolupráci s České pojištění a.s., autorizovaný partner pro PVZP, Slavia a SV pojišťovnu."
+    "brokerDesc": "Licencovaný zprostředkovatel pojištění v Praze, Česká republika. Ve spolupráci s České pojištění a.s., autorizovaný partner pro PVZP, Slavia a SV pojišťovnu.",
+    "techPlatformLead": "FormVault provozuje "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "Šifrované automatické ukládání",
       "tooltip": "Změny konceptu se automaticky ukládají do vašeho lokálního zabezpečeného trezoru."
+    },
+    "rbac": {
+      "label": "Striktní RBAC izolace",
+      "tooltip": "Identifikační soubory jsou izolovány v režimu zero-trust; dešifrování je vyhrazeno výhradně ověřeným upisovatelům."
+    },
+    "session": {
+      "label": "Rychlý relační sandbox",
+      "tooltip": "Citlivé údaje žadatele existují pouze v dočasné paměti relace, což zabraňuje ukládání na disk sdílených počítačů."
+    },
+    "cnb": {
+      "label": "ČNB zprostředkovatelská shoda",
+      "tooltip": "Technická infrastruktura provozovaná HKTSE s.r.o. v autorizované spolupráci s České pojištění a.s. podle zákona č. 170/2018 Sb."
+    },
+    "audit": {
+      "label": "Audit odolný proti manipulaci",
+      "tooltip": "Každé dešifrování, kontrola dokumentu a aktualizace stavu generuje neměnný kryptografický záznam o auditu."
     }
   },
   "addressAssistant": {

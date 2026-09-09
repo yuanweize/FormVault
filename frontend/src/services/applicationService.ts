@@ -229,6 +229,30 @@ export class ApplicationService {
     const response = await apiClient.get<PortalShowcaseResponse>('/portal/showcase');
     return response.data;
   }
+
+  /**
+   * Get public portal configuration (branding, ingress, features)
+   */
+  async getPortalConfig(): Promise<PortalPublicConfig> {
+    const response = await apiClient.get<PortalPublicConfig>('/portal/config');
+    return response.data;
+  }
+}
+
+export interface PortalPublicConfig {
+  success: boolean;
+  site_title: string;
+  site_description?: string;
+  site_icon_url?: string;
+  support_email: string;
+  broker_legal_disclosure?: string;
+  production_ingress_name?: string;
+  primary_domain?: string;
+  secondary_domain?: string;
+  crisp_website_id?: string;
+  crisp_custom_color?: string;
+  form_profile_config?: string;
+  features_config?: string;
 }
 
 export interface ApplicationTimelineStep {

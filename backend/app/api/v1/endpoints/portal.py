@@ -44,8 +44,8 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
     config = db.query(SystemConfig).first()
     if not config:
         config = SystemConfig(
-            site_title="FormVault Insurance | Official Broker in Czechia",
-            site_description="Licensed insurance brokerage for international students and expatriates in the Czech Republic.",
+            site_title="FormVault Insurance | Czech Health & Travel Insurance",
+            site_description="Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.",
             site_icon_url="/favicon.svg",
             support_email="insurance@hktse.eu.org",
             crisp_website_id=None,
@@ -60,18 +60,19 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
 
     return PortalPublicConfigSchema(
         success=True,
-        site_title=config.site_title or "FormVault Insurance | Official Broker in Czechia",
+        site_title=config.site_title or "FormVault Insurance | Czech Health & Travel Insurance",
         site_description=config.site_description,
         site_icon_url=config.site_icon_url or "/favicon.svg",
         support_email=config.support_email or "insurance@hktse.eu.org",
         broker_legal_disclosure=getattr(config, "broker_legal_disclosure", None)
-        or "HKTSE s.r.o. (IČO: 10858032) in authorized cooperation with České pojištění a.s. representing PVZP, Slavia & SV pojišťovna.",
+        or "HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).",
         production_ingress_name=getattr(config, "production_ingress_name", None) or "Cloudflare Tunnel",
         primary_domain=getattr(config, "primary_domain", None) or "insure.hktse.eu.org",
         secondary_domain=getattr(config, "secondary_domain", None) or "pojisteni.hktse.eu.org",
         crisp_website_id=config.crisp_website_id,
         crisp_custom_color=config.crisp_custom_color or "blue",
         form_profile_config=getattr(config, "form_profile_config", None),
+        features_config=getattr(config, "features_config", None),
     )
 
 

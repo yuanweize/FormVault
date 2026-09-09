@@ -39,7 +39,9 @@ const AppContent: React.FC = () => {
               iconLink.href = data.site_icon_url;
             }
           }
-          if (data.crisp_website_id && !(window as any).$crisp) {
+          // Only auto-load external tracking/chat widget if user provided GDPR consent
+          const consent = localStorage.getItem('formvault_gdpr_consent');
+          if (consent === 'all' && data.crisp_website_id && !(window as any).$crisp) {
             (window as any).$crisp = [];
             (window as any).CRISP_WEBSITE_ID = data.crisp_website_id;
             const script = document.createElement('script');

@@ -39,12 +39,12 @@
       "subtitle": "Schließen Sie Ihren Versicherungsantrag sicher und effizient ab",
       "getStarted": "Loslegen",
       "features": {
-        "secure": "Sicher & Verschlüsselt",
-        "secureDesc": "Ihre Daten sind durch Industriestandards geschützt",
-        "multilingual": "Mehrsprachige Unterstützung",
-        "multilingualDesc": "Verfügbar in Englisch, Chinesisch und Spanisch",
-        "mobile": "Mobilfreundlich",
-        "mobileDesc": "Schließen Sie Ihren Antrag auf jedem Gerät ab"
+        "secure": "AES-256-GCM-Tresor auf Hardware-Niveau",
+        "secureDesc": "Authentifizierte Verschlüsselung auf Militärniveau mit individuellen Nonces. Entschlüsselung nur für autorisierte Prüfer.",
+        "multilingual": "Mehrsprachige Erfassung in 12 Sprachen",
+        "multilingualDesc": "Reibungslose grenzüberschreitende Anträge gemäß den Vorgaben des tschechischen Innenministeriums (OAMP).",
+        "mobile": "Flüchtige Sitzungs-Sandbox",
+        "mobileDesc": "Sofortige Kameraerfassung und isolierter Sitzungsstatus. Sensible Identitätsdaten verfallen beim Beenden der Sitzung."
       },
       "authorizedBroker": "Autorisierter europäischer Versicherungsmakler • Standards der Tschechischen Republik & EU",
       "trackMyApplication": "Meine Bewerbung verfolgen",
@@ -287,7 +287,8 @@
     "terms": "Nutzungsbedingungen",
     "support": "Kundenservice & Hilfe",
     "brokerTitle": "FormVault Versicherungsvermittlungsdienste",
-    "brokerDesc": "Lizenziertes Versicherungsvermittlungsnetzwerk in Prag, Tschechische Republik. In Kooperation mit České pojištění a.s., autorisierter Partner für PVZP, Slavia und SV pojišťovna."
+    "brokerDesc": "Lizenziertes Versicherungsvermittlungsnetzwerk in Prag, Tschechische Republik. In Kooperation mit České pojištění a.s., autorisierter Partner für PVZP, Slavia und SV pojišťovna.",
+    "techPlatformLead": "FormVault wird betrieben von "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "Verschlüsseltes Auto-Save",
       "tooltip": "Entwurfsänderungen werden automatisch in Ihrem lokalen Tresor gespeichert."
+    },
+    "rbac": {
+      "label": "Strikte RBAC-Isolation",
+      "tooltip": "Identitätsdateien sind in Zero-Trust-Enklaven isoliert; die Entschlüsselung ist ausschließlich authentifizierten Risikoprüfern vorbehalten."
+    },
+    "session": {
+      "label": "Flüchtige Sitzungs-Sandbox",
+      "tooltip": "Sensible Anmeldedaten verbleiben im flüchtigen Sitzungsspeicher und verhindern Festplatten-Caching auf gemeinsam genutzten Rechnern."
+    },
+    "cnb": {
+      "label": "ČNB-Vermittler-Konformität",
+      "tooltip": "Technische Infrastruktur betrieben von HKTSE s.r.o. in autorisierter Zusammenarbeit mit České pojištění a.s. gemäß Gesetz Nr. 170/2018 Slg."
+    },
+    "audit": {
+      "label": "Manipulationssicheres Audit",
+      "tooltip": "Jede Entschlüsselung, Dokumentenprüfung und Statusaktualisierung erzeugt einen unveränderlichen kryptografischen Audit-Eintrag."
     }
   },
   "addressAssistant": {

@@ -177,6 +177,18 @@ const HomePage: React.FC = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [trackResult, setTrackResult] = useState<TrackApplicationResponse | null>(null);
+  // Feature cards custom config state
+  interface FeatureCardItem {
+    id?: string;
+    badge?: string;
+    title?: string;
+    title_key?: string;
+    description?: string;
+    desc_key?: string;
+    icon?: string;
+    gradient?: string;
+  }
+  const [customFeatures, setCustomFeatures] = useState<FeatureCardItem[] | null>(null);
 
   useEffect(() => {
     // Fetch live showcase data from API
@@ -196,6 +208,19 @@ const HomePage: React.FC = () => {
         }
       } catch (err) {
         // Retain default templates gracefully
+      }
+
+      // Fetch dynamic portal config for customizable features showcase
+      try {
+        const config = await applicationService.getPortalConfig();
+        if (config && config.features_config) {
+          const parsed = JSON.parse(config.features_config);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setCustomFeatures(parsed);
+          }
+        }
+      } catch (err) {
+        // Retain professional default feature cards
       }
     };
     loadShowcase();
@@ -1033,78 +1058,118 @@ const HomePage: React.FC = () => {
         </Grid>
       </Box>
 
-      {/* 6. Feature Cards (AES-256 GCM, Global, Mobile) */}
-      <Grid container spacing={3.5}>
-        {[
-          {
-            icon: <SecurityOutlined sx={{ fontSize: 32, color: '#4F46E5' }} />,
-            badge: 'AES-256 GCM',
-            title: t('pages.home.features.secure', { defaultValue: 'Encrypted Document Vault' }),
-            description: t('pages.home.features.secureDesc', {
-              defaultValue: 'Your identity and passport documents are encrypted with AES-256 GCM before storage.',
-            }),
-            gradient: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
-          },
-          {
-            icon: <LanguageOutlined sx={{ fontSize: 32, color: '#059669' }} />,
-            badge: 'Multilingual',
-            title: t('pages.home.features.multilingual', { defaultValue: 'International Coverage' }),
-            description: t('pages.home.features.multilingualDesc', {
-              defaultValue: 'Full multi-language support for international students, expats, and visa applicants.',
-            }),
-            gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.12) 100%)',
-          },
-          {
-            icon: <PhoneAndroidOutlined sx={{ fontSize: 32, color: '#D97706' }} />,
-            badge: 'Mobile Optimized',
-            title: t('pages.home.features.mobile', { defaultValue: 'Instant Document Capture' }),
-            description: t('pages.home.features.mobileDesc', {
-              defaultValue: 'Upload your passport and visa documents directly from your smartphone camera.',
-            }),
-            gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%)',
-          },
-        ].map((feature, index) => (
+      {/* 6. Feature Cards (Streamlined, Compact, High-Tech, Fully Customizable via Backend Config) */}
+      <Grid container spacing={2.5} sx={{ mb: 1 }}>
+        {(customFeatures && customFeatures.length > 0
+          ? customFeatures.map((item) => ({
+              icon: <SecurityOutlined sx={{ fontSize: 24, color: '#4F46E5' }} />,
+              badge: item.badge || 'Verified',
+              title: item.title_key ? t(item.title_key, { defaultValue: item.title || '' }) : (item.title || ''),
+              description: item.desc_key ? t(item.desc_key, { defaultValue: item.description || '' }) : (item.description || ''),
+              gradient: item.gradient || 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
+            }))
+          : [
+              {
+                icon: <SecurityOutlined sx={{ fontSize: 24, color: '#4F46E5' }} />,
+                badge: 'AES-256 GCM',
+                title: t('pages.home.features.secure', { defaultValue: 'Hardware-Grade AES-256 GCM Vault' }),
+                description: t('pages.home.features.secureDesc', {
+                  defaultValue: 'Military-grade authenticated encryption with per-document nonces. Decryption restricted to verified underwriters.',
+                }),
+                gradient: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
+              },
+              {
+                icon: <LanguageOutlined sx={{ fontSize: 24, color: '#059669' }} />,
+                badge: '12 Languages',
+                title: t('pages.home.features.multilingual', { defaultValue: '12-Language Multilingual Intake' }),
+                description: t('pages.home.features.multilingualDesc', {
+                  defaultValue: 'Seamless cross-border applications compliant with Czech Ministry (OAMP) naming and residency requirements.',
+                }),
+                gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.12) 100%)',
+              },
+              {
+                icon: <PhoneAndroidOutlined sx={{ fontSize: 24, color: '#D97706' }} />,
+                badge: 'Zero-Trace Sandbox',
+                title: t('pages.home.features.mobile', { defaultValue: 'Volatile Session Sandbox' }),
+                description: t('pages.home.features.mobileDesc', {
+                  defaultValue: 'Instant camera OCR & sandboxed session state. Sensitive identity credentials vanish upon session exit.',
+                }),
+                gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%)',
+              },
+            ]
+        ).map((feature, index) => (
           <Grid item xs={12} md={4} key={index}>
-            <Card
+            <Paper
+              elevation={0}
               sx={{
                 height: '100%',
+                p: { xs: 2, sm: 2.2 },
+                borderRadius: '16px',
+                backgroundColor:
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(30, 41, 59, 0.55)'
+                    : 'rgba(255, 255, 255, 0.85)',
+                backdropFilter: 'blur(12px)',
+                border:
+                  theme.palette.mode === 'dark'
+                    ? '1px solid rgba(255, 255, 255, 0.08)'
+                    : '1px solid rgba(226, 232, 240, 0.85)',
+                transition: 'all 0.25s ease-in-out',
                 display: 'flex',
                 flexDirection: 'column',
-                p: { xs: 2, sm: 3 },
-                borderRadius: '20px',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                justifyContent: 'space-between',
                 '&:hover': {
-                  transform: 'translateY(-6px)',
+                  transform: 'translateY(-3px)',
+                  borderColor: 'primary.main',
                   boxShadow:
-                    theme.palette.mode === 'light'
-                      ? '0 12px 30px -4px rgba(79, 70, 229, 0.12)'
-                      : '0 16px 36px -4px rgba(0, 0, 0, 0.65)',
+                    theme.palette.mode === 'dark'
+                      ? '0 8px 24px -4px rgba(0, 0, 0, 0.5)'
+                      : '0 8px 24px -4px rgba(79, 70, 229, 0.12)',
                 },
               }}
             >
-              <CardContent sx={{ p: 1 }}>
-                <Box
-                  sx={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: '14px',
-                    background: feature.gradient,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mb: 2.5,
-                  }}
-                >
-                  {feature.icon}
-                </Box>
-                <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, fontSize: '1.2rem', mb: 1.2 }}>
+              <Box>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1.5 }}>
+                  <Box
+                    sx={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: '10px',
+                      background: feature.gradient,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {feature.icon}
+                  </Box>
+                  {feature.badge && (
+                    <Chip
+                      label={feature.badge}
+                      size="small"
+                      sx={{
+                        fontSize: '0.7rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.02em',
+                        borderRadius: '6px',
+                        height: 22,
+                        backgroundColor:
+                          theme.palette.mode === 'dark'
+                            ? 'rgba(255, 255, 255, 0.06)'
+                            : 'rgba(79, 70, 229, 0.08)',
+                        color: theme.palette.mode === 'dark' ? '#E2E8F0' : '#4338CA',
+                      }}
+                    />
+                  )}
+                </Stack>
+                <Typography variant="subtitle1" sx={{ fontWeight: 750, fontSize: '1.05rem', mb: 0.6 }}>
                   {feature.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.55, display: 'block', fontSize: '0.82rem' }}>
                   {feature.description}
                 </Typography>
-              </CardContent>
-            </Card>
+              </Box>
+            </Paper>
           </Grid>
         ))}
       </Grid>

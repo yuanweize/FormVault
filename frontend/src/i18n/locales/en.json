@@ -39,12 +39,12 @@
       "subtitle": "Complete your insurance application securely and efficiently",
       "getStarted": "Get Started",
       "features": {
-        "secure": "Secure & Encrypted",
-        "secureDesc": "Your data is protected with industry-standard encryption",
-        "multilingual": "Multi-language Support",
-        "multilingualDesc": "Available in English, Chinese, and Spanish",
-        "mobile": "Mobile Friendly",
-        "mobileDesc": "Complete your application on any device"
+        "secure": "Hardware-Grade AES-256 GCM Vault",
+        "secureDesc": "Military-grade authenticated encryption with per-document nonces. Decryption restricted to verified underwriters.",
+        "multilingual": "12-Language Multilingual Intake",
+        "multilingualDesc": "Seamless cross-border applications compliant with Czech Ministry (OAMP) naming and residency requirements.",
+        "mobile": "Volatile Session Sandbox",
+        "mobileDesc": "Instant camera OCR & sandboxed session state. Sensitive identity credentials vanish upon session exit."
       },
       "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
       "trackMyApplication": "Track My Application",
@@ -287,7 +287,8 @@
     "terms": "Terms of Service",
     "support": "Support",
     "brokerTitle": "FormVault Insurance Brokerage Services",
-    "brokerDesc": "Licensed insurance intermediary network in Prague, Czech Republic. In cooperation with České pojištění a.s., authorized partner for PVZP, Slavia & SV pojišťovna."
+    "brokerDesc": "Licensed insurance intermediary network in Prague, Czech Republic. In cooperation with České pojištění a.s., authorized partner for PVZP, Slavia & SV pojišťovna.",
+    "techPlatformLead": "FormVault is operated by "
   },
   "forms": {
     "personalInfo": {
@@ -574,6 +575,22 @@
     "autoSave": {
       "label": "Encrypted Auto-Save",
       "tooltip": "Draft changes are automatically captured in your local secure vault to prevent loss."
+    },
+    "rbac": {
+      "label": "Strict RBAC Isolation",
+      "tooltip": "Identity files are isolated in zero-trust enclaves; decryption is restricted exclusively to authenticated underwriters."
+    },
+    "session": {
+      "label": "Volatile Session Sandbox",
+      "tooltip": "Sensitive applicant credentials exist in volatile session memory, preventing disk caching on shared workstations."
+    },
+    "cnb": {
+      "label": "ČNB Intermediary Co-Compliance",
+      "tooltip": "Technical infrastructure operated by HKTSE s.r.o. in authorized cooperation with České pojištění a.s. under Act No. 170/2018 Coll."
+    },
+    "audit": {
+      "label": "Tamper-Evident Audit",
+      "tooltip": "Every decryption, document review, and status update generates an immutable cryptographic audit record."
     }
   },
   "addressAssistant": {

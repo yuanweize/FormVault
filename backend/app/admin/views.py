@@ -449,6 +449,7 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         SystemConfig.primary_domain,
         SystemConfig.secondary_domain,
         SystemConfig.form_profile_config,
+        SystemConfig.features_config,
     ]
     form_overrides = dict(
         storage_provider=SelectField,
@@ -456,6 +457,10 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         production_ingress_name=SelectField,
     )
     form_args = dict(
+        features_config=dict(
+            label="Home Feature Cards Config (JSON)",
+            description="JSON array defining feature cards on the public homepage. Leave empty to use default professional security features.",
+        ),
         storage_provider=dict(
             choices=[
                 ("local", "Local Disk Storage (/app/uploads)"),

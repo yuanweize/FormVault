@@ -33,9 +33,32 @@ const Footer: React.FC = () => {
     fetchBrokerDisclosure();
   }, []);
 
-  const defaultBrokerDesc = t(
-    'footer.brokerDesc',
-    'Licensed insurance intermediary network in Prague, Czech Republic. In cooperation with České pojištění a.s., authorized partner for PVZP, Slavia & SV pojišťovna.'
+  const defaultBrokerDesc = (
+    <span>
+      {t('footer.techPlatformLead', 'FormVault is operated by ')}
+      <Link
+        href="https://hktse.eu.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        color="inherit"
+        underline="hover"
+        sx={{ fontWeight: 700 }}
+      >
+        HKTSE s.r.o.
+      </Link>
+      {' (IČO: 10858032), providing digital intake & IT infrastructure in authorized cooperation with '}
+      <Link
+        href="https://ceskepojisteni.cz/"
+        target="_blank"
+        rel="noopener noreferrer"
+        color="inherit"
+        underline="hover"
+        sx={{ fontWeight: 700 }}
+      >
+        České pojištění a.s.
+      </Link>
+      {' (registered independent intermediary under Czech National Bank ČNB supervision).'}
+    </span>
   );
 
   return (
@@ -66,15 +89,19 @@ const Footer: React.FC = () => {
           }}
         >
           {/* Brand & Broker Accreditation */}
-          <Box sx={{ maxWidth: { xs: '100%', md: '55%' } }}>
+          <Box sx={{ maxWidth: { xs: '100%', md: '58%' } }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.8 }}>
               <ShieldOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                {t('footer.brokerTitle', 'FormVault Insurance Intermediary Services')}
+                {t('footer.brokerTitle', 'FormVault Insurance Technology & Distribution Support')}
               </Typography>
             </Stack>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.6 }}>
-              {customDisclosure || defaultBrokerDesc}
+              {customDisclosure ? (
+                <span>{customDisclosure}</span>
+              ) : (
+                defaultBrokerDesc
+              )}
             </Typography>
           </Box>
 
@@ -156,6 +183,17 @@ const Footer: React.FC = () => {
               sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
             >
               HKTSE s.r.o. <OpenInNewOutlined sx={{ fontSize: 11 }} />
+            </Link>
+            <span>•</span>
+            <Link
+              href="https://ceskepojisteni.cz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="text.secondary"
+              underline="hover"
+              sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
+            >
+              České pojištění a.s. <OpenInNewOutlined sx={{ fontSize: 11 }} />
             </Link>
             <span>•</span>
             <span>IČO: 10858032</span>

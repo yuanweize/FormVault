@@ -67,9 +67,9 @@ def auto_upgrade_schema(bind_engine):
             if "system_config" in table_names:
                 cfg_cols = {c["name"] for c in inspector.get_columns("system_config")}
                 if "site_title" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_title VARCHAR(150) DEFAULT 'FormVault Insurance | Official Broker in Czechia' NOT NULL"))
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_title VARCHAR(150) DEFAULT 'FormVault Insurance | Czech Health & Travel Insurance' NOT NULL"))
                 if "site_description" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_description VARCHAR(255) DEFAULT 'Licensed insurance brokerage for international students and expatriates in the Czech Republic.' NULL"))
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_description VARCHAR(255) DEFAULT 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' NULL"))
                 if "site_icon_url" not in cfg_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN site_icon_url VARCHAR(255) DEFAULT '/favicon.svg' NOT NULL"))
                 if "support_email" not in cfg_cols:
@@ -79,7 +79,7 @@ def auto_upgrade_schema(bind_engine):
                 if "crisp_custom_color" not in cfg_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_custom_color VARCHAR(50) DEFAULT 'blue' NULL"))
                 if "broker_legal_disclosure" not in cfg_cols:
-                    conn.execute(text("ALTER TABLE system_config ADD COLUMN broker_legal_disclosure VARCHAR(255) DEFAULT 'HKTSE s.r.o. (IČO: 10858032) in authorized cooperation with České pojištění a.s. representing PVZP, Slavia & SV pojišťovna.' NULL"))
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN broker_legal_disclosure VARCHAR(255) DEFAULT 'HKTSE s.r.o. (IČO: 10858032) technical platform in authorized cooperation with České pojištění a.s. (ČNB registered intermediary).' NULL"))
                 if "production_ingress_name" not in cfg_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN production_ingress_name VARCHAR(100) DEFAULT 'Cloudflare Tunnel' NULL"))
                 if "primary_domain" not in cfg_cols:
@@ -88,6 +88,15 @@ def auto_upgrade_schema(bind_engine):
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN secondary_domain VARCHAR(150) DEFAULT 'pojisteni.hktse.eu.org' NULL"))
                 if "form_profile_config" not in cfg_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN form_profile_config TEXT NULL"))
+                if "features_config" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN features_config TEXT NULL"))
+
+                # Smoothly sanitize legacy unlicensed wording in existing rows
+                try:
+                    conn.execute(text("UPDATE system_config SET site_title = 'FormVault Insurance | Czech Health & Travel Insurance' WHERE site_title LIKE '%Official Broker%'"))
+                    conn.execute(text("UPDATE system_config SET site_description = 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' WHERE site_description LIKE '%Licensed insurance brokerage%'"))
+                except Exception:
+                    pass
 
             # 2. admin_users (RBAC)
             if "admin_users" in table_names:
