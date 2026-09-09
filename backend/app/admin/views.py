@@ -10,6 +10,7 @@ Implements robust Role-Based Access Control (RBAC) and row-level tenant scoping:
   - Compliance Auditor: Read-only access across applications & audit trails.
 """
 
+import re
 from sqladmin import ModelView
 from wtforms.fields import PasswordField, SelectField
 from passlib.context import CryptContext
@@ -674,6 +675,15 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
                     raise Exception(
                         "System Configuration already exists. Please edit the existing entry."
                     )
+        # Automatically clean and extract 36-character UUID from Crisp script or string
+        if "crisp_website_id" in data and data["crisp_website_id"]:
+            val = str(data["crisp_website_id"]).strip()
+            uuid_match = re.search(
+                r"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})",
+                val,
+            )
+            if uuid_match:
+                data["crisp_website_id"] = uuid_match.group(1).lower()
         return await super().on_model_change(data, model, is_created, request)
 
 

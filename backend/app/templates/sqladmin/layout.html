@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const statusBadge = document.getElementById('crisp-status-badge');
 
   async function performVerification(isAuto = false) {
-    const key = (crispInput.value || '').trim();
+    let key = (crispInput.value || '').trim();
     if (!key) {
       if (!isAuto) {
         feedback.style.display = 'block';
@@ -421,6 +421,15 @@ document.addEventListener('DOMContentLoaded', function() {
         feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-1"></i> 请先输入 Crisp Website ID (36位 UUID，例如 168677e2-0aa6-45ec-a486-83855b18c6f4)';
       }
       return;
+    }
+
+    // Auto-extract pure UUID if user pasted the entire script snippet or HTML
+    const uuidMatch = key.match(/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/);
+    if (uuidMatch) {
+      key = uuidMatch[1].toLowerCase();
+      if (crispInput.value !== key) {
+        crispInput.value = key;
+      }
     }
 
     verifyBtn.disabled = true;
@@ -437,13 +446,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       const data = await res.json();
       feedback.style.display = 'block';
-      if (data.is_valid) {
+      const isPassed = Boolean(data.valid || data.is_valid);
+      if (isPassed) {
         statusBadge.className = 'badge bg-success text-white';
         statusBadge.textContent = '官方验证通过';
         feedback.className = 'small text-success mt-1 p-2 bg-success-subtle border border-success-subtle rounded-2';
         feedback.innerHTML = `
           <div class="fw-bold"><i class="fa-solid fa-circle-check me-1"></i> Crisp Website ID 验证成功！官方接入状态正常。</div>
-          <div class="text-secondary mt-1">站点名称: <strong>${data.website_name || '已配置'}</strong> · 绑定域名: <strong>${data.website_domain || 'N/A'}</strong> · 在线客服人员: <strong>${data.operator_count || 1} 人</strong></div>
+          <div class="text-secondary mt-1">站点名称: <strong>${data.website_name || '已配置'}</strong> · 绑定域名: <strong>${data.website_domain || data.domain || 'N/A'}</strong> · 在线客服人员: <strong>${data.operators_count ?? data.operator_count ?? 1} 人</strong></div>
         `;
       } else {
         statusBadge.className = 'badge bg-danger text-white';

@@ -31,6 +31,17 @@ def test_verify_crisp_api_validation():
     assert res_valid.status_code == 200
     data_valid = res_valid.json()
     assert data_valid["valid"] is True
+    assert data_valid["is_valid"] is True
+
+    # 3. Full <script> tag snippet pasted by user
+    script_snippet = '<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="168677e2-0aa6-45ec-a486-83855b18c6f4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>'
+    res_script = client.post(
+        "/api/v1/portal/verify-crisp", json={"website_id": script_snippet}
+    )
+    assert res_script.status_code == 200
+    data_script = res_script.json()
+    assert data_script["valid"] is True
+    assert data_script["is_valid"] is True
 
 
 def test_public_portal_config_authentic_disclosure():

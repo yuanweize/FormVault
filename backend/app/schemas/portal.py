@@ -2,7 +2,7 @@
 Pydantic schemas for the customer-facing insurance portal showcase.
 """
 
-from typing import List, Optional
+from typing import Any, List, Optional
 from pydantic import BaseModel, ConfigDict
 
 
@@ -99,11 +99,30 @@ class CrispVerifyRequestSchema(BaseModel):
 
 class CrispVerifyResponseSchema(BaseModel):
     valid: bool
+    is_valid: Optional[bool] = None
     message: str
     website_name: Optional[str] = None
     domain: Optional[str] = None
+    website_domain: Optional[str] = None
     online: Optional[bool] = None
     operators_count: Optional[int] = 0
+    operator_count: Optional[int] = 0
+
+    def model_post_init(self, __context: Any) -> None:
+        if self.is_valid is None:
+            self.is_valid = self.valid
+        if not self.website_domain and self.domain:
+            self.website_domain = self.domain
+        if not self.domain and self.website_domain:
+            self.domain = self.website_domain
+        if (
+            self.operator_count is None or self.operator_count == 0
+        ) and self.operators_count:
+            self.operator_count = self.operators_count
+        if (
+            self.operators_count is None or self.operators_count == 0
+        ) and self.operator_count:
+            self.operators_count = self.operator_count
 
 
 class GDPRRequestSchema(BaseModel):
