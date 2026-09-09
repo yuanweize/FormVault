@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "法令遵守通知",
+        "defaultTitle": "チェコ外国人滞在法（第326/1999号）準拠保険",
+        "defaultSubtitle": "当代理店が発行するすべての保険証明書は、チェコ内務省（OAMP）の長期ビザおよび居住許可要件を満たしています。",
+        "defaultButton": "オンラインで申し込む"
       }
     },
     "personalInfo": {

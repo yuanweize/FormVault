@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Avis réglementaire",
+        "defaultTitle": "Assurance conforme à la loi tchèque sur le séjour des étrangers (loi n° 326/1999 Coll.)",
+        "defaultSubtitle": "Toutes les attestations d'assurance délivrées par notre agence répondent aux exigences de l'OAMP du ministère tchèque pour les visas et titres de séjour.",
+        "defaultButton": "Souscrire en ligne"
       }
     },
     "personalInfo": {

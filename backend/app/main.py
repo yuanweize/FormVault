@@ -75,6 +75,12 @@ def auto_upgrade_schema(bind_engine):
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_website_id VARCHAR(100) NULL"))
                 if "crisp_custom_color" not in existing_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_custom_color VARCHAR(50) DEFAULT 'blue' NULL"))
+                if "production_ingress_name" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN production_ingress_name VARCHAR(100) DEFAULT 'Cloudflare Tunnel' NULL"))
+                if "primary_domain" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN primary_domain VARCHAR(150) DEFAULT 'insure.hktse.eu.org' NULL"))
+                if "secondary_domain" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN secondary_domain VARCHAR(150) DEFAULT 'pojisteni.hktse.eu.org' NULL"))
                 conn.commit()
     except Exception as exc:
         logger.warning(f"Schema auto-upgrade notice: {exc}")

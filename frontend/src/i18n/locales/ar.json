@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "إشعار تنظيمي",
+        "defaultTitle": "تأمين متوافق مع قانون إقامة الأجانب في جمهورية التشيك (رقم 326/1999)",
+        "defaultSubtitle": "جميع شهادات التأمين الصادرة من خلال وكالتنا تلبي متطلبات وزارة الداخلية التشيكية (OAMP) لتأشيرات الإقامة الطويلة وتصاريح الإقامة.",
+        "defaultButton": "التقديم عبر الإنترنت"
       }
     },
     "personalInfo": {

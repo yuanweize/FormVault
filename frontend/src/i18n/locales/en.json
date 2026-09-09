@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Regulatory Notice",
+        "defaultTitle": "Czech Foreigners Residence Act (326/1999 Coll.) Compliant Insurance",
+        "defaultSubtitle": "All insurance certificates issued through our agency meet the latest OAMP Czech Ministry requirements for Long-Term Visa and Residence Permit applications.",
+        "defaultButton": "Apply Online"
       }
     },
     "personalInfo": {

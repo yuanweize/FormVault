@@ -254,6 +254,9 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         SystemConfig.site_title,
         SystemConfig.site_icon_url,
         SystemConfig.support_email,
+        SystemConfig.production_ingress_name,
+        SystemConfig.primary_domain,
+        SystemConfig.secondary_domain,
         SystemConfig.crisp_website_id,
         SystemConfig.crisp_custom_color,
         SystemConfig.storage_provider,
@@ -264,6 +267,9 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         SystemConfig.site_description: "SEO Meta Description",
         SystemConfig.site_icon_url: "Brand Icon / Favicon URL",
         SystemConfig.support_email: "Official Support Email",
+        SystemConfig.production_ingress_name: "Ingress Provider",
+        SystemConfig.primary_domain: "Primary Domain",
+        SystemConfig.secondary_domain: "Secondary Domain",
         SystemConfig.crisp_website_id: "Crisp Chat Website ID (Key)",
         SystemConfig.crisp_custom_color: "Crisp Widget Style / Theme",
         SystemConfig.storage_provider: "Storage Provider",
@@ -275,6 +281,9 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         SystemConfig.site_description,
         SystemConfig.site_icon_url,
         SystemConfig.support_email,
+        SystemConfig.production_ingress_name,
+        SystemConfig.primary_domain,
+        SystemConfig.secondary_domain,
         SystemConfig.crisp_website_id,
         SystemConfig.crisp_custom_color,
         SystemConfig.storage_provider,
@@ -332,6 +341,18 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         support_email=dict(
             label="Official Support Email",
             description="Email shown on customer support pages and email receipts (e.g. insurance@hktse.eu.org).",
+        ),
+        production_ingress_name=dict(
+            label="Production Ingress Architecture",
+            description="Name of your reverse proxy or tunnel service (e.g. Cloudflare Tunnel, Nginx Ingress, Traefik).",
+        ),
+        primary_domain=dict(
+            label="Primary Production Domain",
+            description="Main domain where this portal is accessed by clients (e.g. insure.hktse.eu.org).",
+        ),
+        secondary_domain=dict(
+            label="Secondary / Regional Domain",
+            description="Alternate or regional domain (e.g. pojisteni.hktse.eu.org).",
         ),
     )
 

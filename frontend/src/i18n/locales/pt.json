@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Aviso regulatório",
+        "defaultTitle": "Seguro em conformidade com a Lei de Residência de Estrangeiros da Chéquia (nº 326/1999)",
+        "defaultSubtitle": "Todos os certificados emitidos pela nossa agência cumprem os requisitos do OAMP para vistos de longa duração e autorizações de residência.",
+        "defaultButton": "Candidatar-se online"
       }
     },
     "personalInfo": {

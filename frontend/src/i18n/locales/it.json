@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Avviso normativo",
+        "defaultTitle": "Assicurazione conforme alla Legge sul soggiorno dei cittadini stranieri (n. 326/1999)",
+        "defaultSubtitle": "Tutti i certificati emessi dalla nostra agenzia soddisfano i requisiti OAMP del Ministero ceco per visti e permessi di soggiorno.",
+        "defaultButton": "Richiedi online"
       }
     },
     "personalInfo": {

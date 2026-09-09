@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Официальное уведомление",
+        "defaultTitle": "Страхование в соответствии с Законом о пребывании иностранцев в Чехии (№ 326/1999)",
+        "defaultSubtitle": "Все полисы, оформленные через наше агентство, соответствуют требованиям OAMP МВД Чехии для долгосрочных виз и ВНЖ.",
+        "defaultButton": "Оформить онлайн"
       }
     },
     "personalInfo": {

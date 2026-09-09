@@ -64,6 +64,9 @@ class PortalPublicConfigSchema(BaseModel):
     site_description: Optional[str] = None
     site_icon_url: str = "/favicon.svg"
     support_email: str
+    production_ingress_name: Optional[str] = "Cloudflare Tunnel"
+    primary_domain: Optional[str] = "insure.hktse.eu.org"
+    secondary_domain: Optional[str] = "pojisteni.hktse.eu.org"
     crisp_website_id: Optional[str] = None
     crisp_custom_color: Optional[str] = "blue"
 

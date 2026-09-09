@@ -4,6 +4,7 @@ import {
   Box,
   Typography,
   Button,
+  IconButton,
   Grid,
   Card,
   CardContent,
@@ -283,8 +284,10 @@ const HomePage: React.FC = () => {
         <Paper
           elevation={0}
           sx={{
+            position: 'relative',
             mb: { xs: 3, md: 5 },
             p: { xs: 2, sm: 2.5 },
+            pr: { xs: 5, sm: 6 },
             borderRadius: '16px',
             background:
               theme.palette.mode === 'light'
@@ -292,65 +295,124 @@ const HomePage: React.FC = () => {
                 : 'linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(124, 58, 237, 0.12) 100%)',
             border: '1px solid rgba(79, 70, 229, 0.25)',
             display: 'flex',
-            alignItems: { xs: 'flex-start', sm: 'center' },
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: { xs: 'flex-start', md: 'center' },
             justifyContent: 'space-between',
-            gap: 2,
+            gap: { xs: 1.5, md: 2.5 },
             boxShadow: '0 4px 20px -2px rgba(79, 70, 229, 0.08)',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.8 }}>
+          {/* Top-Right Close Button */}
+          <IconButton
+            size="small"
+            onClick={() => setBannerVisible(false)}
+            aria-label="close announcement"
+            sx={{
+              position: 'absolute',
+              top: { xs: 8, sm: 10 },
+              right: { xs: 8, sm: 10 },
+              color: 'text.secondary',
+              '&:hover': { color: 'text.primary' },
+            }}
+          >
+            <CloseOutlined fontSize="small" />
+          </IconButton>
+
+          {/* Left Text Block */}
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, width: '100%' }}>
             <Box
               sx={{
                 p: 1,
                 borderRadius: '10px',
                 backgroundColor: 'rgba(79, 70, 229, 0.15)',
                 color: 'primary.main',
-                display: 'flex',
+                display: { xs: 'none', sm: 'flex' },
                 alignItems: 'center',
                 justifyContent: 'center',
+                flexShrink: 0,
+                mt: 0.25,
               }}
             >
               <CampaignOutlined fontSize="small" />
             </Box>
-            <Box>
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, mb: 0.75 }}>
                 <Chip
-                  label={banner.tag || t('pages.home.banner.notice', { defaultValue: 'Notice' })}
+                  label={
+                    banner.id === 1 && (banner.tag === 'Regulatory Notice' || !banner.tag)
+                      ? t('pages.home.banner.defaultTag', { defaultValue: 'Regulatory Notice' })
+                      : banner.tag || t('pages.home.banner.notice', { defaultValue: 'Notice' })
+                  }
                   size="small"
                   sx={{
                     fontWeight: 700,
-                    fontSize: '0.7rem',
-                    height: 20,
+                    fontSize: '0.72rem',
+                    height: 22,
                     backgroundColor: 'primary.main',
                     color: '#FFFFFF',
+                    flexShrink: 0,
                   }}
                 />
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                  {banner.title}
+                <Typography
+                  variant="subtitle2"
+                  component="span"
+                  sx={{
+                    fontWeight: 800,
+                    fontSize: { xs: '0.92rem', sm: '1rem' },
+                    lineHeight: 1.45,
+                    color: 'text.primary',
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  {banner.id === 1 && banner.title.includes('Czech Foreigners Residence Act')
+                    ? t('pages.home.banner.defaultTitle', { defaultValue: banner.title })
+                    : banner.title}
                 </Typography>
-              </Stack>
+              </Box>
               {banner.subtitle && (
-                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-                  {banner.subtitle}
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    fontSize: { xs: '0.82rem', sm: '0.875rem' },
+                    lineHeight: 1.6,
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  {banner.id === 1 && banner.subtitle.includes('All insurance certificates issued through our agency meet')
+                    ? t('pages.home.banner.defaultSubtitle', { defaultValue: banner.subtitle })
+                    : banner.subtitle}
                 </Typography>
               )}
             </Box>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+
+          {/* Action Button */}
+          <Box
+            sx={{
+              alignSelf: { xs: 'flex-start', md: 'center' },
+              flexShrink: 0,
+              mt: { xs: 0.5, md: 0 },
+            }}
+          >
             <Button
-              variant="text"
+              variant="contained"
               size="small"
               onClick={() => handleGetStarted('health')}
-              sx={{ fontWeight: 700, whiteSpace: 'nowrap' }}
+              sx={{
+                px: 2.2,
+                py: 0.7,
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                borderRadius: '8px',
+                whiteSpace: 'nowrap',
+                textTransform: 'none',
+                boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
+              }}
             >
-              {banner.button_text || t('pages.home.banner.learnMore', { defaultValue: 'Apply Online' })}
-            </Button>
-            <Button
-              size="small"
-              onClick={() => setBannerVisible(false)}
-              sx={{ minWidth: 32, p: 0.5, color: 'text.secondary' }}
-            >
-              <CloseOutlined fontSize="small" />
+              {banner.id === 1 && (banner.button_text === 'Apply Online' || banner.button_text === 'Apply Now')
+                ? t('pages.home.banner.defaultButton', { defaultValue: 'Apply Online' })
+                : banner.button_text || t('pages.home.banner.learnMore', { defaultValue: 'Apply Online' })}
             </Button>
           </Box>
         </Paper>
@@ -512,8 +574,8 @@ const HomePage: React.FC = () => {
 
         {/* Security badges */}
         <Stack
-          direction="row"
-          spacing={{ xs: 2, sm: 4 }}
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={{ xs: 1.2, sm: 4 }}
           justifyContent="center"
           alignItems="center"
           sx={{ color: 'text.secondary', fontSize: '0.85rem' }}

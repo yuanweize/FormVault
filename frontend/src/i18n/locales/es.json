@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Aviso regulatorio",
+        "defaultTitle": "Seguro conforme a la Ley de Residencia de Extranjeros de la República Checa (n.º 326/1999)",
+        "defaultSubtitle": "Todos los certificados de seguro emitidos por nuestra agencia cumplen con los requisitos de la OAMP para visados y permisos de residencia.",
+        "defaultButton": "Solicitar en línea"
       }
     },
     "personalInfo": {

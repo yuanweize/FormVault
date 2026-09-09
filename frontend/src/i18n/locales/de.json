@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "Gesetzlicher Hinweis",
+        "defaultTitle": "Versicherung konform mit dem tschechischen Aufenthaltsgesetz (Nr. 326/1999 Slg.)",
+        "defaultSubtitle": "Alle über unsere Agentur ausgestellten Policen erfüllen die aktuellen OAMP-Vorgaben des tschechischen Innenministeriums für Visa und Aufenthaltstitel.",
+        "defaultButton": "Online beantragen"
       }
     },
     "personalInfo": {

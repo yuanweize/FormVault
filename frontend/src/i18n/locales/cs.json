@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Oznámení",
-        "learnMore": "Zažádat online"
+        "learnMore": "Zažádat online",
+        "defaultTag": "Zákonné oznámení",
+        "defaultTitle": "Pojištění v plném souladu se zákonem o pobytu cizinců (č. 326/1999 Sb.)",
+        "defaultSubtitle": "Všechna potvrzení o pojištění vydaná naší agenturou splňují nejnovější požadavky OAMP MV ČR pro žádosti o dlouhodobá víza a pobyty.",
+        "defaultButton": "Sjednat online"
       }
     },
     "personalInfo": {

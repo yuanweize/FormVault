@@ -58,6 +58,9 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         site_description=config.site_description,
         site_icon_url=config.site_icon_url or "/favicon.svg",
         support_email=config.support_email or "insurance@hktse.eu.org",
+        production_ingress_name=getattr(config, "production_ingress_name", None) or "Cloudflare Tunnel",
+        primary_domain=getattr(config, "primary_domain", None) or "insure.hktse.eu.org",
+        secondary_domain=getattr(config, "secondary_domain", None) or "pojisteni.hktse.eu.org",
         crisp_website_id=config.crisp_website_id,
         crisp_custom_color=config.crisp_custom_color or "blue",
     )

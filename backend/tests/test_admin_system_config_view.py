@@ -53,11 +53,14 @@ def test_system_config_edit_view_accessible(client, db):
     assert "System Configuration" in html
     assert "Crisp Live Chat Website ID" in html
     assert "Crisp Live Chat Widget Color Theme" in html
+    assert "Production Ingress Architecture" in html
+    assert "Primary Production Domain" in html
+    assert "Secondary / Regional Domain" in html
     assert "storage_provider" in html
 
 
 def test_admin_dashboard_view_renders_kpis_and_crisp(client, db):
-    """Verify that /admin/ renders the custom high-aesthetic dashboard with Crisp status & KPI cards."""
+    """Verify that /admin/ renders the custom high-aesthetic dashboard with Crisp status, Ingress domains & KPI cards."""
     # Ensure AdminUser exists
     admin = db.query(AdminUser).filter_by(username=settings.ADMIN_USERNAME).first()
     if not admin:
@@ -76,10 +79,16 @@ def test_admin_dashboard_view_renders_kpis_and_crisp(client, db):
             crisp_website_id="test-crisp-uuid-12345",
             crisp_custom_color="blue",
             storage_provider="local",
+            production_ingress_name="Cloudflare Tunnel",
+            primary_domain="insure.hktse.eu.org",
+            secondary_domain="pojisteni.hktse.eu.org",
         )
         db.add(cfg)
     else:
         cfg.crisp_website_id = "test-crisp-uuid-12345"
+        cfg.production_ingress_name = "Cloudflare Tunnel"
+        cfg.primary_domain = "insure.hktse.eu.org"
+        cfg.secondary_domain = "pojisteni.hktse.eu.org"
     db.commit()
 
     # Login to admin
@@ -96,6 +105,10 @@ def test_admin_dashboard_view_renders_kpis_and_crisp(client, db):
     assert "Insurance Operations Console" in html
     assert "Crisp Live Chat Integration" in html
     assert "test-crisp-uuid-12345" in html
+    assert "Production Ingress" in html
+    assert "Cloudflare Tunnel" in html
+    assert "insure.hktse.eu.org" in html
+    assert "pojisteni.hktse.eu.org" in html
     assert "Total Applications" in html
     assert "Active Plans" in html
     assert "Encrypted Files" in html

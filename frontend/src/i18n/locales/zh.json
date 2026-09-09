@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "官方公告",
-        "learnMore": "在线申请"
+        "learnMore": "在线申请",
+        "defaultTag": "官方合规声明",
+        "defaultTitle": "经捷克《外国人居留法》（第 326/1999 号法律）合规认证之官方保险",
+        "defaultSubtitle": "通过我司代理签发的所有保险凭证均 100% 符合捷克内政部移民局 (OAMP) 针对长期签证与居留许可申请的最新法定承保标准。",
+        "defaultButton": "即刻在线申请"
       }
     },
     "personalInfo": {

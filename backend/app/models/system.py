@@ -37,6 +37,11 @@ class SystemConfig(Base):
     crisp_website_id = Column(String(100), nullable=True) # Crisp Live Chat Website ID / Key
     crisp_custom_color = Column(String(50), default="blue", nullable=True) # Crisp Widget Theme Color (blue, azure, green, orange, red, purple)
     
+    # Production Ingress & Domain Settings
+    production_ingress_name = Column(String(100), default="Cloudflare Tunnel", nullable=True)
+    primary_domain = Column(String(150), default="insure.hktse.eu.org", nullable=True)
+    secondary_domain = Column(String(150), default="pojisteni.hktse.eu.org", nullable=True)
+    
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __repr__(self):

@@ -94,7 +94,11 @@
       },
       "banner": {
         "notice": "Notice",
-        "learnMore": "Apply Online"
+        "learnMore": "Apply Online",
+        "defaultTag": "규정 준수 안내",
+        "defaultTitle": "체코 외국인 체류법(제326/1999호) 준거 보험",
+        "defaultSubtitle": "당사를 통해 발급된 모든 보험 증명서는 장기 비자 및 거주 허가 신청을 위한 체코 내무부(OAMP)의 최신 요건을 충족합니다.",
+        "defaultButton": "온라인 신청"
       }
     },
     "personalInfo": {
