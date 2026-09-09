@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block head_meta %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  {% endblock %}
+  {% block head_css %}
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/tabler.min.css?v=2">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/tabler-icons.min.css?v=2">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/fontawesome-all.min.css?v=2">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/select2.min.css?v=2">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/flatpickr.min.css?v=2">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/main.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  {% endblock %}
+  {% if admin.favicon_url %}
+  <link rel="icon" href="{{ admin.favicon_url }}">
+  {% endif %}
+  <title>{{ admin.title }}</title>
+  {% block head %}
+  {% endblock %}
+  {% block head_tail %}
+  {% endblock %}
+</head>
+
+<body>
+  {% block body %}
+  <main>
+    {% block main %}
+    {% endblock %}
+  </main>
+  {% endblock %}
+  {% block tail_js %}
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/jquery.min.js?v=2"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/tabler.min.js?v=2"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/select2.full.min.js?v=2"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/flatpickr.min.js?v=2"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/main.js?v=2"></script>
+  {% endblock %}
+  {% block tail %}
+  {% endblock %}
+</body>
+
+</html>
