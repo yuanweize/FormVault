@@ -88,7 +88,7 @@
             <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle" style="width: 32px; height: 32px;">
               <i class="fa-solid fa-comments"></i>
             </span>
-            <h3 class="fw-bold text-dark m-0">Crisp Live Chat Integration (在线即时客服配置)</h3>
+            <h3 class="fw-bold text-dark m-0">Crisp Live Chat Integration</h3>
             {% if stats.system_config and stats.system_config.crisp_website_id %}
             <span class="badge bg-success-lt text-success fw-bold px-2 py-1">
               <i class="fa-solid fa-circle-check me-1"></i>Active & Connected
@@ -101,11 +101,11 @@
           </div>
 
           <p class="text-secondary mb-2">
-            <strong>配置位置说明：</strong>
-            系统后台的 Crisp 在线聊天由 
+            <strong>Configuration Notice:</strong>
+            System-wide Crisp live chat is centrally managed under 
             <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="fw-bold text-primary text-decoration-none">
-              [System & Security] &rarr; [System Configuration] (系统配置 ⚙️)
-            </a> 统一托管。前台网站（<code>/</code>）会自动感知并注入官方 Crisp 浮窗。
+              [System & Security] &rarr; [System Configuration] (⚙️)
+            </a>. The customer-facing portal (<code>/</code>) automatically detects and embeds the official Crisp widget.
           </p>
 
           <div class="row g-3 mt-1">
@@ -117,19 +117,19 @@
                   {{ stats.system_config.crisp_website_id }}
                 </div>
                 {% else %}
-                <div class="text-danger fw-bold">未配置 (前台浮窗暂不显示)</div>
+                <div class="text-danger fw-bold">Unconfigured (Widget disabled on portal)</div>
                 {% endif %}
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="p-2 bg-light rounded border small">
-                <div class="text-muted fw-bold mb-1">Widget Theme / Color (挂件主题色)</div>
+                <div class="text-muted fw-bold mb-1">Widget Theme / Color</div>
                 <div class="d-flex align-items-center gap-2">
                   <span class="badge bg-blue text-white text-capitalize">
                     {{ stats.system_config.crisp_custom_color if (stats.system_config and stats.system_config.crisp_custom_color) else 'Blue (Default)' }}
                   </span>
-                  <span class="text-muted small">与前台保司风格无缝契合</span>
+                  <span class="text-muted small">Matches portal branding</span>
                 </div>
               </div>
             </div>
@@ -140,11 +140,11 @@
           <div class="d-flex flex-column gap-2">
             <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="btn btn-primary fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
               <i class="fa-solid fa-sliders"></i>
-              <span>配置 / 修改 Crisp 参数</span>
+              <span>Configure Crisp Settings</span>
             </a>
             <a href="https://app.crisp.chat/" target="_blank" class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center gap-2">
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              <span>登录 Crisp 官方控制台</span>
+              <span>Open Crisp Console</span>
             </a>
           </div>
         </div>
@@ -259,7 +259,7 @@
   <div class="card shadow-sm h-100">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h3 class="card-title fw-bold m-0 text-dark">
-        <i class="fa-solid fa-bolt text-warning me-2"></i>Operational Quick Actions (常用工作流)
+        <i class="fa-solid fa-bolt text-warning me-2"></i>Operational Quick Actions
       </h3>
       <span class="badge bg-blue-lt">Broker Suite</span>
     </div>
@@ -329,24 +329,24 @@
   <div class="card shadow-sm h-100">
     <div class="card-header">
       <h3 class="card-title fw-bold m-0 text-dark">
-        <i class="fa-solid fa-scale-balanced text-primary me-2"></i>Czech Compliance Brief (居留合规指引)
+        <i class="fa-solid fa-scale-balanced text-primary me-2"></i>Czech Compliance Brief
       </h3>
     </div>
     <div class="card-body">
       <div class="alert alert-info border-0 p-3 mb-3">
         <div class="fw-bold mb-1">
-          <i class="fa-solid fa-circle-info me-1"></i>Act No. 326/1999 Coll. (外国人居留法) & Act No. 170/2018 Coll.
+          <i class="fa-solid fa-circle-info me-1"></i>Act No. 326/1999 Coll. (Foreigners Residence Act) & Act No. 170/2018 Coll.
         </div>
         <div class="small">
-          所有在捷克申请长期签证（Long-term Visa）及居留（Residence Permit）的留学生和外籍人士，必须投保<strong>综合健康医疗保险（Komplexní zdravotní pojištění cizinců）</strong>，单项事故最低赔偿限额为 <strong>400,000 EUR</strong>。
+          All foreign nationals and students applying for a Long-term Visa or Residence Permit in Czechia must hold <strong>Comprehensive Foreigners Health Insurance (Komplexní zdravotní pojištění cizinců)</strong> with a statutory minimum indemnity limit of <strong>€400,000</strong> per event.
         </div>
       </div>
 
       <div class="text-secondary small">
-        <div class="mb-2"><strong>合作承保保司：</strong> PVZP (Pojišťovna VZP), Slavia pojišťovna, SV pojišťovna (formerly ERGO)</div>
-        <div class="mb-2"><strong>正规中介网络：</strong> České pojištění a.s. 官方中介合作体系，持牌法人 <strong>HKTSE s.r.o.</strong>（IČO: 10858032，布拉格市法院商业注册登记）</div>
-        <div class="mb-2"><strong>数据留存合规：</strong> 所有用户提交的护照扫描件和保单附件经客户端与服务端加密，符合 GDPR Article 32 安全要求。</div>
-        <div><strong>官方咨询支持：</strong> <code>{{ stats.system_config.support_email if stats.system_config else 'insurance@hktse.eu.org' }}</code></div>
+        <div class="mb-2"><strong>Partner Underwriters:</strong> PVZP (Pojišťovna VZP), Slavia pojišťovna, SV pojišťovna (formerly ERGO)</div>
+        <div class="mb-2"><strong>Broker Network:</strong> Authorized collaboration with České pojištění a.s.; registered entity <strong>HKTSE s.r.o.</strong> (IČO: 10858032, Municipal Court in Prague).</div>
+        <div class="mb-2"><strong>Data Protection:</strong> All applicant identity documents and policy attachments are encrypted end-to-end in compliance with GDPR Article 32.</div>
+        <div><strong>Official Inquiries & Support:</strong> <code>{{ stats.system_config.support_email if stats.system_config else 'insurance@hktse.eu.org' }}</code></div>
       </div>
     </div>
   </div>

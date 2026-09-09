@@ -397,11 +397,11 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="d-flex align-items-center gap-2">
         <button type="button" id="btn-verify-crisp" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
           <i class="fa-solid fa-circle-check"></i>
-          <span>测试并验证 Crisp Website ID</span>
+          <span>Test & Verify Crisp Website ID</span>
         </button>
-        <span class="text-muted small">直连 Crisp 官方 API 验证 UUID 有效性与在线状态</span>
+        <span class="text-muted small">Direct connection to official Crisp API to verify UUID and active status</span>
       </div>
-      <span class="badge bg-secondary-subtle text-secondary" id="crisp-status-badge">未检测</span>
+      <span class="badge bg-secondary-subtle text-secondary" id="crisp-status-badge">Unverified</span>
     </div>
     <div id="crisp-verify-feedback" class="small" style="display: none;"></div>
   `;
@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!isAuto) {
         feedback.style.display = 'block';
         feedback.className = 'small text-warning mt-1';
-        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-1"></i> 请先输入 Crisp Website ID (36位 UUID，例如 168677e2-0aa6-45ec-a486-83855b18c6f4)';
+        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-1"></i> Please enter a valid Crisp Website ID (36-char UUID, e.g. 168677e2-0aa6-45ec-a486-83855b18c6f4)';
       }
       return;
     }
@@ -433,9 +433,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     verifyBtn.disabled = true;
-    verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span><span>正在连接 Crisp 官方 API 验证...</span>';
+    verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span><span>Connecting to official Crisp API...</span>';
     statusBadge.className = 'badge bg-warning-subtle text-warning';
-    statusBadge.textContent = '验证中...';
+    statusBadge.textContent = 'Verifying...';
     feedback.style.display = 'none';
 
     try {
@@ -449,27 +449,27 @@ document.addEventListener('DOMContentLoaded', function() {
       const isPassed = Boolean(data.valid || data.is_valid);
       if (isPassed) {
         statusBadge.className = 'badge bg-success text-white';
-        statusBadge.textContent = '官方验证通过';
+        statusBadge.textContent = 'Officially Verified';
         feedback.className = 'small text-success mt-1 p-2 bg-success-subtle border border-success-subtle rounded-2';
         feedback.innerHTML = `
-          <div class="fw-bold"><i class="fa-solid fa-circle-check me-1"></i> Crisp Website ID 验证成功！官方接入状态正常。</div>
-          <div class="text-secondary mt-1">站点名称: <strong>${data.website_name || '已配置'}</strong> · 绑定域名: <strong>${data.website_domain || data.domain || 'N/A'}</strong> · 在线客服人员: <strong>${data.operators_count ?? data.operator_count ?? 1} 人</strong></div>
+          <div class="fw-bold"><i class="fa-solid fa-circle-check me-1"></i> Crisp Website ID verified successfully! Official integration is active.</div>
+          <div class="text-secondary mt-1">Website Name: <strong>${data.website_name || 'Configured'}</strong> · Domain: <strong>${data.website_domain || data.domain || 'N/A'}</strong> · Active Operators: <strong>${data.operators_count ?? data.operator_count ?? 1} operator(s)</strong></div>
         `;
       } else {
         statusBadge.className = 'badge bg-danger text-white';
-        statusBadge.textContent = '验证未通过';
+        statusBadge.textContent = 'Verification Failed';
         feedback.className = 'small text-danger mt-1 p-2 bg-danger-subtle border border-danger-subtle rounded-2';
-        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark me-1"></i> 验证未通过: ${data.message || 'Key 无效或无法访问'}`;
+        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark me-1"></i> Verification failed: ${data.message || 'Key invalid or inaccessible'}`;
       }
     } catch (e) {
       statusBadge.className = 'badge bg-danger text-white';
-      statusBadge.textContent = '检测出错';
+      statusBadge.textContent = 'Network Error';
       feedback.style.display = 'block';
       feedback.className = 'small text-danger mt-1';
-      feedback.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> 验证请求失败，请检查网络连通性。';
+      feedback.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> Verification request failed. Please check network connectivity.';
     } finally {
       verifyBtn.disabled = false;
-      verifyBtn.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i><span>测试并验证 Crisp Website ID</span>';
+      verifyBtn.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i><span>Test & Verify Crisp Website ID</span>';
     }
   }
 
