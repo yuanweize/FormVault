@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 from typing import List, Optional
 
-from sqlalchemy import Column, String, Date, DateTime, Enum, Index
+from sqlalchemy import Column, String, Date, DateTime, Enum, Index, Integer, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import VARCHAR, TIMESTAMP
 
@@ -47,6 +47,27 @@ class Application(Base):
     )
     preferred_language = Column(VARCHAR(5), default="en", nullable=False)
 
+    # Underwriting Partner & Plan Binding
+    insurance_company_id = Column(
+        Integer, ForeignKey("insurance_companies.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    insurance_plan_id = Column(
+        Integer, ForeignKey("insurance_plans.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+
+    # Detailed Underwriting & Passport Information (České pojištění / PVZP / Slavia standard)
+    gender = Column(VARCHAR(10), nullable=True)  # Male / Female
+    nationality = Column(VARCHAR(50), nullable=True)  # Country of citizenship (e.g. China)
+    place_of_birth = Column(VARCHAR(100), nullable=True)  # City, Country
+    passport_number = Column(VARCHAR(50), nullable=True)
+    passport_expiry_date = Column(Date, nullable=True)
+    passport_issued_by = Column(VARCHAR(50), nullable=True)  # State which issued the passport
+    insurance_commencement_date = Column(Date, nullable=True)  # Date of commencement
+    insurance_duration_months = Column(Integer, default=12, nullable=True)  # Duration in months (e.g. 12, 24, 36)
+    type_of_stay = Column(VARCHAR(50), default="student", nullable=True)  # student, adult, employee
+    study_confirmation_file_id = Column(VARCHAR(36), nullable=True)  # Potvrzení o studiu scan reference
+    custom_fields_data = Column(Text, nullable=True)  # Configurable recipe custom fields (JSON)
+
     # Application status
     status = Column(
         Enum(
@@ -67,6 +88,8 @@ class Application(Base):
     )
 
     # Relationships
+    company = relationship("InsuranceCompany", foreign_keys=[insurance_company_id])
+    plan = relationship("InsurancePlan", foreign_keys=[insurance_plan_id])
     files = relationship(
         "File", back_populates="application", cascade="all, delete-orphan"
     )
@@ -83,6 +106,7 @@ class Application(Base):
         Index("idx_apps_email", "email"),
         Index("idx_apps_created_at", "created_at"),
         Index("idx_apps_status", "status"),
+        Index("idx_apps_company_id", "insurance_company_id"),
     )
 
     def __repr__(self) -> str:

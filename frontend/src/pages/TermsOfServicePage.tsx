@@ -55,7 +55,7 @@ const TermsOfServicePage: React.FC = () => {
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section1Content', {
                 defaultValue:
-                  'FormVault functions as a registered insurance intermediary and broker operating under the laws of the Czech Republic. Our platform mediates agreements between the applicant ("You") and licensed Czech/EU underwriting insurance companies (including but not limited to Pojišťovna VZP, a.s., Slavia pojišťovna a.s., Maxima pojišťovna a.s., and UNIQA pojišťovna, a.s.). Final binding coverage is executed in accordance with the underwriter\'s General Insurance Conditions (VPP).',
+                  'FormVault functions as a registered insurance intermediary service operating under Act No. 170/2018 Coll. (Insurance Distribution Act) of the Czech Republic. In cooperation with České pojištění a.s., our platform mediates agreements between the applicant ("You") and licensed Czech underwriting carriers (including Pojišťovna VZP, a.s., Slavia pojišťovna a.s., and SV pojišťovna, a.s.). Final binding coverage is executed in accordance with each underwriter\'s General Insurance Conditions (VPP) and registered with the Czech Foreign Police / Ministry of the Interior (OAMP).',
               })}
             </Typography>
           </Box>

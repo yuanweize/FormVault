@@ -64,25 +64,46 @@ class PortalPublicConfigSchema(BaseModel):
     site_description: Optional[str] = None
     site_icon_url: str = "/favicon.svg"
     support_email: str
+    broker_legal_disclosure: Optional[str] = "HKTSE s.r.o. (IČO: 10858032) in authorized cooperation with České pojištění a.s. representing PVZP, Slavia & SV pojišťovna."
     production_ingress_name: Optional[str] = "Cloudflare Tunnel"
     primary_domain: Optional[str] = "insure.hktse.eu.org"
     secondary_domain: Optional[str] = "pojisteni.hktse.eu.org"
     crisp_website_id: Optional[str] = None
     crisp_custom_color: Optional[str] = "blue"
+    form_profile_config: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class GdprRequestSchema(BaseModel):
-    request_type: str  # access, rectification, erasure, portability
+class CrispVerifyRequestSchema(BaseModel):
+    website_id: str
+
+
+class CrispVerifyResponseSchema(BaseModel):
+    valid: bool
+    message: str
+    website_name: Optional[str] = None
+    domain: Optional[str] = None
+    online: Optional[bool] = None
+    operators_count: Optional[int] = 0
+
+
+class GDPRRequestSchema(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    full_name: Optional[str] = None
     email: str
-    full_name: str
+    request_type: str  # access, rectification, erasure, portability
     reference_number: Optional[str] = None
     details: Optional[str] = None
 
 
-class GdprResponseSchema(BaseModel):
+class GDPRResponseSchema(BaseModel):
     success: bool = True
     ticket_id: str
     message: str
 
+
+# Case-insensitive aliases
+GdprRequestSchema = GDPRRequestSchema
+GdprResponseSchema = GDPRResponseSchema

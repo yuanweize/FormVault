@@ -201,6 +201,19 @@ async def create_application(
             date_of_birth=application_data.personal_info.date_of_birth,
             insurance_type=application_data.insurance_type,
             preferred_language=application_data.preferred_language,
+            insurance_company_id=application_data.insurance_company_id,
+            insurance_plan_id=application_data.insurance_plan_id,
+            gender=application_data.gender,
+            nationality=application_data.nationality,
+            place_of_birth=application_data.place_of_birth,
+            passport_number=application_data.passport_number,
+            passport_expiry_date=application_data.passport_expiry_date,
+            passport_issued_by=application_data.passport_issued_by,
+            insurance_commencement_date=application_data.insurance_commencement_date,
+            insurance_duration_months=application_data.insurance_duration_months or 12,
+            type_of_stay=application_data.type_of_stay or "student",
+            study_confirmation_file_id=application_data.study_confirmation_file_id,
+            custom_fields_data=application_data.custom_fields_data,
             status="draft",
         )
 
@@ -245,6 +258,16 @@ async def create_application(
             passport_file.application_id = application.id
             files.append(passport_file)
 
+        if application_data.study_confirmation_file_id:
+            study_file = (
+                db.query(File)
+                .filter(File.id == application_data.study_confirmation_file_id)
+                .first()
+            )
+            if study_file:
+                study_file.application_id = application.id
+                files.append(study_file)
+
         # Create audit log
         user_ip = request.client.host if request.client else None
         user_agent = request.headers.get("user-agent")
@@ -260,6 +283,7 @@ async def create_application(
                 "insurance_type": application.insurance_type,
                 "email": application.email,
                 "files_attached": len(files),
+                "insurance_company_id": application.insurance_company_id,
             },
         )
 
@@ -293,6 +317,17 @@ async def create_application(
             insurance_type=application.insurance_type,
             preferred_language=application.preferred_language,
             status=application.status,
+            insurance_company_id=application.insurance_company_id,
+            insurance_plan_id=application.insurance_plan_id,
+            gender=application.gender,
+            nationality=application.nationality,
+            place_of_birth=application.place_of_birth,
+            passport_number=application.passport_number,
+            passport_expiry_date=application.passport_expiry_date,
+            passport_issued_by=application.passport_issued_by,
+            insurance_commencement_date=application.insurance_commencement_date,
+            insurance_duration_months=application.insurance_duration_months,
+            type_of_stay=application.type_of_stay,
             files=file_responses,
             created_at=application.created_at,
             updated_at=application.updated_at,
@@ -466,6 +501,17 @@ async def get_application(
         insurance_type=application.insurance_type,
         preferred_language=application.preferred_language,
         status=application.status,
+        insurance_company_id=application.insurance_company_id,
+        insurance_plan_id=application.insurance_plan_id,
+        gender=application.gender,
+        nationality=application.nationality,
+        place_of_birth=application.place_of_birth,
+        passport_number=application.passport_number,
+        passport_expiry_date=application.passport_expiry_date,
+        passport_issued_by=application.passport_issued_by,
+        insurance_commencement_date=application.insurance_commencement_date,
+        insurance_duration_months=application.insurance_duration_months,
+        type_of_stay=application.type_of_stay,
         files=file_responses,
         created_at=application.created_at,
         updated_at=application.updated_at,

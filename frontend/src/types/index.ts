@@ -8,6 +8,15 @@ export interface PersonalInfo {
   address: Address;
   dateOfBirth: string;
   insuranceType: InsuranceType;
+  gender?: string;
+  nationality?: string;
+  placeOfBirth?: string;
+  passportNumber?: string;
+  passportExpiryDate?: string;
+  passportIssuedBy?: string;
+  insuranceCommencementDate?: string;
+  insuranceDurationMonths?: number;
+  typeOfStay?: string;
 }
 
 export interface Address {

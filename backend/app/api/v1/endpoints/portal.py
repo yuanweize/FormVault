@@ -22,9 +22,15 @@ from app.schemas.portal import (
     InsurancePlanShowcaseSchema,
     AgencyBannerShowcaseSchema,
     PortalPublicConfigSchema,
+    CrispVerifyRequestSchema,
+    CrispVerifyResponseSchema,
     GdprRequestSchema,
     GdprResponseSchema,
 )
+import re
+import json
+import urllib.request
+import urllib.error
 
 router = APIRouter()
 
@@ -58,12 +64,86 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         site_description=config.site_description,
         site_icon_url=config.site_icon_url or "/favicon.svg",
         support_email=config.support_email or "insurance@hktse.eu.org",
+        broker_legal_disclosure=getattr(config, "broker_legal_disclosure", None)
+        or "HKTSE s.r.o. (IČO: 10858032) in authorized cooperation with České pojištění a.s. representing PVZP, Slavia & SV pojišťovna.",
         production_ingress_name=getattr(config, "production_ingress_name", None) or "Cloudflare Tunnel",
         primary_domain=getattr(config, "primary_domain", None) or "insure.hktse.eu.org",
         secondary_domain=getattr(config, "secondary_domain", None) or "pojisteni.hktse.eu.org",
         crisp_website_id=config.crisp_website_id,
         crisp_custom_color=config.crisp_custom_color or "blue",
+        form_profile_config=getattr(config, "form_profile_config", None),
     )
+
+
+@router.post("/verify-crisp", response_model=CrispVerifyResponseSchema)
+def verify_crisp_website_id(payload: CrispVerifyRequestSchema) -> CrispVerifyResponseSchema:
+    """
+    Validate and verify a Crisp Live Chat Website ID.
+    Performs UUID format validation and queries Crisp API to verify existence and online status.
+    """
+    key = (payload.website_id or "").strip()
+    if not key:
+        return CrispVerifyResponseSchema(
+            valid=False,
+            message="Crisp Website ID cannot be empty. Please enter your Crisp UUID key.",
+        )
+
+    # Validate UUID format (e.g. 168677e2-0aa6-45ec-a486-83855b18c6f4)
+    uuid_pattern = r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    if not re.match(uuid_pattern, key):
+        return CrispVerifyResponseSchema(
+            valid=False,
+            message="Invalid UUID format. Crisp Website ID must be 36 characters (e.g., 168677e2-0aa6-45ec-a486-83855b18c6f4).",
+        )
+
+    # Ping Crisp public website settings endpoint
+    url = f"https://client.crisp.chat/settings/website/{key}/"
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            },
+        )
+        with urllib.request.urlopen(req, timeout=6) as response:
+            if response.status == 200:
+                raw_data = response.read().decode("utf-8")
+                data = json.loads(raw_data)
+                website_name = data.get("website", "Unknown")
+                domain = data.get("domain", "")
+                online = data.get("online", True)
+                operators_count = len(data.get("operators", []))
+
+                return CrispVerifyResponseSchema(
+                    valid=True,
+                    message=f"✅ Crisp Website ID is verified & active! (Website: '{website_name}', Domain: '{domain or 'N/A'}', Operators: {operators_count})",
+                    website_name=website_name,
+                    domain=domain,
+                    online=online,
+                    operators_count=operators_count,
+                )
+            else:
+                return CrispVerifyResponseSchema(
+                    valid=False,
+                    message=f"Crisp API returned status code {response.status}. Key could not be confirmed.",
+                )
+    except urllib.error.HTTPError as err:
+        if err.code == 404:
+            return CrispVerifyResponseSchema(
+                valid=False,
+                message=f"❌ Website ID '{key}' was not found on Crisp. Please check the ID in your Crisp dashboard (Settings > Website Settings).",
+            )
+        return CrispVerifyResponseSchema(
+            valid=False,
+            message=f"Crisp verification HTTP error {err.code}: {err.reason}",
+        )
+    except Exception as e:
+        # If network error or timeout
+        return CrispVerifyResponseSchema(
+            valid=True,  # UUID format valid, could not reach crisp servers
+            message=f"UUID format is valid ({key}), but could not connect to Crisp servers ({e}).",
+        )
+
 
 
 @router.get("/showcase", response_model=PortalShowcaseResponseSchema)

@@ -55,6 +55,14 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       },
       dateOfBirth: initialData?.dateOfBirth || '',
       insuranceType: initialData?.insuranceType || 'health',
+      gender: initialData?.gender || 'male',
+      nationality: initialData?.nationality || '',
+      placeOfBirth: initialData?.placeOfBirth || '',
+      passportNumber: initialData?.passportNumber || '',
+      passportExpiryDate: initialData?.passportExpiryDate || '',
+      insuranceCommencementDate: initialData?.insuranceCommencementDate || '',
+      insuranceDurationMonths: initialData?.insuranceDurationMonths || 12,
+      typeOfStay: initialData?.typeOfStay || 'student',
     },
   });
 
@@ -291,7 +299,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               disabled={isLoading}
               rules={{
                 required: t('forms.personalInfo.validation.dateOfBirth.required') as string,
-                validate: (value: string | Address) => {
+                validate: (value: any) => {
                   if (typeof value !== 'string') return true;
                   const date = new Date(value);
                   const today = new Date();
@@ -351,6 +359,189 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 </FormHelperText>
               )}
             </FormControl>
+          </Grid>
+
+          {/* Czech Underwriting & Policy Details Section */}
+          <Grid item xs={12}>
+            <Typography
+              variant="h6"
+              component="h2"
+              gutterBottom
+              sx={{
+                mt: { xs: 2, sm: 3 },
+                fontSize: { xs: '1.1rem', sm: '1.25rem' },
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+              }}
+            >
+              <span>{t('forms.personalInfo.sections.underwriting', { defaultValue: 'Underwriting & Policy Specifications (Czech Registry Data)' })}</span>
+            </Typography>
+          </Grid>
+
+          {/* Gender Field */}
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="medium" disabled={isLoading}>
+              <InputLabel id="gender-select-label">
+                {t('forms.personalInfo.fields.gender', { defaultValue: 'Gender' })}
+              </InputLabel>
+              <Controller
+                name="gender"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="gender-select-label"
+                    label={t('forms.personalInfo.fields.gender', { defaultValue: 'Gender' })}
+                  >
+                    <MenuItem value="male">{t('forms.personalInfo.genderOptions.male', { defaultValue: 'Male (Muž)' })}</MenuItem>
+                    <MenuItem value="female">{t('forms.personalInfo.genderOptions.female', { defaultValue: 'Female (Žena)' })}</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </Grid>
+
+          {/* Nationality Field */}
+          <Grid item xs={12} md={4}>
+            <Controller
+              name="nationality"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  size="medium"
+                  label={t('forms.personalInfo.fields.nationality', { defaultValue: 'Nationality / Citizenship' })}
+                  placeholder="e.g. CHINA, UKRAINE, INDIA"
+                  disabled={isLoading}
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Place of Birth Field */}
+          <Grid item xs={12} md={4}>
+            <Controller
+              name="placeOfBirth"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  size="medium"
+                  label={t('forms.personalInfo.fields.placeOfBirth', { defaultValue: 'Place of Birth (City)' })}
+                  placeholder="e.g. Prague, Beijing, Kyiv"
+                  disabled={isLoading}
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Passport Number Field */}
+          <Grid item xs={12} md={4}>
+            <Controller
+              name="passportNumber"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  size="medium"
+                  label={t('forms.personalInfo.fields.passportNumber', { defaultValue: 'Passport Number' })}
+                  placeholder="e.g. EC1234567"
+                  disabled={isLoading}
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Type of Stay Field */}
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="medium" disabled={isLoading}>
+              <InputLabel id="stay-select-label">
+                {t('forms.personalInfo.fields.typeOfStay', { defaultValue: 'Type of Stay in CZ' })}
+              </InputLabel>
+              <Controller
+                name="typeOfStay"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="stay-select-label"
+                    label={t('forms.personalInfo.fields.typeOfStay', { defaultValue: 'Type of Stay in CZ' })}
+                  >
+                    <MenuItem value="student">{t('forms.personalInfo.stayOptions.student', { defaultValue: 'University Student (Student)' })}</MenuItem>
+                    <MenuItem value="employment">{t('forms.personalInfo.stayOptions.employment', { defaultValue: 'Employment / Work Permit (Zaměstnání)' })}</MenuItem>
+                    <MenuItem value="business">{t('forms.personalInfo.stayOptions.business', { defaultValue: 'Trade License / Business (Živnostník)' })}</MenuItem>
+                    <MenuItem value="family">{t('forms.personalInfo.stayOptions.family', { defaultValue: 'Family Reunification (Sloučení rodiny)' })}</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </Grid>
+
+          {/* Duration of Insurance Months Field */}
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="medium" disabled={isLoading}>
+              <InputLabel id="duration-select-label">
+                {t('forms.personalInfo.fields.duration', { defaultValue: 'Insurance Duration' })}
+              </InputLabel>
+              <Controller
+                name="insuranceDurationMonths"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="duration-select-label"
+                    label={t('forms.personalInfo.fields.duration', { defaultValue: 'Insurance Duration' })}
+                  >
+                    <MenuItem value={6}>6 Months (Půl roku)</MenuItem>
+                    <MenuItem value={12}>12 Months / 1 Year (1 rok - Standard)</MenuItem>
+                    <MenuItem value={24}>24 Months / 2 Years (2 roky)</MenuItem>
+                    <MenuItem value={36}>36 Months / 3 Years (3 roky)</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </Grid>
+
+          {/* Insurance Commencement Date */}
+          <Grid item xs={12} md={6}>
+            <Controller
+              name="insuranceCommencementDate"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  type="date"
+                  size="medium"
+                  label={t('forms.personalInfo.fields.commencementDate', { defaultValue: 'Insurance Start Date (Počátek pojištění)' })}
+                  InputLabelProps={{ shrink: true }}
+                  disabled={isLoading}
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Passport Expiry Date */}
+          <Grid item xs={12} md={6}>
+            <Controller
+              name="passportExpiryDate"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  type="date"
+                  size="medium"
+                  label={t('forms.personalInfo.fields.passportExpiry', { defaultValue: 'Passport Expiration Date' })}
+                  InputLabelProps={{ shrink: true }}
+                  disabled={isLoading}
+                />
+              )}
+            />
           </Grid>
 
           {/* Address Section */}

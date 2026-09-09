@@ -185,7 +185,7 @@ describe('PersonalInfoForm', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(validFormData);
+      expect(mockOnSubmit).toHaveBeenCalledWith(expect.objectContaining(validFormData));
     });
   });
 

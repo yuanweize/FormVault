@@ -1,19 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
   Typography,
   Link,
   Stack,
+  Divider,
   useTheme,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShieldOutlined, EmailOutlined } from '@mui/icons-material';
+import { ShieldOutlined, EmailOutlined, VerifiedOutlined, OpenInNewOutlined } from '@mui/icons-material';
+import { apiClient } from '../../services/api';
 
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const [customDisclosure, setCustomDisclosure] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Dynamically retrieve configured broker legal disclosure if present
+    const fetchBrokerDisclosure = async () => {
+      try {
+        const res = await apiClient.get('/portal/config');
+        if (res.data && res.data.broker_legal_disclosure) {
+          setCustomDisclosure(res.data.broker_legal_disclosure);
+        }
+      } catch (e) {
+        // Fallback gracefully to default i18n
+      }
+    };
+    fetchBrokerDisclosure();
+  }, []);
+
+  const defaultBrokerDesc = t(
+    'footer.brokerDesc',
+    'Licensed insurance intermediary network in Prague, Czech Republic. In cooperation with České pojištění a.s., authorized partner for PVZP, Slavia & SV pojišťovna.'
+  );
 
   return (
     <Box
@@ -21,8 +44,8 @@ const Footer: React.FC = () => {
       sx={{
         backgroundColor:
           theme.palette.mode === 'dark'
-            ? 'rgba(15, 23, 42, 0.85)'
-            : 'rgba(248, 250, 252, 0.95)',
+            ? 'rgba(15, 23, 42, 0.92)'
+            : 'rgba(248, 250, 252, 0.98)',
         backdropFilter: 'blur(16px)',
         borderTop:
           theme.palette.mode === 'dark'
@@ -43,18 +66,15 @@ const Footer: React.FC = () => {
           }}
         >
           {/* Brand & Broker Accreditation */}
-          <Box>
+          <Box sx={{ maxWidth: { xs: '100%', md: '55%' } }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.8 }}>
               <ShieldOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                {t('footer.brokerTitle', 'FormVault Insurance Brokerage & Underwriting Services')}
+                {t('footer.brokerTitle', 'FormVault Insurance Intermediary Services')}
               </Typography>
             </Stack>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.5 }}>
-              {t('footer.brokerDesc', 'Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA.')}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.3 }}>
-              © {new Date().getFullYear()} FormVault. {t('footer.allRightsReserved')}
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.6 }}>
+              {customDisclosure || defaultBrokerDesc}
             </Typography>
           </Box>
 
@@ -110,6 +130,52 @@ const Footer: React.FC = () => {
               {t('footer.support', { defaultValue: 'Support & FAQ' })}
             </Link>
           </Stack>
+        </Box>
+
+        <Divider sx={{ my: 2.5, opacity: 0.6 }} />
+
+        {/* Legal Regulatory Disclosure & Corporate Verification (Discreet yet Authoritative) */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            gap: 1.5,
+          }}
+        >
+          <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.8, flexWrap: 'wrap' }}>
+            <span>© {new Date().getFullYear()} FormVault. {t('footer.allRightsReserved', 'All rights reserved.')}</span>
+            <span>•</span>
+            <Link
+              href="https://hktse.eu.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="text.secondary"
+              underline="hover"
+              sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
+            >
+              HKTSE s.r.o. <OpenInNewOutlined sx={{ fontSize: 11 }} />
+            </Link>
+            <span>•</span>
+            <span>IČO: 10858032</span>
+            <span>•</span>
+            <Link
+              href="https://verejnerejstriky.msp.gov.cz/vypis/1122326"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="text.secondary"
+              underline="hover"
+              sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
+            >
+              <VerifiedOutlined sx={{ fontSize: 12, color: 'success.main' }} />
+              Municipal Court in Prague <OpenInNewOutlined sx={{ fontSize: 11 }} />
+            </Link>
+          </Typography>
+
+          <Typography variant="caption" color="text.disabled" sx={{ fontSize: '0.72rem' }}>
+            Czech Act No. 170/2018 Coll. & Act No. 326/1999 Coll. (OAMP Compliant)
+          </Typography>
         </Box>
       </Container>
     </Box>

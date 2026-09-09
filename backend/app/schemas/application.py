@@ -95,6 +95,21 @@ class ApplicationCreateSchema(BaseModel):
     )
     student_id_file_id: Optional[str] = Field(None, description="Student ID file ID")
     passport_file_id: Optional[str] = Field(None, description="Passport file ID")
+    study_confirmation_file_id: Optional[str] = Field(None, description="Study confirmation file ID")
+
+    # Underwriting partner & duration
+    insurance_company_id: Optional[int] = Field(None, description="Selected insurance company partner ID")
+    insurance_plan_id: Optional[int] = Field(None, description="Selected insurance plan ID")
+    gender: Optional[str] = Field(None, max_length=10, description="Gender (Male/Female)")
+    nationality: Optional[str] = Field(None, max_length=50, description="Nationality / Citizenship")
+    place_of_birth: Optional[str] = Field(None, max_length=100, description="Place of birth (City, Country)")
+    passport_number: Optional[str] = Field(None, max_length=50, description="Passport number")
+    passport_expiry_date: Optional[date] = Field(None, description="Passport expiration date")
+    passport_issued_by: Optional[str] = Field(None, max_length=50, description="Country/Authority that issued passport")
+    insurance_commencement_date: Optional[date] = Field(None, description="Requested insurance start date")
+    insurance_duration_months: Optional[int] = Field(12, description="Insurance duration in months (e.g. 12, 24, 36)")
+    type_of_stay: Optional[str] = Field("student", max_length=50, description="Type of stay in Czechia (student, employee)")
+    custom_fields_data: Optional[str] = Field(None, description="Configurable recipe dynamic fields JSON")
 
     @field_validator("preferred_language")
     @classmethod
@@ -119,6 +134,19 @@ class ApplicationUpdateSchema(BaseModel):
     )
     student_id_file_id: Optional[str] = Field(None, description="Student ID file ID")
     passport_file_id: Optional[str] = Field(None, description="Passport file ID")
+    study_confirmation_file_id: Optional[str] = Field(None, description="Study confirmation file ID")
+    insurance_company_id: Optional[int] = Field(None, description="Assigned insurance company ID")
+    insurance_plan_id: Optional[int] = Field(None, description="Assigned plan ID")
+    gender: Optional[str] = Field(None, max_length=10)
+    nationality: Optional[str] = Field(None, max_length=50)
+    place_of_birth: Optional[str] = Field(None, max_length=100)
+    passport_number: Optional[str] = Field(None, max_length=50)
+    passport_expiry_date: Optional[date] = Field(None)
+    passport_issued_by: Optional[str] = Field(None, max_length=50)
+    insurance_commencement_date: Optional[date] = Field(None)
+    insurance_duration_months: Optional[int] = Field(None)
+    type_of_stay: Optional[str] = Field(None, max_length=50)
+    custom_fields_data: Optional[str] = Field(None)
 
     @field_validator("preferred_language")
     @classmethod
@@ -149,6 +177,17 @@ class ApplicationResponseSchema(ResponseBase, TimestampMixin):
     insurance_type: InsuranceType = Field(..., description="Type of insurance")
     preferred_language: str = Field(..., description="Preferred language code")
     status: ApplicationStatus = Field(..., description="Application status")
+    insurance_company_id: Optional[int] = None
+    insurance_plan_id: Optional[int] = None
+    gender: Optional[str] = None
+    nationality: Optional[str] = None
+    place_of_birth: Optional[str] = None
+    passport_number: Optional[str] = None
+    passport_expiry_date: Optional[date] = None
+    passport_issued_by: Optional[str] = None
+    insurance_commencement_date: Optional[date] = None
+    insurance_duration_months: Optional[int] = 12
+    type_of_stay: Optional[str] = "student"
     files: List[FileInfoSchema] = Field(
         default_factory=list, description="Uploaded files"
     )

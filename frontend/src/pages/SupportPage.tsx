@@ -37,17 +37,44 @@ const SupportPage: React.FC = () => {
     setCopied(true);
   };
 
-  const handleOpenCrispChat = () => {
-    // Check if crisp is loaded on window
+  const [chatLoading, setChatLoading] = useState(false);
+
+  const handleOpenCrispChat = async () => {
+    // Check if crisp is already loaded on window
     if ((window as any).$crisp) {
-      (window as any).$crisp.push(['do', 'chat:open']);
-    } else {
-      alert(
-        t('pages.support.chatOffline', {
-          defaultValue:
-            'Live chat is initializing or currently offline. Please email us directly at ' + supportEmail,
-        })
-      );
+      try {
+        (window as any).$crisp.push(['do', 'chat:show']);
+        (window as any).$crisp.push(['do', 'chat:open']);
+        return;
+      } catch (e) {
+        console.warn('Crisp open failed:', e);
+      }
+    }
+
+    // Otherwise dynamically retrieve crisp configuration and initialize
+    setChatLoading(true);
+    try {
+      const res = await (await import('../services/api')).apiClient.get('/portal/config');
+      const crispId = res?.data?.crisp_website_id;
+      if (crispId) {
+        (window as any).$crisp = (window as any).$crisp || [];
+        (window as any).CRISP_WEBSITE_ID = crispId;
+        if (!document.querySelector('script[src*="client.crisp.chat"]')) {
+          const script = document.createElement('script');
+          script.src = 'https://client.crisp.chat/l.js';
+          script.async = true;
+          document.head.appendChild(script);
+        }
+        (window as any).$crisp.push(['do', 'chat:show']);
+        (window as any).$crisp.push(['do', 'chat:open']);
+      } else {
+        // Fallback gracefully to email
+        window.location.href = `mailto:${supportEmail}?subject=FormVault%20Insurance%20Inquiry`;
+      }
+    } catch (err) {
+      window.location.href = `mailto:${supportEmail}?subject=FormVault%20Insurance%20Inquiry`;
+    } finally {
+      setChatLoading(false);
     }
   };
 
@@ -67,7 +94,7 @@ const SupportPage: React.FC = () => {
       }),
       a: t('pages.support.faqs.a2', {
         defaultValue:
-          'Yes. All policies mediated through our agency (PVZP, Slavia, Maxima, UNIQA) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.',
+          'Yes. All policies mediated through our agency network (PVZP, Slavia, SV pojišťovna) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.',
       }),
     },
     {
@@ -269,10 +296,13 @@ const SupportPage: React.FC = () => {
               variant="outlined"
               color="success"
               fullWidth
+              disabled={chatLoading}
               onClick={handleOpenCrispChat}
               sx={{ py: 1.2, fontWeight: 700, borderRadius: '10px', borderWidth: '2px' }}
             >
-              {t('pages.support.openChat', { defaultValue: 'Open Live Chat' })}
+              {chatLoading
+                ? t('pages.support.connectingChat', { defaultValue: 'Connecting to Crisp Agent...' })
+                : t('pages.support.openChat', { defaultValue: 'Open Live Chat' })}
             </Button>
           </Card>
         </Grid>

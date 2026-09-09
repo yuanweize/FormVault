@@ -324,9 +324,18 @@ export function ApplicationWorkflowProvider({ children }: { children: React.Reac
       const applicationData: CreateApplicationRequest = {
         personal_info: state.personalInfo as PersonalInfo,
         insurance_type: state.personalInfo.insuranceType || 'health',
-        preferred_language: 'en', // TODO: Get from i18n context
+        preferred_language: localStorage.getItem('i18nextLng') || 'en',
         student_id_file_id: state.uploadedFiles.studentId?.id,
         passport_file_id: state.uploadedFiles.passport?.id,
+        gender: state.personalInfo.gender,
+        nationality: state.personalInfo.nationality,
+        place_of_birth: state.personalInfo.placeOfBirth,
+        passport_number: state.personalInfo.passportNumber,
+        passport_expiry_date: state.personalInfo.passportExpiryDate,
+        passport_issued_by: state.personalInfo.passportIssuedBy,
+        insurance_commencement_date: state.personalInfo.insuranceCommencementDate,
+        insurance_duration_months: state.personalInfo.insuranceDurationMonths,
+        type_of_stay: state.personalInfo.typeOfStay,
       };
 
       let result;

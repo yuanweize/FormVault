@@ -173,7 +173,7 @@
       "title": "Obchodní podmínky",
       "subtitle": "Standardní obchodní a zprostředkovatelské podmínky upravující podávání žádostí o pojištění, ověřování dokumentů a zprostředkování pojištění přes portál FormVault.",
       "section1Title": "1. Rozsah zprostředkování a status makléře",
-      "section1Content": "FormVault působí jako registrovaný pojišťovací zprostředkovatel a makléř podle právních předpisů České republiky. Naše platforma zprostředkovává smlouvy mezi žadatelem („Vy“) a licencovanými pojišťovnami v ČR/EU (mimo jiné Pojišťovna VZP, a.s., Slavia pojišťovna a.s., Maxima pojišťovna a.s. a UNIQA pojišťovna, a.s.). Závazné krytí vzniká v souladu se Všeobecnými pojistnými podmínkami (VPP) daného pojistitele.",
+      "section1Content": "FormVault působí jako zprostředkovatel pojištění dle zákona č. 170/2018 Sb. Ve spolupráci s České pojištění a.s. zprostředkováváme pojistné smlouvy mezi žadatelem a licencovanými pojistiteli (Pojišťovna VZP, a.s., Slavia pojišťovna a.s. a SV pojišťovna, a.s.).",
       "section2Title": "2. Prohlášení žadatele a pravost dokumentů",
       "section2Content": "Odesláním žádosti a nahráním dokladů totožnosti (cestovní pas, potvrzení o studiu, vízum) zaručujete, že veškeré poskytnuté údaje jsou pravdivé, aktuální a úplné. Předložení padělaných nebo pozměněných dokumentů je trestným činem podle trestního zákoníku ČR (zák. č. 40/2009 Sb.) a povede k okamžitému ukončení zprostředkování a nahlášení příslušným orgánům (OAMP / Policie ČR).",
       "section3Title": "3. Vydání pojistky a soulad s OAMP MV ČR",
@@ -204,7 +204,7 @@
         "q1": "Jak rychle obdržím oficiální doklad o pojištění po odeslání?",
         "a1": "Standardní elektronické potvrzení o pojištění je vygenerováno do 1 až 4 pracovních hodin po schválení a úhradě. Certifikované PDF s číslem pojistné smlouvy obdržíte přímo na Váš e-mail pro potřeby vízové žádosti.",
         "q2": "Jsou Vaše pojistky 100% akceptovány Ministerstvem vnitra ČR (OAMP)?",
-        "a2": "Ano. Všechna pojištění zprostředkovaná naší agenturou (PVZP, Slavia, Maxima, UNIQA) striktně splňují zákon o pobytu cizinců (zák. č. 326/1999 Sb.). Jedná se o komplexní zdravotní pojištění (KZPC) s limitem až 10 000 000 Kč (400 000 EUR) registrované v registru pojištění.",
+        "a2": "Ano. Všechna pojištění zprostředkovaná naší sítí (PVZP, Slavia, SV pojišťovna) striktně splňují požadavky Zákona o pobytu cizinců (zákon č. 326/1999 Sb.). Zahrnují komplexní zdravotní pojištění cizinců (KZPC) s limitem plnění až 10 000 000 Kč a jsou registrována v centrálním registru.",
         "q3": "Co dělat v případě, že je má žádost o vízum zamítnuta ambasádou?",
         "a3": "V případě zamítnutí žádosti máte nárok na vrácení pojistného dle storno podmínek pojišťovny. Zašlete kopii oficiálního rozhodnutí o zamítnutí na insurance@hktse.eu.org a my vyřídíme storno i vrácení peněz.",
         "q4": "Jak funguje přímé proplácení a úhrada lékařské péče v ČR?",
@@ -265,7 +265,7 @@
     "terms": "Podmínky",
     "support": "Podpora",
     "brokerTitle": "FormVault Pojišťovací zprostředkovatel a upisovací služby",
-    "brokerDesc": "Licencované zprostředkovatelské služby v Praze, Česká republika. Oficiální partner PVZP, Slavia, Maxima a UNIQA."
+    "brokerDesc": "Licencovaný zprostředkovatel pojištění v Praze, Česká republika. Ve spolupráci s České pojištění a.s., autorizovaný partner pro PVZP, Slavia a SV pojišťovnu."
   },
   "forms": {
     "personalInfo": {

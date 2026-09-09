@@ -382,4 +382,93 @@
     </div>
   </div>
 </div>
+
+<!-- Crisp Website ID Verification and Portal Helper Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const crispInput = document.getElementById('crisp_website_id') || document.querySelector('input[name="crisp_website_id"]');
+  if (!crispInput) return;
+
+  // Create UI Container for Crisp Validator
+  const container = document.createElement('div');
+  container.className = 'mt-2 p-2.5 border rounded-3 bg-light d-flex flex-column gap-2 shadow-sm';
+  container.innerHTML = `
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" id="btn-verify-crisp" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>测试并验证 Crisp Website ID</span>
+        </button>
+        <span class="text-muted small">直连 Crisp 官方 API 验证 UUID 有效性与在线状态</span>
+      </div>
+      <span class="badge bg-secondary-subtle text-secondary" id="crisp-status-badge">未检测</span>
+    </div>
+    <div id="crisp-verify-feedback" class="small" style="display: none;"></div>
+  `;
+
+  crispInput.parentNode.insertBefore(container, crispInput.nextSibling);
+
+  const verifyBtn = document.getElementById('btn-verify-crisp');
+  const feedback = document.getElementById('crisp-verify-feedback');
+  const statusBadge = document.getElementById('crisp-status-badge');
+
+  async function performVerification(isAuto = false) {
+    const key = (crispInput.value || '').trim();
+    if (!key) {
+      if (!isAuto) {
+        feedback.style.display = 'block';
+        feedback.className = 'small text-warning mt-1';
+        feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-1"></i> 请先输入 Crisp Website ID (36位 UUID，例如 168677e2-0aa6-45ec-a486-83855b18c6f4)';
+      }
+      return;
+    }
+
+    verifyBtn.disabled = true;
+    verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span><span>正在连接 Crisp 官方 API 验证...</span>';
+    statusBadge.className = 'badge bg-warning-subtle text-warning';
+    statusBadge.textContent = '验证中...';
+    feedback.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/v1/portal/verify-crisp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website_id: key })
+      });
+      const data = await res.json();
+      feedback.style.display = 'block';
+      if (data.is_valid) {
+        statusBadge.className = 'badge bg-success text-white';
+        statusBadge.textContent = '官方验证通过';
+        feedback.className = 'small text-success mt-1 p-2 bg-success-subtle border border-success-subtle rounded-2';
+        feedback.innerHTML = `
+          <div class="fw-bold"><i class="fa-solid fa-circle-check me-1"></i> Crisp Website ID 验证成功！官方接入状态正常。</div>
+          <div class="text-secondary mt-1">站点名称: <strong>${data.website_name || '已配置'}</strong> · 绑定域名: <strong>${data.website_domain || 'N/A'}</strong> · 在线客服人员: <strong>${data.operator_count || 1} 人</strong></div>
+        `;
+      } else {
+        statusBadge.className = 'badge bg-danger text-white';
+        statusBadge.textContent = '验证未通过';
+        feedback.className = 'small text-danger mt-1 p-2 bg-danger-subtle border border-danger-subtle rounded-2';
+        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark me-1"></i> 验证未通过: ${data.message || 'Key 无效或无法访问'}`;
+      }
+    } catch (e) {
+      statusBadge.className = 'badge bg-danger text-white';
+      statusBadge.textContent = '检测出错';
+      feedback.style.display = 'block';
+      feedback.className = 'small text-danger mt-1';
+      feedback.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> 验证请求失败，请检查网络连通性。';
+    } finally {
+      verifyBtn.disabled = false;
+      verifyBtn.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i><span>测试并验证 Crisp Website ID</span>';
+    }
+  }
+
+  verifyBtn.addEventListener('click', () => performVerification(false));
+
+  // Automatically test when page is loaded if key is already 36-char UUID
+  if (crispInput.value && crispInput.value.trim().length === 36) {
+    performVerification(true);
+  }
+});
+</script>
 {% endblock %}

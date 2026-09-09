@@ -18,7 +18,7 @@
 ## ✨ Key Features & Architecture Highlights
 
 - **💎 Modern InsurTech SaaS UI/UX** — Deep Obsidian Dark Mode & Crisp Alpine Light Mode, glassmorphism surfaces, and smooth focus glows.
-- **🏢 Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, Maxima, UNIQA in CZK); fully dynamic, open-source and customizable via Admin Panel.
+- **🏢 Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, SV pojišťovna in CZK via České pojištění network); fully dynamic, open-source and customizable via Admin Panel.
 - **🔍 Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
 - **✉️ Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
 - **🛡️ Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, AES-256 GCM hardware encryption badges, and Zero-Knowledge privacy isolation.

@@ -15,6 +15,18 @@ export interface CreateApplicationRequest {
   preferred_language?: string;
   student_id_file_id?: string;
   passport_file_id?: string;
+  gender?: string;
+  nationality?: string;
+  place_of_birth?: string;
+  passport_number?: string;
+  passport_expiry_date?: string;
+  passport_issued_by?: string;
+  insurance_commencement_date?: string;
+  insurance_duration_months?: number;
+  type_of_stay?: string;
+  study_confirmation_file_id?: string;
+  insurance_company_id?: number;
+  insurance_plan_id?: number;
 }
 
 export interface CreateApplicationResponse {
@@ -36,6 +48,18 @@ export interface UpdateApplicationRequest {
   preferred_language?: string;
   student_id_file_id?: string;
   passport_file_id?: string;
+  gender?: string;
+  nationality?: string;
+  place_of_birth?: string;
+  passport_number?: string;
+  passport_expiry_date?: string;
+  passport_issued_by?: string;
+  insurance_commencement_date?: string;
+  insurance_duration_months?: number;
+  type_of_stay?: string;
+  study_confirmation_file_id?: string;
+  insurance_company_id?: number;
+  insurance_plan_id?: number;
 }
 
 export interface SubmitApplicationRequest {

@@ -173,7 +173,7 @@
       "title": "Условия обслуживания",
       "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
       "section1Title": "1. Intermediary Scope & Broker Status",
-      "section1Content": "FormVault functions as a registered insurance intermediary and broker operating under the laws of the Czech Republic. Our platform mediates agreements between the applicant (\"You\") and licensed Czech/EU underwriting insurance companies (including but not limited to Pojišťovna VZP, a.s., Slavia pojišťovna a.s., Maxima pojišťovna a.s., and UNIQA pojišťovna, a.s.). Final binding coverage is executed in accordance with the underwriter's General Insurance Conditions (VPP).",
+      "section1Content": "FormVault действует в качестве зарегистрированного страхового посредника в соответствии с Законом Чехии № 170/2018 Сб. В сотрудничестве с České pojištění a.s. мы обеспечиваем оформление полисов надежных страховщиков (PVZP, Slavia и SV pojišťovna).",
       "section2Title": "2. Applicant Representations & Document Authenticity",
       "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
       "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
@@ -204,7 +204,7 @@
         "q1": "How fast will I receive my official insurance certificate after submission?",
         "a1": "Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.",
         "q2": "Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?",
-        "a2": "Yes. All policies mediated through our agency (PVZP, Slavia, Maxima, UNIQA) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.",
+        "a2": "Да. Все полисы, оформленные через нашу сеть (PVZP, Slavia, SV pojišťovna), полностью соответствуют Закону о пребывании иностранцев (№ 326/1999 Сб.) с лимитом страхового покрытия до 10 000 000 CZK и принимаются МВД Чехии (OAMP).",
         "q3": "What should I do if my visa application is refused by the Embassy?",
         "a3": "If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.",
         "q4": "How does medical claim reimbursement and direct billing work in Czechia?",
@@ -265,7 +265,7 @@
     "terms": "Условия",
     "support": "Поддержка",
     "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
-    "brokerDesc": "Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA."
+    "brokerDesc": "Лицензированная сеть страхового посредничества в Праге, Чехия. В партнерстве с České pojištění a.s., авторизованный партнер PVZP, Slavia и SV pojišťovna."
   },
   "forms": {
     "personalInfo": {
