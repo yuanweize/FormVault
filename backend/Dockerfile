@@ -1,5 +1,5 @@
 # Backend Dockerfile for production
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -23,7 +23,10 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Production stage
-FROM python:3.11-slim as production
+FROM python:3.11-slim AS production
+
+LABEL org.opencontainers.image.source="https://github.com/yuanweize/FormVault"
+LABEL org.opencontainers.image.description="FormVault backend service"
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \

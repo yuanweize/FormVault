@@ -17,7 +17,10 @@ COPY . .
 RUN npm run build
 
 # Production stage with Nginx
-FROM nginx:alpine as production
+FROM nginx:alpine AS production
+
+LABEL org.opencontainers.image.source="https://github.com/yuanweize/FormVault"
+LABEL org.opencontainers.image.description="FormVault frontend web client"
 
 # Install security updates
 RUN apk update && apk upgrade && apk add --no-cache \
