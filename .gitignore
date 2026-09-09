@@ -108,3 +108,5 @@ dmypy.json
 # Alembic
 alembic/versions/*.py
 !alembic/versions/.gitkeep
+# Local temporary scratch scripts
+scratch/

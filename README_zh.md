@@ -1,4 +1,4 @@
-# 🛡️ FormVault
+# FormVault
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
@@ -10,29 +10,41 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
 
 > **[English Version](README.md)**
+>
+> 🌐 **在线演示 (Live Demo)**: [https://pojisteni.hktse.eu.org/](https://pojisteni.hktse.eu.org/)
 
 **FormVault** 是一套企业级、可信优先（Trust-First）的现代保险科技（InsurTech）SaaS 平台，专为多步骤保单申报、高敏感身份（护照、学生证）加密上传、客户端验真、AES-256-GCM 文件加密存储与可审计邮件归档流转设计。
 
----
-
-## ✨ 核心特性与架构亮点
-
-- **💎 现代高奢 InsurTech SaaS 视觉体验** — 支持 Obsidian 深邃暗黑与 Alpine 极简纯白天体切换、毛玻璃卡片与聚焦微发光。
-- **🏢 保险代理人通用产品展示与管理架构** — 预载捷克合规留学生与工作居留健康险真实样板（PVZP、Slavia、SV pojišťovna 等，CZK 计价，依托 České pojištění 合作网络），通用模型完全动态可配置，开源无硬编码。
-- **🔍 首页双因子极简状态追踪与时间轴 (`/track`)** — 客户凭【申请编号 + 申请邮箱】即可在首页直接查询审核与承保出单进度时间轴，数据全程安全脱敏（OWASP 合规）。
-- **✉️ 自动申请回执与追踪邮件通知** — 提交即刻发送带有唯一追踪号的确认邮件，投保体验更安心。
-- **🛡️ 专属金融安全护航面板 (`SecurityAssuranceRail`)** — 实时展示 TLS 1.3 安全通道状态、AES-256 GCM 硬件加密验证、Zero-Knowledge 隐私隔离。
-- **🔄 Stripe 级流动发光步骤轨 (`WorkflowProgressIndicator`)** — 呼吸脉冲光环、祖母绿完成徽标、动态平滑进度条。
-- **📁 机密凭证安全文件库** — 客户端文件头签名严格校验、哈希验真脱敏预览、防篡改存储。
-- **✅ 实时严谨校验** — 基于 `react-hook-form` 的流式校验与即时错误定位。
-- **💾 加密自动草稿暂存** — 智能防丢失保护，离线或刷新无缝恢复进度。
-- **🔒 零外网暴露数据库架构** — MySQL 仅在内部专用隔离网络通信，杜绝外网撞库风险。
-- **♿ 100% WCAG 无障碍访问** — axe 自动化零违规检测，全键盘与屏幕阅读器无障碍适配。
-- **🌍 国际化多语言支持 (i18n)** — 英语、简体中文、西班牙语等丝滑无刷新切换。
+<div align="center">
+  <img src="assets/portal_frontend.png" width="850" alt="FormVault 投保申请客户端门户">
+  <p><em>FormVault 投保申请前端 — 多步骤保单申报、捷克主流保险产品即时算价、凭据校验与金融级安全护航轨</em></p>
+</div>
 
 ---
 
-## 🐳 Docker Compose 极简容器化部署（推荐）
+## 核心特性与架构亮点
+
+- **现代高奢 InsurTech SaaS 视觉体验** — 支持 Obsidian 深邃暗黑与 Alpine 极简纯白天体切换、毛玻璃卡片与聚焦微发光。
+- **保险代理人通用产品展示与管理架构** — 预载捷克合规留学生与工作居留健康险真实样板（PVZP、Slavia、SV pojišťovna 等，CZK 计价，依托 České pojištění 合作网络），通用模型完全动态可配置，开源无硬编码。
+- **首页双因子极简状态追踪与时间轴 (`/track`)** — 客户凭【申请编号 + 申请邮箱】即可在首页直接查询审核与承保出单进度时间轴，数据全程安全脱敏（OWASP 合规）。
+- **自动申请回执与追踪邮件通知** — 提交即刻发送带有唯一追踪号的确认邮件，投保体验更安心。
+- **专属金融安全护航面板 (`SecurityAssuranceRail`)** — 实时展示 TLS 1.3 安全通道状态、AES-256 GCM 硬件加密验证、Zero-Knowledge 隐私隔离。
+- **Stripe 级流动发光步骤轨 (`WorkflowProgressIndicator`)** — 呼吸脉冲光环、祖母绿完成徽标、动态平滑进度条。
+- **机密凭证安全文件库** — 客户端文件头签名严格校验、哈希验真脱敏预览、防篡改存储。
+- **实时严谨校验** — 基于 `react-hook-form` 的流式校验与即时错误定位。
+- **加密自动草稿暂存** — 智能防丢失保护，离线或刷新无缝恢复进度。
+- **零外网暴露数据库架构** — MySQL 仅在内部专用隔离网络通信，杜绝外网撞库风险。
+- **100% WCAG 无障碍访问** — axe 自动化零违规检测，全键盘与屏幕阅读器无障碍适配。
+- **国际化多语言支持 (i18n)** — 英语、简体中文、西班牙语等丝滑无刷新切换。
+
+<div align="center">
+  <img src="assets/broker_admin.png" width="850" alt="FormVault 保险代理人管理控制台">
+  <p><em>FormVault 代理人运营后台 — 投保申请全生命周期流转、审计归档追溯与加密凭证审核</em></p>
+</div>
+
+---
+
+## Docker Compose 极简容器化部署（推荐）
 
 FormVault 提供了开箱即用、具备**完整数据持久化**与**专属高位无冲突端口**的 `docker-compose.yml`，且默认直接从 **GHCR (GitHub Container Registry)** 自动拉取预打包镜像，无需在宿主机安装编译工具链。
 
@@ -127,7 +139,7 @@ FormVault 配置了 3 大专用 Docker 数据卷，确保系统重启与镜像�
 
 ---
 
-## 🚀 GitHub Actions: GHCR 自动化打包与发布
+## GitHub Actions: GHCR 自动化打包与发布
 
 项目配置了完整的自动化构建工作流 (`.github/workflows/docker-publish.yml`)：
 - 每当代码推送到 `main` 分支、或发布版本标签（如 `v1.0.0`）、或手动触发时，GitHub Actions 会自动构建前端与后端容器镜像，并推送到 **GitHub Container Registry (ghcr.io)**：
@@ -137,7 +149,7 @@ FormVault 配置了 3 大专用 Docker 数据卷，确保系统重启与镜像�
 
 ---
 
-## 💻 本地源码开发环境
+## 本地源码开发环境
 
 ### 前置条件
 - Node.js 18+ 与 npm 9+
@@ -163,7 +175,7 @@ npm start
 
 ---
 
-## 🧪 全栈自动化测试套件 (100% 通过率)
+## 全栈自动化测试套件 (100% 通过率)
 
 FormVault 拥有全量严格的自动化测试用例，保障金融级软件质量：
 
@@ -190,6 +202,6 @@ npm run build
 
 ---
 
-## 📄 许可证
+## 许可证
 
 本项目基于 MIT 许可证开源 — 详情见 [LICENSE](LICENSE)。

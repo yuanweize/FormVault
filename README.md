@@ -1,4 +1,4 @@
-# 🛡️ FormVault
+# FormVault
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
@@ -10,29 +10,41 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
 
 > **[中文说明文档 (Chinese Version)](README_zh.md)**
+>
+> 🌐 **Live Demo**: [https://pojisteni.hktse.eu.org/](https://pojisteni.hktse.eu.org/)
 
 **FormVault** is an enterprise-grade, trust-first InsurTech SaaS platform engineered for multi-step insurance applications, high-assurance identity verification (Student ID, Passport), client-side checksum validation, AES-256-GCM encrypted document storage, and auditable email dispatch.
 
----
-
-## ✨ Key Features & Architecture Highlights
-
-- **💎 Modern InsurTech SaaS UI/UX** — Deep Obsidian Dark Mode & Crisp Alpine Light Mode, glassmorphism surfaces, and smooth focus glows.
-- **🏢 Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, SV pojišťovna in CZK via České pojištění network); fully dynamic, open-source and customizable via Admin Panel.
-- **🔍 Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
-- **✉️ Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
-- **🛡️ Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, AES-256 GCM hardware encryption badges, and Zero-Knowledge privacy isolation.
-- **🔄 Stripe-Inspired Fluid Stepper** — Connected step rail with pulsing halos, completion badges, and smooth progress tracking.
-- **📁 Secure File Vault** — Client-side file signature validation, anti-tampering checksums, and encrypted local/S3 storage.
-- **✅ Real-time Form Validation** — Strict validation schema powered by `react-hook-form` and accessible error handling.
-- **💾 Automated State Persistence** — Local encrypted draft caching prevents data loss during workflow navigation.
-- **🔒 Isolated Database Architecture** — Database is strictly isolated inside the container bridge network with zero public port exposure.
-- **♿ 100% WCAG Accessibility** — Zero axe violations, keyboard navigable, screen reader optimized.
-- **🌍 Full Internationalization (i18n)** — Dynamic language switching (English, 简体中文, Español, etc.).
+<div align="center">
+  <img src="assets/portal_frontend.png" width="850" alt="FormVault Insurance Applicant Portal">
+  <p><em>FormVault Applicant Portal — Multi-step insurance quotation, client-side document verification, and trust-first security rail</em></p>
+</div>
 
 ---
 
-## 🐳 Docker Compose Deployment (Recommended)
+## Key Features & Architecture Highlights
+
+- **Modern InsurTech SaaS UI/UX** — Deep Obsidian Dark Mode & Crisp Alpine Light Mode, glassmorphism surfaces, and smooth focus glows.
+- **Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, SV pojišťovna in CZK via České pojištění network); fully dynamic, open-source and customizable via Admin Panel.
+- **Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
+- **Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
+- **Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, AES-256 GCM hardware encryption badges, and Zero-Knowledge privacy isolation.
+- **Stripe-Inspired Fluid Stepper** — Connected step rail with pulsing halos, completion badges, and smooth progress tracking.
+- **Secure File Vault** — Client-side file signature validation, anti-tampering checksums, and encrypted local/S3 storage.
+- **Real-time Form Validation** — Strict validation schema powered by `react-hook-form` and accessible error handling.
+- **Automated State Persistence** — Local encrypted draft caching prevents data loss during workflow navigation.
+- **Isolated Database Architecture** — Database is strictly isolated inside the container bridge network with zero public port exposure.
+- **100% WCAG Accessibility** — Zero axe violations, keyboard navigable, screen reader optimized.
+- **Full Internationalization (i18n)** — Dynamic language switching (English, 简体中文, Español, etc.).
+
+<div align="center">
+  <img src="assets/broker_admin.png" width="850" alt="FormVault Broker Admin Operations Console">
+  <p><em>FormVault Broker Admin Console — Application lifecycle auditing, applicant status transitions, and secure document inspection</em></p>
+</div>
+
+---
+
+## Docker Compose Deployment (Recommended)
 
 FormVault provides an out-of-the-box, production-ready `docker-compose.yml` with **full data persistence** and **collision-free dedicated ports**. It automatically pulls pre-built images directly from **GitHub Container Registry (GHCR)**, requiring zero local Node or Python toolchain.
 
@@ -127,7 +139,7 @@ FormVault uses dedicated Docker Named Volumes to guarantee zero data loss:
 
 ---
 
-## 🚀 GitHub Actions: GHCR Automated Docker Build
+## GitHub Actions: GHCR Automated Docker Build
 
 FormVault includes an automated GitHub Actions workflow (`.github/workflows/docker-publish.yml`) that builds and pushes images to **GitHub Container Registry (GHCR)** on every push to `main` or semantic release tag (`v*.*.*`):
 - Backend: `ghcr.io/yuanweize/formvault-backend:latest`
@@ -135,7 +147,7 @@ FormVault includes an automated GitHub Actions workflow (`.github/workflows/dock
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 ### Prerequisites
 - Node.js 18+ & npm 9+
@@ -173,7 +185,7 @@ npm start
 
 ---
 
-## 🧪 Comprehensive Test Suites (100% Pass Rate)
+## Comprehensive Test Suites (100% Pass Rate)
 
 FormVault maintains strict software quality with 100% automated test coverage across frontend and backend:
 
@@ -200,7 +212,7 @@ npm run build
 
 ---
 
-## ☁️ Cloud Deployment Options
+## Cloud Deployment Options
 
 | Platform | Deployment Type | Target |
 |---|---|---|
@@ -212,6 +224,6 @@ npm run build
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see the [LICENSE](LICENSE) file for details.
