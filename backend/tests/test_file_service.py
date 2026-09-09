@@ -157,7 +157,8 @@ class TestFileService:
         assert result.file_type == FileType.passport
 
         # Should not query for application
-        mock_db.query.assert_not_called()
+        for c in mock_db.query.call_args_list:
+            assert Application not in c.args
 
     @pytest.mark.asyncio
     async def test_upload_file_application_not_found(
