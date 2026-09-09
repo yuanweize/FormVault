@@ -87,14 +87,14 @@ const DEFAULT_CZECH_PLANS: InsurancePlanShowcase[] = [
     company_id: 1,
     company_name: 'PVZP',
     company_code: 'PVZP',
-    name: 'PVZP Komplexní PLUS (Student 15-30 let)',
+    name: 'PVZP Komplexní PLUS',
     category: 'Comprehensive Health',
     price_amount: 12978,
     currency: 'CZK',
     billing_period: 'year',
-    coverage_summary: '10,000,000 CZK (~400,000 EUR) medical limit with 5,000+ contracted medical facilities across the Czech Republic.',
-    badge: 'Top Authority',
-    target_audience: 'University Students (15-30 yrs) & OAMP Applicants',
+    coverage_summary: '5,000+ contracted medical facilities with direct hospital billing across the Czech Republic.',
+    badge: 'Official Market Leader',
+    target_audience: 'Student Special (15–30 let)',
     features: 'Czech OAMP visa certified\nDirect hospital billing (Motol, FNKV, VFN)\n10,000,000 CZK comprehensive limit\nPre-existing condition coverage eligible',
     is_featured: true,
     display_order: 1,
@@ -104,15 +104,15 @@ const DEFAULT_CZECH_PLANS: InsurancePlanShowcase[] = [
     company_id: 2,
     company_name: 'Slavia',
     company_code: 'SLAVIA',
-    name: 'Slavia KZPC 131 Komplexní (Student 15-35 let)',
+    name: 'Slavia KZPC 131 Komplexní',
     category: 'Student Special',
     price_amount: 11200,
     currency: 'CZK',
     billing_period: 'year',
-    coverage_summary: 'High-value comprehensive medical care with +2 extra months free promotional discount and up to 3 months backdating.',
+    coverage_summary: 'Includes +2 months free promotional extension & allows backdating up to 3 months.',
     badge: 'Best Value (+2 Mo Free)',
-    target_audience: 'Students (15-35 yrs) & Visa Applicants',
-    features: 'Act No. 326/1999 Coll. fully certified\n+2 extra months free included\nBackdating permitted up to 3 months\nEmergency dental & prescription drugs covered',
+    target_audience: 'Student Discount (15–35 let)',
+    features: 'Act No. 326/1999 Coll. fully certified\n+2 extra months free promotional discount\nBackdating permitted up to 3 months\nEmergency dental & prescription drugs covered',
     is_featured: true,
     display_order: 2,
   },
@@ -121,34 +121,17 @@ const DEFAULT_CZECH_PLANS: InsurancePlanShowcase[] = [
     company_id: 3,
     company_name: 'SV',
     company_code: 'SV',
-    name: 'SV WELCOME Komplex (Student 16-26 let)',
+    name: 'SV WELCOME Komplex',
     category: 'Comprehensive Health',
     price_amount: 11214,
     currency: 'CZK',
     billing_period: 'year',
-    coverage_summary: 'Highly competitive premium rate with top client satisfaction and straightforward claims processing.',
-    badge: 'Competitive Student Rate',
-    target_audience: 'Foreign Students (16-26 yrs) & Scholars',
-    features: 'Official OAMP long-term visa certified\nCompetitive student annual fee\nNo special medical form needed for standard applicants\n24/7 multilingual medical hotline',
+    coverage_summary: 'Fast digital claims processing & 24/7 multilingual emergency medical hotline.',
+    badge: 'Client Favorite',
+    target_audience: 'Student Special (16–26 let)',
+    features: 'Official OAMP long-term visa certified\nCompetitive student annual fee\nNo special medical questionnaire required\n24/7 multilingual medical hotline',
     is_featured: true,
     display_order: 3,
-  },
-  {
-    id: 4,
-    company_id: 1,
-    company_name: 'PVZP',
-    company_code: 'PVZP',
-    name: 'PVZP Komplexní EXCLUSIVE (Standard Adult)',
-    category: 'VIP Comprehensive',
-    price_amount: 18540,
-    currency: 'CZK',
-    billing_period: 'year',
-    coverage_summary: 'Premium medical security for adults, working professionals, trade license holders (Živnostenský list) and families.',
-    badge: 'Exclusive Care',
-    target_audience: 'Working Professionals & Expatriates',
-    features: '10,000,000 CZK medical limit per event\nEnhanced outpatient medication & dental\nDirect cashless billing in top private hospitals\nFree Schengen travel rider included',
-    is_featured: false,
-    display_order: 4,
   },
 ];
 
@@ -278,6 +261,52 @@ const HomePage: React.FC = () => {
     if (c.includes('student')) return <SchoolOutlined sx={{ fontSize: 28, color: '#4F46E5' }} />;
     if (c.includes('travel') || c.includes('schengen')) return <FlightTakeoffOutlined sx={{ fontSize: 28, color: '#059669' }} />;
     return <LocalHospitalOutlined sx={{ fontSize: 28, color: '#2563EB' }} />;
+  };
+
+  const parsePlanDisplay = (plan: InsurancePlanShowcase) => {
+    let cleanName = plan.name;
+    let audience = plan.target_audience || '';
+    
+    // Cleanly extract parentheses from name (e.g. "PVZP Komplexní PLUS (Student 15-30 let)")
+    const match = plan.name.match(/^(.*?)\s*\((.*?)\)$/);
+    if (match) {
+      cleanName = match[1].trim();
+      if (!audience || audience === plan.name) {
+        audience = match[2].trim();
+      }
+    }
+
+    // Format prominent medical limit guarantee
+    let limitHighlight = '10,000,000 CZK (~€400,000) Medical Limit';
+    let cleanSummary = plan.coverage_summary || '';
+
+    if (
+      cleanSummary.includes('10,000,000') ||
+      cleanSummary.includes('400,000')
+    ) {
+      limitHighlight = '10,000,000 CZK (~€400,000) Medical Limit';
+      cleanSummary = cleanSummary
+        .replace(/10[,.0-9]+\s*CZK\s*(\(~?[0-9,.]+\s*EUR\))?\s*(medical\s*)?(limit,?\s*)?(with\s*)?/i, '')
+        .replace(/^with\s+/i, '')
+        .replace(/^limit,\s*/i, '')
+        .trim();
+      if (cleanSummary) {
+        cleanSummary = cleanSummary.charAt(0).toUpperCase() + cleanSummary.slice(1);
+      }
+    } else if (cleanSummary.toLowerCase().includes('schengen') || cleanSummary.toLowerCase().includes('travel')) {
+      limitHighlight = '€30,000 Schengen Compliant Minimum';
+    }
+
+    if (!cleanSummary) {
+      cleanSummary = 'Direct hospital billing across contracted medical facilities in the Czech Republic.';
+    }
+
+    const isStudent =
+      cleanName.toLowerCase().includes('student') ||
+      audience.toLowerCase().includes('student') ||
+      plan.category.toLowerCase().includes('student');
+
+    return { cleanName, audience, limitHighlight, cleanSummary, isStudent };
   };
 
   const getStatusColor = (status: string) => {
@@ -879,100 +908,321 @@ const HomePage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
-          {plans.map((plan) => (
-            <Grid item xs={12} sm={6} md={3} key={plan.id}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: '20px',
-                  border: plan.is_featured
-                    ? '2px solid rgba(79, 70, 229, 0.4)'
-                    : '1px solid rgba(15, 23, 42, 0.08)',
-                  boxShadow: plan.is_featured
-                    ? '0 12px 30px -4px rgba(79, 70, 229, 0.2)'
-                    : '0 4px 16px -2px rgba(0, 0, 0, 0.04)',
-                  transition: 'all 0.3s ease',
-                  position: 'relative',
-                  '&:hover': {
-                    transform: 'translateY(-6px)',
-                    boxShadow: '0 16px 36px -4px rgba(79, 70, 229, 0.25)',
-                  },
-                }}
-              >
-                {plan.badge && (
-                  <Chip
-                    label={plan.badge}
-                    size="small"
-                    sx={{
-                      position: 'absolute',
-                      top: 16,
-                      right: 16,
-                      fontWeight: 700,
-                      fontSize: '0.7rem',
-                      backgroundColor: plan.is_featured ? 'primary.main' : 'rgba(79, 70, 229, 0.1)',
-                      color: plan.is_featured ? '#FFFFFF' : 'primary.main',
-                    }}
-                  />
-                )}
-                <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <Box sx={{ mb: 2 }}>{getPlanCategoryIcon(plan.category)}</Box>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', fontWeight: 600 }}>
-                    {plan.company_name}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.3, mb: 1, minHeight: 48 }}>
-                    {plan.name}
-                  </Typography>
+        <Grid container spacing={3.5} justifyContent="center" alignItems="stretch">
+          {plans.map((plan) => {
+            const { cleanName, audience, limitHighlight, cleanSummary, isStudent } = parsePlanDisplay(plan);
+            const gridCols =
+              plans.length === 3
+                ? { xs: 12, sm: 6, md: 4 }
+                : plans.length === 2
+                ? { xs: 12, sm: 6, md: 5 }
+                : plans.length === 1
+                ? { xs: 12, sm: 8, md: 6 }
+                : { xs: 12, sm: 6, md: 3 };
 
-                  <Box sx={{ my: 2 }}>
-                    <Typography variant="h4" component="span" sx={{ fontWeight: 800, color: 'primary.main' }}>
-                      {plan.price_amount > 0
-                        ? `${plan.price_amount.toLocaleString()} ${plan.currency}`
-                        : t('pages.home.plans.customRate', { defaultValue: 'Custom Rate' })}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                      {plan.billing_period === 'month'
-                        ? t('pages.home.plans.perMonth', { defaultValue: '/ month' })
-                        : t('pages.home.plans.perYear', { defaultValue: '/ year' })}
-                    </Typography>
-                  </Box>
-
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5, minHeight: 60, fontSize: '0.875rem' }}>
-                    {plan.coverage_summary}
-                  </Typography>
-
-                  {plan.features && (
-                    <Stack spacing={0.8} sx={{ mb: 3, flex: 1 }}>
-                      {plan.features.split('\n').map((feat, i) => (
-                        <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <CheckCircleOutline sx={{ fontSize: 16, color: '#10B981' }} />
-                          <Typography variant="caption" color="text.primary" sx={{ fontWeight: 500 }}>
-                            {feat}
-                          </Typography>
-                        </Box>
-                      ))}
-                    </Stack>
+            return (
+              <Grid item {...gridCols} key={plan.id} sx={{ display: 'flex' }}>
+                <Card
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderRadius: '20px',
+                    border: plan.is_featured
+                      ? '2px solid rgba(79, 70, 229, 0.45)'
+                      : '1px solid rgba(15, 23, 42, 0.08)',
+                    boxShadow: plan.is_featured
+                      ? '0 12px 32px -4px rgba(79, 70, 229, 0.22)'
+                      : '0 4px 16px -2px rgba(0, 0, 0, 0.04)',
+                    transition: 'all 0.3s ease',
+                    position: 'relative',
+                    overflow: 'visible',
+                    '&:hover': {
+                      transform: 'translateY(-6px)',
+                      boxShadow: '0 18px 40px -4px rgba(79, 70, 229, 0.28)',
+                    },
+                  }}
+                >
+                  {/* Top Popular / Value Badge */}
+                  {plan.badge && (
+                    <Chip
+                      label={plan.badge}
+                      size="small"
+                      sx={{
+                        position: 'absolute',
+                        top: 16,
+                        right: 16,
+                        fontWeight: 700,
+                        fontSize: '0.725rem',
+                        backgroundColor: plan.is_featured ? 'primary.main' : 'rgba(79, 70, 229, 0.1)',
+                        color: plan.is_featured ? '#FFFFFF' : 'primary.main',
+                        borderRadius: '8px',
+                        boxShadow: plan.is_featured ? '0 2px 8px rgba(79, 70, 229, 0.3)' : 'none',
+                      }}
+                    />
                   )}
 
-                  <Button
-                    variant={plan.is_featured ? 'contained' : 'outlined'}
-                    fullWidth
-                    onClick={() => handleGetStarted(plan.category.toLowerCase().includes('travel') ? 'travel' : 'health')}
-                    sx={{
-                      mt: 'auto',
-                      fontWeight: 700,
-                      borderRadius: '10px',
-                      py: 1,
-                    }}
-                  >
-                    {t('pages.home.plans.applyNow', { defaultValue: 'Apply Now' })}
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+                  <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    {/* Carrier Icon & Category */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 1.5 }}>
+                      <Box sx={{ p: 1, borderRadius: '10px', backgroundColor: 'rgba(79, 70, 229, 0.06)' }}>
+                        {getPlanCategoryIcon(plan.category)}
+                      </Box>
+                      <Box>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}
+                        >
+                          {plan.company_name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                          {plan.category}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {/* Clean Plan Title */}
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 800,
+                        fontSize: '1.25rem',
+                        lineHeight: 1.3,
+                        mb: 1.2,
+                        minHeight: 32,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {cleanName}
+                    </Typography>
+
+                    {/* Student Discount & Promotional Highlight Banner (醒目提示区 / 广告美观设计) */}
+                    {isStudent ? (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          px: 1.5,
+                          py: 0.85,
+                          mb: 2,
+                          borderRadius: '10px',
+                          background:
+                            theme.palette.mode === 'light'
+                              ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(147, 51, 234, 0.08) 100%)'
+                              : 'linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.18) 100%)',
+                          border:
+                            theme.palette.mode === 'light'
+                              ? '1px solid rgba(79, 70, 229, 0.3)'
+                              : '1px solid rgba(129, 140, 248, 0.35)',
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <SchoolOutlined sx={{ fontSize: 20, color: 'primary.main', flexShrink: 0 }} />
+                          <Box>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                fontWeight: 800,
+                                fontSize: '0.78rem',
+                                color: 'primary.main',
+                                display: 'block',
+                                lineHeight: 1.1,
+                                letterSpacing: '0.02em',
+                              }}
+                            >
+                              {t('pages.home.plans.studentSpecialTag', { defaultValue: 'Student Discount' })}
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                fontSize: '0.72rem',
+                                color: 'text.secondary',
+                                fontWeight: 600,
+                              }}
+                            >
+                              {audience || '15–30 let'}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Chip
+                          label={t('pages.home.plans.promoTag', { defaultValue: 'Special Rate' })}
+                          size="small"
+                          sx={{
+                            height: 22,
+                            fontSize: '0.675rem',
+                            fontWeight: 800,
+                            backgroundColor: 'primary.main',
+                            color: '#FFFFFF',
+                            borderRadius: '6px',
+                          }}
+                        />
+                      </Box>
+                    ) : audience ? (
+                      <Box
+                        sx={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 0.8,
+                          px: 1.25,
+                          py: 0.6,
+                          mb: 2,
+                          borderRadius: '8px',
+                          backgroundColor:
+                            theme.palette.mode === 'light'
+                              ? 'rgba(15, 23, 42, 0.04)'
+                              : 'rgba(255, 255, 255, 0.06)',
+                          border: '1px solid rgba(148, 163, 184, 0.2)',
+                          width: 'fit-content',
+                        }}
+                      >
+                        <VerifiedUserOutlined sx={{ fontSize: 16, color: 'text.secondary' }} />
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            fontWeight: 600,
+                            fontSize: '0.75rem',
+                            color: 'text.secondary',
+                          }}
+                        >
+                          {audience}
+                        </Typography>
+                      </Box>
+                    ) : null}
+
+                    {/* Price & Billing Period on Same Single Line (紧凑单行基线对齐，绝对无空行) */}
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.75, mb: 2 }}>
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          fontWeight: 800,
+                          fontSize: { xs: '2.1rem', sm: '2.35rem' },
+                          color: 'primary.main',
+                          letterSpacing: '-0.02em',
+                          lineHeight: 1,
+                        }}
+                      >
+                        {plan.price_amount > 0
+                          ? plan.price_amount.toLocaleString()
+                          : t('pages.home.plans.customRate', { defaultValue: 'Custom' })}
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: 800, color: 'text.primary', lineHeight: 1 }}
+                      >
+                        {plan.currency}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: 'text.secondary', fontWeight: 600, ml: 0.2, lineHeight: 1 }}
+                      >
+                        {plan.billing_period === 'month'
+                          ? t('pages.home.plans.perMonth', { defaultValue: '/ month' })
+                          : t('pages.home.plans.perYear', { defaultValue: '/ year' })}
+                      </Typography>
+                    </Box>
+
+                    {/* Medical Coverage Guarantee Banner */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1.25,
+                        p: 1.25,
+                        mb: 2,
+                        borderRadius: '10px',
+                        backgroundColor:
+                          theme.palette.mode === 'light'
+                            ? 'rgba(16, 185, 129, 0.08)'
+                            : 'rgba(16, 185, 129, 0.14)',
+                        border: '1px solid rgba(16, 185, 129, 0.25)',
+                      }}
+                    >
+                      <ShieldOutlined sx={{ fontSize: 22, color: '#10B981', flexShrink: 0 }} />
+                      <Box>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: 'block',
+                            fontWeight: 800,
+                            fontSize: '0.825rem',
+                            color: theme.palette.mode === 'light' ? '#047857' : '#34D399',
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {limitHighlight}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: 'block',
+                            fontSize: '0.7rem',
+                            color: theme.palette.mode === 'light' ? '#065F46' : '#A7F3D0',
+                            fontWeight: 600,
+                            mt: 0.2,
+                          }}
+                        >
+                          {t('pages.home.plans.actCertified', { defaultValue: 'Czech Act No. 326/1999 Coll. Certified' })}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {/* Clean Descriptive Details */}
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ mb: 2.5, minHeight: 42, fontSize: '0.85rem', lineHeight: 1.5 }}
+                    >
+                      {cleanSummary}
+                    </Typography>
+
+                    {/* Features Checklist */}
+                    {plan.features && (
+                      <Stack spacing={1} sx={{ mb: 3, flex: 1 }}>
+                        {plan.features.split('\n').map((feat, i) => (
+                          <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+                            <CheckCircleOutline
+                              sx={{ fontSize: 16, color: '#10B981', mt: 0.2, flexShrink: 0 }}
+                            />
+                            <Typography
+                              variant="caption"
+                              color="text.primary"
+                              sx={{ fontWeight: 500, fontSize: '0.8rem', lineHeight: 1.4 }}
+                            >
+                              {feat}
+                            </Typography>
+                          </Box>
+                        ))}
+                      </Stack>
+                    )}
+
+                    {/* Apply Now Button */}
+                    <Button
+                      variant={plan.is_featured ? 'contained' : 'outlined'}
+                      fullWidth
+                      onClick={() =>
+                        handleGetStarted(
+                          plan.category.toLowerCase().includes('travel') ? 'travel' : 'health'
+                        )
+                      }
+                      sx={{
+                        mt: 'auto',
+                        fontWeight: 700,
+                        borderRadius: '12px',
+                        py: 1.2,
+                        textTransform: 'none',
+                        fontSize: '0.925rem',
+                        boxShadow: plan.is_featured ? '0 4px 14px rgba(79, 70, 229, 0.35)' : 'none',
+                      }}
+                    >
+                      {t('pages.home.plans.applyNow', { defaultValue: 'Apply Now' })}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
 
