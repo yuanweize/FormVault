@@ -1,0 +1,368 @@
+{% extends "sqladmin/base.html" %}
+{% from 'sqladmin/_macros.html' import display_menu %}
+
+{% block head_tail %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --tblr-font-monospace: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --fv-primary: #2563eb;
+    --fv-primary-hover: #1d4ed8;
+    --fv-bg-surface: #ffffff;
+    --fv-bg-page: #f8fafc;
+    --fv-sidebar-bg: #0f172a;
+    --fv-sidebar-border: #1e293b;
+    --fv-card-border: #e2e8f0;
+    --fv-text-main: #0f172a;
+    --fv-text-muted: #64748b;
+  }
+
+  body {
+    font-family: var(--tblr-font-sans-serif) !important;
+    background-color: var(--fv-bg-page) !important;
+    color: var(--fv-text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sleek Sidebar Theme */
+  aside.navbar-vertical {
+    background: var(--fv-sidebar-bg) !important;
+    border-right: 1px solid var(--fv-sidebar-border) !important;
+    box-shadow: 4px 0 24px -2px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .navbar-brand-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.25rem;
+    text-decoration: none !important;
+  }
+
+  .navbar-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    color: #ffffff;
+    font-size: 1.1rem;
+  }
+
+  .navbar-brand-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: #ffffff !important;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .navbar-brand-subtitle {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  /* Nav Menu Links */
+  .navbar-vertical .nav-link {
+    border-radius: 8px !important;
+    padding: 0.55rem 0.85rem !important;
+    margin: 0.15rem 0.35rem !important;
+    font-weight: 500 !important;
+    color: #cbd5e1 !important;
+    transition: all 0.15s ease-in-out !important;
+    font-size: 0.875rem !important;
+  }
+
+  .navbar-vertical .nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(2px);
+  }
+
+  .navbar-vertical .nav-item.active > .nav-link,
+  .navbar-vertical .nav-link.active {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.1) 100%) !important;
+    color: #60a5fa !important;
+    font-weight: 600 !important;
+    border-left: 3px solid #3b82f6 !important;
+  }
+
+  .navbar-vertical .nav-link i, 
+  .navbar-vertical .nav-link .nav-link-icon {
+    font-size: 0.95rem !important;
+    width: 1.4rem;
+    opacity: 0.85;
+  }
+
+  /* Modern Card & Shadow Styling */
+  .card {
+    border: 1px solid var(--fv-card-border) !important;
+    border-radius: 12px !important;
+    background: var(--fv-bg-surface) !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04) !important;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--fv-card-border) !important;
+    padding: 1rem 1.25rem !important;
+    font-weight: 600 !important;
+  }
+
+  /* Tables Enhancement */
+  .table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  .table thead th {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.05em !important;
+    padding: 0.75rem 1rem !important;
+    border-top: none !important;
+    border-bottom: 1px solid var(--fv-card-border) !important;
+  }
+
+  .table tbody td {
+    padding: 0.85rem 1rem !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 0.875rem !important;
+  }
+
+  .table tbody tr:hover td {
+    background-color: #f8fafc !important;
+  }
+
+  /* Form Elements */
+  .form-control, .form-select {
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.875rem !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18) !important;
+  }
+
+  .form-label {
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    color: #1e293b !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .form-text, .text-muted {
+    font-size: 0.8rem !important;
+    color: var(--fv-text-muted) !important;
+  }
+
+  /* Buttons */
+  .btn {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.15s ease-in-out !important;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+    transform: translateY(-1px);
+  }
+
+  /* Badges */
+  .badge {
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    padding: 0.35em 0.65em !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* Custom Topbar Navigation Ribbon */
+  .admin-topbar-ribbon {
+    background: #ffffff;
+    border-bottom: 1px solid var(--fv-card-border);
+    padding: 0.65rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .env-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+  }
+
+  .status-dot-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    display: inline-block;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="wrapper">
+  <!-- Modern Vertical Sidebar -->
+  <aside class="navbar navbar-expand-lg navbar-vertical navbar-expand-md navbar-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+      <div class="navbar-brand navbar-brand-autodark py-3">
+        <a href="{{ url_for('admin:index') }}" class="navbar-brand-logo-wrapper">
+          <div class="navbar-brand-badge">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <div class="navbar-brand-title">FormVault</div>
+            <div class="navbar-brand-subtitle">Broker Console 🇨🇿</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="navbar navbar-expand-sm shadow-none" id="navbar-menu"
+        data-sqladmin-menu="{{ admin.base_url }}">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-column align-items-stretch" id="navbarSupportedContent">
+          <!-- Overview Home Link -->
+          <ul class="navbar-nav mb-2">
+            <li class="nav-item">
+              <a class="nav-link {% if request.url.path == admin.base_url or request.url.path == admin.base_url + '/' %}active{% endif %}" href="{{ url_for('admin:index') }}">
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <i class="fa-solid fa-chart-line text-blue"></i>
+                </span>
+                <span class="nav-link-title">Dashboard Overview</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Dynamic SQLAdmin Model Views Menu -->
+          <div class="w-100">
+            {{ display_menu(admin._menu, request) }}
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer Links: External Portal & Logout -->
+      <div class="mt-auto p-3 w-100 border-top border-dark-subtle">
+        <a href="/" target="_blank" class="btn btn-outline-secondary w-100 mb-2 btn-sm text-white d-flex align-items-center justify-content-center">
+          <i class="fa-solid fa-arrow-up-right-from-square me-2"></i>
+          <span>View Public Portal</span>
+        </a>
+        {% if admin.authentication_backend %}
+        <a href="{{ request.url_for('admin:logout') }}" class="btn btn-danger w-100 btn-sm d-flex align-items-center justify-content-center">
+          <i class="fa-solid fa-right-from-bracket me-2"></i>
+          <span>Logout</span>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </aside>
+
+  <!-- Page Content Area -->
+  <div class="page-wrapper">
+    <!-- Topbar Ribbon -->
+    <div class="admin-topbar-ribbon d-print-none">
+      <div class="d-flex align-items-center gap-2">
+        <span class="env-status-pill">
+          <span class="status-dot-pulse"></span>
+          <span>Czech Node (EU-CZ)</span>
+        </span>
+        <span class="env-status-pill d-none d-md-inline-flex">
+          <i class="fa-solid fa-lock text-success me-1"></i>
+          <span>GDPR Compliant</span>
+        </span>
+        <span class="env-status-pill d-none d-lg-inline-flex">
+          <i class="fa-solid fa-server text-primary me-1"></i>
+          <span>FastAPI + MySQL 8.0</span>
+        </span>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+          <i class="fa-solid fa-comments"></i>
+          <span>Crisp & Site Config</span>
+        </a>
+        <a href="/docs" target="_blank" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+          <i class="fa-solid fa-book-open"></i>
+          <span>API Docs</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container-fluid py-4 px-4">
+      <!-- Optional Page Header -->
+      {% block content_header %}
+      {% if title and title != "Dashboard" %}
+      <div class="page-header d-print-none mb-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="page-title text-dark fw-bold">{{ title }}</h2>
+            {% if subtitle %}
+            <div class="page-pretitle text-muted mt-1">{{ subtitle }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endblock %}
+
+      <!-- Content Injection -->
+      <div class="row row-deck row-cards">
+        {% block content %} {% endblock %}
+        {% block flash %}
+        {% include 'sqladmin/flash.html' %}
+        {% endblock %}
+        {% block secret_modal %}
+        {% include 'sqladmin/secret_modal.html' %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

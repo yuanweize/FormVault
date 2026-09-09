@@ -6,7 +6,7 @@ FontAwesome icons, and comprehensive field customization.
 """
 
 from sqladmin import ModelView
-from wtforms.fields import PasswordField
+from wtforms.fields import PasswordField, SelectField
 from passlib.context import CryptContext
 
 from ..models.application import Application
@@ -285,18 +285,59 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         SystemConfig.s3_secret_key,
     ]
 
-    form_overrides = dict(s3_secret_key=PasswordField)
+    form_overrides = dict(
+        s3_secret_key=PasswordField,
+        storage_provider=SelectField,
+        crisp_custom_color=SelectField,
+    )
     form_args = dict(
-        storage_provider=dict(choices=["local", "s3"], label="Storage Provider (local / s3)"),
+        storage_provider=dict(
+            choices=[
+                ("local", "Local Disk Storage (/app/uploads)"),
+                ("s3", "S3 / Object Storage (AWS S3, Cloudflare R2, MinIO)"),
+            ],
+            label="Storage Provider",
+            description="Choose where uploaded customer passport scans and insurance documents are stored.",
+        ),
         crisp_custom_color=dict(
-            choices=["blue", "azure", "green", "orange", "red", "purple", "grey", "black"],
-            label="Crisp Live Chat Theme Color / Style",
+            choices=[
+                ("blue", "Classic Blue (Default)"),
+                ("azure", "Azure Cyan"),
+                ("green", "Emerald Green"),
+                ("orange", "Amber Orange"),
+                ("red", "Crimson Red"),
+                ("purple", "Indigo Purple"),
+                ("grey", "Slate Grey"),
+                ("black", "Dark Carbon"),
+            ],
+            label="Crisp Live Chat Widget Color Theme",
+            description="Color scheme of the floating Crisp chat widget on your public portal.",
+        ),
+        crisp_website_id=dict(
+            label="Crisp Live Chat Website ID (Key)",
+            description="Enter your Crisp Website ID (UUID, e.g. 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d). Found in Crisp Dashboard > Settings > Website Settings.",
+        ),
+        site_title=dict(
+            label="Website Title",
+            description="Brand title shown in the customer's browser tab and portal header.",
+        ),
+        site_description=dict(
+            label="SEO Meta Description",
+            description="Description shown in Google search results and social share previews.",
+        ),
+        site_icon_url=dict(
+            label="Brand Icon / Favicon URL",
+            description="Relative path (e.g. /favicon.svg) or full CDN URL to your logo/favicon.",
+        ),
+        support_email=dict(
+            label="Official Support Email",
+            description="Email shown on customer support pages and email receipts (e.g. insurance@hktse.eu.org).",
         ),
     )
 
     async def on_model_change(self, data, model, is_created, request):
         if is_created:
-            with request.state.db_session_factory() as session:
+            with self.session_maker() as session:
                 existing = session.query(SystemConfig).first()
                 if existing:
                     raise Exception("System Configuration already exists. Please edit the existing entry.")

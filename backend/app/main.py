@@ -29,7 +29,7 @@ from app.middleware.audit import AuditMiddleware
 from app.services.error_tracking import track_error
 
 from starlette.middleware.sessions import SessionMiddleware
-from sqladmin import Admin
+from app.admin.admin import FormVaultAdmin
 from app.database import engine, Base, SessionLocal
 import app.models  # Ensures all ORM models are registered with Base.metadata
 from app.admin.auth import authentication_backend
@@ -110,14 +110,15 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Admin Interface Initialization
-admin = Admin(
+admin_templates_dir = os.path.join(os.path.dirname(__file__), "templates")
+admin = FormVaultAdmin(
     app, 
     engine, 
     authentication_backend=authentication_backend,
     title="FormVault Broker Admin",
     logo_url="/favicon.svg",
     favicon_url="/favicon.svg",
+    templates_dir=admin_templates_dir,
 )
 admin.add_view(ApplicationAdmin)
 admin.add_view(FileAdmin)

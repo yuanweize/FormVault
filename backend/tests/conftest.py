@@ -41,6 +41,16 @@ def patch_db_objects(engine):
     # Create a new SessionLocal bound to the test engine
     TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+    from app.main import admin
+    orig_admin_engine = admin.engine
+    orig_admin_session_maker = admin.session_maker
+    orig_view_session_makers = [getattr(v, "session_maker", None) for v in admin._views]
+
+    admin.engine = engine
+    admin.session_maker = TestSessionLocal
+    for v in admin._views:
+        v.session_maker = TestSessionLocal
+
     # Patch both engine and SessionLocal in app.database
     # db_helpers now uses database.engine directly so no separate patch needed
     with (
@@ -48,6 +58,11 @@ def patch_db_objects(engine):
         patch("app.database.SessionLocal", TestSessionLocal),
     ):
         yield
+
+    admin.engine = orig_admin_engine
+    admin.session_maker = orig_admin_session_maker
+    for v, orig_sm in zip(admin._views, orig_view_session_makers):
+        v.session_maker = orig_sm
 
 
 @pytest.fixture(scope="function", autouse=True)

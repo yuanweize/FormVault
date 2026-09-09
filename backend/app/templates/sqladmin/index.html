@@ -1,0 +1,338 @@
+{% extends "sqladmin/layout.html" %}
+
+{% block content %}
+<div class="col-12 mb-3">
+  <!-- Operations Hero Banner -->
+  <div class="card bg-primary-lt border-0 shadow-sm overflow-hidden position-relative">
+    <div class="card-body p-4">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-blue text-white px-2 py-1">FormVault Insurance Broker</span>
+            <span class="badge bg-azure-lt text-azure px-2 py-1">Czechia Operations 🇨🇿</span>
+          </div>
+          <h1 class="fw-bold mb-2 text-dark">Insurance Operations Console</h1>
+          <p class="text-secondary mb-3 fs-3">
+            Secure multi-tenant insurance application management for international students and expatriates in the Czech Republic.
+          </p>
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <a href="{{ url_for('admin:list', identity='application') }}" class="btn btn-primary btn-sm d-flex align-items-center gap-2">
+              <i class="fa-solid fa-file-invoice"></i>
+              <span>Review Applications</span>
+              {% if stats.applications_submitted > 0 %}
+              <span class="badge bg-white text-primary ms-1">{{ stats.applications_submitted }}</span>
+              {% endif %}
+            </a>
+            <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2">
+              <i class="fa-solid fa-gear"></i>
+              <span>System & Crisp Config</span>
+            </a>
+            <a href="{{ url_for('admin:list', identity='insurance-plan') }}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2">
+              <i class="fa-solid fa-layer-group"></i>
+              <span>Manage Insurance Plans</span>
+            </a>
+            <a href="/" target="_blank" class="btn btn-ghost-secondary btn-sm d-flex align-items-center gap-1 text-muted">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>Public Portal</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mt-3 mt-lg-0 text-lg-end">
+          <div class="p-3 bg-white rounded-3 border shadow-sm d-inline-block text-start" style="min-width: 260px;">
+            <div class="text-muted small text-uppercase fw-bold mb-1">Production Ingress</div>
+            <div class="fw-bold text-dark fs-4 mb-2">Cloudflare Tunnel</div>
+            <div class="small text-secondary mb-1">
+              <i class="fa-solid fa-globe text-primary me-1"></i>
+              <a href="https://insure.hktse.eu.org" target="_blank" class="text-decoration-none">insure.hktse.eu.org</a>
+            </div>
+            <div class="small text-secondary mb-2">
+              <i class="fa-solid fa-globe text-azure me-1"></i>
+              <a href="https://pojisteni.hktse.eu.org" target="_blank" class="text-decoration-none">pojisteni.hktse.eu.org</a>
+            </div>
+            <div class="small text-muted border-top pt-2">
+              <i class="fa-solid fa-shield-check text-success me-1"></i>
+              <span>AES-256 Storage: <strong>{{ stats.system_config.storage_provider if stats.system_config else 'local' }}</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- CRISP LIVE CHAT INTEGRATION HIGHLIGHT (Explicitly answers User Requirement) -->
+<!-- ========================================================================= -->
+<div class="col-12 mb-4">
+  <div class="card border-primary shadow-sm" style="border-left: 5px solid #2563eb !important;">
+    <div class="card-body p-4">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle" style="width: 32px; height: 32px;">
+              <i class="fa-solid fa-comments"></i>
+            </span>
+            <h3 class="fw-bold text-dark m-0">Crisp Live Chat Integration (在线即时客服配置)</h3>
+            {% if stats.system_config and stats.system_config.crisp_website_id %}
+            <span class="badge bg-success-lt text-success fw-bold px-2 py-1">
+              <i class="fa-solid fa-circle-check me-1"></i>Active & Connected
+            </span>
+            {% else %}
+            <span class="badge bg-warning-lt text-warning fw-bold px-2 py-1">
+              <i class="fa-solid fa-triangle-exclamation me-1"></i>Pending Configuration
+            </span>
+            {% endif %}
+          </div>
+
+          <p class="text-secondary mb-2">
+            <strong>配置位置说明：</strong>
+            系统后台的 Crisp 在线聊天由 
+            <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="fw-bold text-primary text-decoration-none">
+              [System & Security] &rarr; [System Configuration] (系统配置 ⚙️)
+            </a> 统一托管。前台网站（<code>/</code>）会自动感知并注入官方 Crisp 浮窗。
+          </p>
+
+          <div class="row g-3 mt-1">
+            <div class="col-sm-6">
+              <div class="p-2 bg-light rounded border small">
+                <div class="text-muted fw-bold mb-1">Crisp Website ID (Chat Key)</div>
+                {% if stats.system_config and stats.system_config.crisp_website_id %}
+                <div class="font-monospace text-dark fw-bold text-truncate" title="{{ stats.system_config.crisp_website_id }}">
+                  {{ stats.system_config.crisp_website_id }}
+                </div>
+                {% else %}
+                <div class="text-danger fw-bold">未配置 (前台浮窗暂不显示)</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="p-2 bg-light rounded border small">
+                <div class="text-muted fw-bold mb-1">Widget Theme / Color (挂件主题色)</div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-blue text-white text-capitalize">
+                    {{ stats.system_config.crisp_custom_color if (stats.system_config and stats.system_config.crisp_custom_color) else 'Blue (Default)' }}
+                  </span>
+                  <span class="text-muted small">与前台保司风格无缝契合</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <div class="d-flex flex-column gap-2">
+            <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="btn btn-primary fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+              <i class="fa-solid fa-sliders"></i>
+              <span>配置 / 修改 Crisp 参数</span>
+            </a>
+            <a href="https://app.crisp.chat/" target="_blank" class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center gap-2">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>登录 Crisp 官方控制台</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- CORE METRIC KPI CARDS (Stripe / Supabase Style) -->
+<!-- ========================================================================= -->
+<div class="col-sm-6 col-lg-3 mb-3">
+  <div class="card card-sm border-0 shadow-sm h-100">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <span class="bg-blue-lt text-blue avatar rounded-3 me-3">
+          <i class="fa-solid fa-file-invoice fs-2"></i>
+        </span>
+        <div>
+          <div class="text-muted text-uppercase fw-bold small">Total Applications</div>
+          <div class="fw-bold fs-2 text-dark">{{ stats.applications_total }}</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+        <span class="badge bg-warning-lt text-warning fw-bold">
+          {{ stats.applications_submitted }} Pending
+        </span>
+        <a href="{{ url_for('admin:list', identity='application') }}" class="small text-primary text-decoration-none fw-semibold">
+          View All &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6 col-lg-3 mb-3">
+  <div class="card card-sm border-0 shadow-sm h-100">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <span class="bg-green-lt text-green avatar rounded-3 me-3">
+          <i class="fa-solid fa-layer-group fs-2"></i>
+        </span>
+        <div>
+          <div class="text-muted text-uppercase fw-bold small">Active Plans</div>
+          <div class="fw-bold fs-2 text-dark">{{ stats.plans_active }}</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+        <span class="badge bg-success-lt text-success fw-bold">
+          {{ stats.partners_active }} Certified Insurers
+        </span>
+        <a href="{{ url_for('admin:list', identity='insurance-plan') }}" class="small text-primary text-decoration-none fw-semibold">
+          Manage &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6 col-lg-3 mb-3">
+  <div class="card card-sm border-0 shadow-sm h-100">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <span class="bg-purple-lt text-purple avatar rounded-3 me-3">
+          <i class="fa-solid fa-file-shield fs-2"></i>
+        </span>
+        <div>
+          <div class="text-muted text-uppercase fw-bold small">Encrypted Files</div>
+          <div class="fw-bold fs-2 text-dark">{{ stats.files_total }}</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+        <span class="badge bg-purple-lt text-purple fw-bold">
+          AES-256 GCM
+        </span>
+        <a href="{{ url_for('admin:list', identity='file') }}" class="small text-primary text-decoration-none fw-semibold">
+          Vault &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6 col-lg-3 mb-3">
+  <div class="card card-sm border-0 shadow-sm h-100">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <span class="bg-azure-lt text-azure avatar rounded-3 me-3">
+          <i class="fa-solid fa-shield-halved fs-2"></i>
+        </span>
+        <div>
+          <div class="text-muted text-uppercase fw-bold small">Audit Trail</div>
+          <div class="fw-bold fs-2 text-dark">{{ stats.audit_logs_total }}</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+        <span class="badge bg-azure-lt text-azure fw-bold">
+          GDPR Immutable
+        </span>
+        <a href="{{ url_for('admin:list', identity='audit-log') }}" class="small text-primary text-decoration-none fw-semibold">
+          Logs &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MIDDLE ROW: QUICK ACTIONS & CZECH REGULATION BRIEF -->
+<!-- ========================================================================= -->
+<div class="col-lg-7 mb-4">
+  <div class="card shadow-sm h-100">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title fw-bold m-0 text-dark">
+        <i class="fa-solid fa-bolt text-warning me-2"></i>Operational Quick Actions (常用工作流)
+      </h3>
+      <span class="badge bg-blue-lt">Broker Suite</span>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <a href="{{ url_for('admin:list', identity='application') }}" class="p-3 d-block rounded-3 border bg-light text-decoration-none h-100 hover-shadow">
+            <div class="d-flex align-items-center gap-3">
+              <span class="avatar bg-blue text-white rounded-3">
+                <i class="fa-solid fa-clipboard-list"></i>
+              </span>
+              <div>
+                <div class="fw-bold text-dark">Review Customer Forms</div>
+                <div class="small text-secondary">Verify applicant passport scans and insurance coverage.</div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="{{ url_for('admin:list', identity='insurance-company') }}" class="p-3 d-block rounded-3 border bg-light text-decoration-none h-100 hover-shadow">
+            <div class="d-flex align-items-center gap-3">
+              <span class="avatar bg-success text-white rounded-3">
+                <i class="fa-solid fa-building-shield"></i>
+              </span>
+              <div>
+                <div class="fw-bold text-dark">Insurance Partners</div>
+                <div class="small text-secondary">Configure PVZP, Slavia, Maxima, UNIQA showcase cards.</div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="{{ url_for('admin:list', identity='agency-banner') }}" class="p-3 d-block rounded-3 border bg-light text-decoration-none h-100 hover-shadow">
+            <div class="d-flex align-items-center gap-3">
+              <span class="avatar bg-danger text-white rounded-3">
+                <i class="fa-solid fa-bullhorn"></i>
+              </span>
+              <div>
+                <div class="fw-bold text-dark">Broadcast Banners</div>
+                <div class="small text-secondary">Publish discount announcements or semester promo notices.</div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="{{ url_for('admin:edit', identity='system-config', pk=1) }}" class="p-3 d-block rounded-3 border bg-light text-decoration-none h-100 hover-shadow">
+            <div class="d-flex align-items-center gap-3">
+              <span class="avatar bg-dark text-white rounded-3">
+                <i class="fa-solid fa-gears"></i>
+              </span>
+              <div>
+                <div class="fw-bold text-dark">Brand & Support Setup</div>
+                <div class="small text-secondary">Update site title, crisp key, official support email.</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-5 mb-4">
+  <div class="card shadow-sm h-100">
+    <div class="card-header">
+      <h3 class="card-title fw-bold m-0 text-dark">
+        <i class="fa-solid fa-scale-balanced text-primary me-2"></i>Czech Compliance Brief (居留合规指引)
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-info border-0 p-3 mb-3">
+        <div class="fw-bold mb-1">
+          <i class="fa-solid fa-circle-info me-1"></i>Act No. 326/1999 Coll. (外国人居留法)
+        </div>
+        <div class="small">
+          所有在捷克申请长期签证（Long-term Visa）及居留（Residence Permit）的留学生和外籍人士，必须投保<strong>综合健康医疗保险（Komplexní zdravotní pojištění cizinců）</strong>，单项事故最低赔偿限额为 <strong>400,000 EUR</strong>。
+        </div>
+      </div>
+
+      <div class="text-secondary small">
+        <div class="mb-2"><strong>合作认证保司：</strong> PVZP, Slavia, Maxima, UNIQA</div>
+        <div class="mb-2"><strong>数据留存合规：</strong> 所有用户提交的护照扫描件和保单附件经客户端与服务端加密，符合 GDPR Article 32 安全要求。</div>
+        <div><strong>官方咨询支持：</strong> <code>{{ stats.system_config.support_email if stats.system_config else 'insurance@hktse.eu.org' }}</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
