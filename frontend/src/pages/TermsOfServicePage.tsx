@@ -104,7 +104,7 @@ const TermsOfServicePage: React.FC = () => {
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section3Content', {
                 defaultValue:
-                  'FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.',
+                  'FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the underwriter system.',
               })}
             </Typography>
           </Box>

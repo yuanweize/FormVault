@@ -246,8 +246,7 @@
       "section2Item1": "Sjednání a vydání zdravotního, cestovního a studentského pojištění u licencovaných pojistitelů;",
       "section2Item2": "Splnění zákonných požadavků zákona o pobytu cizinců (zák. č. 326/1999 Sb., požadavky OAMP MV ČR);",
       "section2Item3": "Audity, prevence podvodů a zákonná archivace dle předpisů o distribuci pojištění.",
-      "section2Legal": "Právní základ: Článek 6 odst. 1 písm. b) GDPR (plnění smlouvy) a Článek 6 odst. 1 písm. c) GDPR (plnění právní povinnosti).",
-      "section3Title": "3. Hardwarové šifrování a úložiště Zero-Knowledge",
+      "section3Title": "3. Šifrování na aplikační vrstvě AES-256 GCM",
       "section3Content": "Veškeré fotografie pasů, studentské průkazy a osobní záznamy zaslané do FormVault jsou šifrovány pomocí autentizovaného šifrování AES-256 GCM s unikátními inicializačními vektory (IV). Databáze je zcela izolována od veřejného internetu a přenosy probíhají přes TLS 1.3.",
       "section4Title": "4. Vaše práva podle GDPR (články 15-22)",
       "section4Intro": "Jako subjekt údajů máte následující zákonná práva:",
@@ -562,10 +561,10 @@
     "title": "Institucionální bezpečnostní lišta",
     "aes": {
       "label": "Šifrování AES-256 GCM",
-      "tooltip": "Všechny dokumenty a formulářová data jsou uložena v zašifrovaném stavu pomocí vojenského standardu AES-256 GCM."
+      "tooltip": "Všechny dokumenty a formulářová data jsou uložena v zašifrovaném stavu pomocí standardu AES-256 GCM."
     },
     "privacy": {
-      "label": "Ochrana soukromí Zero-Knowledge",
+      "label": "Role-Based izolace dat",
       "tooltip": "Vaše citlivé osobní údaje jsou přísně izolovány a přístupné pouze oprávněným upisovatelům."
     },
     "tls": {

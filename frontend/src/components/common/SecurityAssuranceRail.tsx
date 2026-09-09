@@ -59,16 +59,16 @@ export const SecurityAssuranceRail: React.FC<SecurityAssuranceRailProps> = ({
     },
     {
       icon: <VerifiedUserOutlined sx={{ fontSize: 16, color: '#F59E0B' }} />,
-      label: t('securityRail.cnb.label', { defaultValue: 'ČNB Intermediary Co-Compliance' }),
+      label: t('securityRail.cnb.label', { defaultValue: 'Authorized Broker Collaboration' }),
       tooltip: t('securityRail.cnb.tooltip', {
-        defaultValue: 'Technical infrastructure operated by HKTSE s.r.o. in authorized cooperation with České pojištění a.s. under Act No. 170/2018 Coll.',
+        defaultValue: 'Technical infrastructure operated by HKTSE s.r.o. as a lead introducer (tipař) in authorized collaboration with licensed broker České pojištění a.s. under Act No. 170/2018 Coll.',
       }),
     },
     {
       icon: <AssignmentTurnedInOutlined sx={{ fontSize: 16, color: '#EC4899' }} />,
-      label: t('securityRail.audit.label', { defaultValue: 'Tamper-Evident Audit' }),
+      label: t('securityRail.audit.label', { defaultValue: 'Tamper-Evident Hash Chain' }),
       tooltip: t('securityRail.audit.tooltip', {
-        defaultValue: 'Every decryption, document review, and status update generates an immutable cryptographic audit record.',
+        defaultValue: 'Every document decryption, review, and status transition generates an immutable SHA-256 chained audit record.',
       }),
     },
   ];

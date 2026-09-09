@@ -39,8 +39,8 @@
       "subtitle": "Complete your insurance application securely and efficiently",
       "getStarted": "Get Started",
       "features": {
-        "secure": "Hardware-Grade AES-256 GCM Vault",
-        "secureDesc": "Military-grade authenticated encryption with per-document nonces. Decryption restricted to verified underwriters.",
+        "secure": "Authenticated AES-256 GCM Vault",
+        "secureDesc": "Authenticated symmetric encryption with per-document nonces. Decryption restricted to verified underwriters.",
         "multilingual": "12-Language Multilingual Intake",
         "multilingualDesc": "Seamless cross-border applications compliant with Czech Ministry (OAMP) naming and residency requirements.",
         "mobile": "Volatile Session Sandbox",
@@ -194,11 +194,11 @@
       "title": "Terms of Service",
       "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
       "section1Title": "1. Intermediary Scope & Broker Status",
-      "section1Content": "FormVault functions as a registered insurance intermediary service operating under Act No. 170/2018 Coll. of the Czech Republic. In cooperation with České pojištění a.s., our platform mediates agreements between the applicant (\"You\") and licensed Czech underwriting carriers (including Pojišťovna VZP, a.s., Slavia pojišťovna a.s., and SV pojišťovna, a.s.). Final binding coverage is executed in accordance with each underwriter's General Insurance Conditions (VPP).",
+      "section1Content": "FormVault is a specialized digital insurance intake and workflow platform operated by HKTSE s.r.o. (IČO: 10858032) acting as a lead introducer (tipař) in authorized cooperation with licensed broker České pojištění a.s. under Act No. 170/2018 Coll. Policies are underwritten by authorized carriers (PVZP, Slavia, SV pojišťovna) and compliant with Czech Foreigners Residence Act No. 326/1999 Coll.",
       "section2Title": "2. Applicant Representations & Document Authenticity",
       "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
       "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
-      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.",
+      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the underwriter system.",
       "section4Title": "4. Cancellations, Refunds & Visa Refusal Policy",
       "section4Content": "In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier's contract terms.",
       "section5Title": "5. Governing Law & Dispute Resolution",
@@ -246,8 +246,7 @@
       "section2Item1": "Binding and issuing health, travel, and student insurance policies with licensed underwriters;",
       "section2Item2": "Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);",
       "section2Item3": "Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.",
-      "section2Legal": "Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).",
-      "section3Title": "3. Hardware-Grade Encryption & Zero-Knowledge Storage",
+      "section3Title": "3. Application-Layer AES-256 GCM Encryption",
       "section3Content": "All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.",
       "section4Title": "4. Your Rights Under GDPR (Articles 15-22)",
       "section4Intro": "As an applicant, you possess the following enforceable statutory rights:",
@@ -561,11 +560,11 @@
   "securityRail": {
     "title": "Institutional Security Rail",
     "aes": {
-      "label": "AES-256 GCM Encrypted",
-      "tooltip": "All documents and form data are encrypted at rest using military-grade AES-256 GCM."
+      "label": "AES-256 GCM Storage",
+      "tooltip": "All documents and form data are encrypted at rest using AES-256 GCM authenticated encryption."
     },
     "privacy": {
-      "label": "Zero-Knowledge Privacy",
+      "label": "Role-Based Data Isolation",
       "tooltip": "Your sensitive personal data is strictly isolated and only accessible to authorized underwriters."
     },
     "tls": {
@@ -585,12 +584,12 @@
       "tooltip": "Sensitive applicant credentials exist in volatile session memory, preventing disk caching on shared workstations."
     },
     "cnb": {
-      "label": "ČNB Intermediary Co-Compliance",
-      "tooltip": "Technical infrastructure operated by HKTSE s.r.o. in authorized cooperation with České pojištění a.s. under Act No. 170/2018 Coll."
+      "label": "Authorized Broker Collaboration",
+      "tooltip": "Technical infrastructure operated by HKTSE s.r.o. as a lead introducer (tipař) in authorized collaboration with licensed broker České pojištění a.s. under Act No. 170/2018 Coll."
     },
     "audit": {
-      "label": "Tamper-Evident Audit",
-      "tooltip": "Every decryption, document review, and status update generates an immutable cryptographic audit record."
+      "label": "Tamper-Evident Hash Chain",
+      "tooltip": "Every document decryption, review, and status transition generates an immutable SHA-256 chained audit record."
     }
   },
   "addressAssistant": {

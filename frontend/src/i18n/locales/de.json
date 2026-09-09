@@ -562,10 +562,10 @@
     "title": "Institutionelle Sicherheitsleiste",
     "aes": {
       "label": "AES-256 GCM verschlüsselt",
-      "tooltip": "Alle Dokumente und Formulardaten werden im Ruhezustand mit militärischem AES-256 GCM verschlüsselt."
+      "tooltip": "Alle Dokumente und Formulardaten werden im Ruhezustand mit sicherem AES-256 GCM verschlüsselt."
     },
     "privacy": {
-      "label": "Zero-Knowledge-Datenschutz",
+      "label": "Rollenbasierte Datenisolation",
       "tooltip": "Ihre sensiblen Daten sind streng isoliert und nur autorisierten Zeichnern zugänglich."
     },
     "tls": {

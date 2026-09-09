@@ -16,15 +16,22 @@ import { apiClient } from '../../services/api';
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [customDisclosure, setCustomDisclosure] = useState<string | null>(null);
+  const [portalConfig, setPortalConfig] = useState<{
+    operator_legal_name?: string;
+    operator_website_url?: string;
+    partner_name?: string;
+    partner_website_url?: string;
+    relationship_status?: string;
+    broker_legal_disclosure?: string;
+  } | null>(null);
 
   useEffect(() => {
-    // Dynamically retrieve configured broker legal disclosure if present
+    // Dynamically retrieve configured broker legal disclosure and websites
     const fetchBrokerDisclosure = async () => {
       try {
         const res = await apiClient.get('/portal/config');
-        if (res.data && res.data.broker_legal_disclosure) {
-          setCustomDisclosure(res.data.broker_legal_disclosure);
+        if (res.data) {
+          setPortalConfig(res.data);
         }
       } catch (e) {
         // Fallback gracefully to default i18n
@@ -33,31 +40,44 @@ const Footer: React.FC = () => {
     fetchBrokerDisclosure();
   }, []);
 
+  const isPartnerVerified = portalConfig?.relationship_status === 'VERIFIED';
+  const operatorUrl = portalConfig?.operator_website_url || 'https://hktse.eu.org/';
+  const partnerUrl = portalConfig?.partner_website_url || 'https://ceskepojisteni.cz/';
+  const operatorName = portalConfig?.operator_legal_name || 'HKTSE s.r.o.';
+  const partnerName = portalConfig?.partner_name || 'České pojištění a.s.';
+
   const defaultBrokerDesc = (
     <span>
       {t('footer.techPlatformLead', 'FormVault is operated by ')}
       <Link
-        href="https://hktse.eu.org/"
+        href={operatorUrl}
         target="_blank"
         rel="noopener noreferrer"
         color="inherit"
         underline="hover"
         sx={{ fontWeight: 700 }}
       >
-        HKTSE s.r.o.
+        {operatorName}
       </Link>
-      {' (IČO: 10858032), providing digital intake & IT infrastructure in authorized cooperation with '}
-      <Link
-        href="https://ceskepojisteni.cz/"
-        target="_blank"
-        rel="noopener noreferrer"
-        color="inherit"
-        underline="hover"
-        sx={{ fontWeight: 700 }}
-      >
-        České pojištění a.s.
-      </Link>
-      {' (registered independent intermediary under Czech National Bank ČNB supervision).'}
+      {' (IČO: 10858032), providing digital intake & IT infrastructure as a lead introducer (tipař) '}
+      {isPartnerVerified ? (
+        <>
+          {'in authorized cooperation with '}
+          <Link
+            href={partnerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            color="inherit"
+            underline="hover"
+            sx={{ fontWeight: 700 }}
+          >
+            {partnerName}
+          </Link>
+          {' (registered independent broker under Czech National Bank ČNB supervision per Act No. 170/2018 Coll.).'}
+        </>
+      ) : (
+        'under configurable intermediary settings per Act No. 170/2018 Coll.'
+      )}
     </span>
   );
 
@@ -97,12 +117,36 @@ const Footer: React.FC = () => {
               </Typography>
             </Stack>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.6 }}>
-              {customDisclosure ? (
-                <span>{customDisclosure}</span>
+              {portalConfig?.broker_legal_disclosure ? (
+                <span>{portalConfig.broker_legal_disclosure}</span>
               ) : (
                 defaultBrokerDesc
               )}
             </Typography>
+            <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+              <Link
+                href={operatorUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="caption"
+                color="primary"
+                sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4, fontWeight: 700 }}
+              >
+                {operatorName} <OpenInNewOutlined sx={{ fontSize: 12 }} />
+              </Link>
+              {isPartnerVerified && (
+                <Link
+                  href={partnerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="caption"
+                  color="primary"
+                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4, fontWeight: 700 }}
+                >
+                  {partnerName} <OpenInNewOutlined sx={{ fontSize: 12 }} />
+                </Link>
+              )}
+            </Stack>
           </Box>
 
           {/* Direct Support Contact & Links */}

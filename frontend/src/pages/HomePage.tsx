@@ -1072,9 +1072,9 @@ const HomePage: React.FC = () => {
               {
                 icon: <SecurityOutlined sx={{ fontSize: 24, color: '#4F46E5' }} />,
                 badge: 'AES-256 GCM',
-                title: t('pages.home.features.secure', { defaultValue: 'Hardware-Grade AES-256 GCM Vault' }),
+                title: t('pages.home.features.secure', { defaultValue: 'Authenticated AES-256 GCM Vault' }),
                 description: t('pages.home.features.secureDesc', {
-                  defaultValue: 'Military-grade authenticated encryption with per-document nonces. Decryption restricted to verified underwriters.',
+                  defaultValue: 'Authenticated symmetric encryption with per-document nonces and PBKDF2 key derivation. Decryption restricted to verified underwriters.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
               },

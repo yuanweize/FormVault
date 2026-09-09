@@ -562,10 +562,10 @@
     "title": "Barra de segurança institucional",
     "aes": {
       "label": "Encriptado AES-256 GCM",
-      "tooltip": "Todos os documentos e dados estão encriptados em repouso com AES-256 GCM de nível militar."
+      "tooltip": "Todos os documentos e dados estão encriptados em repouso com autenticação AES-256 GCM."
     },
     "privacy": {
-      "label": "Privacidade Zero-Knowledge",
+      "label": "Isolamento de dados por funções",
       "tooltip": "Os seus dados pessoais sensíveis estão rigorosamente isolados."
     },
     "tls": {

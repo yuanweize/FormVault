@@ -562,10 +562,10 @@
     "title": "Rail de sécurité institutionnelle",
     "aes": {
       "label": "Chiffré AES-256 GCM",
-      "tooltip": "Tous les documents et données sont chiffrés au repos via AES-256 GCM de niveau militaire."
+      "tooltip": "Tous les documents et données sont chiffrés au repos via AES-256 GCM authentifié."
     },
     "privacy": {
-      "label": "Confidentialité Zero-Knowledge",
+      "label": "Isolation des données par rôles",
       "tooltip": "Vos données personnelles sensibles sont strictement isolées."
     },
     "tls": {

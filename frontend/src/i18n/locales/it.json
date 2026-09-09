@@ -565,7 +565,7 @@
       "tooltip": "Tutti i documenti e i dati dei moduli sono crittografati con standard AES-256 GCM."
     },
     "privacy": {
-      "label": "Privacy Zero-Knowledge",
+      "label": "Isolamento dati basato sui ruoli",
       "tooltip": "I tuoi dati sensibili sono rigorosamente isolati."
     },
     "tls": {

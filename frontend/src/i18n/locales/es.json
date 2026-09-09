@@ -562,10 +562,10 @@
     "title": "Riel de seguridad institucional",
     "aes": {
       "label": "Cifrado AES-256 GCM",
-      "tooltip": "Todos los documentos y datos están cifrados en reposo utilizando AES-256 GCM de nivel militar."
+      "tooltip": "Todos los documentos y datos están cifrados en reposo utilizando autenticación AES-256 GCM."
     },
     "privacy": {
-      "label": "Privacidad Zero-Knowledge",
+      "label": "Aislamiento de datos basado en roles",
       "tooltip": "Sus datos personales confidenciales están estrictamente aislados."
     },
     "tls": {
