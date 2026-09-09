@@ -2,7 +2,8 @@
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
-[![License: Non-Commercial / Commercial Option](https://img.shields.io/badge/License-Non--Commercial%20%2F%20Commercial%20Option-red.svg)](LICENSE)
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
+[![Commercial License](https://img.shields.io/badge/Commercial%20License-Available-red.svg)](COMMERCIAL-LICENSE.md)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg)](https://www.python.org/)
@@ -27,13 +28,13 @@
 - **保险代理人通用产品展示与管理架构** — 预载捷克合规留学生与工作居留健康险真实样板（PVZP、Slavia、SV pojišťovna 等，CZK 计价，依托 České pojištění 合作网络），通用模型完全动态可配置，开源无硬编码。
 - **首页双因子极简状态追踪与时间轴 (`/track`)** — 客户凭【申请编号 + 申请邮箱】即可在首页直接查询审核与承保出单进度时间轴，数据全程安全脱敏（OWASP 合规）。
 - **自动申请回执与追踪邮件通知** — 提交即刻发送带有唯一追踪号的确认邮件，投保体验更安心。
-- **专属金融安全护航面板 (`SecurityAssuranceRail`)** — 实时展示 TLS 1.3 安全通道状态、AES-256 GCM 硬件加密验证、Zero-Knowledge 隐私隔离。
+- **专属金融安全护航面板 (`SecurityAssuranceRail`)** — 实时展示 TLS 1.3 安全通道状态、AES-256 GCM 静态加密保护与严格 RBAC 权限隔离。
 - **Stripe 级流动发光步骤轨 (`WorkflowProgressIndicator`)** — 呼吸脉冲光环、祖母绿完成徽标、动态平滑进度条。
 - **机密凭证安全文件库** — 客户端文件头签名严格校验、哈希验真脱敏预览、防篡改存储。
 - **实时严谨校验** — 基于 `react-hook-form` 的流式校验与即时错误定位。
 - **加密自动草稿暂存** — 智能防丢失保护，离线或刷新无缝恢复进度。
 - **零外网暴露数据库架构** — MySQL 仅在内部专用隔离网络通信，杜绝外网撞库风险。
-- **100% WCAG 无障碍访问** — axe 自动化零违规检测，全键盘与屏幕阅读器无障碍适配。
+- **WCAG 2.1 AA 标准无障碍适配** — axe 自动化零违规检测，全键盘与屏幕阅读器友好支持。
 - **国际化多语言支持 (i18n)** — 英语、简体中文、西班牙语等丝滑无刷新切换。
 
 <div align="center">
@@ -203,8 +204,9 @@ npm run build
 
 ## 许可证与商业授权 (License & Commercial Licensing)
 
-本项目采用 **FormVault 源码可用非商业许可证 (Source-Available & Non-Commercial License)** 并附带 **商业付费授权选项 (Commercial Licensing Option)** — 完整法律条文请见 [LICENSE](LICENSE) 文件。
+本项目为 **源码可用软件 (Source-Available Software)**，采用官方标准 **[PolyForm Noncommercial License 1.0.0](LICENSE)**，并附带独立的 **[商业授权许可 (Commercial License)](COMMERCIAL-LICENSE.md)**：
 
-- **个人自用与非商业研究**：对个人私有自建、学习研究与非营利评估完全免费开放。
-- **商业机构与保险公司限制**：任何商业实体、保险公司（包括但不限于 PVZP, Slavia, SV, Maxima, UNIQA 等）、保险中介/经纪机构、签证移民中介等，**严禁在未取得 HKTSE s.r.o. 正式书面商业授权并支付授权费用的情况下将其用于生产运营、商业获利或客户信息采集**。
+- **个人自用与非商业研究**：对个人私有自建、学习研究、安全审计与学术非营利评估完全免费开放。
+- **商业机构与保险公司限制**：任何商业实体、保险公司、保险经纪/中介、企业内部工作流或商业平台，**严禁在未取得 HKTSE s.r.o. 正式商业授权的情况下将其用于生产运营、商业获利或客户信息采集**。
+- **商标与品牌专有保护**：FormVault 名称、Logo 与视觉标识受 **[TRADEMARKS.md](TRADEMARKS.md)** 保护，不随源码授权让渡。
 - **商业授权与采购咨询**：请联系商务邮箱 [licensing@hktse.eu.org](mailto:licensing@hktse.eu.org) 或 [insurance@hktse.eu.org](mailto:insurance@hktse.eu.org)。

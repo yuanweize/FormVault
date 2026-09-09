@@ -2,7 +2,8 @@
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
-[![License: Non-Commercial / Commercial Option](https://img.shields.io/badge/License-Non--Commercial%20%2F%20Commercial%20Option-red.svg)](LICENSE)
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
+[![Commercial License](https://img.shields.io/badge/Commercial%20License-Available-red.svg)](COMMERCIAL-LICENSE.md)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg)](https://www.python.org/)
@@ -27,13 +28,13 @@
 - **Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, SV pojišťovna in CZK via České pojištění network); fully dynamic, open-source and customizable via Admin Panel.
 - **Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
 - **Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
-- **Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, AES-256 GCM hardware encryption badges, and Zero-Knowledge privacy isolation.
+- **Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, authenticated AES-256-GCM storage encryption, and strict RBAC isolation.
 - **Stripe-Inspired Fluid Stepper** — Connected step rail with pulsing halos, completion badges, and smooth progress tracking.
 - **Secure File Vault** — Client-side file signature validation, anti-tampering checksums, and encrypted local/S3 storage.
 - **Real-time Form Validation** — Strict validation schema powered by `react-hook-form` and accessible error handling.
 - **Automated State Persistence** — Local encrypted draft caching prevents data loss during workflow navigation.
 - **Isolated Database Architecture** — Database is strictly isolated inside the container bridge network with zero public port exposure.
-- **100% WCAG Accessibility** — Zero axe violations, keyboard navigable, screen reader optimized.
+- **WCAG 2.1 AA Compliant Accessibility** — axe automated zero violation testing, full keyboard navigation and screen reader support.
 - **Full Internationalization (i18n)** — Dynamic language switching (English, 简体中文, Español, etc.).
 
 <div align="center">
@@ -225,8 +226,9 @@ npm run build
 
 ## License & Commercial Licensing
 
-This project is licensed under the **FormVault Source-Available & Non-Commercial License** with a **Commercial Licensing Option** — see the [LICENSE](LICENSE) file for complete details.
+This software is **Source-Available** under the **[PolyForm Noncommercial License 1.0.0](LICENSE)** with a separate **[Commercial License](COMMERCIAL-LICENSE.md)** option:
 
-- **Non-Commercial / Personal Self-Hosting**: Free for private, academic, and non-profit evaluation.
-- **Commercial Operations & Insurance Carriers**: Any commercial deployment, insurance mediation, corporate document intake, or enterprise operation strictly requires a paid, signed Commercial License from HKTSE s.r.o.
-- **Commercial Inquiries & Pricing**: Contact [licensing@hktse.eu.org](mailto:licensing@hktse.eu.org) or [insurance@hktse.eu.org](mailto:insurance@hktse.eu.org).
+- **Non-Commercial / Private Self-Hosting**: Free of charge for private, academic, educational, and non-profit evaluation.
+- **Commercial Operations & Insurance Carriers**: Any commercial deployment, SaaS hosting, insurance mediation, client document intake, or enterprise workflow strictly requires a paid, executed Commercial License from **HKTSE s.r.o.** (IČO: 10858032).
+- **Trademarks**: The FormVault name, logo, and visual branding are reserved under **[TRADEMARKS.md](TRADEMARKS.md)** and do not transfer with the source code license.
+- **Commercial Inquiries**: Contact [licensing@hktse.eu.org](mailto:licensing@hktse.eu.org) or [insurance@hktse.eu.org](mailto:insurance@hktse.eu.org).

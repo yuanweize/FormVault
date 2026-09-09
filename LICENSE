@@ -1,69 +1,50 @@
-FormVault Source-Available & Non-Commercial License Agreement
-with Commercial Licensing Option
+PolyForm Noncommercial License 1.0.0
 
 Copyright (c) 2024-2026 HKTSE s.r.o. & Yuan Weize. All rights reserved.
-Official Licensing & Commercial Inquiries: licensing@hktse.eu.org / insurance@hktse.eu.org
 
-================================================================================
-CRITICAL NOTICE FOR COMMERCIAL ENTITIES & INSURANCE UNDERWRITERS / BROKERS:
-================================================================================
-This software is source-available under a strict Non-Commercial License.
+<https://polyformproject.org/licenses/noncommercial/1.0.0>
 
-ANY COMMERCIAL USE, PRODUCTION DEPLOYMENT, INTERNAL BUSINESS OPERATION, OR 
-MONETIZATION BY ANY COMMERCIAL ENTITY, INCLUDING BUT NOT LIMITED TO:
-  - Insurance Companies / Underwriters (e.g. PVZP, Slavia, SV, Maxima, UNIQA, etc.)
-  - Insurance Intermediaries, Brokers, Independent Agents, MGAs
-  - Corporate Relocation, Visa Services, or Financial Technology Providers
-IS STRICTLY PROHIBITED WITHOUT A PAID, SIGNED COMMERCIAL LICENSE FROM HKTSE s.r.o.
+## Acceptance
 
-If you or your organization wish to utilize FormVault for commercial client intake,
-production insurance distribution, or corporate workflows, you MUST obtain a 
-Commercial License. Contact: licensing@hktse.eu.org
-================================================================================
+In order to receive this license, you must agree to its rules. The rules of this license are both obligations under that agreement and conditions to your license. You must not do anything with this software that triggers a rule that you cannot or will not follow.
 
-1. PERMITTED NON-COMMERCIAL USE
-Subject to the terms and conditions of this Agreement, the Licensor (HKTSE s.r.o. 
-and Yuan Weize) hereby grants you a personal, non-exclusive, non-transferable, 
-royalty-free worldwide license to:
-  (a) Inspect, test, and evaluate the source code for private, educational, or academic research;
-  (b) Run the software solely for personal, non-commercial self-hosting;
-  (c) Contribute improvements, bug fixes, and translations back to the upstream repository.
+## Copyright License
 
-2. STRICT COMMERCIAL RESTRICTIONS
-You may NOT use this software, whether in original or modified form, for any "Commercial Purpose".
-"Commercial Purpose" includes, without limitation:
-  (a) Use within or on behalf of any commercial enterprise, corporation, partnership, or brokerage;
-  (b) Performance of client-facing services, whether charged for directly or offered as an auxiliary service;
-  (c) Collection, intake, underwriting review, or processing of insurance applications for business revenue;
-  (d) Mediation, distribution, or policy binding on behalf of licensed insurance underwriters;
-  (e) Hosting the software as a paid or ad-supported Software-as-a-Service (SaaS), API, or cloud platform;
-  (f) Replicating or incorporating the proprietary workflows, encryption container architectures, 
-      or data structures into a competing commercial product.
+The licensor grants you a copyright license for the software to do everything you might do with the software that would otherwise infringe the licensor's copyright in it, for any noncommercial purpose.
 
-3. COMMERCIAL LICENSING OPTION
-Any commercial entity, insurance carrier, intermediary agency, or service provider seeking 
-production rights, multi-tenant deployment, white-label distribution, or commercial mediation 
-permissions must execute a separate, paid Commercial License Agreement with HKTSE s.r.o. 
-prior to any commercial usage or production deployment.
+## Notices
 
-4. INTELLECTUAL PROPERTY & ATTRIBUTION
-  (a) All copies, distributions, and substantial portions of the software must retain the complete 
-      copyright notices, licensing terms, and corporate attributions to HKTSE s.r.o. and Yuan Weize.
-  (b) Unauthorized commercial utilization constitutes willful intellectual property infringement, 
-      actionable under Czech Copyright Act (Act No. 121/2000 Coll.), the EU Enforcement Directive 
-      (2004/48/EC), and international treaties.
+You must ensure that everyone who gets a copy of any part of this software from you also gets a copy of these terms or the name and URL of this license, as well as the copyright notice submitted with the software.
 
-5. GOVERNING LAW & JURISDICTION
-This Agreement shall be governed by and construed in accordance with the substantive laws of the 
-Czech Republic, excluding its conflicts of law provisions. Any legal claim or dispute arising out 
-of unauthorized commercial exploitation shall be subject to the exclusive jurisdiction of the 
-competent courts of Prague, Czech Republic. The Licensor reserves all rights to seek immediate 
-injunctive relief, statutory copyright damages, and recovery of legal costs.
+## Noncommercial Purposes
 
-6. DISCLAIMER OF WARRANTIES
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
-PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
-FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR 
-OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-DEALINGS IN THE SOFTWARE.
+Any noncommercial purpose is any purpose that is not a commercial purpose.
+
+## Commercial Purposes
+
+A commercial purpose is any purpose that is not a noncommercial purpose, including:
+
+1. selling or providing services to third parties in exchange for payment or anything of value
+
+2. using the software in the performance of services for a fee
+
+3. using the software in business or commerce, including in or for an enterprise
+
+## Fair Use
+
+You may spend any amount of time learning about the software, but you may not use it for commercial purposes.
+
+## No Other Rights
+
+These terms do not imply or grant any rights other than the copyright license expressly granted. In particular, they do not grant any trademark, patent, or other intellectual property rights.
+
+## Commercial Licensing
+
+Commercial use is not granted under this public license. For commercial use permissions, enterprise deployment, or production insurance mediation, see COMMERCIAL-LICENSE.md or contact:
+HKTSE s.r.o. (IČO: 10858032)
+Email: licensing@hktse.eu.org / insurance@hktse.eu.org
+Website: https://hktse.eu.org/
+
+## No Warranty
+
+As far as the law allows, the software comes as is, without any warranty or condition, and the licensor will not be liable to you for any damages arising out of these terms or the use or inability to use the software.
