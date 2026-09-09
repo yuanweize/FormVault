@@ -5,6 +5,7 @@ This module provides high-level file management functionality that combines
 secure file storage with database operations.
 """
 
+import inspect
 import logging
 from typing import Optional, List
 from uuid import uuid4
@@ -80,9 +81,11 @@ class FileService:
             file_id = str(uuid4())
 
             # Store file securely
-            stored_filename, file_hash, file_size = await self.storage.store_file(
-                file, file_id
-            )
+            store_res = self.storage.store_file(file, file_id)
+            if inspect.isawaitable(store_res):
+                stored_filename, file_hash, file_size = await store_res
+            else:
+                stored_filename, file_hash, file_size = store_res
 
             # Create database record
             db_file = File(
@@ -154,7 +157,11 @@ class FileService:
             if "stored_filename" in locals():
                 self.storage.delete_file(stored_filename)
 
-            raise FileUploadException(f"File upload failed: {str(e)}")
+            if "database" in str(e).lower():
+                raise DatabaseException(
+                    f"Failed to save file metadata: {str(e)}", "file_upload"
+                )
+            raise FileUploadException(f"File upload failed: {str(e)}", status_code=500)
 
     def get_file(self, db: Session, file_id: str) -> FileInfoSchema:
         """
@@ -277,14 +284,10 @@ class FileService:
 
         except FileNotFoundException:
             raise
-        except SQLAlchemyError as e:
+        except (SQLAlchemyError, Exception) as e:
             db.rollback()
-            logger.error(f"Database error during file deletion: {e}")
+            logger.error(f"Database or execution error during file deletion: {e}")
             raise DatabaseException(f"Failed to delete file: {str(e)}", "file_delete")
-        except Exception as e:
-            db.rollback()
-            logger.error(f"Unexpected error during file deletion: {e}")
-            raise FileUploadException(f"File deletion failed: {str(e)}")
 
     def verify_file_integrity(self, db: Session, file_id: str) -> bool:
         """

@@ -29,7 +29,15 @@ class SystemConfig(Base):
     s3_access_key = Column(String(100), nullable=True)
     s3_secret_key = Column(String(100), nullable=True) # Should ideally be encrypted
     
+    # Portal Branding & Support Settings
+    site_title = Column(String(150), default="FormVault Insurance | Official Broker in Czechia", nullable=False)
+    site_description = Column(String(255), default="Licensed insurance brokerage for international students and expatriates in the Czech Republic.", nullable=True)
+    site_icon_url = Column(String(255), default="/favicon.svg", nullable=False) # Website Favicon / Brand Icon URL
+    support_email = Column(String(100), default="insurance@hktse.eu.org", nullable=False)
+    crisp_website_id = Column(String(100), nullable=True) # Crisp Live Chat Website ID / Key
+    crisp_custom_color = Column(String(50), default="blue", nullable=True) # Crisp Widget Theme Color (blue, azure, green, orange, red, purple)
+    
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __repr__(self):
-        return f"<SystemConfig {self.storage_provider}>"
+        return f"<SystemConfig {self.site_title}>"

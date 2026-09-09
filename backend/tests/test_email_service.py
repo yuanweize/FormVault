@@ -23,7 +23,14 @@ class TestEmailService:
     @pytest.fixture
     def email_service_instance(self):
         """Create EmailService instance for testing."""
-        return EmailService()
+        from app.core.config import Settings
+        svc = EmailService()
+        svc.settings = Settings(
+            SMTP_HOST="smtp.example.com",
+            SMTP_PORT=587,
+            FROM_EMAIL="noreply@formvault.com",
+        )
+        return svc
 
     @pytest.fixture
     def sample_application(self):
@@ -247,6 +254,7 @@ class TestEmailService:
         self, mock_smtp, email_service_instance
     ):
         """Test SMTP sending handles connection errors."""
+        email_service_instance.settings.SMTP_HOST = "smtp.example.com"
         mock_smtp.side_effect = smtplib.SMTPException("Connection failed")
 
         message = MIMEMultipart()

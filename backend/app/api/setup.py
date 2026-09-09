@@ -44,7 +44,7 @@ async def setup_page(request: Request, db: Session = Depends(get_db)):
              # But let's proceed to show setup page anyway if we can, or let it fail.
              pass
             
-        return templates.TemplateResponse("setup.html", {"request": request})
+        return templates.TemplateResponse(request=request, name="setup.html", context={})
     except Exception as e:
         logger.error(f"Error serving setup page: {e}", exc_info=True)
         return HTMLResponse(content=f"<h1>Setup Error</h1><p>Detailed Error: {str(e)}</p><p>Template Dir: {TEMPLATE_DIR}</p>", status_code=500)
@@ -63,15 +63,13 @@ async def setup_submit(
          return RedirectResponse(url="/admin/login", status_code=303)
 
     if password != confirm_password:
-        return templates.TemplateResponse("setup.html", {
-            "request": request, 
+        return templates.TemplateResponse(request=request, name="setup.html", context={
             "error": "Passwords do not match"
         })
 
     # Validate password length for bcrypt (max 72 bytes)
     if len(password.encode('utf-8')) > 72:
-        return templates.TemplateResponse("setup.html", {
-            "request": request,
+        return templates.TemplateResponse(request=request, name="setup.html", context={
             "error": "Password is too long (max 72 characters)"
         })
     
@@ -80,12 +78,16 @@ async def setup_submit(
         hashed_pw = pwd_context.hash(password)
     except Exception as e:
         logger.error(f"Password hashing error: {e}")
-        return templates.TemplateResponse("setup.html", {
-            "request": request,
+        return templates.TemplateResponse(request=request, name="setup.html", context={
             "error": "Error processing password. Please try a simpler one."
         })
     new_admin = AdminUser(username=username, password_hash=hashed_pw)
     db.add(new_admin)
     db.commit()
-    
-    return RedirectResponse(url="/admin/login", status_code=303)
+
+    # Automatically log the user into the admin session and navigate to dashboard
+    try:
+        request.session.update({"token": f"db-user-{new_admin.id}"})
+        return RedirectResponse(url="/admin/", status_code=303)
+    except Exception:
+        return RedirectResponse(url="/admin/login", status_code=303)

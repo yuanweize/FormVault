@@ -8,15 +8,20 @@ error handlers, and API routes for the insurance application portal.
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse, FileResponse, Response
+from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from starlette.exceptions import HTTPException as StarletteHTTPException
 import structlog
 import time
-from datetime import datetime
+import os
+from datetime import datetime, timezone
 from typing import Dict, Any
+from contextlib import asynccontextmanager
 
 from app.core.exceptions import FormVaultException
+from app.core import config
 from app.core.config import get_settings
 from app.api.v1.router import api_router
 from app.middleware.security import SecurityMiddleware
@@ -25,9 +30,21 @@ from app.services.error_tracking import track_error
 
 from starlette.middleware.sessions import SessionMiddleware
 from sqladmin import Admin
-from app.database import engine
+from app.database import engine, Base, SessionLocal
+import app.models  # Ensures all ORM models are registered with Base.metadata
 from app.admin.auth import authentication_backend
-from app.admin.views import ApplicationAdmin, FileAdmin, EmailExportAdmin, AuditLogAdmin, SystemConfigAdmin, AdminUserAdmin
+from app.admin.views import (
+    ApplicationAdmin,
+    FileAdmin,
+    EmailExportAdmin,
+    AuditLogAdmin,
+    SystemConfigAdmin,
+    AdminUserAdmin,
+    InsuranceCompanyAdmin,
+    InsurancePlanAdmin,
+    AgencyBannerAdmin,
+)
+from app.services.seed_service import seed_czech_broker_defaults
 
 # Configure structured logging
 logger = structlog.get_logger(__name__)
@@ -35,13 +52,62 @@ logger = structlog.get_logger(__name__)
 # Get application settings
 settings = get_settings()
 
+
+from sqlalchemy import inspect, text
+
+
+def auto_upgrade_schema(bind_engine):
+    """Safely migrate and add any missing columns to existing database tables."""
+    try:
+        inspector = inspect(bind_engine)
+        if "system_config" in inspector.get_table_names():
+            existing_cols = {c["name"] for c in inspector.get_columns("system_config")}
+            with bind_engine.connect() as conn:
+                if "site_title" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_title VARCHAR(150) DEFAULT 'FormVault Insurance | Official Broker in Czechia' NOT NULL"))
+                if "site_description" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_description VARCHAR(255) DEFAULT 'Licensed insurance brokerage for international students and expatriates in the Czech Republic.' NULL"))
+                if "site_icon_url" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN site_icon_url VARCHAR(255) DEFAULT '/favicon.svg' NOT NULL"))
+                if "support_email" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN support_email VARCHAR(100) DEFAULT 'insurance@hktse.eu.org' NOT NULL"))
+                if "crisp_website_id" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_website_id VARCHAR(100) NULL"))
+                if "crisp_custom_color" not in existing_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN crisp_custom_color VARCHAR(50) DEFAULT 'blue' NULL"))
+                conn.commit()
+    except Exception as exc:
+        logger.warning(f"Schema auto-upgrade notice: {exc}")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Initialize application lifecycle."""
+    logger.info("FormVault API starting up")
+    try:
+        Base.metadata.create_all(bind=engine)
+        auto_upgrade_schema(engine)
+        logger.info("Database tables initialized successfully")
+        # Initialize default seed templates if database is fresh
+        try:
+            with SessionLocal() as db:
+                seed_czech_broker_defaults(db)
+        except Exception as seed_err:
+            logger.warning(f"Default seed population skipped: {seed_err}")
+    except Exception as e:
+        logger.warning(f"Database auto-creation skipped or deferred: {e}")
+    yield
+    logger.info("FormVault API shutting down")
+
+
 # Create FastAPI application instance
 app = FastAPI(
     title="FormVault Insurance Portal API",
     description="Secure API for insurance application submissions and document management",
     version="1.0.0",
-    docs_url="/docs" if settings.DEBUG else None,
-    redoc_url="/redoc" if settings.DEBUG else None,
+    docs_url="/docs" if (settings.DEBUG or settings.ENABLE_DOCS) else None,
+    redoc_url="/redoc" if (settings.DEBUG or settings.ENABLE_DOCS) else None,
+    lifespan=lifespan,
 )
 
 # Admin Interface Initialization
@@ -49,14 +115,19 @@ admin = Admin(
     app, 
     engine, 
     authentication_backend=authentication_backend,
-    title="FormVault Admin"
+    title="FormVault Broker Admin",
+    logo_url="/favicon.svg",
+    favicon_url="/favicon.svg",
 )
 admin.add_view(ApplicationAdmin)
 admin.add_view(FileAdmin)
 admin.add_view(EmailExportAdmin)
-admin.add_view(AuditLogAdmin)
+admin.add_view(InsuranceCompanyAdmin)
+admin.add_view(InsurancePlanAdmin)
+admin.add_view(AgencyBannerAdmin)
 admin.add_view(SystemConfigAdmin)
 admin.add_view(AdminUserAdmin)
+admin.add_view(AuditLogAdmin)
 
 # Session Middleware (Required for Admin Auth)
 app.add_middleware(SessionMiddleware, secret_key=settings.ADMIN_SECRET_KEY)
@@ -82,6 +153,31 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+
+# First-run setup detection: automatically redirect to /setup if no admin exists yet
+@app.middleware("http")
+async def check_first_run_setup(request: Request, call_next):
+    """
+    If no admin user exists in the database yet (first-time deployment),
+    automatically redirect any request to /admin (including /admin/login) to /setup.
+    """
+    path = request.url.path
+    if (path == "/admin" or path.startswith("/admin/")) and not path.startswith("/admin/statics"):
+        from app.database import SessionLocal
+        from app.models.system import AdminUser
+
+        db = SessionLocal()
+        try:
+            admin_exists = db.query(AdminUser).first() is not None
+            if not admin_exists:
+                return RedirectResponse(url="/setup", status_code=303)
+        except Exception:
+            pass
+        finally:
+            db.close()
+
+    return await call_next(request)
 
 
 # Request logging middleware
@@ -147,12 +243,15 @@ async def formvault_exception_handler(request: Request, exc: FormVaultException)
     return JSONResponse(
         status_code=exc.status_code,
         content={
+            "success": False,
+            "message": exc.message,
+            "detail": exc.message,
             "error": {
                 "message": exc.message,
                 "code": exc.error_code,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "path": str(request.url.path),
-            }
+            },
         },
     )
 
@@ -160,22 +259,26 @@ async def formvault_exception_handler(request: Request, exc: FormVaultException)
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     """Handle Pydantic validation errors."""
+    encoded_errors = jsonable_encoder(exc.errors())
     logger.warning(
         "Validation error occurred",
-        errors=exc.errors(),
+        errors=encoded_errors,
         url=str(request.url),
     )
 
     return JSONResponse(
         status_code=422,
         content={
+            "success": False,
+            "message": "Validation failed",
+            "detail": encoded_errors,
             "error": {
                 "message": "Validation failed",
                 "code": "VALIDATION_ERROR",
-                "details": exc.errors(),
-                "timestamp": datetime.utcnow().isoformat(),
+                "details": encoded_errors,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "path": str(request.url.path),
-            }
+            },
         },
     )
 
@@ -193,12 +296,15 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     return JSONResponse(
         status_code=exc.status_code,
         content={
+            "success": False,
+            "message": exc.detail,
+            "detail": exc.detail,
             "error": {
                 "message": exc.detail,
                 "code": "HTTP_ERROR",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "path": str(request.url.path),
-            }
+            },
         },
     )
 
@@ -221,7 +327,7 @@ async def general_exception_handler(request: Request, exc: Exception):
         context={
             "url": str(request.url),
             "method": request.method,
-            "exception_type": type(exc).__name__,
+            "error_type": type(exc).__name__,
         },
         user_ip=request.client.host if request.client else None,
     )
@@ -229,12 +335,15 @@ async def general_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={
+            "success": False,
+            "message": "Internal server error",
+            "detail": "Internal server error",
             "error": {
                 "message": "Internal server error",
                 "code": "INTERNAL_ERROR",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "path": str(request.url.path),
-            }
+            },
         },
     )
 
@@ -244,11 +353,12 @@ async def general_exception_handler(request: Request, exc: Exception):
 @app.head("/")
 async def root() -> Dict[str, Any]:
     """Root endpoint - returns API information."""
+    current_settings = get_settings()
     return {
         "name": "FormVault Insurance Portal API",
         "version": "1.0.0",
         "status": "running",
-        "docs": "/docs" if settings.DEBUG else None,
+        "docs": "/docs" if current_settings.DEBUG else None,
         "health": "/health",
         "api": "/api/v1",
     }
@@ -260,9 +370,60 @@ async def health_check() -> Dict[str, Any]:
     """Health check endpoint for monitoring."""
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "1.0.0",
     }
+
+
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+@app.head("/favicon.ico", include_in_schema=False)
+async def favicon_ico():
+    ico_path = os.path.join(static_dir, "favicon.ico")
+    if os.path.exists(ico_path):
+        return FileResponse(ico_path, media_type="image/x-icon")
+    return Response(status_code=404)
+
+
+@app.get("/favicon.svg", include_in_schema=False)
+@app.head("/favicon.svg", include_in_schema=False)
+async def favicon_svg():
+    svg_path = os.path.join(static_dir, "favicon.svg")
+    if os.path.exists(svg_path):
+        return FileResponse(svg_path, media_type="image/svg+xml")
+    return Response(status_code=404)
+
+
+@app.get("/docs", include_in_schema=False)
+async def custom_docs(request: Request):
+    """Serve Swagger UI docs dynamically based on current debug setting."""
+    current_settings = config.get_settings()
+    if current_settings.DEBUG:
+        from fastapi.openapi.docs import get_swagger_ui_html
+        return get_swagger_ui_html(
+            openapi_url=app.openapi_url or "/openapi.json",
+            title=app.title + " - Swagger UI",
+            swagger_favicon_url="/favicon.svg",
+        )
+    raise HTTPException(status_code=404, detail="Not Found")
+
+
+@app.get("/redoc", include_in_schema=False)
+async def custom_redoc(request: Request):
+    """Serve ReDoc docs dynamically based on current debug setting."""
+    current_settings = config.get_settings()
+    if current_settings.DEBUG:
+        from fastapi.openapi.docs import get_redoc_html
+        return get_redoc_html(
+            openapi_url=app.openapi_url or "/openapi.json",
+            title=app.title + " - ReDoc",
+            redoc_favicon_url="/favicon.svg",
+        )
+    raise HTTPException(status_code=404, detail="Not Found")
 
 
 # Include API routes
@@ -271,19 +432,6 @@ app.include_router(api_router, prefix="/api/v1")
 # Include Setup Router (Mounted at root)
 from app.api.setup import router as setup_router
 app.include_router(setup_router)
-
-# Application startup event
-@app.on_event("startup")
-async def startup_event():
-    """Initialize application on startup."""
-    logger.info("FormVault API starting up")
-
-
-# Application shutdown event
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Clean up resources on shutdown."""
-    logger.info("FormVault API shutting down")
 
 
 if __name__ == "__main__":

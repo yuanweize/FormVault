@@ -7,5 +7,16 @@ from .file import File
 from .email_export import EmailExport
 from .audit_log import AuditLog
 from .system import AdminUser, SystemConfig
+from .partner import InsuranceCompany, InsurancePlan, AgencyBanner
 
-__all__ = ["Application", "File", "EmailExport", "AuditLog", "AdminUser", "SystemConfig"]
+__all__ = [
+    "Application",
+    "File",
+    "EmailExport",
+    "AuditLog",
+    "AdminUser",
+    "SystemConfig",
+    "InsuranceCompany",
+    "InsurancePlan",
+    "AgencyBanner",
+]

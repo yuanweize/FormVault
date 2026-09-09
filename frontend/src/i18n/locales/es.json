@@ -227,7 +227,7 @@
     },
     "fileUpload": {
       "studentId": {
-        "label": "Carnet de Estudiante",
+        "label": "Identificación de Estudiante",
         "description": "Foto clara del carnet"
       },
       "passport": {
@@ -239,7 +239,7 @@
   "fileUpload": {
     "title": "Carga de Archivos",
     "description": "Cargue sus documentos.",
-    "studentId": "Carnet de Estudiante",
+    "studentId": "Identificación de Estudiante",
     "passport": "Pasaporte",
     "dragAndDrop": "Arrastre archivos aquí",
     "orClickToSelect": "o clic para seleccionar",
@@ -247,7 +247,7 @@
     "remove": "Eliminar",
     "requirements": "JPEG, PNG, PDF. Max 5MB.",
     "errors": {
-      "fileTooLarge": "Archivo muy grande.",
+      "fileTooLarge": "El archivo es demasiado grande. El tamaño máximo es {{maxSize}}MB",
       "invalidFormat": "Formato inválido.",
       "uploadFailed": "Error.",
       "noFilesUploaded": "Sin archivos."

@@ -25,7 +25,7 @@ class File(Base):
 
     # Foreign key to application
     application_id = Column(
-        VARCHAR(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=False
+        VARCHAR(36), ForeignKey("applications.id", ondelete="CASCADE"), nullable=True
     )
 
     # File type classification

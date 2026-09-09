@@ -5,17 +5,19 @@ This module handles all application configuration using Pydantic settings
 with environment variable support.
 """
 
-from pydantic import BaseModel, field_validator
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List, Optional
 import os
 from functools import lru_cache
 
 
-class Settings(BaseModel):
+class Settings(BaseSettings):
     """Application settings with environment variable support."""
 
     # Application settings
     DEBUG: bool = False
+    ENABLE_DOCS: bool = True
     SECRET_KEY: str = "your-secret-key-change-in-production"
 
     # Database settings
@@ -100,7 +102,7 @@ class Settings(BaseModel):
             os.makedirs(v, exist_ok=True)
         return v
 
-    model_config = {"env_file": ".env", "case_sensitive": True}
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
 
 
 @lru_cache()

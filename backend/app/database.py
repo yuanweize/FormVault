@@ -6,8 +6,7 @@ import os
 from typing import Generator
 
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase
 from sqlalchemy.pool import QueuePool
 
 # Database configuration from environment variables
@@ -18,21 +17,31 @@ DATABASE_POOL_SIZE = int(os.getenv("DATABASE_POOL_SIZE", "10"))
 DATABASE_MAX_OVERFLOW = int(os.getenv("DATABASE_MAX_OVERFLOW", "20"))
 
 # Create SQLAlchemy engine with connection pooling
-engine = create_engine(
-    DATABASE_URL,
-    poolclass=QueuePool,
-    pool_size=DATABASE_POOL_SIZE,
-    max_overflow=DATABASE_MAX_OVERFLOW,
-    pool_pre_ping=True,  # Verify connections before use
-    pool_recycle=3600,  # Recycle connections every hour
-    echo=os.getenv("DEBUG", "false").lower() == "true",  # Log SQL queries in debug mode
-)
+connect_args = {}
+engine_kwargs = {
+    "pool_pre_ping": True,
+    "echo": os.getenv("DEBUG", "false").lower() == "true",
+}
+
+if DATABASE_URL.startswith("sqlite"):
+    from sqlalchemy.pool import StaticPool
+    connect_args["check_same_thread"] = False
+    engine_kwargs["poolclass"] = StaticPool
+    engine_kwargs["connect_args"] = connect_args
+else:
+    engine_kwargs["poolclass"] = QueuePool
+    engine_kwargs["pool_size"] = DATABASE_POOL_SIZE
+    engine_kwargs["max_overflow"] = DATABASE_MAX_OVERFLOW
+    engine_kwargs["pool_recycle"] = 3600
+
+engine = create_engine(DATABASE_URL, **engine_kwargs)
 
 # Create SessionLocal class for database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Create declarative base for models
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
 # Metadata for migrations
 metadata = MetaData()

@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 import structlog
 
 from ..models.audit_log import AuditLog
+from ..database import get_db
 
 logger = structlog.get_logger(__name__)
 
@@ -59,9 +60,14 @@ class PerformanceMonitor:
         total_time = sum(stats["total_time"] for stats in self.query_stats.values())
         total_count = sum(stats["count"] for stats in self.query_stats.values())
 
-        return total_time / total_count if total_count > 0 else 0.0
+        return round(total_time / total_count, 4) if total_count > 0 else 0.0
 
-    def record_query(self, query: str, duration: float, params: Optional[Dict] = None):
+    def record_query(
+        self,
+        query: str,
+        duration: float,
+        params: Optional[Any] = None,
+    ):
         """Record a database query execution."""
         if not self.enabled:
             return
@@ -81,7 +87,7 @@ class PerformanceMonitor:
 
         stats = self.query_stats[normalized_query]
         stats["count"] += 1
-        stats["total_time"] += duration
+        stats["total_time"] = round(stats["total_time"] + duration, 4)
         stats["min_time"] = min(stats["min_time"], duration)
         stats["max_time"] = max(stats["max_time"], duration)
 
@@ -106,7 +112,7 @@ class PerformanceMonitor:
         # Replace parameter placeholders with generic markers
         normalized = re.sub(r"%\([^)]+\)s", "?", normalized)  # Named parameters
         normalized = re.sub(r"\?", "?", normalized)  # Positional parameters
-        normalized = re.sub(r"'[^']*'", "'?'", normalized)  # String literals
+        normalized = re.sub(r"'[^']*'", "?", normalized)  # String literals
         normalized = re.sub(r"\b\d+\b", "?", normalized)  # Numbers
 
         return normalized

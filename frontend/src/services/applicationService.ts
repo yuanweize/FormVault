@@ -186,6 +186,95 @@ export class ApplicationService {
     const response = await apiClient.get(`/applications/${applicationId}/export-history`);
     return response.data;
   }
+
+  /**
+   * Track application status with dual-factor verification
+   */
+  async trackApplication(referenceNumber: string, email: string): Promise<TrackApplicationResponse> {
+    const response = await apiClient.post<TrackApplicationResponse>('/applications/track', {
+      reference_number: referenceNumber,
+      email,
+    });
+    return response.data;
+  }
+
+  /**
+   * Get broker portal showcase data (partners, plans, banners)
+   */
+  async getPortalShowcase(): Promise<PortalShowcaseResponse> {
+    const response = await apiClient.get<PortalShowcaseResponse>('/portal/showcase');
+    return response.data;
+  }
+}
+
+export interface ApplicationTimelineStep {
+  key: string;
+  label: string;
+  description: string;
+  completed: boolean;
+  current: boolean;
+  timestamp?: string;
+}
+
+export interface TrackApplicationResponse {
+  success: boolean;
+  reference_number: string;
+  status: string;
+  status_label: string;
+  insurance_type: string;
+  masked_name: string;
+  masked_email: string;
+  created_at: string;
+  submitted_at?: string;
+  updated_at?: string;
+  timeline: ApplicationTimelineStep[];
+  message: string;
+}
+
+export interface InsuranceCompanyShowcase {
+  id: number;
+  name: string;
+  code: string;
+  logo_url?: string;
+  rating: string;
+  website?: string;
+  description?: string;
+  display_order: number;
+}
+
+export interface InsurancePlanShowcase {
+  id: number;
+  company_id: number;
+  company_name: string;
+  company_code: string;
+  name: string;
+  category: string;
+  price_amount: number;
+  currency: string;
+  billing_period: string;
+  coverage_summary: string;
+  badge?: string;
+  target_audience?: string;
+  features?: string;
+  is_featured: boolean;
+  display_order: number;
+}
+
+export interface AgencyBannerShowcase {
+  id: number;
+  title: string;
+  subtitle?: string;
+  tag: string;
+  link_url?: string;
+  button_text: string;
+  display_order: number;
+}
+
+export interface PortalShowcaseResponse {
+  success: boolean;
+  banners: AgencyBannerShowcase[];
+  companies: InsuranceCompanyShowcase[];
+  plans: InsurancePlanShowcase[];
 }
 
 // Create and export a singleton instance

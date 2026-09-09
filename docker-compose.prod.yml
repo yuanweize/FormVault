@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MySQL Database
   database:
@@ -49,7 +47,6 @@ services:
     volumes:
       - uploads_data:/app/uploads
       - logs_data:/app/logs
-      - ssl_certs:/app/certs:ro
     ports:
       - "8000:8000"
     networks:
@@ -73,9 +70,6 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - ssl_certs:/etc/nginx/certs:ro
     networks:
       - formvault-network
     depends_on:
@@ -104,24 +98,6 @@ services:
       timeout: 10s
       retries: 3
 
-  # Nginx Load Balancer (for multiple backend instances)
-  nginx-lb:
-    image: nginx:alpine
-    container_name: formvault-lb-prod
-    restart: unless-stopped
-    volumes:
-      - ./nginx/nginx-lb.conf:/etc/nginx/nginx.conf:ro
-      - ssl_certs:/etc/nginx/certs:ro
-    ports:
-      - "443:443"
-    networks:
-      - formvault-network
-    depends_on:
-      - frontend
-      - backend
-    profiles:
-      - load-balancer
-
 volumes:
   db_data:
     driver: local
@@ -130,8 +106,6 @@ volumes:
   logs_data:
     driver: local
   redis_data:
-    driver: local
-  ssl_certs:
     driver: local
 
 networks:

@@ -50,18 +50,34 @@ def patch_db_objects(engine):
         yield
 
 
+@pytest.fixture(scope="function", autouse=True)
+def setup_database_tables(engine):
+    """
+    Autouse fixture to create all database tables before every test and drop them after.
+    Guarantees isolation and ensures endpoints that create their own sessions have tables ready.
+    """
+    import app.models  # noqa: F401 - Register all models with Base.metadata
+    from app.database import Base
+    from app.middleware.security import rate_limit_store, SecurityMiddleware
+    from app.utils.performance_monitor import reset_performance_stats
+
+    rate_limit_store.clear()
+    SecurityMiddleware._override_rate_limit = None
+
+    Base.metadata.create_all(bind=engine)
+    reset_performance_stats()
+    yield
+    Base.metadata.drop_all(bind=engine)
+    rate_limit_store.clear()
+    SecurityMiddleware._override_rate_limit = None
+    reset_performance_stats()
+
+
 @pytest.fixture(scope="function")
 def db(engine) -> Generator[Session, None, None]:
     """
     Create a clean database session for each test.
-    Creates tables if they don't exist, and drops them after test to ensure isolation.
     """
-    from app.database import Base
-
-    # Create tables
-    Base.metadata.create_all(bind=engine)
-
-    # Use the session factory that we patched (or create a new one bound to engine)
     TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = TestSessionLocal()
 
@@ -69,12 +85,6 @@ def db(engine) -> Generator[Session, None, None]:
         yield session
     finally:
         session.close()
-        # Clean up tables after each test to ensure fresh state
-        # In a real CI with massive tests, we might use transaction rollback instead,
-        # but for now this ensures correctness.
-        from app.database import Base
-
-        Base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture(scope="function")

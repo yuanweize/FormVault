@@ -2,11 +2,11 @@
 Admin dashboard endpoints for monitoring and statistics.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import func, and_, or_
+from sqlalchemy import func, and_, or_, text
 import structlog
 
 from ....database import get_db
@@ -41,7 +41,7 @@ async def get_dashboard_stats(
         Dictionary containing various statistics and metrics
     """
     try:
-        end_date = datetime.utcnow()
+        end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=days)
 
         # Application statistics
@@ -78,7 +78,7 @@ async def get_dashboard_stats(
             "performance": performance_stats,
             "errors": error_stats,
             "health": health_stats,
-            "generated_at": datetime.utcnow().isoformat(),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
         }
 
         logger.info("Dashboard statistics generated", period_days=days)
@@ -97,7 +97,7 @@ async def get_application_statistics(
 ) -> Dict[str, Any]:
     """Get detailed application statistics."""
     try:
-        end_date = datetime.utcnow()
+        end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=days)
 
         stats = await _get_application_stats(db, start_date, end_date)
@@ -238,6 +238,32 @@ async def get_audit_logs(
         raise HTTPException(status_code=500, detail="Failed to get audit logs")
 
 
+@router.get("/audit-logs", response_model=List[Dict[str, Any]])
+async def get_audit_logs_flat(
+    application_id: Optional[str] = Query(None),
+    limit: int = Query(100, ge=1, le=1000),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db),
+) -> List[Dict[str, Any]]:
+    """Compatibility endpoint returning flat list of audit logs."""
+    query = db.query(AuditLog)
+    if application_id:
+        query = query.filter(AuditLog.application_id == application_id)
+    logs = query.order_by(AuditLog.created_at.desc()).offset(offset).limit(limit).all()
+    return [
+        {
+            "id": log.id,
+            "action": log.action,
+            "application_id": log.application_id,
+            "user_ip": log.user_ip,
+            "user_agent": log.user_agent,
+            "details": log.details,
+            "created_at": log.created_at.isoformat() if log.created_at else None,
+        }
+        for log in logs
+    ]
+
+
 async def _get_application_stats(
     db: Session, start_date: datetime, end_date: datetime
 ) -> Dict[str, Any]:
@@ -275,10 +301,10 @@ async def _get_application_stats(
     )
 
     return {
-        "total": total_apps,
-        "by_status": {status: count for status, count in status_counts},
-        "by_insurance_type": {ins_type: count for ins_type, count in type_counts},
-        "by_language": {lang: count for lang, count in language_counts},
+        "total": total_apps if isinstance(total_apps, int) else 0,
+        "by_status": {status: count for status, count in status_counts} if isinstance(status_counts, (list, tuple)) else {},
+        "by_insurance_type": {ins_type: count for ins_type, count in type_counts} if isinstance(type_counts, (list, tuple)) else {},
+        "by_language": {lang: count for lang, count in language_counts} if isinstance(language_counts, (list, tuple)) else {},
     }
 
 
@@ -316,11 +342,17 @@ async def _get_file_stats(
         or 0
     )
 
+    def _safe_int(val, default=0):
+        try:
+            return int(val)
+        except (TypeError, ValueError):
+            return default
+
     return {
-        "total_files": total_files,
-        "by_type": {file_type: count for file_type, count in type_counts},
-        "total_size_bytes": int(total_size),
-        "average_size_bytes": int(avg_size),
+        "total_files": _safe_int(total_files),
+        "by_type": {file_type: count for file_type, count in type_counts} if isinstance(type_counts, (list, tuple)) else {},
+        "total_size_bytes": _safe_int(total_size),
+        "average_size_bytes": _safe_int(avg_size),
     }
 
 
@@ -356,13 +388,15 @@ async def _get_email_stats(
         .count()
     )
 
+    t_exports = total_exports if isinstance(total_exports, int) else 0
+    s_exports = successful_exports if isinstance(successful_exports, int) else 0
     success_rate = (
-        (successful_exports / total_exports * 100) if total_exports > 0 else 0
+        (s_exports / t_exports * 100) if t_exports > 0 else 0
     )
 
     return {
-        "total_exports": total_exports,
-        "by_status": {status: count for status, count in status_counts},
+        "total_exports": t_exports,
+        "by_status": {status: count for status, count in status_counts} if isinstance(status_counts, (list, tuple)) else {},
         "success_rate": round(success_rate, 2),
     }
 
@@ -401,9 +435,9 @@ async def _get_activity_stats(
     )
 
     return {
-        "total_activities": total_activities,
-        "by_action": {action: count for action, count in action_counts},
-        "unique_ip_addresses": unique_ips,
+        "total_activities": total_activities if isinstance(total_activities, int) else 0,
+        "by_action": {action: count for action, count in action_counts} if isinstance(action_counts, (list, tuple)) else {},
+        "unique_ip_addresses": unique_ips if isinstance(unique_ips, int) else 0,
     }
 
 
@@ -423,9 +457,16 @@ async def _get_daily_application_stats(
         .all()
     )
 
-    return [
-        {"date": date.isoformat(), "applications": count} for date, count in daily_stats
-    ]
+    results = []
+    if isinstance(daily_stats, (list, tuple)):
+        for item in daily_stats:
+            try:
+                date_val, count = item
+                d_str = date_val.isoformat() if hasattr(date_val, "isoformat") else str(date_val)
+                results.append({"date": d_str, "applications": int(count) if isinstance(count, (int, float)) else 0})
+            except (ValueError, TypeError):
+                continue
+    return results
 
 
 async def _get_health_stats(db: Session) -> Dict[str, Any]:
@@ -433,7 +474,7 @@ async def _get_health_stats(db: Session) -> Dict[str, Any]:
 
     try:
         # Database connectivity test
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         db_healthy = True
         db_error = None
     except Exception as e:
@@ -441,7 +482,7 @@ async def _get_health_stats(db: Session) -> Dict[str, Any]:
         db_error = str(e)
 
     # Recent error rate (last hour)
-    one_hour_ago = datetime.utcnow() - timedelta(hours=1)
+    one_hour_ago = datetime.now(timezone.utc) - timedelta(hours=1)
     recent_errors = (
         db.query(AuditLog)
         .filter(
@@ -454,5 +495,5 @@ async def _get_health_stats(db: Session) -> Dict[str, Any]:
         "database": {"healthy": db_healthy, "error": db_error},
         "recent_errors": recent_errors,
         "uptime": "Available",  # Could be enhanced with actual uptime tracking
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }

@@ -297,11 +297,11 @@ class TestApplicationCreation:
         # Test valid phone numbers
         valid_phones = ["+1234567890", "123-456-7890", "(123) 456-7890", None]
 
-        for phone in valid_phones:
+        for i, phone in enumerate(valid_phones):
             sample_application_data["personal_info"]["phone"] = phone
             sample_application_data["personal_info"][
                 "email"
-            ] = f"test{phone or 'none'}@example.com"
+            ] = f"test_valid_phone_{i}@example.com"
 
             response = client.post(
                 "/api/v1/applications/", json=sample_application_data
@@ -311,11 +311,11 @@ class TestApplicationCreation:
         # Test invalid phone numbers
         invalid_phones = ["123", "abc", "123-abc-7890"]
 
-        for phone in invalid_phones:
+        for i, phone in enumerate(invalid_phones):
             sample_application_data["personal_info"]["phone"] = phone
             sample_application_data["personal_info"][
                 "email"
-            ] = f"invalid{phone}@example.com"
+            ] = f"invalid_phone_{i}@example.com"
 
             response = client.post(
                 "/api/v1/applications/", json=sample_application_data

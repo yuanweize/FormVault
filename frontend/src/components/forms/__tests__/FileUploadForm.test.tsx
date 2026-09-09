@@ -183,7 +183,7 @@ describe('FileUploadForm Component', () => {
       await waitFor(() => {
         expect(mockOnSubmit).toHaveBeenCalledWith({
           studentId: studentIdFile,
-          passport: undefined,
+          passport: passportFile,
         });
       });
     });

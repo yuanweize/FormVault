@@ -47,11 +47,16 @@ class ValidationException(FormVaultException):
 class FileUploadException(FormVaultException):
     """Exception for file upload related errors."""
 
-    def __init__(self, message: str, details: Optional[Dict[str, Any]] = None):
+    def __init__(
+        self,
+        message: str,
+        details: Optional[Dict[str, Any]] = None,
+        status_code: int = 400,
+    ):
         super().__init__(
             message=message,
             error_code="FILE_UPLOAD_ERROR",
-            status_code=400,
+            status_code=status_code,
             details=details or {},
         )
 
@@ -63,6 +68,7 @@ class FileSizeException(FileUploadException):
         super().__init__(
             message=f"File size {actual_size} bytes exceeds maximum allowed size of {max_size} bytes",
             details={"max_size": max_size, "actual_size": actual_size},
+            status_code=413,
         )
 
 

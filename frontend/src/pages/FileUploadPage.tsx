@@ -10,6 +10,7 @@ import { Box, Container, Paper } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FileUploadForm } from '../components/forms/FileUploadForm';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
+import { SecurityAssuranceRail } from '../components/common/SecurityAssuranceRail';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { useFileUpload } from '../hooks/useFiles';
 import { FileType, UploadedFile } from '../types';
@@ -60,6 +61,9 @@ export function FileUploadPage() {
   return (
     <Container maxWidth="md">
       <Box sx={{ py: 4 }}>
+        {/* Security Trust Assurance Rail */}
+        <SecurityAssuranceRail />
+
         {/* Progress Indicator */}
         <WorkflowProgressIndicator sx={{ mb: 4 }} />
 

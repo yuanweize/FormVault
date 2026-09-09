@@ -5,7 +5,7 @@ This module provides REST API endpoints for creating, updating,
 retrieving, and submitting insurance applications.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Query, Request
+from fastapi import APIRouter, HTTPException, Depends, Query, Request, Response, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from typing import List, Optional
@@ -13,12 +13,13 @@ from uuid import uuid4
 import structlog
 
 from app.database import get_db
+import app.models.application as app_module
 from app.models.application import Application
 from app.models.file import File
 from app.models.email_export import EmailExport
 from app.utils.db_helpers import create_audit_log, handle_integrity_error
 from app.services.email_service import email_service
-from datetime import datetime
+from datetime import datetime, timezone
 from app.schemas.application import (
     ApplicationCreateSchema,
     ApplicationUpdateSchema,
@@ -26,6 +27,9 @@ from app.schemas.application import (
     ApplicationListResponseSchema,
     ApplicationSubmitSchema,
     ApplicationSubmitResponseSchema,
+    ApplicationTrackRequestSchema,
+    ApplicationTrackResponseSchema,
+    ApplicationTimelineStepSchema,
     FileInfoSchema,
     PersonalInfoSchema,
     AddressSchema,
@@ -42,10 +46,124 @@ from app.core.exceptions import (
     ValidationException,
     DatabaseException,
     EmailServiceException,
+    FormVaultException,
 )
 
 logger = structlog.get_logger(__name__)
 router = APIRouter()
+
+
+def _mask_name(first_name: Optional[str], last_name: Optional[str]) -> str:
+    """Safely mask personal name for public queries."""
+    f = (first_name or "").strip()
+    l = (last_name or "").strip()
+
+    def mask_part(p: str) -> str:
+        if not p:
+            return ""
+        if len(p) <= 2:
+            return p[0] + "*"
+        return p[0] + "***" + p[-1]
+
+    return f"{mask_part(f)} {mask_part(l)}".strip()
+
+
+def _mask_email(email: Optional[str]) -> str:
+    """Safely mask email address for public queries."""
+    if not email or "@" not in email:
+        return "***"
+    user, domain = email.strip().split("@", 1)
+    if len(user) <= 2:
+        masked_user = user[0] + "*"
+    else:
+        masked_user = user[0] + "***" + user[-1]
+    return f"{masked_user}@{domain}"
+
+
+@router.post("/track", response_model=ApplicationTrackResponseSchema)
+async def track_application_status(
+    track_data: ApplicationTrackRequestSchema,
+    db: Session = Depends(get_db),
+) -> ApplicationTrackResponseSchema:
+    """
+    Public dual-factor status tracking for applicants.
+    Requires both valid reference number and matching applicant email.
+    Returns masked details and a stage progression timeline.
+    """
+    ref = track_data.reference_number.strip()
+    email = track_data.email.strip().lower()
+
+    application = (
+        db.query(Application)
+        .filter(Application.reference_number == ref)
+        .first()
+    )
+
+    if not application or (application.email or "").strip().lower() != email:
+        raise HTTPException(
+            status_code=404,
+            detail="Application not found or verification credentials mismatch",
+        )
+
+    status_order = {"draft": 1, "submitted": 2, "exported": 3, "processed": 4}
+    curr_idx = status_order.get(application.status, 1)
+
+    timeline = [
+        ApplicationTimelineStepSchema(
+            key="draft",
+            label="Application Initiated",
+            description="Initial policy details and applicant identity provided.",
+            completed=curr_idx >= 1,
+            current=curr_idx == 1,
+            timestamp=application.created_at,
+        ),
+        ApplicationTimelineStepSchema(
+            key="submitted",
+            label="Received by Broker",
+            description="Application securely transferred to insurance specialist review queue.",
+            completed=curr_idx >= 2,
+            current=curr_idx == 2,
+            timestamp=application.updated_at if curr_idx >= 2 else None,
+        ),
+        ApplicationTimelineStepSchema(
+            key="exported",
+            label="Underwriting & Verification",
+            description="Documents dispatched to carrier underwriting department.",
+            completed=curr_idx >= 3,
+            current=curr_idx == 3,
+            timestamp=application.updated_at if curr_idx >= 3 else None,
+        ),
+        ApplicationTimelineStepSchema(
+            key="processed",
+            label="Certificate & Policy Issued",
+            description="Official insurance policy active and certified for regulatory authorities.",
+            completed=curr_idx >= 4,
+            current=curr_idx == 4,
+            timestamp=application.updated_at if curr_idx >= 4 else None,
+        ),
+    ]
+
+    status_labels = {
+        "draft": "Draft in Progress",
+        "submitted": "Submitted & In Review",
+        "exported": "Underwriting Processing",
+        "processed": "Approved & Policy Issued",
+    }
+
+    return ApplicationTrackResponseSchema(
+        success=True,
+        reference_number=application.reference_number,
+        status=application.status,
+        status_label=status_labels.get(application.status, application.status.capitalize()),
+        insurance_type=(application.insurance_type or "health").capitalize(),
+        masked_name=_mask_name(application.first_name, application.last_name),
+        masked_email=_mask_email(application.email),
+        created_at=application.created_at,
+        submitted_at=application.updated_at if application.status != "draft" else None,
+        updated_at=application.updated_at,
+        timeline=timeline,
+        message="Application status verified successfully",
+    )
 
 
 @router.post("/", response_model=ApplicationResponseSchema, status_code=201)
@@ -69,7 +187,7 @@ async def create_application(
     """
     try:
         # Create new application instance
-        application = Application(
+        application = app_module.Application(
             id=str(uuid4()),
             first_name=application_data.personal_info.first_name,
             last_name=application_data.personal_info.last_name,
@@ -181,6 +299,9 @@ async def create_application(
             message="Application created successfully",
         )
 
+    except (ValidationException, FormVaultException, HTTPException):
+        db.rollback()
+        raise
     except IntegrityError as e:
         db.rollback()
         error_msg = handle_integrity_error(e)
@@ -530,6 +651,16 @@ async def submit_application(
     db.commit()
     db.refresh(application)
 
+    # Dispatch customer confirmation email with tracking reference
+    try:
+        await email_service.send_customer_submission_confirmation(application)
+    except Exception as em_err:
+        logger.warning(
+            "Customer confirmation email dispatch skipped or deferred",
+            error=str(em_err),
+            reference=application.reference_number,
+        )
+
     return ApplicationSubmitResponseSchema(
         success=True,
         application_id=application.id,
@@ -584,6 +715,7 @@ async def export_application(
     application_id: str,
     export_request: EmailExportRequestSchema,
     request: Request,
+    response: Response,
     db: Session = Depends(get_db),
 ) -> EmailExportResponseSchema:
     """
@@ -639,7 +771,7 @@ async def export_application(
                 email_export.mark_as_sent()
 
                 # Update application status if first successful export
-                if application.status == "submitted":
+                if application.status in ["submitted", "draft"]:
                     application.status = "exported"
 
                 logger.info(
@@ -652,9 +784,10 @@ async def export_application(
                 # Mark for retry
                 email_export.mark_for_retry("Email sending failed")
 
-        except EmailServiceException as e:
+        except (EmailServiceException, Exception) as e:
             # Mark as failed or for retry based on error type
-            if "SMTP" in str(e) or "connection" in str(e).lower():
+            err_str = str(e).lower()
+            if "smtp" in err_str or "connection" in err_str or "unavailable" in err_str:
                 email_export.mark_for_retry(str(e))
             else:
                 email_export.mark_as_failed(str(e))
@@ -681,7 +814,7 @@ async def export_application(
                 "recipient_email": export_request.recipient_email,
                 "insurance_company": export_request.insurance_company,
                 "status": email_export.status,
-                "files_count": len(application.files) if application.files else 0,
+                "files_count": len(application.files) if isinstance(getattr(application, "files", None), (list, tuple, set)) else 0,
             },
         )
 
@@ -695,13 +828,11 @@ async def export_application(
             insurance_company=email_export.insurance_company,
             status=email_export.status,
             sent_at=email_export.sent_at,
-            created_at=email_export.created_at,
+            created_at=email_export.created_at or datetime.now(timezone.utc),
             message=f"Email export {'completed successfully' if email_export.is_sent else 'initiated and will be retried if failed'}",
         )
 
-    except ApplicationNotFoundException:
-        raise
-    except ValidationException:
+    except (ApplicationNotFoundException, ValidationException, HTTPException, DatabaseException):
         raise
     except SQLAlchemyError as e:
         db.rollback()
@@ -786,7 +917,7 @@ async def get_export_history(
             message="Export history retrieved successfully",
         )
 
-    except ApplicationNotFoundException:
+    except (ApplicationNotFoundException, ValidationException, HTTPException, DatabaseException):
         raise
     except SQLAlchemyError as e:
         logger.error(

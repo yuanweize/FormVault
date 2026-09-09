@@ -36,6 +36,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useApplicationWorkflowContext } from '../contexts/ApplicationWorkflowContext';
 import { WorkflowProgressIndicator } from '../components/workflow/WorkflowProgressIndicator';
+import { SecurityAssuranceRail } from '../components/common/SecurityAssuranceRail';
 import { WorkflowNavigation } from '../components/workflow/WorkflowNavigation';
 import { fileService } from '../services/fileService';
 
@@ -88,6 +89,9 @@ export function ConfirmationPage() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
+      {/* Security Trust Assurance Rail */}
+      <SecurityAssuranceRail />
+
       {/* Progress Indicator */}
       <WorkflowProgressIndicator sx={{ mb: 4 }} />
 

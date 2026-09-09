@@ -7,7 +7,7 @@ for the FastAPI application.
 
 from fastapi import APIRouter
 
-from .endpoints import applications, files, health, admin
+from .endpoints import applications, files, health, admin, portal
 
 # Create main API router
 api_router = APIRouter()
@@ -22,3 +22,5 @@ api_router.include_router(
 api_router.include_router(files.router, prefix="/files", tags=["files"])
 
 api_router.include_router(admin.router, prefix="/admin", tags=["admin"])
+
+api_router.include_router(portal.router, prefix="/portal", tags=["portal"])

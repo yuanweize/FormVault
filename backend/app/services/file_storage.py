@@ -103,24 +103,35 @@ class SecureFileStorage:
         self.upload_dir.mkdir(exist_ok=True, mode=0o750)
 
     def _get_or_create_encryption_key(self) -> bytes:
-        """Get encryption key derived deterministically from SECRET_KEY (Stateless)."""
-        # Use a fixed salt to ensure the key is consistent across restarts without disk persistence
-        # In a real production scenario, this salt could also be an env var, but hardcoding ensures
-        # we don't lose access to files if the container restarts.
+        """Get or create encryption key derived deterministically from SECRET_KEY."""
+        key_file = self.upload_dir / ".encryption_key"
+        if key_file.exists():
+            try:
+                with open(key_file, "rb") as f:
+                    content = f.read()
+                    if content:
+                        return content
+            except Exception:
+                pass
+
         salt = b"formvault_stateless_salt_v1"
-        
-        # Derive 32-byte key from the SECRET_KEY
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
             salt=salt,
             iterations=100000,
         )
-        # We start with the configured secret key
         password = self.settings.SECRET_KEY.encode()
-        
-        # Return the derived key in URL-safe base64 format (required by Fernet)
-        return base64.urlsafe_b64encode(kdf.derive(password))
+        key = base64.urlsafe_b64encode(kdf.derive(password))
+
+        try:
+            with open(key_file, "wb") as f:
+                f.write(key)
+            os.chmod(key_file, 0o600)
+        except Exception:
+            pass
+
+        return key
 
     def validate_file(self, file: UploadFile) -> None:
         """Validate uploaded file for security and compliance."""
@@ -192,9 +203,10 @@ class SecureFileStorage:
             return decrypted_data.decode()
         except Exception as e:
             logger.error(f"Failed to decrypt filename {encrypted_filename}: {e}")
-            return "unknown"
-
     async def store_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
+        return await self.save_file(file, file_id, db)
+
+    async def save_file(self, file: UploadFile, file_id: str, db: Optional[Session] = None) -> Tuple[str, str, int]:
         """Store file securely (S3 or Local)."""
         # Load Config (Dynamic)
         config = self._get_config(db)
@@ -361,9 +373,11 @@ class SecureFileStorage:
             return {
                 "size": stat.st_size,
                 "modified": stat.st_mtime,
+                "permissions": oct(stat.st_mode)[-3:],
                 "exists": True
             }
 
 
 # Global instance
 file_storage = SecureFileStorage()
+FileStorage = SecureFileStorage

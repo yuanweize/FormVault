@@ -3,7 +3,7 @@ Email export model for tracking email deliveries to insurance companies.
 """
 
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlalchemy import Column, String, Integer, DateTime, Enum, ForeignKey, Index
@@ -45,7 +45,7 @@ class EmailExport(Base):
     retry_count = Column(Integer, default=0, nullable=False)
 
     # Timestamp
-    created_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
+    created_at = Column(TIMESTAMP, default=lambda: datetime.now(timezone.utc), nullable=False)
 
     # Relationships
     application = relationship("Application", back_populates="email_exports")
@@ -68,7 +68,7 @@ class EmailExport(Base):
 
     @property
     def is_sent(self) -> bool:
-        """Check if the export was successfully sent."""
+        """Check if the export was sent successfully."""
         return self.status == "sent"
 
     @property
@@ -78,19 +78,23 @@ class EmailExport(Base):
 
     @property
     def needs_retry(self) -> bool:
-        """Check if the export needs to be retried."""
+        """Check if the export needs retry."""
         return self.status == "retry"
 
     @property
     def max_retries_reached(self) -> bool:
-        """Check if maximum retry attempts have been reached."""
-        MAX_RETRIES = 3
-        return self.retry_count >= MAX_RETRIES
+        """Check if maximum retries reached."""
+        return (self.retry_count or 0) >= 3
+
+    @property
+    def can_retry(self) -> bool:
+        """Check if the export can be retried (max 3 retries)."""
+        return self.status in ["failed", "retry"] and (self.retry_count or 0) < 3
 
     def mark_as_sent(self) -> None:
         """Mark the export as successfully sent."""
         self.status = "sent"
-        self.sent_at = datetime.utcnow()
+        self.sent_at = datetime.now(timezone.utc)
         self.error_message = None
 
     def mark_as_failed(self, error_message: str) -> None:
@@ -102,6 +106,6 @@ class EmailExport(Base):
     def mark_for_retry(self, error_message: str) -> None:
         """Mark the export for retry and increment retry count."""
         self.status = "retry"
-        self.retry_count += 1
+        self.retry_count = (self.retry_count or 0) + 1
         self.error_message = error_message
         self.sent_at = None

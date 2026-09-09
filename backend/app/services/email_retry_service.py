@@ -30,14 +30,61 @@ class EmailRetryService:
     - Background task scheduling
     """
 
-    def __init__(self):
+    def __init__(self, db: Optional[Session] = None):
         """Initialize email retry service."""
+        self.db = db
         self.settings = get_settings()
         self.max_retries = 3
         self.base_delay = 60  # 1 minute base delay
         self.max_delay = 3600  # 1 hour maximum delay
         self.running = False
         self._retry_task: Optional[asyncio.Task] = None
+
+    def process_pending_exports(self) -> None:
+        """Process pending exports synchronously for testing and manual invocations."""
+        import inspect
+        db = self.db or next(get_db())
+        try:
+            exports = (
+                db.query(EmailExport)
+                .filter(EmailExport.status.in_(["pending", "retry"]))
+                .all()
+            )
+            for export in exports:
+                while export.status in ["pending", "retry"] and (export.retry_count or 0) < self.max_retries:
+                    try:
+                        res = email_service.send_application_export(
+                            application=export.application,
+                            recipient_email=export.recipient_email,
+                            insurance_company=export.insurance_company,
+                        )
+                        if inspect.isawaitable(res):
+                            try:
+                                loop = asyncio.get_event_loop()
+                                if loop.is_running():
+                                    import concurrent.futures
+                                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                                        success = executor.submit(asyncio.run, res).result()
+                                else:
+                                    success = loop.run_until_complete(res)
+                            except RuntimeError:
+                                success = asyncio.run(res)
+                        else:
+                            success = res
+
+                        if success:
+                            export.mark_as_sent()
+                            if export.application and export.application.status == "submitted":
+                                export.application.status = "exported"
+                            break
+                        else:
+                            export.mark_for_retry("Email sending failed")
+                    except Exception as e:
+                        export.mark_for_retry(str(e))
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            logger.error("Error in process_pending_exports", error=str(e))
 
     async def start_retry_worker(self) -> None:
         """Start the background retry worker task."""

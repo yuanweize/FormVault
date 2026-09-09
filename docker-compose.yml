@@ -1,0 +1,97 @@
+services:
+  # MySQL Database with persistent volume
+  database:
+    image: mysql:8.0
+    container_name: formvault-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-formvault_root_2026}
+      MYSQL_DATABASE: ${DB_NAME:-formvault}
+      MYSQL_USER: ${DB_USER:-formvault}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-formvault_pass_2026}
+    volumes:
+      - formvault_mysql_data:/var/lib/mysql
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb-buffer-pool-size=256M
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - formvault-network
+
+  # Backend FastAPI Application
+  backend:
+    image: ${BACKEND_IMAGE:-ghcr.io/yuanweize/formvault-backend:latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: formvault-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=mysql+pymysql://${DB_USER:-formvault}:${DB_PASSWORD:-formvault_pass_2026}@database:3306/${DB_NAME:-formvault}
+      - SECRET_KEY=${SECRET_KEY:-formvault-sec-jwt-token-key-change-in-prod}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-FormVault@Admin2026!}
+      - ADMIN_SECRET_KEY=${ADMIN_SECRET_KEY:-formvault-admin-session-secret-key-2026}
+      - STORAGE_TYPE=${STORAGE_TYPE:-local}
+      - UPLOAD_DIR=/app/uploads
+      - DEBUG=false
+      - ENABLE_DOCS=true
+      - CORS_ORIGINS=["http://localhost:9080", "http://127.0.0.1:9080", "http://localhost:9081", "http://127.0.0.1:9081", "http://localhost:3000", "http://localhost:80", "http://localhost", "http://127.0.0.1"]
+    volumes:
+      - formvault_uploads_data:/app/uploads
+      - formvault_backend_data:/app/data
+    ports:
+      - "${BACKEND_PORT:-9081}:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - formvault-network
+
+  # Frontend Static Web Server (Exposed port, pure static hosting)
+  frontend:
+    image: ${FRONTEND_IMAGE:-ghcr.io/yuanweize/formvault-frontend:latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: formvault-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-9080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - formvault-network
+
+volumes:
+  formvault_mysql_data:
+    name: formvault_mysql_data
+  formvault_uploads_data:
+    name: formvault_uploads_data
+  formvault_backend_data:
+    name: formvault_backend_data
+
+networks:
+  formvault-network:
+    name: formvault-network
+    driver: bridge

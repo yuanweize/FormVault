@@ -101,8 +101,8 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
       // Always navigate on success (or let parent handle it via onSubmit promise)
       // Here we assume if no error, we proceed
       navigate('/review');
-    } catch (err) {
-      setErrors(['Submission failed. Please try again.']);
+    } catch (err: any) {
+      setErrors([err instanceof Error ? err.message : (t('fileUpload.errors.submitFailed') || 'Submission failed. Please try again.')]);
     } finally {
       setIsSubmitting(false);
     }
@@ -135,12 +135,6 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
         {/* Student ID Column */}
         <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              {t('forms.fileUpload.studentId.label')}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {t('forms.fileUpload.studentId.description')}
-            </Typography>
             <FileUpload
               fileType="student_id"
               onUploadSuccess={handleStudentIdSuccess}
@@ -155,12 +149,6 @@ export const FileUploadForm: React.FC<FileUploadFormProps> = ({
         {/* Passport Column */}
         <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              {t('forms.fileUpload.passport.label')}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {t('forms.fileUpload.passport.description')}
-            </Typography>
             <FileUpload
               fileType="passport"
               onUploadSuccess={handlePassportSuccess}

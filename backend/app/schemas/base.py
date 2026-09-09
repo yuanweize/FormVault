@@ -5,16 +5,18 @@ This module contains base schemas and common field definitions
 used across the application.
 """
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, Dict, Any
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 
 
 class TimestampMixin(BaseModel):
     """Mixin for models with timestamp fields."""
 
-    created_at: datetime = Field(..., description="Creation timestamp")
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc), description="Creation timestamp"
+    )
     updated_at: Optional[datetime] = Field(None, description="Last update timestamp")
 
 
@@ -24,7 +26,7 @@ class ResponseBase(BaseModel):
     success: bool = Field(True, description="Indicates if the request was successful")
     message: Optional[str] = Field(None, description="Optional response message")
     timestamp: datetime = Field(
-        default_factory=datetime.utcnow, description="Response timestamp"
+        default_factory=lambda: datetime.now(timezone.utc), description="Response timestamp"
     )
 
 
@@ -33,8 +35,8 @@ class ErrorResponse(BaseModel):
 
     error: Dict[str, Any] = Field(..., description="Error details")
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "error": {
                     "message": "Validation failed",
@@ -45,6 +47,7 @@ class ErrorResponse(BaseModel):
                 }
             }
         }
+    )
 
 
 class InsuranceType(str, Enum):
@@ -70,6 +73,8 @@ class FileType(str, Enum):
 
     STUDENT_ID = "student_id"
     PASSPORT = "passport"
+    student_id = "student_id"
+    passport = "passport"
 
 
 class ExportStatus(str, Enum):

@@ -77,8 +77,12 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       // Try to find element by name attribute (standard Mui TextField)
       const element = document.querySelector(`[name="${firstErrorKey}"]`);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        (element as HTMLElement).focus();
+        if (typeof element.scrollIntoView === 'function') {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (typeof (element as HTMLElement).focus === 'function') {
+          (element as HTMLElement).focus();
+        }
       }
     }
   };
@@ -95,6 +99,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     >
       <Typography
         variant="h4" // Larger title
+        component="h1"
         gutterBottom
         sx={{
           fontWeight: 700,
@@ -123,6 +128,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           <Grid item xs={12}>
             <Typography
               variant="h6"
+              component="h2"
               gutterBottom
               sx={{
                 mt: { xs: 1, sm: 2 },
@@ -352,6 +358,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             <Typography
               id="address-section-title"
               variant="h6"
+              component="h2"
               gutterBottom
               sx={{
                 mt: { xs: 2, sm: 3 },
@@ -362,6 +369,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             </Typography>
             <AddressField
               control={control}
+              setValue={setValue}
               errors={errors.address as any}
               disabled={isLoading}
             />

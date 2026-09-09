@@ -26,7 +26,7 @@ class TestCustomExceptionHandlers:
 
     def setup_method(self):
         """Set up test client for each test."""
-        self.client = TestClient(app)
+        self.client = TestClient(app, raise_server_exceptions=False)
 
     def test_formvault_exception_handler(self):
         """Test FormVault exception handler formatting."""

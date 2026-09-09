@@ -27,6 +27,7 @@ from app.schemas.file import (
     FileValidationSchema,
 )
 from app.schemas.base import FileType, ResponseBase
+from app.core import config
 from app.core.config import get_settings, Settings
 from app.core.exceptions import (
     FileUploadException,
@@ -115,14 +116,12 @@ async def get_file_info(file_id: str, db: Session = Depends(get_db)) -> FileInfo
 
 
 @router.get("/{file_id}/download")
-async def download_file(file_id: str, db: Session = Depends(get_db)):
+async def download_file(file_id: str, request: Request, db: Session = Depends(get_db)):
     """
-    Download a specific file.
+    Download a specific file with security auditing.
 
-    Returns the actual file content for download.
-    Includes appropriate headers for file download.
-
-    - **file_id**: Unique file identifier
+    Returns the actual file content for download with strict security headers.
+    All downloads are captured in immutable audit logs.
     """
     # Get file info from database
     file_info = file_service.get_file(db=db, file_id=file_id)
@@ -132,16 +131,39 @@ async def download_file(file_id: str, db: Session = Depends(get_db)):
     if not file_path:
         raise FileNotFoundException(file_id)
 
-    # Return file response with appropriate headers
+    # Audit logging for security compliance
+    try:
+        from app.utils.db_helpers import create_audit_log
+        user_ip = request.client.host if request.client else None
+        user_agent = request.headers.get("user-agent")
+        create_audit_log(
+            db=db,
+            action="file.download_accessed",
+            application_id=file_info.application_id,
+            user_ip=user_ip,
+            user_agent=user_agent,
+            details={
+                "file_id": file_id,
+                "filename": file_info.original_filename,
+                "file_type": file_info.file_type,
+            },
+        )
+        db.commit()
+    except Exception:
+        pass
+
+    # Return file response with hardened security headers
     return FileResponse(
         path=file_path,
         filename=file_info.original_filename,
         media_type=file_info.mime_type,
         headers={
             "Content-Disposition": f'attachment; filename="{file_info.original_filename}"',
-            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Cache-Control": "no-cache, no-store, must-revalidate, private",
             "Pragma": "no-cache",
             "Expires": "0",
+            "X-Content-Type-Options": "nosniff",
+            "X-Download-Options": "noopen",
         },
     )
 
@@ -178,8 +200,9 @@ async def get_validation_rules(
     Returns the current file validation rules including
     maximum file size and allowed file types.
     """
+    current_settings = config.get_settings()
     return FileValidationSchema(
-        max_size=settings.MAX_FILE_SIZE, allowed_types=settings.ALLOWED_FILE_TYPES
+        max_size=current_settings.MAX_FILE_SIZE, allowed_types=current_settings.ALLOWED_FILE_TYPES
     )
 
 

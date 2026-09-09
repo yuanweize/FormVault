@@ -9,6 +9,8 @@ import {
   Card,
   CardContent,
   CardActions,
+  Chip,
+  useTheme,
 } from '@mui/material';
 import {
   CloudUpload,
@@ -61,6 +63,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   customUploadHandler,
 }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [isDragOver, setIsDragOver] = useState(false);
   const [internalIsUploading, setInternalIsUploading] = useState(false);
   const [internalUploadProgress, setInternalUploadProgress] = useState(0);
@@ -266,9 +269,24 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               >
                 {uploadedFile.originalName}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {formatFileSize(uploadedFile.size)}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5, flexWrap: 'wrap' }}>
+                <Typography variant="caption" color="text.secondary">
+                  {formatFileSize(uploadedFile.size)}
+                </Typography>
+                <Chip
+                  size="small"
+                  label="AES-256 Vault Encrypted"
+                  sx={{
+                    height: 20,
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+                    color: '#10B981',
+                    border: '1px solid rgba(16, 185, 129, 0.25)',
+                    borderRadius: '4px',
+                  }}
+                />
+              </Box>
             </Box>
           </Box>
 

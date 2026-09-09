@@ -5,7 +5,7 @@ This module contains all schemas for application creation, updates,
 and responses in the FormVault Insurance Portal.
 """
 
-from pydantic import BaseModel, Field, EmailStr, field_validator
+from pydantic import BaseModel, Field, EmailStr, field_validator, ConfigDict
 from typing import Optional, List
 from datetime import date, datetime
 import re
@@ -56,7 +56,7 @@ class PersonalInfoSchema(BaseModel):
     @classmethod
     def validate_names(cls, v):
         """Validate name fields."""
-        if not re.match(r"^[A-Za-z\s\-\'\.]+$", v):
+        if not re.match(r"^[A-Za-z0-9\s\-\'\.]+$", v):
             raise ValueError("Name contains invalid characters")
         return v.strip()
 
@@ -153,8 +153,9 @@ class ApplicationResponseSchema(ResponseBase, TimestampMixin):
         default_factory=list, description="Uploaded files"
     )
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
             "example": {
                 "success": True,
                 "timestamp": "2023-01-01T00:00:00Z",
@@ -181,7 +182,8 @@ class ApplicationResponseSchema(ResponseBase, TimestampMixin):
                 "created_at": "2023-01-01T00:00:00Z",
                 "updated_at": "2023-01-01T00:00:00Z",
             }
-        }
+        },
+    )
 
 
 class ApplicationListResponseSchema(ResponseBase):
@@ -216,8 +218,9 @@ class ApplicationSubmitResponseSchema(ResponseBase):
     status: ApplicationStatus = Field(..., description="New application status")
     submitted_at: datetime = Field(..., description="Submission timestamp")
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
             "example": {
                 "success": True,
                 "message": "Application submitted successfully",
@@ -227,4 +230,47 @@ class ApplicationSubmitResponseSchema(ResponseBase):
                 "status": "submitted",
                 "submitted_at": "2023-01-01T00:00:00Z",
             }
-        }
+        },
+    )
+
+
+class ApplicationTrackRequestSchema(BaseModel):
+    """Schema for public tracking request with dual-factor verification."""
+
+    reference_number: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+        description="Application reference number issued upon submission",
+    )
+    email: str = Field(
+        ...,
+        description="Applicant email address registered with the application",
+    )
+
+
+class ApplicationTimelineStepSchema(BaseModel):
+    """Step in the application review and policy issuance pipeline."""
+
+    key: str
+    label: str
+    description: str
+    completed: bool
+    current: bool
+    timestamp: Optional[datetime] = None
+
+
+class ApplicationTrackResponseSchema(ResponseBase):
+    """Safe, masked status tracking response for customers."""
+
+    reference_number: str
+    status: str
+    status_label: str
+    insurance_type: str
+    masked_name: str
+    masked_email: str
+    created_at: datetime
+    submitted_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    timeline: List[ApplicationTimelineStepSchema]
+

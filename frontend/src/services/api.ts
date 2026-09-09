@@ -15,8 +15,25 @@ declare module 'axios' {
   }
 }
 
-// API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+// API Configuration with smart environment & relative URL support
+const getApiBaseUrl = (): string => {
+  if (process.env.REACT_APP_API_BASE_URL) {
+    return process.env.REACT_APP_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined' && window.location) {
+    const { protocol, hostname, port } = window.location;
+    // Local dev server on port 3000
+    if (port === '3000') {
+      return `${protocol}//${hostname}:8000`;
+    }
+    // In production, behind Cloudflare Tunnel, or accessed via reverse proxy / Docker port,
+    // using relative path '' ensures requests hit the same origin (e.g. /api/v1) seamlessly
+    return '';
+  }
+  return 'http://localhost:9081';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 const API_VERSION = 'v1';
 const API_TIMEOUT = 30000; // 30 seconds
 const MAX_RETRIES = 3;

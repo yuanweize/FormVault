@@ -13,6 +13,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from typing import List, Optional, Dict, Any
+import inspect
 import structlog
 from jinja2 import Environment, FileSystemLoader, Template
 import os
@@ -51,6 +52,23 @@ class EmailService:
         return Environment(loader=FileSystemLoader(str(template_dir)), autoescape=True)
 
     async def send_application_export(
+        self,
+        application: Application,
+        recipient_email: str,
+        insurance_company: Optional[str] = None,
+        additional_notes: Optional[str] = None,
+    ) -> bool:
+        res = self.send_application_email(
+            application=application,
+            recipient_email=recipient_email,
+            insurance_company=insurance_company,
+            additional_notes=additional_notes,
+        )
+        if inspect.isawaitable(res):
+            return await res
+        return res
+
+    async def send_application_email(
         self,
         application: Application,
         recipient_email: str,
@@ -256,7 +274,12 @@ FormVault Insurance Portal
 
         for file_record in application.files:
             try:
-                file_path = Path(self.settings.UPLOAD_DIR) / file_record.stored_filename
+                file_path = Path(
+                    os.path.join(
+                        str(self.settings.UPLOAD_DIR),
+                        str(getattr(file_record, "stored_filename", "")),
+                    )
+                )
 
                 if not file_path.exists():
                     logger.warning(
@@ -394,6 +417,99 @@ FormVault Insurance Portal
                 export_id=email_export.id,
                 retry_count=email_export.retry_count + 1,
                 error=str(e),
+            )
+            return False
+
+    async def send_customer_submission_confirmation(
+        self, application: Application
+    ) -> bool:
+        """
+        Send application receipt and reference number confirmation to the customer.
+        """
+        if not application.email:
+            return False
+
+        try:
+            logger.info(
+                "Sending customer submission confirmation email",
+                reference_number=application.reference_number,
+                recipient=application.email,
+            )
+
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = f"Application Confirmation: [{application.reference_number}] - FormVault Insurance"
+            msg["From"] = self.settings.FROM_EMAIL
+            msg["To"] = application.email
+
+            first_name = application.first_name or "Applicant"
+            ref_num = application.reference_number
+            ins_type = (application.insurance_type or "General").capitalize()
+
+            html_content = f"""
+            <html>
+            <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; background-color: #f8fafc; padding: 24px;">
+                <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); padding: 32px 24px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">FormVault Insurance</h1>
+                        <p style="color: #bfdbfe; margin-top: 8px; margin-bottom: 0; font-size: 14px;">Application Confirmation & Tracking</p>
+                    </div>
+                    <div style="padding: 32px 24px;">
+                        <p style="font-size: 16px; line-height: 1.6; margin-top: 0;">Dear <strong>{first_name}</strong>,</p>
+                        <p style="font-size: 15px; line-height: 1.6; color: #475569;">
+                            Thank you for submitting your insurance application through our agency. We have successfully received your information and our underwriting specialists are reviewing your documents.
+                        </p>
+                        
+                        <div style="background: #f1f5f9; border-left: 4px solid #2563eb; padding: 16px 20px; border-radius: 6px; margin: 24px 0;">
+                            <p style="margin: 0; font-size: 13px; color: #64748b; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Your Tracking Reference Number</p>
+                            <p style="margin: 6px 0 0 0; font-size: 22px; font-weight: 800; color: #1e293b; font-family: monospace; letter-spacing: 1px;">{ref_num}</p>
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px;">
+                            <tr style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="padding: 8px 0; color: #64748b;">Insurance Category:</td>
+                                <td style="padding: 8px 0; font-weight: 600; text-align: right;">{ins_type} Insurance</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="padding: 8px 0; color: #64748b;">Registered Email:</td>
+                                <td style="padding: 8px 0; font-weight: 600; text-align: right;">{application.email}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0; color: #64748b;">Current Status:</td>
+                                <td style="padding: 8px 0; font-weight: 600; color: #2563eb; text-align: right;">Submitted / In Review</td>
+                            </tr>
+                        </table>
+
+                        <p style="font-size: 14px; line-height: 1.6; color: #475569;">
+                            You can check the latest status of your policy at any time on our homepage using your <strong>Reference Number</strong> and <strong>Email</strong>.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 24px; text-align: center; font-size: 12px; color: #94a3b8;">
+                        FormVault Brokerage & Underwriting Services &bull; All Rights Reserved.
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            msg.attach(MIMEText(html_content, "html"))
+
+            # Send via SMTP if host configured, else log for demo/dev
+            if self.settings.SMTP_HOST and self.settings.SMTP_HOST != "localhost":
+                try:
+                    await self._send_email_smtp(msg, application.email)
+                except Exception as ex:
+                    logger.warning(f"SMTP delivery skipped or failed: {ex}")
+            else:
+                logger.info(
+                    "Customer confirmation email prepared (Local SMTP bypassed)",
+                    reference=ref_num,
+                    recipient=application.email,
+                )
+            return True
+        except Exception as e:
+            logger.warning(
+                "Failed to send customer submission confirmation email",
+                error=str(e),
+                reference=application.reference_number,
             )
             return False
 

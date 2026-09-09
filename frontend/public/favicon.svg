@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="innerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#4F46E5" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Glowing Shield Background -->
+  <path d="M256 32 C340 88 416 92 448 96 C448 316 352 428 256 480 C160 428 64 316 64 96 C96 92 172 88 256 32 Z" 
+        fill="url(#shieldGrad)" 
+        filter="url(#shadow)"/>
+
+  <!-- Inner Glassmorphism Inset -->
+  <path d="M256 64 C328 112 390 116 418 120 C418 296 338 392 256 438 C174 392 94 296 94 120 C122 116 184 112 256 64 Z" 
+        fill="url(#innerGrad)" 
+        stroke="#FFFFFF" 
+        stroke-width="8" 
+        stroke-opacity="0.4"/>
+
+  <!-- Golden Security Star & Checkmark Badge -->
+  <path d="M220 270 L180 230 L150 260 L220 330 L360 190 L330 160 Z" 
+        fill="#FFFFFF"/>
+  <circle cx="256" cy="180" r="14" fill="#34D399"/>
+</svg>
