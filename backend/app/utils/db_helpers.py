@@ -105,21 +105,36 @@ def create_audit_log(
         AuditLog instance if successful, None if failed
     """
     try:
+        prev_seq = 0
+        prev_h = None
+        try:
+            last_log = db.query(AuditLog).order_by(AuditLog.id.desc()).first()
+            if last_log and hasattr(last_log, "sequence") and isinstance(last_log.sequence, int):
+                prev_seq = last_log.sequence
+                if hasattr(last_log, "entry_hash") and isinstance(last_log.entry_hash, str):
+                    prev_h = last_log.entry_hash
+        except Exception as query_err:
+            logger.warning(f"Could not query last audit log: {query_err}")
+
+        seq = prev_seq + 1
+
         audit_log = AuditLog.create_log(
             action=action,
             application_id=application_id,
             user_ip=user_ip,
             user_agent=user_agent,
             details=details,
+            sequence=seq,
+            prev_hash=prev_h,
         )
 
         db.add(audit_log)
         db.flush()  # Get the ID without committing
 
-        logger.info(f"Audit log created: {action} (ID: {audit_log.id})")
+        logger.info(f"Audit log created: {action} (ID: {getattr(audit_log, 'id', None)}, Seq: {seq})")
         return audit_log
 
-    except SQLAlchemyError as e:
+    except Exception as e:
         logger.error(f"Failed to create audit log: {e}")
         return None
 

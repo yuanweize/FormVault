@@ -253,6 +253,19 @@ export interface PortalPublicConfig {
   crisp_custom_color?: string;
   form_profile_config?: string;
   features_config?: string;
+  business_scope_mode?: 'LEAD_ONLY' | 'ASSISTED_APPLICATION' | 'REGULATED_DISTRIBUTION';
+  operator_legal_name?: string;
+  operator_ico?: string;
+  operator_role?: string;
+  operator_website_url?: string;
+  partner_name?: string;
+  partner_ico?: string;
+  partner_role?: string;
+  partner_cnb_id?: string;
+  partner_website_url?: string;
+  relationship_status?: string;
+  dpa_status?: string;
+  lead_only_fallback_url?: string;
 }
 
 export interface ApplicationTimelineStep {
