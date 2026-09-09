@@ -43,7 +43,8 @@ services:
       - UPLOAD_DIR=/app/uploads
       - DEBUG=false
       - ENABLE_DOCS=true
-      - CORS_ORIGINS=["http://localhost:9080", "http://127.0.0.1:9080", "http://localhost:9081", "http://127.0.0.1:9081", "http://localhost:3000", "http://localhost:80", "http://localhost", "http://127.0.0.1"]
+      - ALLOWED_HOSTS=["insure.hktse.eu.org", "pojisteni.hktse.eu.org", "10.4.2.108", "localhost", "127.0.0.1", "frontend", "backend", "*"]
+      - CORS_ORIGINS=["https://insure.hktse.eu.org", "https://pojisteni.hktse.eu.org", "http://10.4.2.108:9080", "http://10.4.2.108:9081", "http://localhost:9080", "http://127.0.0.1:9080", "http://localhost:9081", "http://127.0.0.1:9081", "http://localhost:3000", "http://localhost:80", "http://localhost", "http://127.0.0.1"]
     volumes:
       - formvault_uploads_data:/app/uploads
       - formvault_backend_data:/app/data
