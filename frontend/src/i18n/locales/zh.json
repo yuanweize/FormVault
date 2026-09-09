@@ -45,6 +45,56 @@
         "multilingualDesc": "支持英语、中文和西班牙语",
         "mobile": "移动友好",
         "mobileDesc": "在任何设备上完成您的申请"
+      },
+      "authorizedBroker": "欧洲认证保险经纪服务机构 • 符合捷克与欧盟监管标准",
+      "trackMyApplication": "查询申请进度",
+      "metrics": {
+        "actCompliance": "符合捷克内政部移民局 (OAMP) 规定",
+        "rapidApp": "快速极简填报",
+        "bankPrivacy": "银行级加密隐私"
+      },
+      "securityBadges": {
+        "endToEnd": "端到端全程加密存储",
+        "autoEmail": "自动发送申请编号与追踪确认邮件"
+      },
+      "tracker": {
+        "title": "申请状态即时查询",
+        "subtitle": "输入您的保单申请编号与预留邮箱，即刻查询保司审核进度与签发状态。",
+        "refLabel": "申请编号",
+        "refPlaceholder": "例如：APP-2026-001234",
+        "emailLabel": "预留邮箱",
+        "emailPlaceholder": "例如：client@example.com",
+        "trackButton": "立即查询",
+        "tracking": "正在查询...",
+        "applicantName": "申请人姓名",
+        "registeredEmail": "预留邮箱",
+        "lastUpdated": "最后更新时间",
+        "recently": "刚刚",
+        "timelineTitle": "保单审核全流程进度",
+        "currentStage": "当前处理阶段",
+        "provideBothError": "请同时提供申请参考编号与注册邮箱。",
+        "notFoundError": "未找到匹配的申请记录。请核对您的申请编号与注册邮箱。",
+        "protected": "受保护"
+      },
+      "plans": {
+        "badge": "官方精选保险套餐",
+        "title": "热选保险方案推荐",
+        "subtitle": "经捷克监管部门及内政部移民局 (OAMP) 认证，专为留学生、外籍工作人士与旅行者定制。",
+        "choosePlan": "选择此方案并申请",
+        "applyNow": "立即申请",
+        "perYear": "/ 年",
+        "perMonth": "/ 月",
+        "customRate": "定制报价"
+      },
+      "partners": {
+        "badge": "承保合作保司",
+        "title": "由欧洲与捷克顶尖保险机构直接承保",
+        "subtitle": "本代理中心拥有法定资质，与捷克主流保险集团直接联网出单与核保。",
+        "officialPortal": "官方网站"
+      },
+      "banner": {
+        "notice": "官方公告",
+        "learnMore": "在线申请"
       }
     },
     "personalInfo": {
@@ -73,7 +123,9 @@
     "allRightsReserved": "版权所有。",
     "privacy": "隐私政策",
     "terms": "服务条款",
-    "support": "支持"
+    "support": "支持",
+    "brokerTitle": "FormVault 保险经纪与核保代理服务中心",
+    "brokerDesc": "经捷克监管注册运营（布拉格），PVZP、Slavia、Maxima 及 UNIQA 保司官方合作签约代理。"
   },
   "forms": {
     "personalInfo": {
@@ -215,5 +267,12 @@
     "general": "发生错误，请重试。",
     "network": "网络错误，请检查您的连接。",
     "validation": "请检查您的输入并重试。"
+  },
+  "cookieConsent": {
+    "title": "欧盟 GDPR 与 Cookie 隐私合规提示",
+    "description": "我们使用必要 Cookie 以确保文件的安全加密传输及会话维持。依据欧盟通用数据保护条例 (GDPR)，您的身份证件均通过 AES-256 GCM 高度加密存储。详情请阅读隐私政策。",
+    "acceptAll": "接受全部",
+    "essentialOnly": "仅必要 Cookie",
+    "privacyPolicy": "隐私政策"
   }
 }

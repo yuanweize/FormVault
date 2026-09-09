@@ -8,10 +8,12 @@ import {
   Link as MuiLink,
   useTheme,
 } from '@mui/material';
-import { SecurityOutlined, CookieOutlined } from '@mui/icons-material';
+import { CookieOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const CookieConsentBanner: React.FC = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -81,13 +83,12 @@ const CookieConsentBanner: React.FC = () => {
 
         <Box sx={{ flex: 1 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 800, mb: 0.5 }}>
-            EU GDPR & Cookie Compliance Notice
+            {t('cookieConsent.title', 'EU GDPR & Cookie Compliance Notice')}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem', lineHeight: 1.5 }}>
-            We use strictly necessary cookies to ensure encrypted document transmission and remember your session.
-            Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our{' '}
+            {t('cookieConsent.description', 'We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our')}{' '}
             <MuiLink component={Link} to="/privacy-policy" sx={{ fontWeight: 600, color: 'primary.main' }}>
-              Privacy Policy
+              {t('cookieConsent.privacyPolicy', 'Privacy Policy')}
             </MuiLink>
             .
           </Typography>
@@ -100,7 +101,7 @@ const CookieConsentBanner: React.FC = () => {
             onClick={handleAcceptAll}
             sx={{ fontWeight: 700, borderRadius: '10px', px: 2.5, whiteSpace: 'nowrap', flex: 1 }}
           >
-            Accept All
+            {t('cookieConsent.acceptAll', 'Accept All')}
           </Button>
           <Button
             variant="outlined"
@@ -108,7 +109,7 @@ const CookieConsentBanner: React.FC = () => {
             onClick={handleAcceptNecessary}
             sx={{ fontWeight: 600, borderRadius: '10px', px: 2, whiteSpace: 'nowrap', flex: 1 }}
           >
-            Essential Only
+            {t('cookieConsent.essentialOnly', 'Essential Only')}
           </Button>
         </Stack>
       </Stack>

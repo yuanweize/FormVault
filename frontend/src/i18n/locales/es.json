@@ -45,6 +45,52 @@
         "multilingualDesc": "Disponible en inglés, chino, español, etc.",
         "mobile": "Compatible con Móvil",
         "mobileDesc": "Complete su solicitud en cualquier dispositivo"
+      },
+      "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
+      "trackMyApplication": "Track My Application",
+      "metrics": {
+        "actCompliance": "Czech OAMP Compliant",
+        "rapidApp": "Rapid Application",
+        "bankPrivacy": "Bank-Grade Privacy"
+      },
+      "securityBadges": {
+        "endToEnd": "End-to-End Encrypted Storage",
+        "autoEmail": "Automatic Tracking Confirmation Email"
+      },
+      "tracker": {
+        "title": "Track Application Status",
+        "subtitle": "Enter your tracking reference number and registered email address to check real-time underwriting progress.",
+        "refLabel": "Reference Number",
+        "refPlaceholder": "e.g. APP-2026-001234",
+        "emailLabel": "Registered Email",
+        "emailPlaceholder": "e.g. client@example.com",
+        "trackButton": "Track",
+        "tracking": "Tracking...",
+        "applicantName": "Applicant Name",
+        "registeredEmail": "Registered Email",
+        "lastUpdated": "Last Updated",
+        "recently": "Recently",
+        "timelineTitle": "Application Processing Timeline",
+        "currentStage": "Current Stage"
+      },
+      "plans": {
+        "badge": "Curated Coverage Tiers",
+        "title": "Recommended Insurance Plans",
+        "subtitle": "Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.",
+        "choosePlan": "Choose Plan & Apply",
+        "applyNow": "Apply Now",
+        "perYear": "/ year",
+        "perMonth": "/ month"
+      },
+      "partners": {
+        "badge": "Underwriting Partners",
+        "title": "Underwritten by Leading European Insurers",
+        "subtitle": "Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.",
+        "officialPortal": "Official Portal"
+      },
+      "banner": {
+        "notice": "Notice",
+        "learnMore": "Apply Online"
       }
     },
     "personalInfo": {
@@ -119,7 +165,9 @@
     "allRightsReserved": "Todos los derechos reservados.",
     "privacy": "Privacidad",
     "terms": "Términos",
-    "support": "Soporte"
+    "support": "Soporte",
+    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "brokerDesc": "Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA."
   },
   "forms": {
     "personalInfo": {
@@ -307,5 +355,12 @@
     "general": "Ocurrió un error.",
     "network": "Error de red.",
     "validation": "Verifique su entrada."
+  },
+  "cookieConsent": {
+    "title": "EU GDPR & Cookie Compliance Notice",
+    "description": "We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our Privacy Policy.",
+    "acceptAll": "Accept All",
+    "essentialOnly": "Essential Only",
+    "privacyPolicy": "Privacy Policy"
   }
 }

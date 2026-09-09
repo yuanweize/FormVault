@@ -1,313 +1,372 @@
 {
-    "app": {
-        "title": "FormVault",
-        "shortTitle": "FormVault",
-        "subtitle": "Bezpečný Pojistný Portál"
+  "app": {
+    "title": "FormVault",
+    "shortTitle": "FormVault",
+    "subtitle": "Bezpečný Pojistný Portál"
+  },
+  "stepper": {
+    "personalInfo": "Osobní Údaje",
+    "personalInfoShort": "Info",
+    "fileUpload": "Nahrání Dokumentů",
+    "fileUploadShort": "Soubory",
+    "review": "Kontrola a Odeslání",
+    "reviewShort": "Kontrola",
+    "success": "Hotovo",
+    "successShort": "Konec",
+    "step": "Krok",
+    "of": "z"
+  },
+  "navigation": {
+    "home": "Domů",
+    "back": "Zpět",
+    "next": "Další",
+    "submit": "Odeslat",
+    "cancel": "Zrušit"
+  },
+  "validation": {
+    "required": "Toto pole je povinné",
+    "email": "Zadejte platný email",
+    "phone": "Zadejte platné telefonní číslo",
+    "minLength": "Minimální délka je {{min}} znaků",
+    "maxLength": "Maximální délka je {{max}} znaků",
+    "fileSize": "Velikost souboru musí být menší než {{size}}MB",
+    "fileType": "Neplatný typ souboru",
+    "dateFormat": "Neplatné datum"
+  },
+  "pages": {
+    "home": {
+      "title": "Vítejte ve FormVault",
+      "subtitle": "Dokončete svou žádost o pojištění bezpečně a efektivně",
+      "getStarted": "Začít",
+      "features": {
+        "secure": "Bezpečné a Šifrované",
+        "secureDesc": "Vaše data jsou chráněna",
+        "multilingual": "Vícejazyčná Podpora",
+        "multilingualDesc": "Dostupné v angličtině, češtině, atd.",
+        "mobile": "Vhodné pro Mobily",
+        "mobileDesc": "Dokončete žádost na jakémkoli zařízení"
+      },
+      "authorizedBroker": "Autorizovaný evropský pojišťovací zprostředkovatel • Normy ČR a EU",
+      "trackMyApplication": "Sledovat mou žádost",
+      "metrics": {
+        "actCompliance": "V souladu s OAMP MV ČR",
+        "rapidApp": "Blesková žádost",
+        "bankPrivacy": "Bankovní úroveň zabezpečení"
+      },
+      "securityBadges": {
+        "endToEnd": "Kompletně šifrované úložiště",
+        "autoEmail": "Automatický potvrzovací e-mail se sledovacím kódem"
+      },
+      "tracker": {
+        "title": "Sledování stavu žádosti",
+        "subtitle": "Zadejte referenční číslo žádosti a registrovaný e-mail pro ověření průběhu schvalování v reálném čase.",
+        "refLabel": "Referenční číslo",
+        "refPlaceholder": "např. APP-2026-001234",
+        "emailLabel": "Registrovaný e-mail",
+        "emailPlaceholder": "např. klient@example.com",
+        "trackButton": "Ověřit",
+        "tracking": "Ověřování...",
+        "applicantName": "Jméno žadatele",
+        "registeredEmail": "Registrovaný e-mail",
+        "lastUpdated": "Poslední aktualizace",
+        "recently": "Nedávno",
+        "timelineTitle": "Časová osa zpracování žádosti",
+        "currentStage": "Aktuální fáze",
+        "provideBothError": "Zadejte prosím referenční číslo žádosti i registrovaný e-mail.",
+        "notFoundError": "Žádná odpovídající žádost nebyla nalezena. Zkontrolujte prosím referenční číslo a registrovaný e-mail.",
+        "protected": "Chráněno"
+      },
+      "plans": {
+        "badge": "Doporučené pojistné balíčky",
+        "title": "Doporučené pojistné plány",
+        "subtitle": "Plně certifikováno českými úřady (OAMP) pro zahraniční studenty, expaty a cestovatele.",
+        "choosePlan": "Vybrat plán a zažádat",
+        "applyNow": "Zažádat nyní",
+        "perYear": "/ rok",
+        "perMonth": "/ měsíc",
+        "customRate": "Individuální sazba"
+      },
+      "partners": {
+        "badge": "Partnerské pojišťovny",
+        "title": "Pojištěno u předních evropských pojišťoven",
+        "subtitle": "Naše agentura je oprávněna sjednávat krytí přímo s předními pojišťovacími institucemi v České republice.",
+        "officialPortal": "Oficiální portál"
+      },
+      "banner": {
+        "notice": "Oznámení",
+        "learnMore": "Zažádat online"
+      }
     },
-    "stepper": {
-        "personalInfo": "Osobní Údaje",
-        "personalInfoShort": "Info",
-        "fileUpload": "Nahrání Dokumentů",
-        "fileUploadShort": "Soubory",
-        "review": "Kontrola a Odeslání",
-        "reviewShort": "Kontrola",
-        "success": "Hotovo",
-        "successShort": "Konec",
-        "step": "Krok",
-        "of": "z"
-    },
-    "navigation": {
-        "home": "Domů",
-        "back": "Zpět",
-        "next": "Další",
-        "submit": "Odeslat",
-        "cancel": "Zrušit"
-    },
-    "validation": {
-        "required": "Toto pole je povinné",
-        "email": "Zadejte platný email",
-        "phone": "Zadejte platné telefonní číslo",
-        "minLength": "Minimální délka je {{min}} znaků",
-        "maxLength": "Maximální délka je {{max}} znaků",
-        "fileSize": "Velikost souboru musí být menší než {{size}}MB",
-        "fileType": "Neplatný typ souboru",
-        "dateFormat": "Neplatné datum"
-    },
-    "pages": {
-        "home": {
-            "title": "Vítejte ve FormVault",
-            "subtitle": "Dokončete svou žádost o pojištění bezpečně a efektivně",
-            "getStarted": "Začít",
-            "features": {
-                "secure": "Bezpečné a Šifrované",
-                "secureDesc": "Vaše data jsou chráněna",
-                "multilingual": "Vícejazyčná Podpora",
-                "multilingualDesc": "Dostupné v angličtině, češtině, atd.",
-                "mobile": "Vhodné pro Mobily",
-                "mobileDesc": "Dokončete žádost na jakémkoli zařízení"
-            }
-        },
-        "personalInfo": {
-            "title": "Osobní Informace",
-            "subtitle": "Prosím uveďte své osobní údaje"
-        },
-        "fileUpload": {
-            "title": "Nahrát Dokumenty",
-            "subtitle": "Prosím nahrajte požadované dokumenty",
-            "instructions": "Jasné obrázky nebo PDF. Max 5MB na soubor.",
-            "allFilesUploaded": "Všechny soubory úspěšně nahrány!",
-            "proceedToReview": "Přejít ke Kontrole"
-        },
-        "review": {
-            "title": "Zkontrolovat Žádost",
-            "subtitle": "Prosím zkontrolujte své údaje",
-            "incompleteWarning": "Žádost je neúplná.",
-            "missingPersonalInfo": "Chybí osobní údaje",
-            "missingFiles": "Chybí soubory",
-            "personalInfoIncomplete": "Prosím vyplňte osobní údaje.",
-            "fileNotUploaded": "Soubor nebyl nahrán.",
-            "readyToProceed": "Žádost je kompletní!",
-            "proceedToConfirmation": "Přejít k Potvrzení",
-            "sections": {
-                "personalInfo": "Osobní Údaje",
-                "uploadedFiles": "Nahrané Soubory"
-            }
-        },
-        "confirmation": {
-            "title": "Potvrdit Odeslání",
-            "subtitle": "Potvrďte odeslání žádosti",
-            "incompleteWarning": "Neúplné.",
-            "missingPersonalInfo": "Chybí info",
-            "missingFiles": "Chybí soubory",
-            "submissionNotice": "Odesláním potvrzujete správnost údajů. Obdržíte potvrzovací email.",
-            "referenceNumber": "Referenční Číslo",
-            "sections": {
-                "personalInfo": "Osobní Info",
-                "uploadedFiles": "Soubory",
-                "applicationDetails": "Detaily"
-            }
-        },
-        "success": {
-            "title": "Žádost Odeslána!",
-            "subtitle": "Vaše žádost byla úspěšně odeslána",
-            "referenceNumber": "Vaše Referenční Číslo",
-            "referenceNumberNote": "Uschovejte toto číslo",
-            "applicationSummary": "Souhrn",
-            "submissionDate": "Datum Odeslání",
-            "nextSteps": {
-                "title": "Co dál?",
-                "emailConfirmation": "Emailové Potvrzení",
-                "emailConfirmationNote": "Obdržíte email do 5 minut",
-                "processing": "Zpracování",
-                "processingNote": "Kontrola trvá 2-3 pracovní dny",
-                "followUp": "Další Komunikace",
-                "followUpNote": "Budeme vás kontaktovat v případě potřeby"
-            },
-            "importantInfo": "Důležité: Uschovejte referenční číslo.",
-            "actions": {
-                "goHome": "Zpět Domů",
-                "print": "Tisk"
-            }
-        },
-        "notFound": {
-            "title": "Stránka nenalezena",
-            "subtitle": "Stránka neexistuje",
-            "goHome": "Domů"
-        }
-    },
-    "footer": {
-        "allRightsReserved": "Všechna práva vyhrazena.",
-        "privacy": "Soukromí",
-        "terms": "Podmínky",
-        "support": "Podpora"
-    },
-    "forms": {
-        "personalInfo": {
-            "title": "Osobní Údaje",
-            "subtitle": "Detaily pro pojištění",
-            "submitting": "Odesílání...",
-            "success": "Uloženo!",
-            "sections": {
-                "personal": "Osobní Detaily",
-                "address": "Adresa"
-            },
-            "fields": {
-                "firstName": "Jméno",
-                "lastName": "Příjmení",
-                "email": "Email",
-                "phone": "Telefon",
-                "dateOfBirth": "Datum Narození",
-                "insuranceType": "Typ Pojištění",
-                "address": {
-                    "street": "Ulice a Číslo",
-                    "city": "Město",
-                    "state": "Kraj/Stát",
-                    "zipCode": "PSČ",
-                    "country": "Země"
-                }
-            },
-            "insuranceType": {
-                "label": "Typ Pojištění",
-                "options": {
-                    "health": "Zdravotní Pojištění",
-                    "auto": "Pojištění Vozidla",
-                    "life": "Životní Pojištění",
-                    "travel": "Cestovní Pojištění"
-                }
-            },
-            "insuranceTypes": {
-                "health": "Zdravotní Pojištění",
-                "auto": "Pojištění Vozidla",
-                "life": "Životní Pojištění",
-                "travel": "Cestovní Pojištění"
-            },
-            "validation": {
-                "firstName": {
-                    "required": "Jméno je povinné",
-                    "minLength": "Min 2 znaky",
-                    "maxLength": "Max 50 znaků",
-                    "pattern": "Pouze písmena"
-                },
-                "lastName": {
-                    "required": "Příjmení je povinné",
-                    "minLength": "Min 2 znaky",
-                    "maxLength": "Max 50 znaků",
-                    "pattern": "Pouze písmena"
-                },
-                "email": {
-                    "required": "Email je povinný",
-                    "pattern": "Neplatný email"
-                },
-                "phone": {
-                    "required": "Telefon je povinný",
-                    "pattern": "Neplatné číslo"
-                },
-                "dateOfBirth": {
-                    "required": "Datum je povinné",
-                    "future": "Datum v budoucnu není povoleno",
-                    "minAge": "Musí vám být 18 let",
-                    "maxAge": "Neplatné datum"
-                },
-                "insuranceType": {
-                    "required": "Vyberte typ"
-                },
-                "address": {
-                    "street": {
-                        "required": "Ulice je povinná",
-                        "minLength": "Min 5 znaků"
-                    },
-                    "city": {
-                        "required": "Město je povinné",
-                        "minLength": "Min 2 znaky",
-                        "pattern": "Pouze písmena"
-                    },
-                    "state": {
-                        "required": "Kraj je povinný",
-                        "minLength": "Min 2 znaky"
-                    },
-                    "zipCode": {
-                        "required": "PSČ je povinné",
-                        "pattern": "Neplatné PSČ"
-                    },
-                    "country": {
-                        "required": "Země je povinná"
-                    }
-                }
-            },
-            "countries": {
-                "US": "Spojené Státy",
-                "CA": "Kanada",
-                "MX": "Mexiko",
-                "CN": "Čína",
-                "ES": "Španělsko",
-                "FR": "Francie",
-                "DE": "Německo",
-                "GB": "Velká Británie",
-                "AU": "Austrálie",
-                "JP": "Japonsko"
-            }
-        },
-        "fileUpload": {
-            "studentId": {
-                "label": "Studentský Průkaz",
-                "description": "Jasné foto průkazu"
-            },
-            "passport": {
-                "label": "Cestovní Pas",
-                "description": "Jasné foto pasu"
-            }
-        }
+    "personalInfo": {
+      "title": "Osobní Informace",
+      "subtitle": "Prosím uveďte své osobní údaje"
     },
     "fileUpload": {
-        "title": "Nahrát Soubory",
-        "description": "Nahrajte dokumenty.",
-        "studentId": "Průkaz",
-        "passport": "Pas",
-        "dragAndDrop": "Přetáhněte soubory sem",
-        "orClickToSelect": "nebo klikněte pro výběr",
-        "uploading": "Nahrávání...",
-        "remove": "Odstranit",
-        "requirements": "JPEG, PNG, PDF. Max 5MB.",
-        "errors": {
-            "fileTooLarge": "Soubor příliš velký.",
-            "invalidFormat": "Neplatný formát.",
-            "uploadFailed": "Chyba.",
-            "noFilesUploaded": "Žádné soubory."
-        }
+      "title": "Nahrát Dokumenty",
+      "subtitle": "Prosím nahrajte požadované dokumenty",
+      "instructions": "Jasné obrázky nebo PDF. Max 5MB na soubor.",
+      "allFilesUploaded": "Všechny soubory úspěšně nahrány!",
+      "proceedToReview": "Přejít ke Kontrole"
     },
-    "workflow": {
-        "steps": {
-            "personalInfo": {
-                "label": "Osobní Info",
-                "description": "Detaily"
-            },
-            "fileUpload": {
-                "label": "Soubory",
-                "description": "Dokumenty"
-            },
-            "review": {
-                "label": "Kontrola",
-                "description": "Souhrn"
-            },
-            "confirmation": {
-                "label": "Potvrzení",
-                "description": "Odeslání"
-            },
-            "success": {
-                "label": "Hotovo",
-                "description": "Odesláno"
-            }
-        },
-        "progress": "Krok {{current}} z {{total}}",
-        "navigation": {
-            "previous": "Zpět",
-            "next": "Další",
-            "submit": "Odeslat Žádost",
-            "saveAsDraft": "Uložit Rozepsané",
-            "goHome": "Domů",
-            "saving": "Ukládání...",
-            "submitting": "Odesílání...",
-            "unsavedChanges": "Neuložené změny."
-        }
+    "review": {
+      "title": "Zkontrolovat Žádost",
+      "subtitle": "Prosím zkontrolujte své údaje",
+      "incompleteWarning": "Žádost je neúplná.",
+      "missingPersonalInfo": "Chybí osobní údaje",
+      "missingFiles": "Chybí soubory",
+      "personalInfoIncomplete": "Prosím vyplňte osobní údaje.",
+      "fileNotUploaded": "Soubor nebyl nahrán.",
+      "readyToProceed": "Žádost je kompletní!",
+      "proceedToConfirmation": "Přejít k Potvrzení",
+      "sections": {
+        "personalInfo": "Osobní Údaje",
+        "uploadedFiles": "Nahrané Soubory"
+      }
     },
-    "common": {
-        "back": "Zpět",
-        "continue": "Pokračovat",
-        "submit": "Odeslat",
-        "submitting": "Odesílání...",
-        "cancel": "Zrušit",
-        "save": "Uložit",
-        "edit": "Upravit",
-        "delete": "Smazat",
-        "confirm": "Potvrdit",
-        "loading": "Načítání...",
-        "copy": "Kopírovat",
-        "notProvided": "Neuvedeno",
-        "notUploaded": "Nenahráno"
+    "confirmation": {
+      "title": "Potvrdit Odeslání",
+      "subtitle": "Potvrďte odeslání žádosti",
+      "incompleteWarning": "Neúplné.",
+      "missingPersonalInfo": "Chybí info",
+      "missingFiles": "Chybí soubory",
+      "submissionNotice": "Odesláním potvrzujete správnost údajů. Obdržíte potvrzovací email.",
+      "referenceNumber": "Referenční Číslo",
+      "sections": {
+        "personalInfo": "Osobní Info",
+        "uploadedFiles": "Soubory",
+        "applicationDetails": "Detaily"
+      }
     },
-    "errors": {
-        "general": "Došlo k chybě.",
-        "network": "Chyba sítě.",
-        "validation": "Zkontrolujte údaje."
+    "success": {
+      "title": "Žádost Odeslána!",
+      "subtitle": "Vaše žádost byla úspěšně odeslána",
+      "referenceNumber": "Vaše Referenční Číslo",
+      "referenceNumberNote": "Uschovejte toto číslo",
+      "applicationSummary": "Souhrn",
+      "submissionDate": "Datum Odeslání",
+      "nextSteps": {
+        "title": "Co dál?",
+        "emailConfirmation": "Emailové Potvrzení",
+        "emailConfirmationNote": "Obdržíte email do 5 minut",
+        "processing": "Zpracování",
+        "processingNote": "Kontrola trvá 2-3 pracovní dny",
+        "followUp": "Další Komunikace",
+        "followUpNote": "Budeme vás kontaktovat v případě potřeby"
+      },
+      "importantInfo": "Důležité: Uschovejte referenční číslo.",
+      "actions": {
+        "goHome": "Zpět Domů",
+        "print": "Tisk"
+      }
+    },
+    "notFound": {
+      "title": "Stránka nenalezena",
+      "subtitle": "Stránka neexistuje",
+      "goHome": "Domů"
     }
+  },
+  "footer": {
+    "allRightsReserved": "Všechna práva vyhrazena.",
+    "privacy": "Soukromí",
+    "terms": "Podmínky",
+    "support": "Podpora",
+    "brokerTitle": "FormVault Pojišťovací zprostředkovatel a upisovací služby",
+    "brokerDesc": "Licencované zprostředkovatelské služby v Praze, Česká republika. Oficiální partner PVZP, Slavia, Maxima a UNIQA."
+  },
+  "forms": {
+    "personalInfo": {
+      "title": "Osobní Údaje",
+      "subtitle": "Detaily pro pojištění",
+      "submitting": "Odesílání...",
+      "success": "Uloženo!",
+      "sections": {
+        "personal": "Osobní Detaily",
+        "address": "Adresa"
+      },
+      "fields": {
+        "firstName": "Jméno",
+        "lastName": "Příjmení",
+        "email": "Email",
+        "phone": "Telefon",
+        "dateOfBirth": "Datum Narození",
+        "insuranceType": "Typ Pojištění",
+        "address": {
+          "street": "Ulice a Číslo",
+          "city": "Město",
+          "state": "Kraj/Stát",
+          "zipCode": "PSČ",
+          "country": "Země"
+        }
+      },
+      "insuranceType": {
+        "label": "Typ Pojištění",
+        "options": {
+          "health": "Zdravotní Pojištění",
+          "auto": "Pojištění Vozidla",
+          "life": "Životní Pojištění",
+          "travel": "Cestovní Pojištění"
+        }
+      },
+      "insuranceTypes": {
+        "health": "Zdravotní Pojištění",
+        "auto": "Pojištění Vozidla",
+        "life": "Životní Pojištění",
+        "travel": "Cestovní Pojištění"
+      },
+      "validation": {
+        "firstName": {
+          "required": "Jméno je povinné",
+          "minLength": "Min 2 znaky",
+          "maxLength": "Max 50 znaků",
+          "pattern": "Pouze písmena"
+        },
+        "lastName": {
+          "required": "Příjmení je povinné",
+          "minLength": "Min 2 znaky",
+          "maxLength": "Max 50 znaků",
+          "pattern": "Pouze písmena"
+        },
+        "email": {
+          "required": "Email je povinný",
+          "pattern": "Neplatný email"
+        },
+        "phone": {
+          "required": "Telefon je povinný",
+          "pattern": "Neplatné číslo"
+        },
+        "dateOfBirth": {
+          "required": "Datum je povinné",
+          "future": "Datum v budoucnu není povoleno",
+          "minAge": "Musí vám být 18 let",
+          "maxAge": "Neplatné datum"
+        },
+        "insuranceType": {
+          "required": "Vyberte typ"
+        },
+        "address": {
+          "street": {
+            "required": "Ulice je povinná",
+            "minLength": "Min 5 znaků"
+          },
+          "city": {
+            "required": "Město je povinné",
+            "minLength": "Min 2 znaky",
+            "pattern": "Pouze písmena"
+          },
+          "state": {
+            "required": "Kraj je povinný",
+            "minLength": "Min 2 znaky"
+          },
+          "zipCode": {
+            "required": "PSČ je povinné",
+            "pattern": "Neplatné PSČ"
+          },
+          "country": {
+            "required": "Země je povinná"
+          }
+        }
+      },
+      "countries": {
+        "US": "Spojené Státy",
+        "CA": "Kanada",
+        "MX": "Mexiko",
+        "CN": "Čína",
+        "ES": "Španělsko",
+        "FR": "Francie",
+        "DE": "Německo",
+        "GB": "Velká Británie",
+        "AU": "Austrálie",
+        "JP": "Japonsko"
+      }
+    },
+    "fileUpload": {
+      "studentId": {
+        "label": "Studentský Průkaz",
+        "description": "Jasné foto průkazu"
+      },
+      "passport": {
+        "label": "Cestovní Pas",
+        "description": "Jasné foto pasu"
+      }
+    }
+  },
+  "fileUpload": {
+    "title": "Nahrát Soubory",
+    "description": "Nahrajte dokumenty.",
+    "studentId": "Průkaz",
+    "passport": "Pas",
+    "dragAndDrop": "Přetáhněte soubory sem",
+    "orClickToSelect": "nebo klikněte pro výběr",
+    "uploading": "Nahrávání...",
+    "remove": "Odstranit",
+    "requirements": "JPEG, PNG, PDF. Max 5MB.",
+    "errors": {
+      "fileTooLarge": "Soubor příliš velký.",
+      "invalidFormat": "Neplatný formát.",
+      "uploadFailed": "Chyba.",
+      "noFilesUploaded": "Žádné soubory."
+    }
+  },
+  "workflow": {
+    "steps": {
+      "personalInfo": {
+        "label": "Osobní Info",
+        "description": "Detaily"
+      },
+      "fileUpload": {
+        "label": "Soubory",
+        "description": "Dokumenty"
+      },
+      "review": {
+        "label": "Kontrola",
+        "description": "Souhrn"
+      },
+      "confirmation": {
+        "label": "Potvrzení",
+        "description": "Odeslání"
+      },
+      "success": {
+        "label": "Hotovo",
+        "description": "Odesláno"
+      }
+    },
+    "progress": "Krok {{current}} z {{total}}",
+    "navigation": {
+      "previous": "Zpět",
+      "next": "Další",
+      "submit": "Odeslat Žádost",
+      "saveAsDraft": "Uložit Rozepsané",
+      "goHome": "Domů",
+      "saving": "Ukládání...",
+      "submitting": "Odesílání...",
+      "unsavedChanges": "Neuložené změny."
+    }
+  },
+  "common": {
+    "back": "Zpět",
+    "continue": "Pokračovat",
+    "submit": "Odeslat",
+    "submitting": "Odesílání...",
+    "cancel": "Zrušit",
+    "save": "Uložit",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "confirm": "Potvrdit",
+    "loading": "Načítání...",
+    "copy": "Kopírovat",
+    "notProvided": "Neuvedeno",
+    "notUploaded": "Nenahráno"
+  },
+  "errors": {
+    "general": "Došlo k chybě.",
+    "network": "Chyba sítě.",
+    "validation": "Zkontrolujte údaje."
+  },
+  "cookieConsent": {
+    "title": "Oznámení o ochraně osobních údajů (GDPR) a souborech Cookie",
+    "description": "Používáme nezbytné soubory cookie pro zabezpečený přenos dokumentů a zachování relace. V souladu s nařízením (EU) 2016/679 (GDPR) jsou vaše doklady šifrovány pomocí AES-256 GCM. Více v Zásadách ochrany osobních údajů.",
+    "acceptAll": "Přijmout vše",
+    "essentialOnly": "Pouze nezbytné",
+    "privacyPolicy": "Zásady ochrany osobních údajů"
+  }
 }

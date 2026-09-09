@@ -144,6 +144,10 @@ app.add_middleware(
     rate_limit_window=settings.RATE_LIMIT_WINDOW,
 )
 
+# Proxy Headers Middleware (Trust X-Forwarded-Proto and X-Forwarded-For from Cloudflare / Nginx)
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
 
 # CORS Middleware

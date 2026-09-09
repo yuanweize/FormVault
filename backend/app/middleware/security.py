@@ -318,11 +318,12 @@ class SecurityMiddleware(BaseHTTPMiddleware):
             "Content-Security-Policy": (
                 "default-src 'self'; "
                 "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fastapi.tiangolo.com https://client.crisp.chat; "
-                "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fastapi.tiangolo.com https://client.crisp.chat; "
+                "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fastapi.tiangolo.com https://client.crisp.chat https://fonts.googleapis.com; "
                 "img-src 'self' data: https:; "
-                "font-src 'self' data: https://cdn.jsdelivr.net https://client.crisp.chat; "
+                "font-src 'self' data: https://cdn.jsdelivr.net https://client.crisp.chat https://fonts.gstatic.com; "
                 "connect-src 'self' https: wss://client.relay.crisp.chat wss://*.crisp.chat; "
-                "frame-ancestors 'none'"
+                "frame-ancestors 'none'; "
+                "upgrade-insecure-requests"
             ),
             "Referrer-Policy": "strict-origin-when-cross-origin",
             "Permissions-Policy": (

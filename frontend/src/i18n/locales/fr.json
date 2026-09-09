@@ -1,313 +1,368 @@
 {
-    "app": {
-        "title": "FormVault",
-        "shortTitle": "FormVault",
-        "subtitle": "Portail de Demande d'Assurance Sécurisé"
+  "app": {
+    "title": "FormVault",
+    "shortTitle": "FormVault",
+    "subtitle": "Portail de Demande d'Assurance Sécurisé"
+  },
+  "stepper": {
+    "personalInfo": "Informations Personnelles",
+    "personalInfoShort": "Info",
+    "fileUpload": "Téléchargement de Documents",
+    "fileUploadShort": "Fichiers",
+    "review": "Vérifier & Soumettre",
+    "reviewShort": "Vérifier",
+    "success": "Terminé",
+    "successShort": "Fini",
+    "step": "Étape",
+    "of": "de"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Soumettre",
+    "cancel": "Annuler"
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire",
+    "email": "Veuillez entrer une adresse email valide",
+    "phone": "Veuillez entrer un numéro de téléphone valide",
+    "minLength": "La longueur minimale est de {{min}} caractères",
+    "maxLength": "La longueur maximale est de {{max}} caractères",
+    "fileSize": "La taille du fichier doit être inférieure à {{size}}MB",
+    "fileType": "Veuillez télécharger un type de fichier valide",
+    "dateFormat": "Veuillez entrer une date valide"
+  },
+  "pages": {
+    "home": {
+      "title": "Bienvenue sur FormVault",
+      "subtitle": "Complétez votre demande d'assurance en toute sécurité",
+      "getStarted": "Commencer",
+      "features": {
+        "secure": "Sécurisé & Crypté",
+        "secureDesc": "Vos données sont protégées par des normes industrielles",
+        "multilingual": "Support Multilingue",
+        "multilingualDesc": "Disponible en anglais, chinois, espagnol, etc.",
+        "mobile": "Compatible Mobile",
+        "mobileDesc": "Complétez votre demande sur n'importe quel appareil"
+      },
+      "authorizedBroker": "Authorized European Insurance Broker • Czech Republic & EU Standards",
+      "trackMyApplication": "Track My Application",
+      "metrics": {
+        "actCompliance": "Czech OAMP Compliant",
+        "rapidApp": "Rapid Application",
+        "bankPrivacy": "Bank-Grade Privacy"
+      },
+      "securityBadges": {
+        "endToEnd": "End-to-End Encrypted Storage",
+        "autoEmail": "Automatic Tracking Confirmation Email"
+      },
+      "tracker": {
+        "title": "Track Application Status",
+        "subtitle": "Enter your tracking reference number and registered email address to check real-time underwriting progress.",
+        "refLabel": "Reference Number",
+        "refPlaceholder": "e.g. APP-2026-001234",
+        "emailLabel": "Registered Email",
+        "emailPlaceholder": "e.g. client@example.com",
+        "trackButton": "Track",
+        "tracking": "Tracking...",
+        "applicantName": "Applicant Name",
+        "registeredEmail": "Registered Email",
+        "lastUpdated": "Last Updated",
+        "recently": "Recently",
+        "timelineTitle": "Application Processing Timeline",
+        "currentStage": "Current Stage"
+      },
+      "plans": {
+        "badge": "Curated Coverage Tiers",
+        "title": "Recommended Insurance Plans",
+        "subtitle": "Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.",
+        "choosePlan": "Choose Plan & Apply",
+        "applyNow": "Apply Now",
+        "perYear": "/ year",
+        "perMonth": "/ month"
+      },
+      "partners": {
+        "badge": "Underwriting Partners",
+        "title": "Underwritten by Leading European Insurers",
+        "subtitle": "Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.",
+        "officialPortal": "Official Portal"
+      },
+      "banner": {
+        "notice": "Notice",
+        "learnMore": "Apply Online"
+      }
     },
-    "stepper": {
-        "personalInfo": "Informations Personnelles",
-        "personalInfoShort": "Info",
-        "fileUpload": "Téléchargement de Documents",
-        "fileUploadShort": "Fichiers",
-        "review": "Vérifier & Soumettre",
-        "reviewShort": "Vérifier",
-        "success": "Terminé",
-        "successShort": "Fini",
-        "step": "Étape",
-        "of": "de"
-    },
-    "navigation": {
-        "home": "Accueil",
-        "back": "Retour",
-        "next": "Suivant",
-        "submit": "Soumettre",
-        "cancel": "Annuler"
-    },
-    "validation": {
-        "required": "Ce champ est obligatoire",
-        "email": "Veuillez entrer une adresse email valide",
-        "phone": "Veuillez entrer un numéro de téléphone valide",
-        "minLength": "La longueur minimale est de {{min}} caractères",
-        "maxLength": "La longueur maximale est de {{max}} caractères",
-        "fileSize": "La taille du fichier doit être inférieure à {{size}}MB",
-        "fileType": "Veuillez télécharger un type de fichier valide",
-        "dateFormat": "Veuillez entrer une date valide"
-    },
-    "pages": {
-        "home": {
-            "title": "Bienvenue sur FormVault",
-            "subtitle": "Complétez votre demande d'assurance en toute sécurité",
-            "getStarted": "Commencer",
-            "features": {
-                "secure": "Sécurisé & Crypté",
-                "secureDesc": "Vos données sont protégées par des normes industrielles",
-                "multilingual": "Support Multilingue",
-                "multilingualDesc": "Disponible en anglais, chinois, espagnol, etc.",
-                "mobile": "Compatible Mobile",
-                "mobileDesc": "Complétez votre demande sur n'importe quel appareil"
-            }
-        },
-        "personalInfo": {
-            "title": "Informations Personnelles",
-            "subtitle": "Veuillez fournir vos coordonnées"
-        },
-        "fileUpload": {
-            "title": "Télécharger des Documents",
-            "subtitle": "Veuillez télécharger les documents requis",
-            "instructions": "Téléchargez des images claires ou des PDF. Max 5MB par fichier.",
-            "allFilesUploaded": "Tous les fichiers requis ont été téléchargés avec succès !",
-            "proceedToReview": "Procéder à la Vérification"
-        },
-        "review": {
-            "title": "Vérifier votre Demande",
-            "subtitle": "Veuillez vérifier vos informations avant de continuer",
-            "incompleteWarning": "Votre demande est incomplète.",
-            "missingPersonalInfo": "Informations personnelles incomplètes",
-            "missingFiles": "Fichiers requis manquants",
-            "personalInfoIncomplete": "Veuillez compléter vos informations personnelles.",
-            "fileNotUploaded": "Ce fichier n'a pas encore été téléchargé.",
-            "readyToProceed": "Votre demande est complète et prête à être soumise !",
-            "proceedToConfirmation": "Procéder à la Confirmation",
-            "sections": {
-                "personalInfo": "Informations Personnelles",
-                "uploadedFiles": "Fichiers Téléchargés"
-            }
-        },
-        "confirmation": {
-            "title": "Confirmer la Soumission",
-            "subtitle": "Veuillez confirmer l'envoi de votre demande",
-            "incompleteWarning": "Impossible de soumettre : demande incomplète.",
-            "missingPersonalInfo": "Info perso manquante",
-            "missingFiles": "Fichiers manquants",
-            "submissionNotice": "En soumettant, vous confirmez l'exactitude des informations. Vous recevrez un email de confirmation.",
-            "referenceNumber": "Numéro de Référence",
-            "sections": {
-                "personalInfo": "Informations Personnelles",
-                "uploadedFiles": "Fichiers Téléchargés",
-                "applicationDetails": "Détails de la Demande"
-            }
-        },
-        "success": {
-            "title": "Demande Soumise !",
-            "subtitle": "Votre demande a été envoyée avec succès",
-            "referenceNumber": "Votre Numéro de Référence",
-            "referenceNumberNote": "Veuillez conserver ce numéro",
-            "applicationSummary": "Résumé de la Demande",
-            "submissionDate": "Date de Soumission",
-            "nextSteps": {
-                "title": "Et ensuite ?",
-                "emailConfirmation": "Confirmation par Email",
-                "emailConfirmationNote": "Vous recevrez une confirmation sous 5 minutes",
-                "processing": "Traitement de la Demande",
-                "processingNote": "Revue sous 2-3 jours ouvrables",
-                "followUp": "Suivi",
-                "followUpNote": "Nous vous contacterons si nécessaire"
-            },
-            "importantInfo": "Important : Gardez votre numéro de référence en sécurité.",
-            "actions": {
-                "goHome": "Retour à l'Accueil",
-                "print": "Imprimer"
-            }
-        },
-        "notFound": {
-            "title": "Page Non Trouvée",
-            "subtitle": "La page demandée n'existe pas",
-            "goHome": "Accueil"
-        }
-    },
-    "footer": {
-        "allRightsReserved": "Tous droits réservés.",
-        "privacy": "Confidentialité",
-        "terms": "Conditions",
-        "support": "Support"
-    },
-    "forms": {
-        "personalInfo": {
-            "title": "Informations Personnelles",
-            "subtitle": "Détails personnels pour l'assurance",
-            "submitting": "Envoi...",
-            "success": "Informations sauvegardées !",
-            "sections": {
-                "personal": "Détails Personnels",
-                "address": "Adresse"
-            },
-            "fields": {
-                "firstName": "Prénom",
-                "lastName": "Nom",
-                "email": "Email",
-                "phone": "Téléphone",
-                "dateOfBirth": "Date de Naissance",
-                "insuranceType": "Type d'Assurance",
-                "address": {
-                    "street": "Rue",
-                    "city": "Ville",
-                    "state": "État/Région",
-                    "zipCode": "Code Postal",
-                    "country": "Pays"
-                }
-            },
-            "insuranceType": {
-                "label": "Type d'Assurance",
-                "options": {
-                    "health": "Assurance Santé",
-                    "auto": "Assurance Auto",
-                    "life": "Assurance Vie",
-                    "travel": "Assurance Voyage"
-                }
-            },
-            "insuranceTypes": {
-                "health": "Assurance Santé",
-                "auto": "Assurance Auto",
-                "life": "Assurance Vie",
-                "travel": "Assurance Voyage"
-            },
-            "validation": {
-                "firstName": {
-                    "required": "Prénom requis",
-                    "minLength": "Min 2 caractères",
-                    "maxLength": "Max 50 caractères",
-                    "pattern": "Lettres uniquement"
-                },
-                "lastName": {
-                    "required": "Nom requis",
-                    "minLength": "Min 2 caractères",
-                    "maxLength": "Max 50 caractères",
-                    "pattern": "Lettres uniquement"
-                },
-                "email": {
-                    "required": "Email requis",
-                    "pattern": "Email invalide"
-                },
-                "phone": {
-                    "required": "Téléphone requis",
-                    "pattern": "Numéro invalide"
-                },
-                "dateOfBirth": {
-                    "required": "Date de naissance requise",
-                    "future": "Date invalide (futur)",
-                    "minAge": "Vous devez avoir 18 ans",
-                    "maxAge": "Date invalide"
-                },
-                "insuranceType": {
-                    "required": "Sélectionnez un type"
-                },
-                "address": {
-                    "street": {
-                        "required": "Rue requise",
-                        "minLength": "Min 5 caractères"
-                    },
-                    "city": {
-                        "required": "Ville requise",
-                        "minLength": "Min 2 caractères",
-                        "pattern": "Lettres uniquement"
-                    },
-                    "state": {
-                        "required": "Région requise",
-                        "minLength": "Min 2 caractères"
-                    },
-                    "zipCode": {
-                        "required": "Code postal requis",
-                        "pattern": "Code invalide"
-                    },
-                    "country": {
-                        "required": "Pays requis"
-                    }
-                }
-            },
-            "countries": {
-                "US": "États-Unis",
-                "CA": "Canada",
-                "MX": "Mexique",
-                "CN": "Chine",
-                "ES": "Espagne",
-                "FR": "France",
-                "DE": "Allemagne",
-                "GB": "Royaume-Uni",
-                "AU": "Australie",
-                "JP": "Japon"
-            }
-        },
-        "fileUpload": {
-            "studentId": {
-                "label": "Carte Étudiante",
-                "description": "Photo claire de votre carte"
-            },
-            "passport": {
-                "label": "Passeport",
-                "description": "Photo claire de votre passeport"
-            }
-        }
+    "personalInfo": {
+      "title": "Informations Personnelles",
+      "subtitle": "Veuillez fournir vos coordonnées"
     },
     "fileUpload": {
-        "title": "Téléchargement",
-        "description": "Téléchargez vos documents.",
-        "studentId": "Carte Étudiante",
-        "passport": "Passeport",
-        "dragAndDrop": "Glisser-déposer ici",
-        "orClickToSelect": "ou cliquer pour sélectionner",
-        "uploading": "Téléchargement...",
-        "remove": "Retirer",
-        "requirements": "JPEG, PNG, PDF. Max 5MB.",
-        "errors": {
-            "fileTooLarge": "Fichier trop volumineux.",
-            "invalidFormat": "Format invalide.",
-            "uploadFailed": "Échec.",
-            "noFilesUploaded": "Aucun fichier."
-        }
+      "title": "Télécharger des Documents",
+      "subtitle": "Veuillez télécharger les documents requis",
+      "instructions": "Téléchargez des images claires ou des PDF. Max 5MB par fichier.",
+      "allFilesUploaded": "Tous les fichiers requis ont été téléchargés avec succès !",
+      "proceedToReview": "Procéder à la Vérification"
     },
-    "workflow": {
-        "steps": {
-            "personalInfo": {
-                "label": "Info Perso",
-                "description": "Détails"
-            },
-            "fileUpload": {
-                "label": "Fichiers",
-                "description": "Documents"
-            },
-            "review": {
-                "label": "Vérifier",
-                "description": "Récapitulatif"
-            },
-            "confirmation": {
-                "label": "Confirmer",
-                "description": "Envoi"
-            },
-            "success": {
-                "label": "Fini",
-                "description": "Terminé"
-            }
-        },
-        "progress": "Étape {{current}} sur {{total}}",
-        "navigation": {
-            "previous": "Précédent",
-            "next": "Suivant",
-            "submit": "Soumettre",
-            "saveAsDraft": "Sauvegarder Brouillon",
-            "goHome": "Accueil",
-            "saving": "Sauvegarde...",
-            "submitting": "Envoi...",
-            "unsavedChanges": "Modifications non enregistrées."
-        }
+    "review": {
+      "title": "Vérifier votre Demande",
+      "subtitle": "Veuillez vérifier vos informations avant de continuer",
+      "incompleteWarning": "Votre demande est incomplète.",
+      "missingPersonalInfo": "Informations personnelles incomplètes",
+      "missingFiles": "Fichiers requis manquants",
+      "personalInfoIncomplete": "Veuillez compléter vos informations personnelles.",
+      "fileNotUploaded": "Ce fichier n'a pas encore été téléchargé.",
+      "readyToProceed": "Votre demande est complète et prête à être soumise !",
+      "proceedToConfirmation": "Procéder à la Confirmation",
+      "sections": {
+        "personalInfo": "Informations Personnelles",
+        "uploadedFiles": "Fichiers Téléchargés"
+      }
     },
-    "common": {
-        "back": "Retour",
-        "continue": "Continuer",
-        "submit": "Soumettre",
-        "submitting": "Envoi...",
-        "cancel": "Annuler",
-        "save": "Sauvegarder",
-        "edit": "Modifier",
-        "delete": "Supprimer",
-        "confirm": "Confirmer",
-        "loading": "Chargement...",
-        "copy": "Copier",
-        "notProvided": "Non fourni",
-        "notUploaded": "Non téléchargé"
+    "confirmation": {
+      "title": "Confirmer la Soumission",
+      "subtitle": "Veuillez confirmer l'envoi de votre demande",
+      "incompleteWarning": "Impossible de soumettre : demande incomplète.",
+      "missingPersonalInfo": "Info perso manquante",
+      "missingFiles": "Fichiers manquants",
+      "submissionNotice": "En soumettant, vous confirmez l'exactitude des informations. Vous recevrez un email de confirmation.",
+      "referenceNumber": "Numéro de Référence",
+      "sections": {
+        "personalInfo": "Informations Personnelles",
+        "uploadedFiles": "Fichiers Téléchargés",
+        "applicationDetails": "Détails de la Demande"
+      }
     },
-    "errors": {
-        "general": "Une erreur est survenue.",
-        "network": "Erreur réseau.",
-        "validation": "Vérifiez vos entrées."
+    "success": {
+      "title": "Demande Soumise !",
+      "subtitle": "Votre demande a été envoyée avec succès",
+      "referenceNumber": "Votre Numéro de Référence",
+      "referenceNumberNote": "Veuillez conserver ce numéro",
+      "applicationSummary": "Résumé de la Demande",
+      "submissionDate": "Date de Soumission",
+      "nextSteps": {
+        "title": "Et ensuite ?",
+        "emailConfirmation": "Confirmation par Email",
+        "emailConfirmationNote": "Vous recevrez une confirmation sous 5 minutes",
+        "processing": "Traitement de la Demande",
+        "processingNote": "Revue sous 2-3 jours ouvrables",
+        "followUp": "Suivi",
+        "followUpNote": "Nous vous contacterons si nécessaire"
+      },
+      "importantInfo": "Important : Gardez votre numéro de référence en sécurité.",
+      "actions": {
+        "goHome": "Retour à l'Accueil",
+        "print": "Imprimer"
+      }
+    },
+    "notFound": {
+      "title": "Page Non Trouvée",
+      "subtitle": "La page demandée n'existe pas",
+      "goHome": "Accueil"
     }
+  },
+  "footer": {
+    "allRightsReserved": "Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "support": "Support",
+    "brokerTitle": "FormVault Insurance Brokerage & Underwriting Services",
+    "brokerDesc": "Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA."
+  },
+  "forms": {
+    "personalInfo": {
+      "title": "Informations Personnelles",
+      "subtitle": "Détails personnels pour l'assurance",
+      "submitting": "Envoi...",
+      "success": "Informations sauvegardées !",
+      "sections": {
+        "personal": "Détails Personnels",
+        "address": "Adresse"
+      },
+      "fields": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "dateOfBirth": "Date de Naissance",
+        "insuranceType": "Type d'Assurance",
+        "address": {
+          "street": "Rue",
+          "city": "Ville",
+          "state": "État/Région",
+          "zipCode": "Code Postal",
+          "country": "Pays"
+        }
+      },
+      "insuranceType": {
+        "label": "Type d'Assurance",
+        "options": {
+          "health": "Assurance Santé",
+          "auto": "Assurance Auto",
+          "life": "Assurance Vie",
+          "travel": "Assurance Voyage"
+        }
+      },
+      "insuranceTypes": {
+        "health": "Assurance Santé",
+        "auto": "Assurance Auto",
+        "life": "Assurance Vie",
+        "travel": "Assurance Voyage"
+      },
+      "validation": {
+        "firstName": {
+          "required": "Prénom requis",
+          "minLength": "Min 2 caractères",
+          "maxLength": "Max 50 caractères",
+          "pattern": "Lettres uniquement"
+        },
+        "lastName": {
+          "required": "Nom requis",
+          "minLength": "Min 2 caractères",
+          "maxLength": "Max 50 caractères",
+          "pattern": "Lettres uniquement"
+        },
+        "email": {
+          "required": "Email requis",
+          "pattern": "Email invalide"
+        },
+        "phone": {
+          "required": "Téléphone requis",
+          "pattern": "Numéro invalide"
+        },
+        "dateOfBirth": {
+          "required": "Date de naissance requise",
+          "future": "Date invalide (futur)",
+          "minAge": "Vous devez avoir 18 ans",
+          "maxAge": "Date invalide"
+        },
+        "insuranceType": {
+          "required": "Sélectionnez un type"
+        },
+        "address": {
+          "street": {
+            "required": "Rue requise",
+            "minLength": "Min 5 caractères"
+          },
+          "city": {
+            "required": "Ville requise",
+            "minLength": "Min 2 caractères",
+            "pattern": "Lettres uniquement"
+          },
+          "state": {
+            "required": "Région requise",
+            "minLength": "Min 2 caractères"
+          },
+          "zipCode": {
+            "required": "Code postal requis",
+            "pattern": "Code invalide"
+          },
+          "country": {
+            "required": "Pays requis"
+          }
+        }
+      },
+      "countries": {
+        "US": "États-Unis",
+        "CA": "Canada",
+        "MX": "Mexique",
+        "CN": "Chine",
+        "ES": "Espagne",
+        "FR": "France",
+        "DE": "Allemagne",
+        "GB": "Royaume-Uni",
+        "AU": "Australie",
+        "JP": "Japon"
+      }
+    },
+    "fileUpload": {
+      "studentId": {
+        "label": "Carte Étudiante",
+        "description": "Photo claire de votre carte"
+      },
+      "passport": {
+        "label": "Passeport",
+        "description": "Photo claire de votre passeport"
+      }
+    }
+  },
+  "fileUpload": {
+    "title": "Téléchargement",
+    "description": "Téléchargez vos documents.",
+    "studentId": "Carte Étudiante",
+    "passport": "Passeport",
+    "dragAndDrop": "Glisser-déposer ici",
+    "orClickToSelect": "ou cliquer pour sélectionner",
+    "uploading": "Téléchargement...",
+    "remove": "Retirer",
+    "requirements": "JPEG, PNG, PDF. Max 5MB.",
+    "errors": {
+      "fileTooLarge": "Fichier trop volumineux.",
+      "invalidFormat": "Format invalide.",
+      "uploadFailed": "Échec.",
+      "noFilesUploaded": "Aucun fichier."
+    }
+  },
+  "workflow": {
+    "steps": {
+      "personalInfo": {
+        "label": "Info Perso",
+        "description": "Détails"
+      },
+      "fileUpload": {
+        "label": "Fichiers",
+        "description": "Documents"
+      },
+      "review": {
+        "label": "Vérifier",
+        "description": "Récapitulatif"
+      },
+      "confirmation": {
+        "label": "Confirmer",
+        "description": "Envoi"
+      },
+      "success": {
+        "label": "Fini",
+        "description": "Terminé"
+      }
+    },
+    "progress": "Étape {{current}} sur {{total}}",
+    "navigation": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "submit": "Soumettre",
+      "saveAsDraft": "Sauvegarder Brouillon",
+      "goHome": "Accueil",
+      "saving": "Sauvegarde...",
+      "submitting": "Envoi...",
+      "unsavedChanges": "Modifications non enregistrées."
+    }
+  },
+  "common": {
+    "back": "Retour",
+    "continue": "Continuer",
+    "submit": "Soumettre",
+    "submitting": "Envoi...",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "loading": "Chargement...",
+    "copy": "Copier",
+    "notProvided": "Non fourni",
+    "notUploaded": "Non téléchargé"
+  },
+  "errors": {
+    "general": "Une erreur est survenue.",
+    "network": "Erreur réseau.",
+    "validation": "Vérifiez vos entrées."
+  },
+  "cookieConsent": {
+    "title": "EU GDPR & Cookie Compliance Notice",
+    "description": "We use strictly necessary cookies to ensure encrypted document transmission and remember your session. Under Regulation (EU) 2016/679 (GDPR), your identity documents are encrypted with AES-256 GCM. Learn more in our Privacy Policy.",
+    "acceptAll": "Accept All",
+    "essentialOnly": "Essential Only",
+    "privacyPolicy": "Privacy Policy"
+  }
 }

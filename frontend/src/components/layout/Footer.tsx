@@ -47,11 +47,11 @@ const Footer: React.FC = () => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.8 }}>
               <ShieldOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                FormVault Insurance Brokerage & Underwriting Services
+                {t('footer.brokerTitle', 'FormVault Insurance Brokerage & Underwriting Services')}
               </Typography>
             </Stack>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.5 }}>
-              Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA.
+              {t('footer.brokerDesc', 'Licensed intermediary operations in Prague, Czech Republic. Official partner for PVZP, Slavia, Maxima & UNIQA.')}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.3 }}>
               © {new Date().getFullYear()} FormVault. {t('footer.allRightsReserved')}

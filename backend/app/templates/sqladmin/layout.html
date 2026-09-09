@@ -1,6 +1,23 @@
 {% extends "sqladmin/base.html" %}
 {% from 'sqladmin/_macros.html' import display_menu %}
 
+{% block head_css %}
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/tabler.min.css">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/tabler-icons.min.css">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/select2.min.css">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/flatpickr.min.css">
+  <link rel="stylesheet" href="{{ admin.base_url }}/statics/css/main.css">
+{% endblock %}
+
+{% block tail_js %}
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/tabler.min.js"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/select2.full.min.js"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/flatpickr.min.js"></script>
+  <script type="text/javascript" src="{{ admin.base_url }}/statics/js/main.js"></script>
+{% endblock %}
+
 {% block head_tail %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

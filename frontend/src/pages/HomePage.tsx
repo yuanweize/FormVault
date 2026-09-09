@@ -227,7 +227,11 @@ const HomePage: React.FC = () => {
   const handleTrackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!trackRef.trim() || !trackEmail.trim()) {
-      setTrackError('Please provide both your Application Reference Number and registered Email.');
+      setTrackError(
+        t('pages.home.tracker.provideBothError', {
+          defaultValue: 'Please provide both your Application Reference Number and registered Email.',
+        })
+      );
       return;
     }
 
@@ -242,7 +246,10 @@ const HomePage: React.FC = () => {
       const errMsg =
         err?.response?.data?.message ||
         err?.response?.data?.detail ||
-        'No matching application found. Please verify your reference number and registered email address.';
+        t('pages.home.tracker.notFoundError', {
+          defaultValue:
+            'No matching application found. Please verify your reference number and registered email address.',
+        });
       setTrackError(errMsg);
     } finally {
       setIsTracking(false);
@@ -308,7 +315,7 @@ const HomePage: React.FC = () => {
             <Box>
               <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
                 <Chip
-                  label={banner.tag || 'Notice'}
+                  label={banner.tag || t('pages.home.banner.notice', { defaultValue: 'Notice' })}
                   size="small"
                   sx={{
                     fontWeight: 700,
@@ -336,7 +343,7 @@ const HomePage: React.FC = () => {
               onClick={() => handleGetStarted('health')}
               sx={{ fontWeight: 700, whiteSpace: 'nowrap' }}
             >
-              {banner.button_text || 'Learn More'}
+              {banner.button_text || t('pages.home.banner.learnMore', { defaultValue: 'Apply Online' })}
             </Button>
             <Button
               size="small"
@@ -360,7 +367,7 @@ const HomePage: React.FC = () => {
       >
         <Chip
           icon={<VerifiedUserOutlined sx={{ fontSize: 16 }} />}
-          label="Authorized European Insurance Broker • Czech Republic & EU Standards"
+          label={t('pages.home.authorizedBroker', { defaultValue: 'Authorized European Insurance Broker • Czech Republic & EU Standards' })}
           sx={{
             mb: 3,
             px: 1.5,
@@ -458,16 +465,16 @@ const HomePage: React.FC = () => {
               borderWidth: '1.5px',
             }}
           >
-            Track My Application
+            {t('pages.home.trackMyApplication', { defaultValue: 'Track My Application' })}
           </Button>
         </Stack>
 
         {/* Live Metrics Row */}
         <Grid container spacing={2} sx={{ mb: 4, maxWidth: 700, mx: 'auto' }}>
           {[
-            { value: 'Act 326/1999', label: 'Czech OAMP Compliant' },
-            { value: '< 3 Min', label: 'Rapid Application' },
-            { value: 'AES-256 GCM', label: 'Bank-Grade Privacy' },
+            { value: 'Act 326/1999', label: t('pages.home.metrics.actCompliance', { defaultValue: 'Czech OAMP Compliant' }) },
+            { value: '< 3 Min', label: t('pages.home.metrics.rapidApp', { defaultValue: 'Rapid Application' }) },
+            { value: 'AES-256 GCM', label: t('pages.home.metrics.bankPrivacy', { defaultValue: 'Bank-Grade Privacy' }) },
           ].map((metric, i) => (
             <Grid item xs={4} key={i}>
               <Box
@@ -514,13 +521,13 @@ const HomePage: React.FC = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <LockOutlined sx={{ fontSize: 18, color: 'success.main' }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              End-to-End Encrypted Storage
+              {t('pages.home.securityBadges.endToEnd', { defaultValue: 'End-to-End Encrypted Storage' })}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <SpeedOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              Automatic Tracking Confirmation Email
+              {t('pages.home.securityBadges.autoEmail', { defaultValue: 'Automatic Tracking Confirmation Email' })}
             </Typography>
           </Box>
         </Stack>
@@ -569,11 +576,11 @@ const HomePage: React.FC = () => {
                 <SearchOutlined fontSize="small" />
               </Box>
               <Typography variant="h5" sx={{ fontWeight: 800 }}>
-                Track Application Status
+                {t('pages.home.tracker.title', { defaultValue: 'Track Application Status' })}
               </Typography>
             </Stack>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              Enter your tracking reference number and registered email address to check real-time underwriting progress.
+              {t('pages.home.tracker.subtitle', { defaultValue: 'Enter your tracking reference number and registered email address to check real-time underwriting progress.' })}
             </Typography>
 
             {/* Tracking Form */}
@@ -583,8 +590,8 @@ const HomePage: React.FC = () => {
                   <TextField
                     id="tracking-reference-input"
                     fullWidth
-                    label="Reference Number"
-                    placeholder="e.g. APP-2026-001234"
+                    label={String(t('pages.home.tracker.refLabel', { defaultValue: 'Reference Number' }))}
+                    placeholder={String(t('pages.home.tracker.refPlaceholder', { defaultValue: 'e.g. APP-2026-001234' }))}
                     value={trackRef}
                     onChange={(e) => setTrackRef(e.target.value.toUpperCase())}
                     disabled={isTracking}
@@ -595,8 +602,8 @@ const HomePage: React.FC = () => {
                 <Grid item xs={12} sm={5}>
                   <TextField
                     fullWidth
-                    label="Registered Email"
-                    placeholder="e.g. client@example.com"
+                    label={String(t('pages.home.tracker.emailLabel', { defaultValue: 'Registered Email' }))}
+                    placeholder={String(t('pages.home.tracker.emailPlaceholder', { defaultValue: 'e.g. client@example.com' }))}
                     type="email"
                     value={trackEmail}
                     onChange={(e) => setTrackEmail(e.target.value)}
@@ -617,7 +624,7 @@ const HomePage: React.FC = () => {
                       borderRadius: '10px',
                     }}
                   >
-                    {isTracking ? <CircularProgress size={24} color="inherit" /> : 'Track'}
+                    {isTracking ? <CircularProgress size={24} color="inherit" /> : t('pages.home.tracker.trackButton', { defaultValue: 'Track' })}
                   </Button>
                 </Grid>
               </Grid>
@@ -657,7 +664,7 @@ const HomePage: React.FC = () => {
                 >
                   <Box>
                     <Typography variant="caption" color="text.secondary">
-                      Reference Number
+                      {t('pages.home.tracker.refLabel', { defaultValue: 'Reference Number' })}
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 800, fontFamily: 'monospace' }}>
                       {trackResult.reference_number}
@@ -686,28 +693,28 @@ const HomePage: React.FC = () => {
                 <Grid container spacing={2} sx={{ mb: 3 }}>
                   <Grid item xs={6} sm={4}>
                     <Typography variant="caption" color="text.secondary">
-                      Applicant Name
+                      {t('pages.home.tracker.applicantName', { defaultValue: 'Applicant Name' })}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      {trackResult.masked_name || 'Protected'}
+                      {trackResult.masked_name || t('pages.home.tracker.protected', { defaultValue: 'Protected' })}
                     </Typography>
                   </Grid>
                   <Grid item xs={6} sm={4}>
                     <Typography variant="caption" color="text.secondary">
-                      Registered Email
+                      {t('pages.home.tracker.registeredEmail', { defaultValue: 'Registered Email' })}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      {trackResult.masked_email || 'Protected'}
+                      {trackResult.masked_email || t('pages.home.tracker.protected', { defaultValue: 'Protected' })}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Typography variant="caption" color="text.secondary">
-                      Last Updated
+                      {t('pages.home.tracker.lastUpdated', { defaultValue: 'Last Updated' })}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       {trackResult.updated_at
                         ? new Date(trackResult.updated_at).toLocaleString()
-                        : 'Recently'}
+                        : t('pages.home.tracker.recently', { defaultValue: 'Recently' })}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -716,7 +723,7 @@ const HomePage: React.FC = () => {
 
                 {/* Visual Timeline Progression */}
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>
-                  Application Processing Timeline
+                  {t('pages.home.tracker.timelineTitle', { defaultValue: 'Application Processing Timeline' })}
                 </Typography>
 
                 <Stack spacing={2}>
@@ -753,7 +760,7 @@ const HomePage: React.FC = () => {
                           </Typography>
                           {step.current && (
                             <Chip
-                              label="Current Stage"
+                              label={t('pages.home.tracker.currentStage', { defaultValue: 'Current Stage' })}
                               size="small"
                               color="primary"
                               sx={{ height: 20, fontSize: '0.675rem', fontWeight: 700 }}
@@ -782,15 +789,15 @@ const HomePage: React.FC = () => {
       <Box sx={{ mb: { xs: 8, md: 11 } }}>
         <Box sx={{ textAlign: 'center', mb: 5 }}>
           <Chip
-            label="Curated Coverage Tiers"
+            label={t('pages.home.plans.badge', { defaultValue: 'Curated Coverage Tiers' })}
             size="small"
             sx={{ fontWeight: 600, mb: 1.5, backgroundColor: 'rgba(79, 70, 229, 0.1)', color: 'primary.main' }}
           />
           <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.4rem' } }}>
-            Recommended Insurance Plans
+            {t('pages.home.plans.title', { defaultValue: 'Recommended Insurance Plans' })}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', mt: 1 }}>
-            Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.
+            {t('pages.home.plans.subtitle', { defaultValue: 'Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.' })}
           </Typography>
         </Box>
 
@@ -845,10 +852,12 @@ const HomePage: React.FC = () => {
                     <Typography variant="h4" component="span" sx={{ fontWeight: 800, color: 'primary.main' }}>
                       {plan.price_amount > 0
                         ? `${plan.price_amount.toLocaleString()} ${plan.currency}`
-                        : 'Custom Rate'}
+                        : t('pages.home.plans.customRate', { defaultValue: 'Custom Rate' })}
                     </Typography>
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                      / {plan.billing_period || 'year'}
+                      {plan.billing_period === 'month'
+                        ? t('pages.home.plans.perMonth', { defaultValue: '/ month' })
+                        : t('pages.home.plans.perYear', { defaultValue: '/ year' })}
                     </Typography>
                   </Box>
 
@@ -880,7 +889,7 @@ const HomePage: React.FC = () => {
                       py: 1,
                     }}
                   >
-                    Apply Now
+                    {t('pages.home.plans.applyNow', { defaultValue: 'Apply Now' })}
                   </Button>
                 </CardContent>
               </Card>
@@ -893,15 +902,15 @@ const HomePage: React.FC = () => {
       <Box sx={{ mb: { xs: 8, md: 10 } }}>
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Chip
-            label="Underwriting Partners"
+            label={t('pages.home.partners.badge', { defaultValue: 'Underwriting Partners' })}
             size="small"
             sx={{ fontWeight: 600, mb: 1, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#059669' }}
           />
           <Typography variant="h4" sx={{ fontWeight: 800 }}>
-            Underwritten by Leading European Insurers
+            {t('pages.home.partners.title', { defaultValue: 'Underwritten by Leading European Insurers' })}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 580, mx: 'auto', mt: 0.5 }}>
-            Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.
+            {t('pages.home.partners.subtitle', { defaultValue: 'Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.' })}
           </Typography>
         </Box>
 
@@ -961,7 +970,7 @@ const HomePage: React.FC = () => {
                         textDecoration: 'none',
                       }}
                     >
-                      Official Portal <OpenInNewOutlined sx={{ fontSize: 14 }} />
+                      {t('pages.home.partners.officialPortal', { defaultValue: 'Official Portal' })} <OpenInNewOutlined sx={{ fontSize: 14 }} />
                     </Link>
                   </Box>
                 )}
