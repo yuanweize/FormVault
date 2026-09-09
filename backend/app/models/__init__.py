@@ -8,6 +8,19 @@ from .email_export import EmailExport
 from .audit_log import AuditLog
 from .system import AdminUser, SystemConfig
 from .partner import InsuranceCompany, InsurancePlan, AgencyBanner
+from .compliance import (
+    EvidenceRecord,
+    ProductVersion,
+    PriceBook,
+    PriceRate,
+    FormRecipe,
+    QuestionnaireVersion,
+    LegalDocumentVersion,
+    DisclosureBundleSnapshot,
+    PartnerHandoffConsent,
+    PrivacyRequest,
+    SecurityIncident,
+)
 
 __all__ = [
     "Application",
@@ -19,4 +32,15 @@ __all__ = [
     "InsuranceCompany",
     "InsurancePlan",
     "AgencyBanner",
+    "EvidenceRecord",
+    "ProductVersion",
+    "PriceBook",
+    "PriceRate",
+    "FormRecipe",
+    "QuestionnaireVersion",
+    "LegalDocumentVersion",
+    "DisclosureBundleSnapshot",
+    "PartnerHandoffConsent",
+    "PrivacyRequest",
+    "SecurityIncident",
 ]

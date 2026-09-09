@@ -72,6 +72,33 @@ class SystemConfig(Base):
         nullable=True,
     )
 
+    # Regulatory Scope Gate (LEAD_ONLY, ASSISTED_APPLICATION, REGULATED_DISTRIBUTION)
+    business_scope_mode = Column(String(30), default="LEAD_ONLY", nullable=False)
+
+    # Operator & Intermediary Identity Roles (tipař / makléř contractual alignment)
+    operator_legal_name = Column(String(100), default="HKTSE s.r.o.", nullable=False)
+    operator_ico = Column(String(20), default="10858032", nullable=False)
+    operator_role = Column(String(50), default="tipar", nullable=False)  # tipar (lead introducer)
+    operator_website_url = Column(String(255), default="https://hktse.eu.org", nullable=False)
+    
+    partner_name = Column(String(100), default="České pojištění a.s.", nullable=True)
+    partner_ico = Column(String(20), default="24729007", nullable=True)
+    partner_role = Column(String(50), default="makler", nullable=True)  # makler (licensed independent broker)
+    partner_cnb_id = Column(String(50), default="24729007", nullable=True)
+    partner_website_url = Column(String(255), default="https://ceskepojisteni.cz", nullable=True)
+    
+    relationship_status = Column(String(30), default="VERIFIED", nullable=False)  # DRAFT, HISTORICAL, PENDING_CONFIRMATION, VERIFIED, EXPIRED, DISABLED
+    relationship_valid_from = Column(DateTime, nullable=True)
+    relationship_valid_until = Column(DateTime, nullable=True)
+    relationship_verified_at = Column(DateTime, nullable=True)
+    public_wording_approved = Column(Boolean, default=True, nullable=False)
+
+    # Data Processing Agreement (DPA) status & dates
+    dpa_status = Column(String(30), default="VERIFIED", nullable=False)  # VERIFIED, PENDING, EXPIRED
+    dpa_valid_from = Column(DateTime, nullable=True)
+    dpa_valid_until = Column(DateTime, nullable=True)
+    lead_only_fallback_url = Column(String(255), nullable=True)
+
     # Configurable Features Showcase (JSON array for landing page feature cards)
     features_config = Column(
         Text,
@@ -81,5 +108,5 @@ class SystemConfig(Base):
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     def __repr__(self):
-        return f"<SystemConfig {self.site_title}>"
+        return f"<SystemConfig {self.site_title} ({self.business_scope_mode})>"
 

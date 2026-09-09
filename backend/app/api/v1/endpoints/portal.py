@@ -73,6 +73,19 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         crisp_custom_color=config.crisp_custom_color or "blue",
         form_profile_config=getattr(config, "form_profile_config", None),
         features_config=getattr(config, "features_config", None),
+        business_scope_mode=getattr(config, "business_scope_mode", "LEAD_ONLY") or "LEAD_ONLY",
+        operator_legal_name=getattr(config, "operator_legal_name", "HKTSE s.r.o.") or "HKTSE s.r.o.",
+        operator_ico=getattr(config, "operator_ico", "10858032") or "10858032",
+        operator_role=getattr(config, "operator_role", "tipar") or "tipar",
+        operator_website_url=getattr(config, "operator_website_url", "https://hktse.eu.org") or "https://hktse.eu.org",
+        partner_name=getattr(config, "partner_name", "České pojištění a.s.") or "České pojištění a.s.",
+        partner_ico=getattr(config, "partner_ico", "24729007") or "24729007",
+        partner_role=getattr(config, "partner_role", "makler") or "makler",
+        partner_cnb_id=getattr(config, "partner_cnb_id", "24729007") or "24729007",
+        partner_website_url=getattr(config, "partner_website_url", "https://ceskepojisteni.cz") or "https://ceskepojisteni.cz",
+        relationship_status=getattr(config, "relationship_status", "VERIFIED") or "VERIFIED",
+        dpa_status=getattr(config, "dpa_status", "VERIFIED") or "VERIFIED",
+        lead_only_fallback_url=getattr(config, "lead_only_fallback_url", None),
     )
 
 

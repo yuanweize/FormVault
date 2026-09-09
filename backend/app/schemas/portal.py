@@ -73,6 +73,21 @@ class PortalPublicConfigSchema(BaseModel):
     form_profile_config: Optional[str] = None
     features_config: Optional[str] = None
 
+    # Regulatory Scope & Entity Identity (tipař / makléř)
+    business_scope_mode: str = "LEAD_ONLY"
+    operator_legal_name: str = "HKTSE s.r.o."
+    operator_ico: str = "10858032"
+    operator_role: str = "tipar"
+    operator_website_url: str = "https://hktse.eu.org"
+    partner_name: Optional[str] = "České pojištění a.s."
+    partner_ico: Optional[str] = "24729007"
+    partner_role: Optional[str] = "makler"
+    partner_cnb_id: Optional[str] = "24729007"
+    partner_website_url: Optional[str] = "https://ceskepojisteni.cz"
+    relationship_status: str = "VERIFIED"
+    dpa_status: str = "VERIFIED"
+    lead_only_fallback_url: Optional[str] = None
+
     model_config = ConfigDict(from_attributes=True)
 
 

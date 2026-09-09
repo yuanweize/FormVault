@@ -22,6 +22,17 @@ from ..models.email_export import EmailExport
 from ..models.audit_log import AuditLog
 from ..models.system import AdminUser, SystemConfig
 from ..models.partner import InsuranceCompany, InsurancePlan, AgencyBanner
+from ..models.compliance import (
+    EvidenceRecord,
+    ProductVersion,
+    PriceBook,
+    PriceRate,
+    FormRecipe,
+    LegalDocumentVersion,
+    PartnerHandoffConsent,
+    PrivacyRequest,
+    SecurityIncident,
+)
 from .auth import get_current_admin
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -416,47 +427,130 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
     can_delete = False
 
     column_list = [
+        SystemConfig.business_scope_mode,
+        SystemConfig.operator_legal_name,
+        SystemConfig.partner_name,
+        SystemConfig.relationship_status,
         SystemConfig.site_title,
         SystemConfig.storage_provider,
-        SystemConfig.production_ingress_name,
-        SystemConfig.primary_domain,
-        SystemConfig.support_email,
         SystemConfig.updated_at,
     ]
     column_labels = {
+        SystemConfig.business_scope_mode: "Regulatory Scope Mode",
+        SystemConfig.operator_legal_name: "Operator Legal Name",
+        SystemConfig.partner_name: "Broker Partner",
+        SystemConfig.relationship_status: "Partnership Status",
         SystemConfig.site_title: "Website Title",
         SystemConfig.storage_provider: "Storage Provider",
-        SystemConfig.production_ingress_name: "Ingress Architecture",
-        SystemConfig.primary_domain: "Primary Domain",
-        SystemConfig.support_email: "Support Email",
         SystemConfig.updated_at: "Last Saved",
     }
     form_columns = [
+        # 1. Regulatory Scope Gate & Intermediary Alignment
+        SystemConfig.business_scope_mode,
+        SystemConfig.operator_legal_name,
+        SystemConfig.operator_ico,
+        SystemConfig.operator_role,
+        SystemConfig.operator_website_url,
+        SystemConfig.partner_name,
+        SystemConfig.partner_ico,
+        SystemConfig.partner_role,
+        SystemConfig.partner_cnb_id,
+        SystemConfig.partner_website_url,
+        SystemConfig.relationship_status,
+        SystemConfig.relationship_valid_from,
+        SystemConfig.relationship_valid_until,
+        SystemConfig.public_wording_approved,
+        SystemConfig.dpa_status,
+        SystemConfig.dpa_valid_from,
+        SystemConfig.dpa_valid_until,
+        SystemConfig.lead_only_fallback_url,
+        # 2. Portal Branding & Disclosure
         SystemConfig.site_title,
         SystemConfig.site_description,
         SystemConfig.site_icon_url,
         SystemConfig.support_email,
         SystemConfig.broker_legal_disclosure,
+        # 3. Storage Settings
         SystemConfig.storage_provider,
         SystemConfig.s3_endpoint,
         SystemConfig.s3_bucket,
         SystemConfig.s3_region,
         SystemConfig.s3_access_key,
         SystemConfig.s3_secret_key,
+        # 4. Live Chat
         SystemConfig.crisp_website_id,
         SystemConfig.crisp_custom_color,
+        # 5. Domain & Ingress
         SystemConfig.production_ingress_name,
         SystemConfig.primary_domain,
         SystemConfig.secondary_domain,
+        # 6. JSON Configs
         SystemConfig.form_profile_config,
         SystemConfig.features_config,
     ]
     form_overrides = dict(
+        business_scope_mode=SelectField,
+        operator_role=SelectField,
+        partner_role=SelectField,
+        relationship_status=SelectField,
+        dpa_status=SelectField,
         storage_provider=SelectField,
         crisp_custom_color=SelectField,
         production_ingress_name=SelectField,
     )
     form_args = dict(
+        business_scope_mode=dict(
+            choices=[
+                ("LEAD_ONLY", "LEAD_ONLY (Safest Default: Neutral info & lead inquiry intake only, no passport uploads)"),
+                ("ASSISTED_APPLICATION", "ASSISTED_APPLICATION (Full digital passport upload & dossier ingestion under verified broker DPA)"),
+                ("REGULATED_DISTRIBUTION", "REGULATED_DISTRIBUTION (Disabled in source-available distribution)"),
+            ],
+            label="Regulatory Scope & Feature Gate",
+            description="Controls public functionality according to legal authorizations. Default LEAD_ONLY collects basic inquiries. ASSISTED_APPLICATION requires: active cooperation agreement + active DPA + approved workflow scope + verified product version + verified form recipe.",
+        ),
+        operator_role=dict(
+            choices=[
+                ("tipar", "Tipař (Lead introducer / referral entity per Act No. 170/2018 Coll.)"),
+                ("technology_provider", "Technology & IT Workflow Provider"),
+                ("broker", "Licensed Broker (Requires ČNB registry filing)"),
+            ],
+            label="Operator Contractual Role",
+            description="Role defined in the commercial cooperation agreement.",
+        ),
+        operator_website_url=dict(
+            label="Operator Official Website URL",
+            description="Official homepage URL for HKTSE s.r.o. (e.g. https://hktse.eu.org).",
+        ),
+        partner_role=dict(
+            choices=[
+                ("makler", "Makléř (Licensed Independent Insurance Broker)"),
+                ("agent", "Samostatný zprostředkovatel / Agent"),
+                ("underwriter", "Direct Insurance Carrier / Underwriter"),
+            ],
+            label="Partner Contractual Role",
+            description="Contractual role of the supervising intermediary.",
+        ),
+        partner_website_url=dict(
+            label="Partner Official Website URL",
+            description="Official homepage URL for České pojištění a.s. (e.g. https://ceskepojisteni.cz).",
+        ),
+        relationship_status=dict(
+            choices=[
+                ("VERIFIED", "VERIFIED (Active valid agreement signed on 2026-03-02)"),
+                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION (Under review)"),
+                ("HISTORICAL", "HISTORICAL (Expired or superseded contract)"),
+                ("DISABLED", "DISABLED (Temporarily suspended)"),
+            ],
+            label="Partnership Agreement Status",
+        ),
+        dpa_status=dict(
+            choices=[
+                ("VERIFIED", "VERIFIED (Bilateral DPA signed on 2026-03-02, České pojištění as controller)"),
+                ("PENDING", "PENDING (Draft DPA pending signatures)"),
+                ("EXPIRED", "EXPIRED (DPA expired or terminated)"),
+            ],
+            label="GDPR Data Processing Agreement (DPA) Status",
+        ),
         features_config=dict(
             label="Home Feature Cards Config (JSON)",
             description="JSON array defining feature cards on the public homepage. Leave empty to use default professional security features.",
@@ -636,19 +730,23 @@ class AuditLogAdmin(ModelView, model=AuditLog):
     icon = "fa-solid fa-shield-halved"
 
     column_list = [
+        AuditLog.sequence,
         AuditLog.action,
         AuditLog.user_ip,
+        AuditLog.entry_hash,
         AuditLog.created_at,
     ]
     column_labels = {
+        AuditLog.sequence: "Seq #",
         AuditLog.action: "Audit Action",
         AuditLog.user_ip: "Client IP",
+        AuditLog.entry_hash: "Tamper-Evident SHA-256",
         AuditLog.created_at: "Timestamp",
     }
     can_create = False
     can_edit = False
     can_delete = False
-    column_sortable_list = [AuditLog.created_at, AuditLog.action]
+    column_sortable_list = [AuditLog.created_at, AuditLog.sequence, AuditLog.action]
     column_default_sort = ("created_at", True)
 
     def is_accessible(self, request: Request) -> bool:
@@ -656,3 +754,333 @@ class AuditLogAdmin(ModelView, model=AuditLog):
 
     def is_visible(self, request: Request) -> bool:
         return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+
+# ==========================================
+# 4. Regulatory & Compliance Category
+# ==========================================
+
+class EvidenceRecordAdmin(ModelView, model=EvidenceRecord):
+    name = "Contract & Evidence Record"
+    name_plural = "Contract & Evidence Records"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-file-contract"
+
+    column_list = [
+        EvidenceRecord.title,
+        EvidenceRecord.evidence_type,
+        EvidenceRecord.source_entity,
+        EvidenceRecord.verification_status,
+        EvidenceRecord.valid_from,
+        EvidenceRecord.sha256,
+    ]
+    column_labels = {
+        EvidenceRecord.title: "Document Title",
+        EvidenceRecord.evidence_type: "Evidence Type",
+        EvidenceRecord.source_entity: "Source Entity",
+        EvidenceRecord.verification_status: "Verification Status",
+        EvidenceRecord.valid_from: "Valid From",
+        EvidenceRecord.sha256: "SHA-256 Digest",
+    }
+    form_overrides = dict(
+        evidence_type=SelectField,
+        verification_status=SelectField,
+    )
+    form_args = dict(
+        evidence_type=dict(
+            choices=[
+                ("contract", "Cooperation Agreement (Smlouva o spolupráci)"),
+                ("dpa", "GDPR Data Processing Agreement (DPA)"),
+                ("price_list", "Official Price Book (Ceník pojištění)"),
+                ("license_filing", "Regulatory Authority / ČNB Filing"),
+            ],
+            label="Evidence Document Type",
+        ),
+        verification_status=dict(
+            choices=[
+                ("VERIFIED", "VERIFIED (Current active authorized document)"),
+                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION (Pending counter-signing)"),
+                ("HISTORICAL", "HISTORICAL (Superceded or archived document)"),
+                ("EXPIRED", "EXPIRED (Past expiration date)"),
+                ("DISABLED", "DISABLED (Suspended)"),
+            ],
+            label="Verification Status",
+        ),
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+
+class ProductVersionAdmin(ModelView, model=ProductVersion):
+    name = "Product Version"
+    name_plural = "Product Versions"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-code-branch"
+
+    column_list = [
+        ProductVersion.product_code,
+        ProductVersion.product_name,
+        ProductVersion.version,
+        ProductVersion.status,
+        ProductVersion.valid_from,
+        ProductVersion.valid_until,
+    ]
+    form_overrides = dict(
+        status=SelectField,
+    )
+    form_args = dict(
+        status=dict(
+            choices=[
+                ("VERIFIED", "VERIFIED (Actively quotable in portal)"),
+                ("HISTORICAL", "HISTORICAL (Reference only; strictly forbidden from public quotation)"),
+                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION (Draft version under review)"),
+                ("EXPIRED", "EXPIRED (Validity window ended)"),
+                ("DISABLED", "DISABLED (Deactivated)"),
+            ],
+            label="Product Quotation Status",
+        )
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+
+class PriceBookAdmin(ModelView, model=PriceBook):
+    name = "Price Book"
+    name_plural = "Price Books"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-book-bookmark"
+
+    column_list = [
+        PriceBook.book_code,
+        PriceBook.version,
+        PriceBook.effective_from,
+        PriceBook.effective_until,
+        PriceBook.status,
+    ]
+    form_overrides = dict(
+        status=SelectField,
+    )
+    form_args = dict(
+        status=dict(
+            choices=[
+                ("VERIFIED", "VERIFIED (Active pricing)"),
+                ("HISTORICAL", "HISTORICAL (Non-quotable archive)"),
+                ("PENDING_CONFIRMATION", "PENDING_CONFIRMATION"),
+                ("EXPIRED", "EXPIRED"),
+            ],
+            label="Price Book Status",
+        )
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+
+class PriceRateAdmin(ModelView, model=PriceRate):
+    name = "Price Rate"
+    name_plural = "Price Rates"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-tag"
+
+    column_list = [
+        PriceRate.plan_variant,
+        PriceRate.duration_months,
+        PriceRate.target_group,
+        PriceRate.amount_czk,
+    ]
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+
+class FormRecipeAdmin(ModelView, model=FormRecipe):
+    name = "Form Recipe"
+    name_plural = "Form Recipes"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-cubes-stacked"
+
+    column_list = [
+        FormRecipe.version,
+        FormRecipe.status,
+        FormRecipe.created_at,
+    ]
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+
+class LegalDocumentVersionAdmin(ModelView, model=LegalDocumentVersion):
+    name = "Legal Policy Version"
+    name_plural = "Legal Policy Versions"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-scale-balanced"
+
+    column_list = [
+        LegalDocumentVersion.doc_type,
+        LegalDocumentVersion.version,
+        LegalDocumentVersion.title,
+        LegalDocumentVersion.status,
+        LegalDocumentVersion.content_sha256,
+        LegalDocumentVersion.effective_from,
+    ]
+    form_overrides = dict(
+        doc_type=SelectField,
+        status=SelectField,
+    )
+    form_args = dict(
+        doc_type=dict(
+            choices=[
+                ("terms", "Terms of Service"),
+                ("privacy", "Privacy Policy & GDPR Processing Notice"),
+                ("intermediary_disclosure", "Intermediary Tipař / Makléř Disclosure"),
+            ],
+            label="Document Classification",
+        ),
+        status=dict(
+            choices=[
+                ("ACTIVE", "ACTIVE (Currently enforced)"),
+                ("DRAFT", "DRAFT (Under review)"),
+                ("SUPERSEDED", "SUPERSEDED (Replaced by newer version)"),
+            ],
+            label="Policy Status",
+        ),
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+
+class PartnerHandoffConsentAdmin(ModelView, model=PartnerHandoffConsent):
+    name = "Broker Handoff Consent"
+    name_plural = "Broker Handoff Consents"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-handshake-simple"
+
+    column_list = [
+        PartnerHandoffConsent.application_id,
+        PartnerHandoffConsent.recipient,
+        PartnerHandoffConsent.recipient_role,
+        PartnerHandoffConsent.ip_address,
+        PartnerHandoffConsent.consented_at,
+    ]
+    can_create = False
+    can_edit = False
+    can_delete = False
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+
+class PrivacyRequestAdmin(ModelView, model=PrivacyRequest):
+    name = "GDPR Rights Request"
+    name_plural = "GDPR Rights Requests"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-user-shield"
+
+    column_list = [
+        PrivacyRequest.request_type,
+        PrivacyRequest.email,
+        PrivacyRequest.status,
+        PrivacyRequest.received_at,
+        PrivacyRequest.completed_at,
+    ]
+    form_overrides = dict(
+        request_type=SelectField,
+        status=SelectField,
+    )
+    form_args = dict(
+        request_type=dict(
+            choices=[
+                ("access", "Article 15: Right of Access"),
+                ("rectification", "Article 16: Right to Rectification"),
+                ("erasure", "Article 17: Right to Erasure ('To Be Forgotten')"),
+                ("restriction", "Article 18: Right to Restriction of Processing"),
+                ("portability", "Article 20: Right to Data Portability"),
+            ],
+            label="GDPR Request Type",
+        ),
+        status=dict(
+            choices=[
+                ("RECEIVED", "RECEIVED (Open intake)"),
+                ("IN_PROGRESS", "IN_PROGRESS (Under investigation)"),
+                ("COMPLETED", "COMPLETED (Resolved & notified)"),
+                ("REJECTED", "REJECTED (Lawful retention exemption applies)"),
+            ],
+            label="Resolution Status",
+        ),
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+
+class SecurityIncidentAdmin(ModelView, model=SecurityIncident):
+    name = "Security Incident Register"
+    name_plural = "Security Incident Register"
+    category = "Regulatory & Compliance"
+    icon = "fa-solid fa-triangle-exclamation"
+
+    column_list = [
+        SecurityIncident.incident_title,
+        SecurityIncident.severity,
+        SecurityIncident.status,
+        SecurityIncident.detected_at,
+        SecurityIncident.controller_notification_deadline,
+    ]
+    form_overrides = dict(
+        severity=SelectField,
+        status=SelectField,
+    )
+    form_args = dict(
+        severity=dict(
+            choices=[
+                ("LOW", "LOW (Minor anomaly, no breach)"),
+                ("MEDIUM", "MEDIUM (Restricted impact)"),
+                ("HIGH", "HIGH (Potential data disclosure, urgent audit)"),
+                ("CRITICAL", "CRITICAL (Immediate DPO & supervisory reporting required)"),
+            ],
+            label="Severity Level",
+        ),
+        status=dict(
+            choices=[
+                ("DETECTED", "DETECTED"),
+                ("CONTAINED", "CONTAINED"),
+                ("RESOLVED", "RESOLVED"),
+                ("FALSE_POSITIVE", "FALSE_POSITIVE"),
+            ],
+            label="Incident Status",
+        ),
+    )
+
+    def is_accessible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+
+    def is_visible(self, request: Request) -> bool:
+        return get_current_admin(request)["role"] in ("super_admin", "compliance_auditor")
+

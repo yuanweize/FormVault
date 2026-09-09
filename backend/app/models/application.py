@@ -81,15 +81,43 @@ class Application(Base):
         nullable=False,
     )
 
-    # Timestamps
+    # Regulatory & Versioned Snapshots (Evidence-backed provenance)
+    regulatory_mode_snapshot = Column(VARCHAR(30), default="LEAD_ONLY", nullable=True)
+    product_version_id = Column(
+        Integer, ForeignKey("product_versions.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    price_book_id = Column(
+        Integer, ForeignKey("price_books.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    form_recipe_id = Column(
+        Integer, ForeignKey("form_recipes.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    disclosure_bundle_id = Column(
+        Integer, ForeignKey("disclosure_bundle_snapshots.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    handoff_consent_id = Column(
+        Integer,
+        ForeignKey("partner_handoff_consents.id", ondelete="SET NULL", use_alter=True, name="fk_apps_handoff_consent"),
+        nullable=True,
+        index=True,
+    )
+    quoted_price_czk = Column(Integer, nullable=True)
+
+    # Timestamps & Soft Deletion (GDPR Article 17 / Retention policy)
     created_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
     updated_at = Column(
         TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
     )
+    deleted_at = Column(DateTime, nullable=True, index=True)
 
     # Relationships
     company = relationship("InsuranceCompany", foreign_keys=[insurance_company_id])
     plan = relationship("InsurancePlan", foreign_keys=[insurance_plan_id])
+    product_version = relationship("ProductVersion", foreign_keys=[product_version_id])
+    price_book = relationship("PriceBook", foreign_keys=[price_book_id])
+    form_recipe = relationship("FormRecipe", foreign_keys=[form_recipe_id])
+    disclosure_bundle = relationship("DisclosureBundleSnapshot", foreign_keys=[disclosure_bundle_id])
+    handoff_consent = relationship("PartnerHandoffConsent", foreign_keys=[handoff_consent_id])
     files = relationship(
         "File", back_populates="application", cascade="all, delete-orphan"
     )
@@ -107,6 +135,7 @@ class Application(Base):
         Index("idx_apps_created_at", "created_at"),
         Index("idx_apps_status", "status"),
         Index("idx_apps_company_id", "insurance_company_id"),
+        Index("idx_apps_deleted_at", "deleted_at"),
     )
 
     def __repr__(self) -> str:

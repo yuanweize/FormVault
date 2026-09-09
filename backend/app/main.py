@@ -43,6 +43,15 @@ from app.admin.views import (
     InsuranceCompanyAdmin,
     InsurancePlanAdmin,
     AgencyBannerAdmin,
+    EvidenceRecordAdmin,
+    ProductVersionAdmin,
+    PriceBookAdmin,
+    PriceRateAdmin,
+    FormRecipeAdmin,
+    LegalDocumentVersionAdmin,
+    PartnerHandoffConsentAdmin,
+    PrivacyRequestAdmin,
+    SecurityIncidentAdmin,
 )
 from app.services.seed_service import seed_czech_broker_defaults
 
@@ -91,6 +100,46 @@ def auto_upgrade_schema(bind_engine):
                 if "features_config" not in cfg_cols:
                     conn.execute(text("ALTER TABLE system_config ADD COLUMN features_config TEXT NULL"))
 
+                # Compliance & Governance scope fields
+                if "business_scope_mode" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN business_scope_mode VARCHAR(30) DEFAULT 'LEAD_ONLY' NOT NULL"))
+                if "operator_legal_name" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_legal_name VARCHAR(100) DEFAULT 'HKTSE s.r.o.' NOT NULL"))
+                if "operator_ico" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_ico VARCHAR(20) DEFAULT '10858032' NOT NULL"))
+                if "operator_role" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_role VARCHAR(50) DEFAULT 'tipar' NOT NULL"))
+                if "operator_website_url" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN operator_website_url VARCHAR(255) DEFAULT 'https://hktse.eu.org' NOT NULL"))
+                if "partner_name" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_name VARCHAR(100) DEFAULT 'České pojištění a.s.' NULL"))
+                if "partner_ico" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_ico VARCHAR(20) DEFAULT '24729007' NULL"))
+                if "partner_role" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_role VARCHAR(50) DEFAULT 'makler' NULL"))
+                if "partner_cnb_id" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_cnb_id VARCHAR(50) DEFAULT '24729007' NULL"))
+                if "partner_website_url" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN partner_website_url VARCHAR(255) DEFAULT 'https://ceskepojisteni.cz' NULL"))
+                if "relationship_status" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"))
+                if "relationship_valid_from" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_valid_from DATETIME NULL"))
+                if "relationship_valid_until" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_valid_until DATETIME NULL"))
+                if "relationship_verified_at" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN relationship_verified_at DATETIME NULL"))
+                if "public_wording_approved" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN public_wording_approved BOOLEAN DEFAULT TRUE NOT NULL"))
+                if "dpa_status" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_status VARCHAR(30) DEFAULT 'VERIFIED' NOT NULL"))
+                if "dpa_valid_from" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_valid_from DATETIME NULL"))
+                if "dpa_valid_until" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN dpa_valid_until DATETIME NULL"))
+                if "lead_only_fallback_url" not in cfg_cols:
+                    conn.execute(text("ALTER TABLE system_config ADD COLUMN lead_only_fallback_url VARCHAR(255) NULL"))
+
                 # Smoothly sanitize legacy unlicensed wording in existing rows
                 try:
                     conn.execute(text("UPDATE system_config SET site_title = 'FormVault Insurance | Czech Health & Travel Insurance' WHERE site_title LIKE '%Official Broker%'"))
@@ -114,7 +163,7 @@ def auto_upgrade_schema(bind_engine):
                 if "last_login_at" not in user_cols:
                     conn.execute(text("ALTER TABLE admin_users ADD COLUMN last_login_at DATETIME NULL"))
 
-            # 3. applications (Underwriting & Partner Binding)
+            # 3. applications (Underwriting & Provenance Snapshots)
             if "applications" in table_names:
                 app_cols = {c["name"] for c in inspector.get_columns("applications")}
                 if "insurance_company_id" not in app_cols:
@@ -143,6 +192,32 @@ def auto_upgrade_schema(bind_engine):
                     conn.execute(text("ALTER TABLE applications ADD COLUMN study_confirmation_file_id VARCHAR(36) NULL"))
                 if "custom_fields_data" not in app_cols:
                     conn.execute(text("ALTER TABLE applications ADD COLUMN custom_fields_data TEXT NULL"))
+                if "regulatory_mode_snapshot" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN regulatory_mode_snapshot VARCHAR(30) DEFAULT 'LEAD_ONLY' NULL"))
+                if "product_version_id" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN product_version_id INT NULL"))
+                if "price_book_id" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN price_book_id INT NULL"))
+                if "form_recipe_id" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN form_recipe_id INT NULL"))
+                if "disclosure_bundle_id" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN disclosure_bundle_id INT NULL"))
+                if "handoff_consent_id" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN handoff_consent_id INT NULL"))
+                if "quoted_price_czk" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN quoted_price_czk INT NULL"))
+                if "deleted_at" not in app_cols:
+                    conn.execute(text("ALTER TABLE applications ADD COLUMN deleted_at DATETIME NULL"))
+
+            # 4. audit_logs (Tamper-Evident Chaining)
+            if "audit_logs" in table_names:
+                audit_cols = {c["name"] for c in inspector.get_columns("audit_logs")}
+                if "sequence" not in audit_cols:
+                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN sequence INT NULL"))
+                if "prev_hash" not in audit_cols:
+                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN prev_hash VARCHAR(64) NULL"))
+                if "entry_hash" not in audit_cols:
+                    conn.execute(text("ALTER TABLE audit_logs ADD COLUMN entry_hash VARCHAR(64) NULL"))
 
             conn.commit()
     except Exception as exc:
@@ -160,7 +235,8 @@ async def lifespan(app: FastAPI):
         # Initialize default seed templates if database is fresh
         try:
             with SessionLocal() as db:
-                seed_czech_broker_defaults(db)
+                from .services.seed_service import seed_demo_defaults
+                seed_demo_defaults(db)
         except Exception as seed_err:
             logger.warning(f"Default seed population skipped: {seed_err}")
     except Exception as e:
@@ -198,6 +274,15 @@ admin.add_view(AgencyBannerAdmin)
 admin.add_view(SystemConfigAdmin)
 admin.add_view(AdminUserAdmin)
 admin.add_view(AuditLogAdmin)
+admin.add_view(EvidenceRecordAdmin)
+admin.add_view(ProductVersionAdmin)
+admin.add_view(PriceBookAdmin)
+admin.add_view(PriceRateAdmin)
+admin.add_view(FormRecipeAdmin)
+admin.add_view(LegalDocumentVersionAdmin)
+admin.add_view(PartnerHandoffConsentAdmin)
+admin.add_view(PrivacyRequestAdmin)
+admin.add_view(SecurityIncidentAdmin)
 
 # Session Middleware (Required for Admin Auth)
 app.add_middleware(SessionMiddleware, secret_key=settings.ADMIN_SECRET_KEY)
