@@ -1,21 +1,69 @@
-MIT License
+FormVault Source-Available & Non-Commercial License Agreement
+with Commercial Licensing Option
 
-Copyright (c) 2024 FormVault Insurance Portal
+Copyright (c) 2024-2026 HKTSE s.r.o. & Yuan Weize. All rights reserved.
+Official Licensing & Commercial Inquiries: licensing@hktse.eu.org / insurance@hktse.eu.org
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+================================================================================
+CRITICAL NOTICE FOR COMMERCIAL ENTITIES & INSURANCE UNDERWRITERS / BROKERS:
+================================================================================
+This software is source-available under a strict Non-Commercial License.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ANY COMMERCIAL USE, PRODUCTION DEPLOYMENT, INTERNAL BUSINESS OPERATION, OR 
+MONETIZATION BY ANY COMMERCIAL ENTITY, INCLUDING BUT NOT LIMITED TO:
+  - Insurance Companies / Underwriters (e.g. PVZP, Slavia, SV, Maxima, UNIQA, etc.)
+  - Insurance Intermediaries, Brokers, Independent Agents, MGAs
+  - Corporate Relocation, Visa Services, or Financial Technology Providers
+IS STRICTLY PROHIBITED WITHOUT A PAID, SIGNED COMMERCIAL LICENSE FROM HKTSE s.r.o.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+If you or your organization wish to utilize FormVault for commercial client intake,
+production insurance distribution, or corporate workflows, you MUST obtain a 
+Commercial License. Contact: licensing@hktse.eu.org
+================================================================================
+
+1. PERMITTED NON-COMMERCIAL USE
+Subject to the terms and conditions of this Agreement, the Licensor (HKTSE s.r.o. 
+and Yuan Weize) hereby grants you a personal, non-exclusive, non-transferable, 
+royalty-free worldwide license to:
+  (a) Inspect, test, and evaluate the source code for private, educational, or academic research;
+  (b) Run the software solely for personal, non-commercial self-hosting;
+  (c) Contribute improvements, bug fixes, and translations back to the upstream repository.
+
+2. STRICT COMMERCIAL RESTRICTIONS
+You may NOT use this software, whether in original or modified form, for any "Commercial Purpose".
+"Commercial Purpose" includes, without limitation:
+  (a) Use within or on behalf of any commercial enterprise, corporation, partnership, or brokerage;
+  (b) Performance of client-facing services, whether charged for directly or offered as an auxiliary service;
+  (c) Collection, intake, underwriting review, or processing of insurance applications for business revenue;
+  (d) Mediation, distribution, or policy binding on behalf of licensed insurance underwriters;
+  (e) Hosting the software as a paid or ad-supported Software-as-a-Service (SaaS), API, or cloud platform;
+  (f) Replicating or incorporating the proprietary workflows, encryption container architectures, 
+      or data structures into a competing commercial product.
+
+3. COMMERCIAL LICENSING OPTION
+Any commercial entity, insurance carrier, intermediary agency, or service provider seeking 
+production rights, multi-tenant deployment, white-label distribution, or commercial mediation 
+permissions must execute a separate, paid Commercial License Agreement with HKTSE s.r.o. 
+prior to any commercial usage or production deployment.
+
+4. INTELLECTUAL PROPERTY & ATTRIBUTION
+  (a) All copies, distributions, and substantial portions of the software must retain the complete 
+      copyright notices, licensing terms, and corporate attributions to HKTSE s.r.o. and Yuan Weize.
+  (b) Unauthorized commercial utilization constitutes willful intellectual property infringement, 
+      actionable under Czech Copyright Act (Act No. 121/2000 Coll.), the EU Enforcement Directive 
+      (2004/48/EC), and international treaties.
+
+5. GOVERNING LAW & JURISDICTION
+This Agreement shall be governed by and construed in accordance with the substantive laws of the 
+Czech Republic, excluding its conflicts of law provisions. Any legal claim or dispute arising out 
+of unauthorized commercial exploitation shall be subject to the exclusive jurisdiction of the 
+competent courts of Prague, Czech Republic. The Licensor reserves all rights to seek immediate 
+injunctive relief, statutory copyright damages, and recovery of legal costs.
+
+6. DISCLAIMER OF WARRANTIES
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
+FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR 
+OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.

@@ -2,8 +2,7 @@
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
-[![Docker GHCR Publish](https://github.com/yuanweize/FormVault/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/docker-publish.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Non-Commercial / Commercial Option](https://img.shields.io/badge/License-Non--Commercial%20%2F%20Commercial%20Option-red.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg)](https://www.python.org/)
@@ -224,6 +223,10 @@ npm run build
 
 ---
 
-## License
+## License & Commercial Licensing
 
-MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **FormVault Source-Available & Non-Commercial License** with a **Commercial Licensing Option** — see the [LICENSE](LICENSE) file for complete details.
+
+- **Non-Commercial / Personal Self-Hosting**: Free for private, academic, and non-profit evaluation.
+- **Commercial Operations & Insurance Carriers**: Any commercial deployment, insurance mediation, corporate document intake, or enterprise operation strictly requires a paid, signed Commercial License from HKTSE s.r.o.
+- **Commercial Inquiries & Pricing**: Contact [licensing@hktse.eu.org](mailto:licensing@hktse.eu.org) or [insurance@hktse.eu.org](mailto:insurance@hktse.eu.org).

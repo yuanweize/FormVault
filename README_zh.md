@@ -2,8 +2,7 @@
 
 [![Frontend CI](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/frontend-ci.yml)
 [![Backend CI](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/backend-ci.yml)
-[![Docker GHCR Publish](https://github.com/yuanweize/FormVault/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/yuanweize/FormVault/actions/workflows/docker-publish.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Non-Commercial / Commercial Option](https://img.shields.io/badge/License-Non--Commercial%20%2F%20Commercial%20Option-red.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg)](https://www.python.org/)
@@ -202,6 +201,10 @@ npm run build
 
 ---
 
-## 许可证
+## 许可证与商业授权 (License & Commercial Licensing)
 
-本项目基于 MIT 许可证开源 — 详情见 [LICENSE](LICENSE)。
+本项目采用 **FormVault 源码可用非商业许可证 (Source-Available & Non-Commercial License)** 并附带 **商业付费授权选项 (Commercial Licensing Option)** — 完整法律条文请见 [LICENSE](LICENSE) 文件。
+
+- **个人自用与非商业研究**：对个人私有自建、学习研究与非营利评估完全免费开放。
+- **商业机构与保险公司限制**：任何商业实体、保险公司（包括但不限于 PVZP, Slavia, SV, Maxima, UNIQA 等）、保险中介/经纪机构、签证移民中介等，**严禁在未取得 HKTSE s.r.o. 正式书面商业授权并支付授权费用的情况下将其用于生产运营、商业获利或客户信息采集**。
+- **商业授权与采购咨询**：请联系商务邮箱 [licensing@hktse.eu.org](mailto:licensing@hktse.eu.org) 或 [insurance@hktse.eu.org](mailto:insurance@hktse.eu.org)。
