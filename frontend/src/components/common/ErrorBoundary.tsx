@@ -8,6 +8,7 @@ import {
   Alert,
 } from '@mui/material';
 import { RefreshOutlined, HomeOutlined } from '@mui/icons-material';
+import i18n from '../../i18n';
 
 interface Props {
   children: ReactNode;
@@ -69,14 +70,17 @@ class ErrorBoundary extends Component<Props, State> {
                 gutterBottom
                 sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}
               >
-                Oops! Something went wrong
+                {i18n.t('errors.somethingWentWrong', { defaultValue: 'Oops! Something went wrong' })}
               </Typography>
               <Typography 
                 variant="body1" 
                 color="text.secondary"
                 sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
               >
-                We're sorry, but an unexpected error occurred. Please try refreshing the page or return to the home page.
+                {i18n.t('errors.unexpectedError', {
+                  defaultValue:
+                    "We're sorry, but an unexpected error occurred. Please try refreshing the page or return to the home page.",
+                })}
               </Typography>
             </Alert>
 
@@ -96,7 +100,7 @@ class ErrorBoundary extends Component<Props, State> {
                   flex: { xs: 1, sm: 'none' },
                 }}
               >
-                Refresh Page
+                {i18n.t('errors.refreshPage', { defaultValue: 'Refresh Page' })}
               </Button>
               <Button
                 variant="outlined"
@@ -107,7 +111,7 @@ class ErrorBoundary extends Component<Props, State> {
                   flex: { xs: 1, sm: 'none' },
                 }}
               >
-                Go Home
+                {i18n.t('errors.goHome', { defaultValue: 'Go Home' })}
               </Button>
             </Box>
 

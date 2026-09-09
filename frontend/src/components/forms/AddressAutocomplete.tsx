@@ -28,6 +28,7 @@ import {
   EditLocationOutlined,
   CheckCircleOutline,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 export interface AddressData {
   street: string;
@@ -68,6 +69,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   errors = {},
   disabled = false,
 }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -234,7 +236,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <PublicOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
             <Typography variant="subtitle2" component="span" sx={{ fontWeight: 700 }}>
-              Smart Address Assistant (Global & Czechia)
+              {t('addressAssistant.title', { defaultValue: 'Smart Address Assistant (Global & Czechia)' })}
             </Typography>
           </Box>
           <Stack direction="row" spacing={1}>
@@ -244,7 +246,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
               onClick={() => setMode('global')}
               sx={{ textTransform: 'none', borderRadius: '8px', fontSize: '0.75rem', py: 0.3 }}
             >
-              Global Auto-Suggest
+              {t('addressAssistant.globalBtn', { defaultValue: 'Global Auto-Suggest' })}
             </Button>
             <Button
               size="small"
@@ -252,7 +254,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
               onClick={() => setMode('czech_preset')}
               sx={{ textTransform: 'none', borderRadius: '8px', fontSize: '0.75rem', py: 0.3 }}
             >
-              Czech Regional Dropdown
+              {t('addressAssistant.czechBtn', { defaultValue: 'Czech Regional Dropdown' })}
             </Button>
           </Stack>
         </Stack>
@@ -263,7 +265,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             <TextField
               fullWidth
               size="small"
-              placeholder="Type any worldwide street, campus, or landmark (e.g. Národní 1 Prague, Strahov, Oxford St)..."
+              placeholder={String(
+                t('addressAssistant.placeholder', {
+                  defaultValue:
+                    'Type any worldwide street, campus, or landmark (e.g. Národní 1 Prague, Strahov, Oxford St)...',
+                })
+              )}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={disabled}
@@ -323,10 +330,14 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         {mode === 'czech_preset' && (
           <Box sx={{ mt: 1.5 }}>
             <FormControl fullWidth size="small">
-              <InputLabel id="czech-region-label">Select Czech Region (Kraj)</InputLabel>
+              <InputLabel id="czech-region-label">
+                {t('addressAssistant.selectRegion', { defaultValue: 'Select Czech Region (Kraj)' })}
+              </InputLabel>
               <Select
                 labelId="czech-region-label"
-                label="Select Czech Region (Kraj)"
+                label={String(
+                  t('addressAssistant.selectRegion', { defaultValue: 'Select Czech Region (Kraj)' })
+                )}
                 value=""
                 onChange={(e) => handleApplyCzechPreset(e.target.value)}
                 sx={{ backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : 'rgba(0,0,0,0.2)' }}
@@ -347,7 +358,11 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Street Address & House / Dorm Number"
+            label={String(
+              t('forms.personalInfo.fields.address.street', {
+                defaultValue: 'Street Address & House / Dorm Number',
+              })
+            )}
             name="street"
             value={value.street}
             onChange={(e) => onChange({ ...value, street: e.target.value })}
@@ -362,7 +377,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="City"
+            label={String(t('forms.personalInfo.fields.address.city', { defaultValue: 'City' }))}
             name="city"
             value={value.city}
             onChange={(e) => onChange({ ...value, city: e.target.value })}
@@ -377,7 +392,11 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="State / Province / Kraj"
+            label={String(
+              t('forms.personalInfo.fields.address.state', {
+                defaultValue: 'State / Province / Kraj',
+              })
+            )}
             name="state"
             value={value.state}
             onChange={(e) => onChange({ ...value, state: e.target.value })}
@@ -392,7 +411,11 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Postal / Zip Code"
+            label={String(
+              t('forms.personalInfo.fields.address.zipCode', {
+                defaultValue: 'Postal / Zip Code',
+              })
+            )}
             name="zipCode"
             value={value.zipCode}
             onChange={(e) => onChange({ ...value, zipCode: e.target.value })}
@@ -407,7 +430,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Country"
+            label={String(t('forms.personalInfo.fields.address.country', { defaultValue: 'Country' }))}
             name="country"
             value={value.country}
             onChange={(e) => onChange({ ...value, country: e.target.value })}

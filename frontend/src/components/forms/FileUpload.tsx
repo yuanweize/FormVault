@@ -275,7 +275,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                 </Typography>
                 <Chip
                   size="small"
-                  label="AES-256 Vault Encrypted"
+                  label={t('fileUpload.vaultEncrypted', { defaultValue: 'AES-256 Vault Encrypted' })}
                   sx={{
                     height: 20,
                     fontSize: '0.65rem',

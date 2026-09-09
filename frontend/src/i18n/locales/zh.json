@@ -103,20 +103,156 @@
     },
     "fileUpload": {
       "title": "文件上传",
-      "subtitle": "上传您的必需文件"
+      "subtitle": "上传您的必需文件",
+      "instructions": "请上传清晰、高画质的证件照片或PDF文件。单个文件上限5MB。",
+      "allFilesUploaded": "所有必需的申请文件均已上传成功！",
+      "proceedToReview": "前往核对信息"
     },
     "review": {
-      "title": "审核提交",
-      "subtitle": "提交前请审核您的信息"
+      "title": "核对申请信息",
+      "subtitle": "提交前请仔细核对您的申请资料",
+      "incompleteWarning": "申请资料尚未填写完整，请补齐以下缺失项：",
+      "missingPersonalInfo": "个人基本信息未填写完整",
+      "missingFiles": "必需的证明文件尚未上传",
+      "personalInfoIncomplete": "请在继续下一步前填写完整个人信息。",
+      "fileNotUploaded": "此文件尚未上传。",
+      "readyToProceed": "您的申请信息已完整无误，随时可以提交！",
+      "proceedToConfirmation": "前往确认提交",
+      "sections": {
+        "personalInfo": "个人身份与联系信息",
+        "uploadedFiles": "已上传文件资料"
+      }
     },
     "success": {
-      "title": "申请已提交",
-      "subtitle": "您的申请已成功提交"
+      "title": "申请已成功提交！",
+      "subtitle": "您的保险申请已进入正式核保流程",
+      "referenceNumber": "您的申请编号",
+      "referenceNumberNote": "请妥善保存此申请编号以供日后查询和跟进进度",
+      "applicationSummary": "申请概要",
+      "submissionDate": "提交日期",
+      "nextSteps": {
+        "title": "后续处理流程",
+        "emailConfirmation": "邮件确认",
+        "emailConfirmationNote": "系统将在 5 分钟内向您的预留邮箱发送确认邮件",
+        "processing": "核保审理",
+        "processingNote": "保司与审核团队将在 2-3 个工作日内完成保单初审",
+        "followUp": "后续联络",
+        "followUpNote": "如需补充证明文件，我们将通过邮件与您联系"
+      },
+      "importantInfo": "特别提醒：请妥善保管您的申请编号，以便日后查询审核进度及保单凭证出单情况。",
+      "actions": {
+        "goHome": "返回首页",
+        "print": "打印凭据"
+      }
     },
     "notFound": {
       "title": "页面未找到",
       "subtitle": "您要查找的页面不存在",
       "goHome": "返回首页"
+    },
+    "confirmation": {
+      "title": "确认提交申请",
+      "subtitle": "请最后确认所有保单申请内容",
+      "incompleteWarning": "由于内容不完整，当前申请无法提交：",
+      "missingPersonalInfo": "个人基本信息未填写完整",
+      "missingFiles": "必需的证明文件尚未上传",
+      "submissionNotice": "提交此申请即代表您确认所提供的信息真实、准确且完整。提交成功后，您将收到一封包含唯一申请参考编号的确认邮件。",
+      "referenceNumber": "申请编号",
+      "sections": {
+        "personalInfo": "个人身份与联系信息",
+        "uploadedFiles": "已上传文件资料",
+        "applicationDetails": "申请详情"
+      }
+    },
+    "terms": {
+      "badge": "受捷克民法典（第 89/2012 号法律）及保险分销法（第 170/2018 号法律）管辖",
+      "title": "服务条款",
+      "subtitle": "规范通过 FormVault 数字化平台提交保险申请、文件验证和经纪代理的标准商业与中介条款。",
+      "section1Title": "1. 中介范围与经纪人资质",
+      "section1Content": "FormVault 是根据捷克共和国法律注册并运营的专业保险中介及经纪机构。我们的平台协助申请人（“您”）与获得捷克/欧盟许可的承保保险公司（包括但不限于 Pojišťovna VZP、Slavia、Maxima、UNIQA 等）达成保险合同。最终具有约束力的保险承保范围严格依照承保公司的《通用保险条款》（VPP）执行。",
+      "section2Title": "2. 申请人声明与材料真实性",
+      "section2Content": "提交申请并上传身份证明文件（护照、学生证、签证材料等）即表示您保证所提交的所有信息真实、最新且完整。根据捷克刑法典（第 40/2009 号法律），提交伪造或变造的文件属于刑事犯罪，将导致立即终止服务并通报相关官方监管部门（捷克内政部 OAMP / 捷克外事警察局）。",
+      "section3Title": "3. 保单出具与捷克内政部 OAMP 合规",
+      "section3Content": "FormVault 协调出具符合捷克《外国人居留法》（第 326/1999 号法律）标准的正式保险凭证（Pojistná smlouva / Potvrzení o pojištění）。经承保公司核保与确认后，保单电子版将立即发送至您的注册邮箱，并同步录入捷克国家保险监管数据库。",
+      "section4Title": "4. 退保、退款与签证拒签政策",
+      "section4Content": "如果您的捷克签证或长期居留许可申请被捷克内政部（OAMP）或捷克驻外使领馆正式拒签，您有权凭官方正式书面拒签信按照承保公司的规定申请全额或按比例退费。承保公司可能会根据合同条款扣除合理的手续费或行政费用。",
+      "section5Title": "5. 适用法律与争议管辖",
+      "section5Content": "本条款及通过本平台达成的任何中介协议均完全受捷克共和国法律管辖并据其解释。因我们的中介服务引起或与之相关的任何争议，均由捷克共和国布拉格具有管辖权的法院排他性管辖。"
+    },
+    "support": {
+      "badge": "24/7 客户关怀与经纪人协助",
+      "title": "客户支持与帮助中心",
+      "subtitle": "获取有关保单申请、捷克签证文件要求、理赔流程的协助，或与核保顾问实时在线沟通。",
+      "emailCardTitle": "直连服务邮箱",
+      "emailCardDesc": "用于保单核验、使领馆签证咨询或提交拒签退保申请。平均响应时间 < 2 小时。",
+      "copyBtn": "复制邮箱",
+      "copied": "客服邮箱已复制到剪贴板: insurance@hktse.eu.org",
+      "composeEmail": "发送邮件",
+      "chatCardTitle": "在线顾问实时咨询 (Crisp)",
+      "chatCardDesc": "与认证保险顾问直接沟通（支持英语、中文、捷克语）。欧洲工作时间内极速响应。",
+      "hours": "周一至周五: 09:00 - 18:00 CET",
+      "location": "捷克·布拉格",
+      "openChat": "打开在线咨询",
+      "chatOffline": "在线聊天正在初始化或当前离线，请直接发送邮件至 insurance@hktse.eu.org",
+      "faqTitle": "常见问题解答 (FAQ)",
+      "faqSubtitle": "关于捷克外国人综合医疗保险政策及签证要求的快速答疑。",
+      "faqs": {
+        "q1": "提交申请后多久能收到正式的保险证明？",
+        "a1": "在核保审核及付款确认后，通常 1 至 4 个工作小时内即可生成正式的电子保险凭证（Potvrzení o pojištění）。带防伪编号的官方 PDF 文件将直接发送到您的注册邮箱，可直接用于捷克签证及居留申请。",
+        "q2": "你们的保单 100% 被捷克内政部（OAMP）认可吗？",
+        "a2": "是的。我们代理的所有保险（PVZP、Slavia、Maxima、UNIQA）均严格符合捷克《外国人居留法》（第 326/1999 号法律）。保险类型为综合医疗保险（KZPC），医疗保额高达 10,000,000 捷克克朗（约 400,000 欧元），并自动录入捷克国家保险数据库。",
+        "q3": "如果我的签证申请被使领馆拒签了，该怎么办？",
+        "a3": "如果您的签证或居留申请被拒签，您有权凭拒签文件向保险公司申请退费。只需将捷克内政部（OAMP）或使领馆出具的官方正式拒签证明扫描件发送至 insurance@hktse.eu.org，我们团队将协助您完成保单注销与退款。",
+        "q4": "在捷克就医如何进行直付结算或理赔报销？",
+        "a4": "在与承保公司签约的公立医院与诊所（如布拉格的 Motol、FNKV、VFN 或布尔诺的 FN Brno），只需出示实体或电子保险卡即可享受免现金直付结算。若在非签约机构就诊，可先行垫付并保存病历和发票，事后提交理赔，通常 14 天内即可获得赔付。",
+        "q5": "为什么必须提供护照和学生身份证明？",
+        "a5": "捷克保险法律及内政部监管要求对外国公民进行严格的实名验证，以确保保单顺利完成官方备案。上传有效学生证或在读证明还可享受专属大学生优惠费率（最高可优惠 30%）。"
+      }
+    },
+    "privacy": {
+      "badge": "符合欧盟通用数据保护条例 (GDPR) 及捷克第 110/2019 号数据处理法",
+      "title": "隐私政策与数据安全保护",
+      "subtitle": "关于 FormVault 如何收集、处理、加密和保护捷克及欧盟保险申请人个人身份信息的官方声明。",
+      "section1Title": "1. 数据控制者身份",
+      "section1Content": "负责处理您个人数据的数据控制者为 FormVault Insurance Brokerage Services（位于捷克共和国布拉格）。如对数据保护有任何疑问或需要联络我们的数据保护官（DPO），请发送邮件至：insurance@hktse.eu.org。",
+      "section2Title": "2. 数据处理目的与法律依据",
+      "section2Intro": "我们收集并处理您的身份信息（姓名、出生日期、护照/身份证件复印件、学生身份证明、地址）严格用于以下目的：",
+      "section2Item1": "协助经许可的保险承保机构出具健康、旅行及留学生保险保单；",
+      "section2Item2": "符合捷克《外国人居留法》（第 326/1999 号法律）及捷克内政部 OAMP 的法定申报要求；",
+      "section2Item3": "依据捷克保险业法规进行审计核验、防范欺诈及法定凭证归档。",
+      "section2Legal": "法律依据：GDPR 第 6(1)(b) 条（履行合同所需）及 GDPR 第 6(1)(c) 条（遵守法定义务）。",
+      "section3Title": "3. 硬件级加密与零知识存储",
+      "section3Content": "传输至 FormVault 的所有护照照片、学生证明文件及个人记录均使用具有独立初始向量（IV）的 AES-256 GCM 认证加密进行静态密文存储。数据库与公网完全物理隔离，系统内部通信严格使用 TLS 1.3 传输加密。",
+      "section4Title": "4. 您在 GDPR 项下的法定权利（第 15-22 条）",
+      "section4Intro": "作为申请人（数据主体），您享有以下法定权利：",
+      "section4Item1": "访问权（第 15 条）：要求获取我们所持有的关于您的所有个人数据副本；",
+      "section4Item2": "更正权（第 16 条）：更正任何不完整或有误的个人信息；",
+      "section4Item3": "删除权 /“被遗忘权”（第 17 条）：在法定档案留存期限允许范围内请求删除提交的文件；",
+      "section4Item4": "数据可携带权（第 20 条）：获取标准机器可读格式（JSON/PDF）的结构化个人数据副本。",
+      "form": {
+        "title": "行使您的 GDPR 权利",
+        "subtitle": "直接向我们的数据保护官提交正式数据权利申请。根据欧盟法律规定，我们将在 30 个自然日内审核并答复您的请求。",
+        "requestAction": "申请权利类型",
+        "types": {
+          "access": "访问权（导出我的数据）",
+          "rectification": "更正权（更正错误信息）",
+          "erasure": "删除权（删除我的文件档案）",
+          "portability": "数据可携带权（机器可读数据副本）"
+        },
+        "fullName": "法定真实姓名",
+        "fullNamePlaceholder": "例如：张三 / Jan Novak",
+        "registeredEmail": "申请注册邮箱",
+        "registeredEmailPlaceholder": "例如：client@example.com",
+        "refNumber": "申请编号（选填）",
+        "refNumberPlaceholder": "例如：APP-2026-001234",
+        "details": "详细说明与申请备注",
+        "detailsPlaceholder": "请在此详细说明您需要调阅、更正或删除的具体材料与理由...",
+        "submit": "提交正式 GDPR 申请",
+        "submitting": "提交中...",
+        "validationError": "请填写您的法定真实姓名及注册邮箱地址。",
+        "successTitle": "申请已成功受理",
+        "successDesc": "您的法定 GDPR 数据申请已正式登记。我们的数据保护官将在核验您的身份后于 30 天内完成处理并答复。"
+      }
     }
   },
   "footer": {
@@ -204,27 +340,67 @@
           "street": {
             "required": "街道地址是必填项",
             "minLength": "街道地址至少需要5个字符",
-            "maxLength": "街道地址不能超过100个字符"
+            "maxLength": "街道地址长度不得超过100个字符"
           },
           "city": {
             "required": "城市是必填项",
             "minLength": "城市至少需要2个字符",
-            "maxLength": "城市不能超过50个字符",
-            "pattern": "城市只能包含字母、空格、连字符和撇号"
+            "maxLength": "城市名称不得超过50个字符",
+            "pattern": "城市名称格式不正确"
           },
           "state": {
             "required": "州/省是必填项",
             "minLength": "州/省至少需要2个字符",
-            "maxLength": "州/省不能超过50个字符"
+            "maxLength": "州/省份不得超过50个字符"
           },
           "zipCode": {
             "required": "邮政编码是必填项",
-            "pattern": "请输入有效的邮政编码"
+            "pattern": "邮政编码格式不正确"
           },
           "country": {
             "required": "请选择国家"
           }
         }
+      },
+      "name": {
+        "label": "姓名"
+      },
+      "firstName": {
+        "label": "名"
+      },
+      "lastName": {
+        "label": "姓"
+      },
+      "email": {
+        "label": "电子邮箱"
+      },
+      "phone": {
+        "label": "联系电话"
+      },
+      "dateOfBirth": {
+        "label": "出生日期"
+      },
+      "address": {
+        "label": "居住地址"
+      },
+      "insuranceType": {
+        "label": "保险险种",
+        "options": {
+          "health": "健康综合医疗险",
+          "auto": "汽车险",
+          "life": "人寿险",
+          "travel": "欧洲申根旅行险"
+        }
+      }
+    },
+    "fileUpload": {
+      "studentId": {
+        "label": "学生证件",
+        "description": "上传清晰的学生证或入学证明照片/扫描件"
+      },
+      "passport": {
+        "label": "护照",
+        "description": "上传清晰的护照个人信息页照片或扫描件"
       }
     }
   },
@@ -236,20 +412,22 @@
     "dragAndDrop": "将文件拖拽到此处",
     "orClickToSelect": "或点击选择文件",
     "selectFile": "选择文件",
-    "takePhoto": "拍照",
+    "takePhoto": "拍摄照片",
     "uploading": "上传中...",
     "preview": "文件预览",
     "remove": "移除",
     "requirements": "支持格式：JPEG、PNG、PDF。每个文件最大5MB。",
-    "supportedFormats": "支持格式：{{formats}}。最大大小：{{maxSize}}MB",
+    "supportedFormats": "支持格式：{{formats}}。单文件上限：{{maxSize}}MB",
     "errors": {
-      "title": "请修复以下错误：",
+      "title": "请更正以下问题：",
       "fileTooLarge": "文件过大。最大大小为{{maxSize}}MB",
       "invalidFormat": "无效的文件格式。支持格式：{{formats}}",
       "uploadFailed": "上传失败。请重试。",
       "noFilesUploaded": "请至少上传一个文件",
-      "submitFailed": "提交文件失败。请重试。"
-    }
+      "submitFailed": "文件提交失败，请重试。",
+      "allFilesRequired": "请在继续之前上传所有必需的申请文件。"
+    },
+    "vaultEncrypted": "AES-256 密室加密"
   },
   "common": {
     "back": "返回",
@@ -261,12 +439,19 @@
     "edit": "编辑",
     "delete": "删除",
     "confirm": "确认",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "copy": "复制",
+    "notProvided": "未提供",
+    "notUploaded": "未上传"
   },
   "errors": {
     "general": "发生错误，请重试。",
     "network": "网络错误，请检查您的连接。",
-    "validation": "请检查您的输入并重试。"
+    "validation": "请检查您的输入并重试。",
+    "somethingWentWrong": "抱歉！出错了",
+    "unexpectedError": "很抱歉，系统发生了非预期的错误。请尝试刷新页面或返回首页。",
+    "refreshPage": "刷新页面",
+    "goHome": "返回首页"
   },
   "cookieConsent": {
     "title": "欧盟 GDPR 与 Cookie 隐私合规提示",
@@ -274,5 +459,66 @@
     "acceptAll": "接受全部",
     "essentialOnly": "仅必要 Cookie",
     "privacyPolicy": "隐私政策"
+  },
+  "workflow": {
+    "steps": {
+      "personalInfo": {
+        "label": "个人信息",
+        "description": "填写基本身份与联系地址"
+      },
+      "fileUpload": {
+        "label": "上传资料",
+        "description": "上传证件照片或扫描件"
+      },
+      "review": {
+        "label": "核对资料",
+        "description": "检查填报信息的准确性"
+      },
+      "confirmation": {
+        "label": "确认提交",
+        "description": "确认合规条款并提交保单"
+      },
+      "success": {
+        "label": "完成提交",
+        "description": "申请已提交并出具编号"
+      }
+    },
+    "progress": "步骤 {{current}} / {{total}}",
+    "navigation": {
+      "previous": "上一步",
+      "next": "下一步",
+      "submit": "提交保单申请",
+      "saveAsDraft": "保存草稿",
+      "goHome": "返回首页",
+      "saving": "保存中...",
+      "submitting": "提交中...",
+      "unsavedChanges": "您有未保存的内容，请记得保存您的进度。"
+    }
+  },
+  "securityRail": {
+    "title": "金融级安全合规轨道",
+    "aes": {
+      "label": "AES-256 GCM 密文存储",
+      "tooltip": "所有证件附件与填报信息均采用军工级 AES-256 GCM 算法在存储前即时加密。"
+    },
+    "privacy": {
+      "label": "零知识隐私保护",
+      "tooltip": "您的敏感个人数据严格隔离保护，仅限法定受托核保团队在出单时调阅。"
+    },
+    "tls": {
+      "label": "TLS 1.3 加密信道",
+      "tooltip": "客户端与保司后端之间已建立最高级别加密通信信道。"
+    },
+    "autoSave": {
+      "label": "草稿密文自动保存",
+      "tooltip": "填写过程中的修改内容会自动在本地安全密室加密暂存，防止意外丢失。"
+    }
+  },
+  "addressAssistant": {
+    "title": "智能地址联想助手（全球范围与捷克本土）",
+    "globalBtn": "全球智能联想",
+    "czechBtn": "捷克 14 州快捷预选",
+    "placeholder": "输入全球街道、校区、地标或住宅（如 Národní 1 Prague、Strahov、Oxford St）...",
+    "selectRegion": "快速选择捷克行政大区（Kraj）"
   }
 }

@@ -5,7 +5,6 @@ import {
   Typography,
   Grid,
   Card,
-  CardContent,
   Button,
   Stack,
   Accordion,
@@ -13,7 +12,6 @@ import {
   AccordionDetails,
   Chip,
   Paper,
-  Alert,
   Snackbar,
   useTheme,
 } from '@mui/material';
@@ -22,15 +20,14 @@ import {
   ChatBubbleOutline,
   ExpandMoreOutlined,
   ContentCopyOutlined,
-  CheckCircleOutline,
   HelpOutline,
-  LocalHospitalOutlined,
   ScheduleOutlined,
   LocationOnOutlined,
-  AssignmentTurnedInOutlined,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const SupportPage: React.FC = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [copied, setCopied] = useState(false);
   const supportEmail = 'insurance@hktse.eu.org';
@@ -45,30 +42,60 @@ const SupportPage: React.FC = () => {
     if ((window as any).$crisp) {
       (window as any).$crisp.push(['do', 'chat:open']);
     } else {
-      alert('Live chat is initializing or currently offline. Please email us directly at ' + supportEmail);
+      alert(
+        t('pages.support.chatOffline', {
+          defaultValue:
+            'Live chat is initializing or currently offline. Please email us directly at ' + supportEmail,
+        })
+      );
     }
   };
 
   const faqs = [
     {
-      q: 'How fast will I receive my official insurance certificate after submission?',
-      a: 'Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.',
+      q: t('pages.support.faqs.q1', {
+        defaultValue: 'How fast will I receive my official insurance certificate after submission?',
+      }),
+      a: t('pages.support.faqs.a1', {
+        defaultValue:
+          'Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.',
+      }),
     },
     {
-      q: 'Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?',
-      a: 'Yes. All policies mediated through our agency (PVZP, Slavia, Maxima, UNIQA) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.',
+      q: t('pages.support.faqs.q2', {
+        defaultValue: 'Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?',
+      }),
+      a: t('pages.support.faqs.a2', {
+        defaultValue:
+          'Yes. All policies mediated through our agency (PVZP, Slavia, Maxima, UNIQA) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.',
+      }),
     },
     {
-      q: 'What should I do if my visa application is refused by the Embassy?',
-      a: 'If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.',
+      q: t('pages.support.faqs.q3', {
+        defaultValue: 'What should I do if my visa application is refused by the Embassy?',
+      }),
+      a: t('pages.support.faqs.a3', {
+        defaultValue:
+          'If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.',
+      }),
     },
     {
-      q: 'How does medical claim reimbursement and direct billing work in Czechia?',
-      a: 'For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.',
+      q: t('pages.support.faqs.q4', {
+        defaultValue: 'How does medical claim reimbursement and direct billing work in Czechia?',
+      }),
+      a: t('pages.support.faqs.a4', {
+        defaultValue:
+          'For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.',
+      }),
     },
     {
-      q: 'Why are passport and student verification documents required?',
-      a: 'Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings).',
+      q: t('pages.support.faqs.q5', {
+        defaultValue: 'Why are passport and student verification documents required?',
+      }),
+      a: t('pages.support.faqs.a5', {
+        defaultValue:
+          'Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings).',
+      }),
     },
   ];
 
@@ -78,7 +105,7 @@ const SupportPage: React.FC = () => {
       <Box sx={{ textAlign: 'center', maxWidth: 820, mx: 'auto', mb: 6 }}>
         <Chip
           icon={<HelpOutline sx={{ fontSize: 16 }} />}
-          label="24/7 Client Care & Broker Assistance"
+          label={t('pages.support.badge', { defaultValue: '24/7 Client Care & Broker Assistance' })}
           sx={{
             mb: 2,
             px: 1.5,
@@ -91,11 +118,13 @@ const SupportPage: React.FC = () => {
           }}
         />
         <Typography variant="h2" component="h1" sx={{ fontWeight: 800, fontSize: { xs: '2.2rem', sm: '3rem' }, mb: 2 }}>
-          Customer Support & Help Center
+          {t('pages.support.title', { defaultValue: 'Customer Support & Help Center' })}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', lineHeight: 1.6 }}>
-          Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an
-          underwriting advisor.
+          {t('pages.support.subtitle', {
+            defaultValue:
+              'Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.',
+          })}
         </Typography>
       </Box>
 
@@ -132,10 +161,13 @@ const SupportPage: React.FC = () => {
                 <EmailOutlined sx={{ fontSize: 28 }} />
               </Box>
               <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>
-                Direct Email Dispatch
+                {t('pages.support.emailCardTitle', { defaultValue: 'Direct Email Dispatch' })}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5, lineHeight: 1.6 }}>
-                For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: &lt; 2 hours.
+                {t('pages.support.emailCardDesc', {
+                  defaultValue:
+                    'For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: < 2 hours.',
+                })}
               </Typography>
 
               <Paper
@@ -161,7 +193,7 @@ const SupportPage: React.FC = () => {
                   onClick={handleCopyEmail}
                   sx={{ textTransform: 'none', fontWeight: 600 }}
                 >
-                  Copy
+                  {t('pages.support.copyBtn', { defaultValue: 'Copy' })}
                 </Button>
               </Paper>
             </Box>
@@ -172,7 +204,7 @@ const SupportPage: React.FC = () => {
               href={`mailto:${supportEmail}?subject=FormVault%20Insurance%20Inquiry`}
               sx={{ py: 1.2, fontWeight: 700, borderRadius: '10px' }}
             >
-              Compose Email
+              {t('pages.support.composeEmail', { defaultValue: 'Compose Email' })}
             </Button>
           </Card>
         </Grid>
@@ -208,23 +240,26 @@ const SupportPage: React.FC = () => {
                 <ChatBubbleOutline sx={{ fontSize: 28 }} />
               </Box>
               <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>
-                Live Advisor Chat (Crisp)
+                {t('pages.support.chatCardTitle', { defaultValue: 'Live Advisor Chat (Crisp)' })}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5, lineHeight: 1.6 }}>
-                Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.
+                {t('pages.support.chatCardDesc', {
+                  defaultValue:
+                    'Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.',
+                })}
               </Typography>
 
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                   <ScheduleOutlined sx={{ fontSize: 18, color: 'text.secondary' }} />
                   <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                    Mon - Fri: 09:00 - 18:00 CET
+                    {t('pages.support.hours', { defaultValue: 'Mon - Fri: 09:00 - 18:00 CET' })}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                   <LocationOnOutlined sx={{ fontSize: 18, color: 'text.secondary' }} />
                   <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                    Prague, Czechia
+                    {t('pages.support.location', { defaultValue: 'Prague, Czechia' })}
                   </Typography>
                 </Box>
               </Stack>
@@ -237,7 +272,7 @@ const SupportPage: React.FC = () => {
               onClick={handleOpenCrispChat}
               sx={{ py: 1.2, fontWeight: 700, borderRadius: '10px', borderWidth: '2px' }}
             >
-              Open Live Chat
+              {t('pages.support.openChat', { defaultValue: 'Open Live Chat' })}
             </Button>
           </Card>
         </Grid>
@@ -247,10 +282,12 @@ const SupportPage: React.FC = () => {
       <Box sx={{ maxWidth: 840, mx: 'auto' }}>
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-            Frequently Asked Questions
+            {t('pages.support.faqTitle', { defaultValue: 'Frequently Asked Questions' })}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Quick answers regarding foreign insurance requirements in the Czech Republic.
+            {t('pages.support.faqSubtitle', {
+              defaultValue: 'Quick answers regarding foreign insurance requirements in the Czech Republic.',
+            })}
           </Typography>
         </Box>
 
@@ -285,7 +322,9 @@ const SupportPage: React.FC = () => {
         open={copied}
         autoHideDuration={3000}
         onClose={() => setCopied(false)}
-        message="Support email copied to clipboard: insurance@hktse.eu.org"
+        message={t('pages.support.copied', {
+          defaultValue: 'Support email copied to clipboard: insurance@hktse.eu.org',
+        })}
       />
     </Container>
   );

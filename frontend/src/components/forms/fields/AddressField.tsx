@@ -186,7 +186,7 @@ const AddressField: React.FC<AddressFieldProps> = ({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <PublicOutlined sx={{ fontSize: 20, color: 'primary.main' }} />
             <Typography variant="subtitle2" component="span" sx={{ fontWeight: 700 }}>
-              Smart Address Autofill (Worldwide & Czechia)
+              {t('addressAssistant.title', { defaultValue: 'Smart Address Autofill (Worldwide & Czechia)' })}
             </Typography>
           </Box>
           <Stack direction="row" spacing={1}>
@@ -196,7 +196,7 @@ const AddressField: React.FC<AddressFieldProps> = ({
               onClick={() => setAssistantMode('global')}
               sx={{ textTransform: 'none', borderRadius: '8px', fontSize: '0.75rem', py: 0.3 }}
             >
-              Worldwide Search
+              {t('addressAssistant.globalBtn', { defaultValue: 'Worldwide Search' })}
             </Button>
             <Button
               size="small"
@@ -204,7 +204,7 @@ const AddressField: React.FC<AddressFieldProps> = ({
               onClick={() => setAssistantMode('czech')}
               sx={{ textTransform: 'none', borderRadius: '8px', fontSize: '0.75rem', py: 0.3 }}
             >
-              Czech Regional Dropdown
+              {t('addressAssistant.czechBtn', { defaultValue: 'Czech Regional Dropdown' })}
             </Button>
           </Stack>
         </Stack>
@@ -215,7 +215,11 @@ const AddressField: React.FC<AddressFieldProps> = ({
             <TextField
               fullWidth
               size="small"
-              placeholder="Search any address worldwide (e.g. Národní 1 Prague, Kolej Strahov, Oxford St London, 中关村)..."
+              placeholder={String(
+                t('addressAssistant.searchPlaceholder', {
+                  defaultValue: 'Search any address worldwide (e.g. Národní 1 Prague, Kolej Strahov, Oxford St London, 中关村)...',
+                })
+              )}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={disabled}
@@ -275,17 +279,20 @@ const AddressField: React.FC<AddressFieldProps> = ({
         {/* Czech Region Quick Select Dropdown */}
         {assistantMode === 'czech' && (
           <FormControl fullWidth size="small">
-            <InputLabel id="quick-czech-region-label">Select Czech Region (Kraj)</InputLabel>
+            <InputLabel id="quick-czech-region-label">
+              {t('addressAssistant.selectCzechRegion', { defaultValue: 'Select Czech Region (Kraj)' })}
+            </InputLabel>
             <Select
               labelId="quick-czech-region-label"
-              label="Select Czech Region (Kraj)"
+              label={t('addressAssistant.selectCzechRegion', { defaultValue: 'Select Czech Region (Kraj)' })}
               value=""
               onChange={(e) => handleApplyCzechPreset(e.target.value)}
               sx={{ backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : 'rgba(15, 23, 42, 0.6)' }}
             >
               {CZECH_REGIONS.map((r) => (
                 <MenuItem key={r.name} value={r.name}>
-                  {r.name} (Default City: {r.city}, Zip: {r.zip})
+                  {r.name} ({t('addressAssistant.defaultCity', { defaultValue: 'Default City' })}: {r.city},{' '}
+                  {t('addressAssistant.zip', { defaultValue: 'Zip' })}: {r.zip})
                 </MenuItem>
               ))}
             </Select>

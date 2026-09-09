@@ -163,6 +163,96 @@
       "title": "Stránka nenalezena",
       "subtitle": "Stránka neexistuje",
       "goHome": "Domů"
+    },
+    "terms": {
+      "badge": "Řídí se občanským zákoníkem (zák. č. 89/2012 Sb.) a zákonem o distribuci pojištění (zák. č. 170/2018 Sb.)",
+      "title": "Obchodní podmínky",
+      "subtitle": "Standardní obchodní a zprostředkovatelské podmínky upravující podávání žádostí o pojištění, ověřování dokumentů a zprostředkování pojištění přes portál FormVault.",
+      "section1Title": "1. Rozsah zprostředkování a status makléře",
+      "section1Content": "FormVault působí jako registrovaný pojišťovací zprostředkovatel a makléř podle právních předpisů České republiky. Naše platforma zprostředkovává smlouvy mezi žadatelem („Vy“) a licencovanými pojišťovnami v ČR/EU (mimo jiné Pojišťovna VZP, a.s., Slavia pojišťovna a.s., Maxima pojišťovna a.s. a UNIQA pojišťovna, a.s.). Závazné krytí vzniká v souladu se Všeobecnými pojistnými podmínkami (VPP) daného pojistitele.",
+      "section2Title": "2. Prohlášení žadatele a pravost dokumentů",
+      "section2Content": "Odesláním žádosti a nahráním dokladů totožnosti (cestovní pas, potvrzení o studiu, vízum) zaručujete, že veškeré poskytnuté údaje jsou pravdivé, aktuální a úplné. Předložení padělaných nebo pozměněných dokumentů je trestným činem podle trestního zákoníku ČR (zák. č. 40/2009 Sb.) a povede k okamžitému ukončení zprostředkování a nahlášení příslušným orgánům (OAMP / Policie ČR).",
+      "section3Title": "3. Vydání pojistky a soulad s OAMP MV ČR",
+      "section3Content": "FormVault koordinuje vydání oficiálního dokladu o pojištění (Pojistná smlouva / Potvrzení o pojištění) splňujícího požadavky zákona o pobytu cizinců (zák. č. 326/1999 Sb.). Po akceptaci a ověření pojistitelem je doklad elektronicky zaslán na Váš e-mail a zaevidován v národním registru pojištění.",
+      "section4Title": "4. Zrušení, refundace a postup při zamítnutí víza",
+      "section4Content": "Pokud je Vaše žádost o vízum nebo pobytové oprávnění oficiálně zamítnuta Ministerstvem vnitra ČR (OAMP) nebo zastupitelským úřadem, máte nárok na vrácení pojistného v souladu s podmínkami pojistitele po předložení úředního rozhodnutí o zamítnutí. Mohou být uplatněny administrativní poplatky dle smluvních podmínek dané pojišťovny.",
+      "section5Title": "5. Rozhodné právo a řešení sporů",
+      "section5Content": "Tyto podmínky a veškeré smlouvy zprostředkované touto platformou se řídí výlučně právním řádem České republiky. Veškeré spory vzniklé v souvislosti s našimi službami podléhají výhradní příslušnosti věcně a místně příslušných soudů v Praze, Česká republika."
+    },
+    "support": {
+      "badge": "Klientská podpora 24/7 a asistence makléře",
+      "title": "Zákaznická podpora a centrum nápovědy",
+      "subtitle": "Získejte pomoc s pojistnými žádostmi, náležitostmi pro víza v ČR, likvidací pojistných událostí nebo chatujte s naším poradcem.",
+      "emailCardTitle": "Přímý e-mailový kontakt",
+      "emailCardDesc": "Pro ověřování smluv, dotazy pro ambasády nebo zaslání dokladu o zamítnutí víza k vrácení pojistného. Průměrná doba odpovědi: < 2 hodiny.",
+      "copyBtn": "Kopírovat",
+      "copied": "E-mail podpory byl zkopírován do schránky: insurance@hktse.eu.org",
+      "composeEmail": "Napsat e-mail",
+      "chatCardTitle": "Živý chat s poradcem (Crisp)",
+      "chatCardDesc": "Spojte se přímo s licencovaným pojišťovacím specialistou v angličtině, čínštině (中文) nebo češtině. Okamžitá asistence během evropských pracovních hodin.",
+      "hours": "Po - Pá: 09:00 - 18:00 SEČ",
+      "location": "Praha, Česká republika",
+      "openChat": "Otevřít živý chat",
+      "chatOffline": "Živý chat se načítá nebo je offline. Napište nám přímo na insurance@hktse.eu.org",
+      "faqTitle": "Často kladené otázky",
+      "faqSubtitle": "Rychlé odpovědi ohledně požadavků na zdravotní pojištění cizinců v České republice.",
+      "faqs": {
+        "q1": "Jak rychle obdržím oficiální doklad o pojištění po odeslání?",
+        "a1": "Standardní elektronické potvrzení o pojištění je vygenerováno do 1 až 4 pracovních hodin po schválení a úhradě. Certifikované PDF s číslem pojistné smlouvy obdržíte přímo na Váš e-mail pro potřeby vízové žádosti.",
+        "q2": "Jsou Vaše pojistky 100% akceptovány Ministerstvem vnitra ČR (OAMP)?",
+        "a2": "Ano. Všechna pojištění zprostředkovaná naší agenturou (PVZP, Slavia, Maxima, UNIQA) striktně splňují zákon o pobytu cizinců (zák. č. 326/1999 Sb.). Jedná se o komplexní zdravotní pojištění (KZPC) s limitem až 10 000 000 Kč (400 000 EUR) registrované v registru pojištění.",
+        "q3": "Co dělat v případě, že je má žádost o vízum zamítnuta ambasádou?",
+        "a3": "V případě zamítnutí žádosti máte nárok na vrácení pojistného dle storno podmínek pojišťovny. Zašlete kopii oficiálního rozhodnutí o zamítnutí na insurance@hktse.eu.org a my vyřídíme storno i vrácení peněz.",
+        "q4": "Jak funguje přímé proplácení a úhrada lékařské péče v ČR?",
+        "a4": "Ve smluvních nemocnicích a klinikách (např. Motol, FNKV, VFN v Praze či FN Brno) stačí předložit průkaz pojištěnce pro bezhotovostní ošetření. V nesmluvních zařízeních uhradíte péči a s lékařskou zprávou a fakturou požádáte o proplacení do 14 dnů.",
+        "q5": "Proč je vyžadován cestovní pas a potvrzení o studiu?",
+        "a5": "Česká legislativa vyžaduje přesné ověření totožnosti cizince pro zápis smlouvy do registru MV ČR. Nahrání potvrzení o studiu Vám navíc zajistí studentskou slevu (až 30 % úspora)."
+      }
+    },
+    "privacy": {
+      "badge": "V souladu s nařízením EU 2016/679 (GDPR) a zákonem č. 110/2019 Sb.",
+      "title": "Zásady ochrany osobních údajů",
+      "subtitle": "Oficiální prohlášení o tom, jak FormVault shromažďuje, zpracovává, šifruje a chrání osobní údaje pro pojistné žádosti v ČR a EU.",
+      "section1Title": "1. Správce osobních údajů",
+      "section1Content": "Správcem osobních údajů je FormVault Insurance Brokerage Services (se sídlem v Praze, Česká republika). Pro veškeré dotazy týkající se ochrany osobních údajů nebo kontaktování pověřence (DPO) použijte e-mail: insurance@hktse.eu.org.",
+      "section2Title": "2. Účel zpracování údajů a právní základ",
+      "section2Intro": "Vaše identifikační údaje (jméno, datum narození, kopie pasu/OP, status studenta, adresa) zpracováváme výhradně pro tyto účely:",
+      "section2Item1": "Sjednání a vydání zdravotního, cestovního a studentského pojištění u licencovaných pojistitelů;",
+      "section2Item2": "Splnění zákonných požadavků zákona o pobytu cizinců (zák. č. 326/1999 Sb., požadavky OAMP MV ČR);",
+      "section2Item3": "Audity, prevence podvodů a zákonná archivace dle předpisů o distribuci pojištění.",
+      "section2Legal": "Právní základ: Článek 6 odst. 1 písm. b) GDPR (plnění smlouvy) a Článek 6 odst. 1 písm. c) GDPR (plnění právní povinnosti).",
+      "section3Title": "3. Hardwarové šifrování a úložiště Zero-Knowledge",
+      "section3Content": "Veškeré fotografie pasů, studentské průkazy a osobní záznamy zaslané do FormVault jsou šifrovány pomocí autentizovaného šifrování AES-256 GCM s unikátními inicializačními vektory (IV). Databáze je zcela izolována od veřejného internetu a přenosy probíhají přes TLS 1.3.",
+      "section4Title": "4. Vaše práva podle GDPR (články 15-22)",
+      "section4Intro": "Jako subjekt údajů máte následující zákonná práva:",
+      "section4Item1": "Právo na přístup (čl. 15): Žádat kopii všech osobních údajů, které o Vás vedeme;",
+      "section4Item2": "Právo na opravu (čl. 16): Opravit neúplné či nepřesné osobní údaje;",
+      "section4Item3": "Právo na výmaz / „být zapomenut“ (čl. 17): Požadovat výmaz dokumentů, pokud to neodporuje zákonným archivačním lhůtám;",
+      "section4Item4": "Právo na přenositelnost údajů (čl. 20): Obdržet Vaše data ve strukturovaném strojově čitelném formátu JSON/PDF.",
+      "form": {
+        "title": "Uplatnit práva GDPR",
+        "subtitle": "Odešlete oficiální žádost přímo našemu pověřenci pro ochranu osobních údajů. Žádost vyřídíme do 30 kalendářních dnů v souladu s právem EU.",
+        "requestAction": "Požadovaná akce",
+        "types": {
+          "access": "Právo na přístup (Exportovat mé údaje)",
+          "rectification": "Právo na opravu (Opravit chyby)",
+          "erasure": "Právo na výmaz (Smazat mé dokumenty)",
+          "portability": "Přenositelnost údajů (Strojově čitelná kopie)"
+        },
+        "fullName": "Celé jméno a příjmení",
+        "fullNamePlaceholder": "např. Jan Novák",
+        "registeredEmail": "Registrovaný e-mail",
+        "registeredEmailPlaceholder": "např. jan@example.cz",
+        "refNumber": "Číslo žádosti (nepovinné)",
+        "refNumberPlaceholder": "např. APP-2026-001234",
+        "details": "Podrobnosti žádosti / poznámky",
+        "detailsPlaceholder": "Uveďte, které dokumenty nebo opravy požadujete...",
+        "submit": "Odeslat formální žádost GDPR",
+        "submitting": "Odesílání...",
+        "validationError": "Zadejte prosím své celé jméno a registrovanou e-mailovou adresu.",
+        "successTitle": "Žádost byla úspěšně zaevidována",
+        "successDesc": "Vaše žádost byla zaevidována. Náš pověřenec pro ochranu osobních údajů ověří Vaši totožnost a vyřídí žádost do 30 dnů."
+      }
     }
   },
   "footer": {
@@ -246,20 +336,23 @@
         "address": {
           "street": {
             "required": "Ulice je povinná",
-            "minLength": "Min 5 znaků"
+            "minLength": "Min 5 znaků",
+            "maxLength": "Ulice nesmí přesáhnout 100 znaků"
           },
           "city": {
             "required": "Město je povinné",
             "minLength": "Min 2 znaky",
-            "pattern": "Pouze písmena"
+            "pattern": "Neplatný formát města",
+            "maxLength": "Město nesmí přesáhnout 50 znaků"
           },
           "state": {
             "required": "Kraj je povinný",
-            "minLength": "Min 2 znaky"
+            "minLength": "Min 2 znaky",
+            "maxLength": "Kraj/Stát nesmí přesáhnout 50 znaků"
           },
           "zipCode": {
             "required": "PSČ je povinné",
-            "pattern": "Neplatné PSČ"
+            "pattern": "Neplatný formát PSČ"
           },
           "country": {
             "required": "Země je povinná"
@@ -277,6 +370,27 @@
         "GB": "Velká Británie",
         "AU": "Austrálie",
         "JP": "Japonsko"
+      },
+      "name": {
+        "label": "Celé jméno"
+      },
+      "firstName": {
+        "label": "Křestní jméno"
+      },
+      "lastName": {
+        "label": "Příjmení"
+      },
+      "email": {
+        "label": "E-mailová adresa"
+      },
+      "phone": {
+        "label": "Telefonní číslo"
+      },
+      "dateOfBirth": {
+        "label": "Datum narození"
+      },
+      "address": {
+        "label": "Adresa"
       }
     },
     "fileUpload": {
@@ -304,8 +418,16 @@
       "fileTooLarge": "Soubor příliš velký.",
       "invalidFormat": "Neplatný formát.",
       "uploadFailed": "Chyba.",
-      "noFilesUploaded": "Žádné soubory."
-    }
+      "noFilesUploaded": "Žádné soubory.",
+      "title": "Opravte prosím následující chyby:",
+      "submitFailed": "Odeslání souborů se nezdařilo. Zkuste to prosím znovu.",
+      "allFilesRequired": "Před pokračováním prosím nahrajte všechny požadované soubory."
+    },
+    "selectFile": "Vybrat soubor",
+    "takePhoto": "Pořídit fotografii",
+    "preview": "Náhled souboru",
+    "supportedFormats": "Podporované formáty: {{formats}}. Maximální velikost: {{maxSize}}MB",
+    "vaultEncrypted": "Zabezpečeno v trezoru AES-256"
   },
   "workflow": {
     "steps": {
@@ -360,7 +482,11 @@
   "errors": {
     "general": "Došlo k chybě.",
     "network": "Chyba sítě.",
-    "validation": "Zkontrolujte údaje."
+    "validation": "Zkontrolujte údaje.",
+    "somethingWentWrong": "Jejda! Něco se pokazilo",
+    "unexpectedError": "Omlouváme se, došlo k neočekávané chybě. Zkuste prosím obnovit stránku nebo se vrátit na domovskou stránku.",
+    "refreshPage": "Obnovit stránku",
+    "goHome": "Přejít domů"
   },
   "cookieConsent": {
     "title": "Oznámení o ochraně osobních údajů (GDPR) a souborech Cookie",
@@ -368,5 +494,31 @@
     "acceptAll": "Přijmout vše",
     "essentialOnly": "Pouze nezbytné",
     "privacyPolicy": "Zásady ochrany osobních údajů"
+  },
+  "securityRail": {
+    "title": "Institucionální bezpečnostní lišta",
+    "aes": {
+      "label": "Šifrování AES-256 GCM",
+      "tooltip": "Všechny dokumenty a formulářová data jsou uložena v zašifrovaném stavu pomocí vojenského standardu AES-256 GCM."
+    },
+    "privacy": {
+      "label": "Ochrana soukromí Zero-Knowledge",
+      "tooltip": "Vaše citlivé osobní údaje jsou přísně izolovány a přístupné pouze oprávněným upisovatelům."
+    },
+    "tls": {
+      "label": "Aktivní kanál TLS 1.3",
+      "tooltip": "Navázán vysoce zabezpečený šifrovaný komunikační kanál."
+    },
+    "autoSave": {
+      "label": "Šifrované automatické ukládání",
+      "tooltip": "Změny konceptu se automaticky ukládají do vašeho lokálního zabezpečeného trezoru."
+    }
+  },
+  "addressAssistant": {
+    "title": "Chytrý asistent adresy (Globální a ČR)",
+    "globalBtn": "Globální našeptávač",
+    "czechBtn": "Výběr kraje ČR",
+    "placeholder": "Zadejte jakoukoli adresu, kampus nebo pamětihodnost (např. Národní 1 Praha, Strahov)...",
+    "selectRegion": "Vyberte kraj ČR"
   }
 }

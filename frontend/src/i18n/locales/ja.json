@@ -71,7 +71,10 @@
         "lastUpdated": "Last Updated",
         "recently": "Recently",
         "timelineTitle": "Application Processing Timeline",
-        "currentStage": "Current Stage"
+        "currentStage": "Current Stage",
+        "provideBothError": "申請照会番号と登録メールアドレスの両方を入力してください。",
+        "notFoundError": "一致する申請が見つかりませんでした。照会番号と登録メールアドレスをご確認ください。",
+        "protected": "保護済み"
       },
       "plans": {
         "badge": "Curated Coverage Tiers",
@@ -80,7 +83,8 @@
         "choosePlan": "Choose Plan & Apply",
         "applyNow": "Apply Now",
         "perYear": "/ year",
-        "perMonth": "/ month"
+        "perMonth": "/ month",
+        "customRate": "カスタム料金"
       },
       "partners": {
         "badge": "Underwriting Partners",
@@ -159,6 +163,96 @@
       "title": "ページが見つかりません",
       "subtitle": "お探しのページは存在しません",
       "goHome": "ホーム"
+    },
+    "terms": {
+      "badge": "チェコ民法典（法律第89/2012号）および保険販売法（法律第170/2018号）に準拠",
+      "title": "利用規約",
+      "subtitle": "Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.",
+      "section1Title": "1. Intermediary Scope & Broker Status",
+      "section1Content": "FormVault functions as a registered insurance intermediary and broker operating under the laws of the Czech Republic. Our platform mediates agreements between the applicant (\"You\") and licensed Czech/EU underwriting insurance companies (including but not limited to Pojišťovna VZP, a.s., Slavia pojišťovna a.s., Maxima pojišťovna a.s., and UNIQA pojišťovna, a.s.). Final binding coverage is executed in accordance with the underwriter's General Insurance Conditions (VPP).",
+      "section2Title": "2. Applicant Representations & Document Authenticity",
+      "section2Content": "By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).",
+      "section3Title": "3. Policy Issuance & Czech OAMP Compliance",
+      "section3Content": "FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the national insurance database.",
+      "section4Title": "4. Cancellations, Refunds & Visa Refusal Policy",
+      "section4Content": "In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier's contract terms.",
+      "section5Title": "5. Governing Law & Dispute Resolution",
+      "section5Content": "These terms and any agreements mediated via this platform are exclusively governed by and construed in accordance with the laws of the Czech Republic. Any disputes arising out of or in connection with our mediation services shall be subject to the exclusive jurisdiction of the competent courts of Prague, Czech Republic."
+    },
+    "support": {
+      "badge": "24時間365日クライアントケア＆仲介アシスタンス",
+      "title": "カスタマーサポート＆ヘルプセンター",
+      "subtitle": "Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.",
+      "emailCardTitle": "Direct Email Dispatch",
+      "emailCardDesc": "For policy verification, visa embassy inquiries, or submitting refusal refund forms. Average response time: < 2 hours.",
+      "copyBtn": "Copy",
+      "copied": "Support email copied to clipboard: insurance@hktse.eu.org",
+      "composeEmail": "Compose Email",
+      "chatCardTitle": "Live Advisor Chat (Crisp)",
+      "chatCardDesc": "Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.",
+      "hours": "Mon - Fri: 09:00 - 18:00 CET",
+      "location": "Prague, Czechia",
+      "openChat": "Open Live Chat",
+      "chatOffline": "Live chat is initializing or currently offline. Please email us directly at insurance@hktse.eu.org",
+      "faqTitle": "Frequently Asked Questions",
+      "faqSubtitle": "Quick answers regarding foreign insurance requirements in the Czech Republic.",
+      "faqs": {
+        "q1": "How fast will I receive my official insurance certificate after submission?",
+        "a1": "Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.",
+        "q2": "Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?",
+        "a2": "Yes. All policies mediated through our agency (PVZP, Slavia, Maxima, UNIQA) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.",
+        "q3": "What should I do if my visa application is refused by the Embassy?",
+        "a3": "If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.",
+        "q4": "How does medical claim reimbursement and direct billing work in Czechia?",
+        "a4": "For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.",
+        "q5": "Why are passport and student verification documents required?",
+        "a5": "Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings)."
+      }
+    },
+    "privacy": {
+      "badge": "EU一般データ保護規則（GDPR）およびチェコ法第110/2019号に完全準拠",
+      "title": "プライバシーポリシーとデータ保護",
+      "subtitle": "Official declaration of how FormVault Insurance collects, processes, encrypts, and protects personal identity data for Czech Republic and European Union insurance applications.",
+      "section1Title": "1. Data Controller Identification",
+      "section1Content": "The data controller responsible for the processing of your personal data is FormVault Insurance Brokerage Services (operating in Prague, Czech Republic). For any inquiries regarding data protection or to contact our Data Protection Officer (DPO), please email: insurance@hktse.eu.org.",
+      "section2Title": "2. Purpose of Data Processing & Legal Basis",
+      "section2Intro": "We collect and process your identity details (Name, Date of Birth, Passport/ID copy, Student Status, Address) strictly for the following purposes:",
+      "section2Item1": "Binding and issuing health, travel, and student insurance policies with licensed underwriters;",
+      "section2Item2": "Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);",
+      "section2Item3": "Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.",
+      "section2Legal": "Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).",
+      "section3Title": "3. Hardware-Grade Encryption & Zero-Knowledge Storage",
+      "section3Content": "All passport photos, student identification cards, and personal records transmitted to FormVault are encrypted at rest using AES-256 GCM authenticated encryption with unique initialization vectors (IV). Database connections are strictly isolated from the public Internet, and internal transfers utilize TLS 1.3.",
+      "section4Title": "4. Your Rights Under GDPR (Articles 15-22)",
+      "section4Intro": "As an applicant, you possess the following enforceable statutory rights:",
+      "section4Item1": "Right of Access (Art. 15): Request a copy of all personal records we hold about you;",
+      "section4Item2": "Right to Rectification (Art. 16): Correct any incomplete or erroneous personal details;",
+      "section4Item3": "Right to Erasure / \"Right to be Forgotten\" (Art. 17): Request deletion of submitted documents where statutory retention periods permit;",
+      "section4Item4": "Right to Data Portability (Art. 20): Receive your structured data in standard machine-readable JSON/PDF.",
+      "form": {
+        "title": "Exercise Your GDPR Rights",
+        "subtitle": "Submit an official data request directly to our Data Protection Officer. We will process and confirm your request within 30 calendar days as mandated by EU law.",
+        "requestAction": "Request Action",
+        "types": {
+          "access": "Right of Access (Export My Data)",
+          "rectification": "Right to Rectification (Correct Errors)",
+          "erasure": "Right to Erasure (Delete My Documents)",
+          "portability": "Data Portability (Structured Machine Copy)"
+        },
+        "fullName": "Full Legal Name",
+        "fullNamePlaceholder": "e.g. Jan Novak",
+        "registeredEmail": "Registered Email",
+        "registeredEmailPlaceholder": "e.g. jan@example.cz",
+        "refNumber": "Application Reference # (Optional)",
+        "refNumberPlaceholder": "e.g. APP-2026-001234",
+        "details": "Specific Notes / Request Details",
+        "detailsPlaceholder": "Specify which documents or corrections you are requesting...",
+        "submit": "Submit Formal GDPR Request",
+        "submitting": "Submitting...",
+        "validationError": "Please provide your full name and registered email address.",
+        "successTitle": "Request Recorded Successfully",
+        "successDesc": "Your statutory GDPR data request has been registered. Our Data Protection Officer will review and verify your identity within 30 days."
+      }
     }
   },
   "footer": {
@@ -242,18 +336,23 @@
         "address": {
           "street": {
             "required": "住所は必須です",
-            "minLength": "5文字以上"
+            "minLength": "5文字以上",
+            "maxLength": "番地・町名は100文字以内で入力してください"
           },
           "city": {
             "required": "市区町村は必須です",
-            "minLength": "2文字以上"
+            "minLength": "2文字以上",
+            "maxLength": "市区町村は50文字以内で入力してください",
+            "pattern": "市区町村の形式が無効です"
           },
           "state": {
             "required": "都道府県は必須です",
-            "minLength": "2文字以上"
+            "minLength": "2文字以上",
+            "maxLength": "都道府県は50文字以内で入力してください"
           },
           "zipCode": {
-            "required": "郵便番号は必須です"
+            "required": "郵便番号は必須です",
+            "pattern": "郵便番号の形式が無効です"
           },
           "country": {
             "required": "国は必須です"
@@ -271,6 +370,27 @@
         "GB": "イギリス",
         "AU": "オーストラリア",
         "JP": "日本"
+      },
+      "name": {
+        "label": "氏名"
+      },
+      "firstName": {
+        "label": "名"
+      },
+      "lastName": {
+        "label": "姓"
+      },
+      "email": {
+        "label": "メールアドレス"
+      },
+      "phone": {
+        "label": "電話番号"
+      },
+      "dateOfBirth": {
+        "label": "生年月日"
+      },
+      "address": {
+        "label": "住所"
       }
     },
     "fileUpload": {
@@ -298,8 +418,16 @@
       "fileTooLarge": "ファイルが大きすぎます。",
       "invalidFormat": "無効な形式。",
       "uploadFailed": "失敗しました。",
-      "noFilesUploaded": "ファイルがありません。"
-    }
+      "noFilesUploaded": "ファイルがありません。",
+      "title": "次のエラーを修正してください:",
+      "submitFailed": "ファイルの送信に失敗しました。もう一度お試しください。",
+      "allFilesRequired": "先に進む前に必要なすべてのファイルをアップロードしてください。"
+    },
+    "selectFile": "ファイルを選択",
+    "takePhoto": "写真を撮る",
+    "preview": "ファイルプレビュー",
+    "supportedFormats": "対応フォーマット: {{formats}}。最大サイズ: {{maxSize}}MB",
+    "vaultEncrypted": "AES-256 保管庫暗号化"
   },
   "workflow": {
     "steps": {
@@ -354,7 +482,11 @@
   "errors": {
     "general": "エラーが発生しました。",
     "network": "ネットワークエラー。",
-    "validation": "入力を確認してください。"
+    "validation": "入力を確認してください。",
+    "somethingWentWrong": "問題が発生しました",
+    "unexpectedError": "予期しないエラーが発生しました。ページを再読み込みするか、ホームに戻ってください。",
+    "refreshPage": "ページを再読み込み",
+    "goHome": "ホームに戻る"
   },
   "cookieConsent": {
     "title": "EU GDPR & Cookie Compliance Notice",
@@ -362,5 +494,31 @@
     "acceptAll": "Accept All",
     "essentialOnly": "Essential Only",
     "privacyPolicy": "Privacy Policy"
+  },
+  "securityRail": {
+    "title": "機関レベルのセキュリティレール",
+    "aes": {
+      "label": "AES-256 GCM 暗号化",
+      "tooltip": "すべての文書とフォームデータは軍用グレードのAES-256 GCMで暗号化保管されます。"
+    },
+    "privacy": {
+      "label": "ゼロナレッジプライバシー",
+      "tooltip": "機密個人データは厳格に隔離され、承認された引受人のみがアクセスできます。"
+    },
+    "tls": {
+      "label": "TLS 1.3 アクティブチャネル",
+      "tooltip": "安全で高信頼性の暗号化通信チャネルが確立されています。"
+    },
+    "autoSave": {
+      "label": "暗号化自動保存",
+      "tooltip": "入力中の内容はローカルの安全な保管庫に自動保存されます。"
+    }
+  },
+  "addressAssistant": {
+    "title": "スマート住所アシスタント（全世界＆チェコ）",
+    "globalBtn": "全世界オートサジェスト",
+    "czechBtn": "チェコ地域選択",
+    "placeholder": "世界中の通り、大学キャンパス、ランドマークを入力...",
+    "selectRegion": "チェコの州を選択 (Kraj)"
   }
 }

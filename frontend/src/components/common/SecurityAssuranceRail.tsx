@@ -12,6 +12,7 @@ import {
   VerifiedUserOutlined,
   SaveOutlined,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface SecurityAssuranceRailProps {
   compact?: boolean;
@@ -20,29 +21,38 @@ interface SecurityAssuranceRailProps {
 export const SecurityAssuranceRail: React.FC<SecurityAssuranceRailProps> = ({
   compact = false,
 }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
   const badges = [
     {
       icon: <LockOutlined sx={{ fontSize: 16, color: '#10B981' }} />,
-      label: 'AES-256 GCM Encrypted',
-      tooltip: 'All documents and form data are encrypted at rest using military-grade AES-256 GCM.',
+      label: t('securityRail.aes.label', { defaultValue: 'AES-256 GCM Encrypted' }),
+      tooltip: t('securityRail.aes.tooltip', {
+        defaultValue: 'All documents and form data are encrypted at rest using military-grade AES-256 GCM.',
+      }),
     },
     {
       icon: <ShieldOutlined sx={{ fontSize: 16, color: '#6366F1' }} />,
-      label: 'Zero-Knowledge Privacy',
-      tooltip: 'Your sensitive personal data is strictly isolated and only accessible to authorized underwriters.',
+      label: t('securityRail.privacy.label', { defaultValue: 'Zero-Knowledge Privacy' }),
+      tooltip: t('securityRail.privacy.tooltip', {
+        defaultValue: 'Your sensitive personal data is strictly isolated and only accessible to authorized underwriters.',
+      }),
     },
     {
       icon: <VerifiedUserOutlined sx={{ fontSize: 16, color: '#3B82F6' }} />,
-      label: 'TLS 1.3 Active Channel',
-      tooltip: 'Secure high-assurance encrypted communication channel established.',
+      label: t('securityRail.tls.label', { defaultValue: 'TLS 1.3 Active Channel' }),
+      tooltip: t('securityRail.tls.tooltip', {
+        defaultValue: 'Secure high-assurance encrypted communication channel established.',
+      }),
     },
     {
       icon: <SaveOutlined sx={{ fontSize: 16, color: '#8B5CF6' }} />,
-      label: 'Encrypted Auto-Save',
-      tooltip: 'Draft changes are automatically captured in your local secure vault to prevent loss.',
+      label: t('securityRail.autoSave.label', { defaultValue: 'Encrypted Auto-Save' }),
+      tooltip: t('securityRail.autoSave.tooltip', {
+        defaultValue: 'Draft changes are automatically captured in your local secure vault to prevent loss.',
+      }),
     },
   ];
 
@@ -95,7 +105,7 @@ export const SecurityAssuranceRail: React.FC<SecurityAssuranceRailProps> = ({
               color: isDark ? '#A5B4FC' : '#4F46E5',
             }}
           >
-            Institutional Security Rail
+            {t('securityRail.title', { defaultValue: 'Institutional Security Rail' })}
           </Typography>
         </Box>
 
