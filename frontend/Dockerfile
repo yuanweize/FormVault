@@ -26,11 +26,6 @@ FROM nginx:alpine AS production
 LABEL org.opencontainers.image.source="https://github.com/yuanweize/FormVault"
 LABEL org.opencontainers.image.description="FormVault frontend web client"
 
-# Install security updates
-RUN apk update && apk upgrade && apk add --no-cache \
-    curl \
-    && rm -rf /var/cache/apk/*
-
 # Copy built application
 COPY --from=builder /app/build /usr/share/nginx/html
 
