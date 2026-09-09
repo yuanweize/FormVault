@@ -1242,69 +1242,81 @@ const HomePage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
-          {companies.map((company) => (
-            <Grid item xs={12} sm={6} md={3} key={company.id}>
-              <Card
-                sx={{
-                  height: '100%',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(15, 23, 42, 0.08)',
-                  p: 2.5,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    borderColor: 'primary.main',
-                    boxShadow: '0 8px 24px -4px rgba(79, 70, 229, 0.12)',
-                  },
-                }}
-              >
-                <Box>
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
-                    <ShieldOutlined sx={{ color: 'primary.main', fontSize: 22 }} />
-                    <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
-                      {company.name}
-                    </Typography>
-                  </Stack>
-                  <Chip
-                    label={company.rating}
-                    size="small"
-                    sx={{
-                      mb: 1.5,
-                      fontWeight: 600,
-                      fontSize: '0.725rem',
-                      backgroundColor: 'rgba(59, 130, 246, 0.08)',
-                      color: '#2563EB',
-                    }}
-                  />
-                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.825rem', lineHeight: 1.5 }}>
-                    {company.description}
-                  </Typography>
-                </Box>
-                {company.website && (
-                  <Box sx={{ mt: 2, pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
-                    <Link
-                      href={company.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
+        <Grid container spacing={3.5} justifyContent="center" alignItems="stretch">
+          {companies.map((company) => {
+            const companyGridCols =
+              companies.length === 3
+                ? { xs: 12, sm: 6, md: 4 }
+                : companies.length === 2
+                ? { xs: 12, sm: 6, md: 5 }
+                : companies.length === 1
+                ? { xs: 12, sm: 8, md: 6 }
+                : { xs: 12, sm: 6, md: 3 };
+
+            return (
+              <Grid item {...companyGridCols} key={company.id} sx={{ display: 'flex' }}>
+                <Card
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(15, 23, 42, 0.08)',
+                    p: 2.5,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transition: 'all 0.2s',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      boxShadow: '0 8px 24px -4px rgba(79, 70, 229, 0.12)',
+                    },
+                  }}
+                >
+                  <Box sx={{ flex: 1 }}>
+                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+                      <ShieldOutlined sx={{ color: 'primary.main', fontSize: 22 }} />
+                      <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
+                        {company.name}
+                      </Typography>
+                    </Stack>
+                    <Chip
+                      label={company.rating}
+                      size="small"
                       sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5,
-                        fontSize: '0.8rem',
+                        mb: 1.5,
                         fontWeight: 600,
-                        textDecoration: 'none',
+                        fontSize: '0.725rem',
+                        backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                        color: '#2563EB',
                       }}
-                    >
-                      {t('pages.home.partners.officialPortal', { defaultValue: 'Official Portal' })} <OpenInNewOutlined sx={{ fontSize: 14 }} />
-                    </Link>
+                    />
+                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.825rem', lineHeight: 1.5 }}>
+                      {company.description}
+                    </Typography>
                   </Box>
-                )}
-              </Card>
-            </Grid>
-          ))}
+                  {company.website && (
+                    <Box sx={{ mt: 2, pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
+                      <Link
+                        href={company.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                        }}
+                      >
+                        {t('pages.home.partners.officialPortal', { defaultValue: 'Official Portal' })} <OpenInNewOutlined sx={{ fontSize: 14 }} />
+                      </Link>
+                    </Box>
+                  )}
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
 

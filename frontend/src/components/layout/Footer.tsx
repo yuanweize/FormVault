@@ -123,30 +123,6 @@ const Footer: React.FC = () => {
                 defaultBrokerDesc
               )}
             </Typography>
-            <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
-              <Link
-                href={operatorUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="caption"
-                color="primary"
-                sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4, fontWeight: 700 }}
-              >
-                {operatorName} <OpenInNewOutlined sx={{ fontSize: 12 }} />
-              </Link>
-              {isPartnerVerified && (
-                <Link
-                  href={partnerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="caption"
-                  color="primary"
-                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4, fontWeight: 700 }}
-                >
-                  {partnerName} <OpenInNewOutlined sx={{ fontSize: 12 }} />
-                </Link>
-              )}
-            </Stack>
           </Box>
 
           {/* Direct Support Contact & Links */}
@@ -219,25 +195,25 @@ const Footer: React.FC = () => {
             <span>© {new Date().getFullYear()} FormVault. {t('footer.allRightsReserved', 'All rights reserved.')}</span>
             <span>•</span>
             <Link
-              href="https://hktse.eu.org/"
+              href={operatorUrl}
               target="_blank"
               rel="noopener noreferrer"
               color="text.secondary"
               underline="hover"
               sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
             >
-              HKTSE s.r.o. <OpenInNewOutlined sx={{ fontSize: 11 }} />
+              {operatorName} <OpenInNewOutlined sx={{ fontSize: 11 }} />
             </Link>
             <span>•</span>
             <Link
-              href="https://ceskepojisteni.cz/"
+              href={partnerUrl}
               target="_blank"
               rel="noopener noreferrer"
               color="text.secondary"
               underline="hover"
               sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.4 }}
             >
-              České pojištění a.s. <OpenInNewOutlined sx={{ fontSize: 11 }} />
+              {partnerName} <OpenInNewOutlined sx={{ fontSize: 11 }} />
             </Link>
             <span>•</span>
             <span>IČO: 10858032</span>
