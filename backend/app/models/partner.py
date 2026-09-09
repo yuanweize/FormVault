@@ -34,7 +34,7 @@ class InsuranceCompany(Base):
     name = Column(String(100), nullable=False, index=True)
     code = Column(String(50), unique=True, nullable=False)
     logo_url = Column(String(255), nullable=True)
-    rating = Column(String(50), default="Authorized Partner", nullable=False)
+    rating = Column(String(255), default="Authorized Partner", nullable=False)
     website = Column(String(255), nullable=True)
     description = Column(Text, nullable=True)
     is_active = Column(Boolean, default=True, nullable=False, index=True)
