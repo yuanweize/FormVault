@@ -124,12 +124,15 @@
 
             <div class="col-sm-6">
               <div class="p-2 bg-light rounded border small">
-                <div class="text-muted fw-bold mb-1">Widget Theme / Color</div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="text-muted fw-bold mb-1">Widget Theme & Position</div>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
                   <span class="badge bg-blue text-white text-capitalize">
-                    {{ stats.system_config.crisp_custom_color if (stats.system_config and stats.system_config.crisp_custom_color) else 'Blue (Default)' }}
+                    {{ stats.system_config.crisp_custom_color if (stats.system_config and stats.system_config.crisp_custom_color) else 'Blue' }}
                   </span>
-                  <span class="text-muted small">Matches portal branding</span>
+                  <span class="badge bg-secondary text-white">
+                    <i class="fa-solid fa-location-dot me-1"></i>
+                    {{ 'Bottom Left' if (stats.system_config and stats.system_config.crisp_position == 'left') else 'Bottom Right' }}
+                  </span>
                 </div>
               </div>
             </div>

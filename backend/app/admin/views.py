@@ -500,6 +500,7 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         # 4. Live Chat
         SystemConfig.crisp_website_id,
         SystemConfig.crisp_custom_color,
+        SystemConfig.crisp_position,
         # 5. Domain & Ingress
         SystemConfig.production_ingress_name,
         SystemConfig.primary_domain,
@@ -516,6 +517,7 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         dpa_status=SelectField,
         storage_provider=SelectField,
         crisp_custom_color=SelectField,
+        crisp_position=SelectField,
         production_ingress_name=SelectField,
     )
     form_args = dict(
@@ -611,6 +613,14 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
             ],
             label="Crisp Live Chat Widget Color Theme",
             description="Color scheme of the floating Crisp chat widget on your public portal.",
+        ),
+        crisp_position=dict(
+            choices=[
+                ("right", "Bottom Right (Standard Default)"),
+                ("left", "Bottom Left"),
+            ],
+            label="Crisp Live Chat Widget Screen Position",
+            description="Choose whether the floating Crisp customer support chat bubble appears in the bottom right or bottom left corner of all portal pages.",
         ),
         crisp_website_id=dict(
             label="Crisp Live Chat Website ID (Key)",

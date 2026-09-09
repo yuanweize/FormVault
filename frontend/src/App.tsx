@@ -39,19 +39,29 @@ const AppContent: React.FC = () => {
               iconLink.href = data.site_icon_url;
             }
           }
-          // Only auto-load external tracking/chat widget if user provided GDPR consent
-          const consent = localStorage.getItem('formvault_gdpr_consent');
-          if (consent === 'all' && data.crisp_website_id && !(window as any).$crisp) {
-            (window as any).$crisp = [];
+          // Auto-load Crisp live customer support chat widget if configured in backend settings
+          if (data.crisp_website_id) {
+            (window as any).$crisp = (window as any).$crisp || [];
             (window as any).CRISP_WEBSITE_ID = data.crisp_website_id;
-            const script = document.createElement('script');
-            script.src = 'https://client.crisp.chat/l.js';
-            script.async = true;
-            document.head.appendChild(script);
 
+            if (!document.querySelector('script[src*="client.crisp.chat"]')) {
+              const script = document.createElement('script');
+              script.src = 'https://client.crisp.chat/l.js';
+              script.async = true;
+              document.head.appendChild(script);
+            }
+
+            // Configure Crisp widget position: 'left' -> reverse true, 'right' -> reverse false
+            const isLeft = data.crisp_position === 'left';
+            (window as any).$crisp.push(['set', 'position:reverse', [isLeft]]);
+
+            // Configure custom theme color if set
             if (data.crisp_custom_color) {
               (window as any).$crisp.push(['set', 'color:theme', [data.crisp_custom_color]]);
             }
+
+            // Ensure floating chat bubble is visible on portal
+            (window as any).$crisp.push(['do', 'chat:show']);
           }
         }
       } catch (err) {

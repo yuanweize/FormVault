@@ -97,6 +97,7 @@ def test_portal_public_config(db):
     assert "site_title" in data
     assert data["site_icon_url"] == "/favicon.svg"
     assert data["crisp_custom_color"] == "blue"
+    assert data["crisp_position"] in ("right", "left")
     assert data["support_email"] == "insurance@hktse.eu.org"
 
 

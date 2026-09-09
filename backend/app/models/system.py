@@ -64,6 +64,7 @@ class SystemConfig(Base):
     )
     crisp_website_id = Column(String(100), nullable=True)
     crisp_custom_color = Column(String(50), default="blue", nullable=True)
+    crisp_position = Column(String(20), default="right", nullable=True)
 
     # Broker Identity & Legal Disclosure (Accurate & Compliant)
     broker_legal_disclosure = Column(

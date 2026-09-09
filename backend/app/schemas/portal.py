@@ -72,6 +72,7 @@ class PortalPublicConfigSchema(BaseModel):
     secondary_domain: Optional[str] = "pojisteni.hktse.eu.org"
     crisp_website_id: Optional[str] = None
     crisp_custom_color: Optional[str] = "blue"
+    crisp_position: Optional[str] = "right"
     form_profile_config: Optional[str] = None
     features_config: Optional[str] = None
 

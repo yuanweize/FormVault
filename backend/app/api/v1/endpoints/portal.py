@@ -74,6 +74,7 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         or "pojisteni.hktse.eu.org",
         crisp_website_id=config.crisp_website_id,
         crisp_custom_color=config.crisp_custom_color or "blue",
+        crisp_position=getattr(config, "crisp_position", "right") or "right",
         form_profile_config=getattr(config, "form_profile_config", None),
         features_config=getattr(config, "features_config", None),
         business_scope_mode=getattr(config, "business_scope_mode", "LEAD_ONLY")

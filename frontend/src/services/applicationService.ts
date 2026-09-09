@@ -251,6 +251,7 @@ export interface PortalPublicConfig {
   secondary_domain?: string;
   crisp_website_id?: string;
   crisp_custom_color?: string;
+  crisp_position?: 'right' | 'left';
   form_profile_config?: string;
   features_config?: string;
   business_scope_mode?: 'LEAD_ONLY' | 'ASSISTED_APPLICATION' | 'REGULATED_DISTRIBUTION';

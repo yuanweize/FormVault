@@ -8,11 +8,13 @@ import {
   useMediaQuery,
   IconButton,
   Tooltip,
+  Button,
 } from '@mui/material';
 import {
   ShieldOutlined,
   Brightness4,
   Brightness7,
+  HeadsetMicOutlined,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -27,6 +29,19 @@ const Header: React.FC = () => {
   const { mode, toggleColorMode } = useThemeMode();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleSupportClick = () => {
+    if ((window as any).$crisp) {
+      try {
+        (window as any).$crisp.push(['do', 'chat:show']);
+        (window as any).$crisp.push(['do', 'chat:open']);
+        return;
+      } catch (e) {
+        console.warn('Crisp open failed:', e);
+      }
+    }
+    navigate('/support');
+  };
 
   return (
     <AppBar position="sticky" elevation={0}>
@@ -139,14 +154,69 @@ const Header: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Right Action Icons (Theme toggle & Language selector) */}
+        {/* Right Action Icons (Support, Theme toggle & Language selector) */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: 1, sm: 2 },
+            gap: { xs: 1, sm: 1.5 },
           }}
         >
+          {/* Desktop Support Action Button */}
+          <Tooltip title={t('pages.support.title', { defaultValue: 'Customer Support & Help Center' })}>
+            <Button
+              onClick={handleSupportClick}
+              size="small"
+              variant="outlined"
+              startIcon={<HeadsetMicOutlined sx={{ fontSize: 18 }} />}
+              sx={{
+                borderRadius: '10px',
+                textTransform: 'none',
+                fontWeight: 600,
+                fontSize: '0.8rem',
+                display: { xs: 'none', sm: 'inline-flex' },
+                borderColor:
+                  theme.palette.mode === 'light'
+                    ? 'rgba(15, 23, 42, 0.12)'
+                    : 'rgba(255, 255, 255, 0.15)',
+                color: theme.palette.mode === 'light' ? '#1E293B' : '#F1F5F9',
+                px: 1.5,
+                py: 0.6,
+                transition: 'all 0.2s',
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor:
+                    theme.palette.mode === 'light'
+                      ? 'rgba(79, 70, 229, 0.04)'
+                      : 'rgba(129, 140, 248, 0.08)',
+                },
+              }}
+            >
+              {t('common.support', { defaultValue: 'Support' })}
+            </Button>
+          </Tooltip>
+
+          {/* Mobile Support Icon Button */}
+          <Tooltip title={t('common.support', { defaultValue: 'Support' })}>
+            <IconButton
+              onClick={handleSupportClick}
+              color="inherit"
+              size="medium"
+              aria-label={String(t('common.support', { defaultValue: 'Support' }))}
+              sx={{
+                display: { xs: 'flex', sm: 'none' },
+                borderRadius: '10px',
+                border:
+                  theme.palette.mode === 'light'
+                    ? '1px solid rgba(15, 23, 42, 0.08)'
+                    : '1px solid rgba(255, 255, 255, 0.1)',
+                transition: 'all 0.2s',
+              }}
+            >
+              <HeadsetMicOutlined sx={{ fontSize: 20 }} />
+            </IconButton>
+          </Tooltip>
+
           <Tooltip
             title={
               mode === 'dark'

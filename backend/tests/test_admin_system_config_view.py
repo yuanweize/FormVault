@@ -53,6 +53,7 @@ def test_system_config_edit_view_accessible(client, db):
     assert "System Configuration" in html
     assert "Crisp Live Chat Website ID" in html
     assert "Crisp Live Chat Widget Color Theme" in html
+    assert "Crisp Live Chat Widget Screen Position" in html
     assert "Production Ingress Architecture" in html
     assert "Primary Production Domain" in html
     assert "Secondary / Regional Domain" in html

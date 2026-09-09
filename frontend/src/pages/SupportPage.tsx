@@ -38,9 +38,10 @@ const SupportPage: React.FC = () => {
   };
 
   const [chatLoading, setChatLoading] = useState(false);
+  const [chatFeedback, setChatFeedback] = useState<string | null>(null);
 
   const handleOpenCrispChat = async () => {
-    // Check if crisp is already loaded on window
+    // 1. Check if Crisp is already loaded on window
     if ((window as any).$crisp) {
       try {
         (window as any).$crisp.push(['do', 'chat:show']);
@@ -51,28 +52,56 @@ const SupportPage: React.FC = () => {
       }
     }
 
-    // Otherwise dynamically retrieve crisp configuration and initialize
+    // 2. Otherwise dynamically retrieve crisp configuration and initialize
     setChatLoading(true);
     try {
-      const res = await (await import('../services/api')).apiClient.get('/portal/config');
+      const { apiClient } = await import('../services/api');
+      const res = await apiClient.get('/portal/config');
       const crispId = res?.data?.crisp_website_id;
+      const crispPosition = res?.data?.crisp_position;
+      const crispColor = res?.data?.crisp_custom_color;
+
       if (crispId) {
         (window as any).$crisp = (window as any).$crisp || [];
         (window as any).CRISP_WEBSITE_ID = crispId;
-        if (!document.querySelector('script[src*="client.crisp.chat"]')) {
-          const script = document.createElement('script');
-          script.src = 'https://client.crisp.chat/l.js';
-          script.async = true;
-          document.head.appendChild(script);
+
+        // Apply position and color configuration
+        const isLeft = crispPosition === 'left';
+        (window as any).$crisp.push(['set', 'position:reverse', [isLeft]]);
+        if (crispColor) {
+          (window as any).$crisp.push(['set', 'color:theme', [crispColor]]);
         }
         (window as any).$crisp.push(['do', 'chat:show']);
         (window as any).$crisp.push(['do', 'chat:open']);
+
+        let script = document.querySelector('script[src*="client.crisp.chat"]') as HTMLScriptElement;
+        if (!script) {
+          script = document.createElement('script');
+          script.src = 'https://client.crisp.chat/l.js';
+          script.async = true;
+          script.onload = () => {
+            try {
+              (window as any).$crisp.push(['do', 'chat:show']);
+              (window as any).$crisp.push(['do', 'chat:open']);
+            } catch (err) {}
+          };
+          document.head.appendChild(script);
+        }
       } else {
-        // Fallback gracefully to email
-        window.location.href = `mailto:${supportEmail}?subject=FormVault%20Insurance%20Inquiry`;
+        // Chat is not configured in backend: show informative message
+        setChatFeedback(
+          t('pages.support.chatUnavailable', {
+            defaultValue: 'Live advisor chat is currently unconfigured. Please use the direct email option below.',
+          })
+        );
       }
     } catch (err) {
-      window.location.href = `mailto:${supportEmail}?subject=FormVault%20Insurance%20Inquiry`;
+      console.error('Failed to initialize Crisp chat:', err);
+      setChatFeedback(
+        t('pages.support.chatError', {
+          defaultValue: 'Could not connect to live chat. Please try again or compose an email.',
+        })
+      );
     } finally {
       setChatLoading(false);
     }
@@ -355,6 +384,13 @@ const SupportPage: React.FC = () => {
         message={t('pages.support.copied', {
           defaultValue: 'Support email copied to clipboard: insurance@hktse.eu.org',
         })}
+      />
+
+      <Snackbar
+        open={Boolean(chatFeedback)}
+        autoHideDuration={5000}
+        onClose={() => setChatFeedback(null)}
+        message={chatFeedback || ''}
       />
     </Container>
   );
