@@ -11,7 +11,7 @@
 
 > **[中文说明文档 (Chinese Version)](README_zh.md)**
 >
-> 🌐 **Live Demo**: [https://pojisteni.hktse.eu.org/](https://pojisteni.hktse.eu.org/)
+> 🌐 **Live Demo**: [https://insure.hktse.eu.org/](https://insure.hktse.eu.org/)
 
 **FormVault** is an enterprise-grade, trust-first InsurTech SaaS platform engineered for multi-step insurance applications, high-assurance identity verification (Student ID, Passport), client-side checksum validation, AES-256-GCM encrypted document storage, and auditable email dispatch.
 
@@ -25,17 +25,19 @@
 ## Key Features & Architecture Highlights
 
 - **Modern InsurTech SaaS UI/UX** — Deep Obsidian Dark Mode & Crisp Alpine Light Mode, glassmorphism surfaces, and smooth focus glows.
-- **Insurance Brokerage & Partner Models** — Pre-loaded with compliant Czech Republic templates (PVZP, Slavia, SV pojišťovna in CZK via České pojištění network); fully dynamic, open-source and customizable via Admin Panel.
+- **Curated Plans & Statutory Compliance Showcase** — Authentic Czech Republic insurance packages (PVZP, Slavia, SV pojišťovna in CZK via licensed broker network) compliant with Act No. 326/1999 Coll. (OAMP).
+- **Prominent Student Discount & Promo Badges** — Distinct highlight ribbons with graduation cap icons and special rate tags, cleanly separated from core policy titles.
+- **Symmetrical Centered Grid Architecture** — Dynamic responsive grid layout automatically adapting to 1, 2, 3, or 4 plans/partners with equal-height stretch and zero awkward whitespace.
+- **Crisp Live Chat Integration** — Direct customer support with official API connectivity verification, floating widget, header quick-call, and admin-configurable placement (`bottom-right` or `bottom-left`).
+- **Regulatory Business Scope Gate** — Dynamic mode switching via Admin Panel: `LEAD_ONLY` (default compliant mode) and `ASSISTED_APPLICATION` (full document intake once broker agreement is verified).
 - **Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
+- **Tamper-Evident SHA-256 Audit Hash Chain** — Monotonically increasing sequence with immutable cryptographic parent hashing preventing backdating or silent ledger tampering.
 - **Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
 - **Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, authenticated AES-256-GCM storage encryption, and strict RBAC isolation.
 - **Stripe-Inspired Fluid Stepper** — Connected step rail with pulsing halos, completion badges, and smooth progress tracking.
 - **Secure File Vault** — Client-side file signature validation, anti-tampering checksums, and encrypted local/S3 storage.
-- **Real-time Form Validation** — Strict validation schema powered by `react-hook-form` and accessible error handling.
-- **Automated State Persistence** — Local encrypted draft caching prevents data loss during workflow navigation.
-- **Isolated Database Architecture** — Database is strictly isolated inside the container bridge network with zero public port exposure.
 - **WCAG 2.1 AA Compliant Accessibility** — axe automated zero violation testing, full keyboard navigation and screen reader support.
-- **Full Internationalization (i18n)** — Dynamic language switching (English, 简体中文, Español, etc.).
+- **Full Internationalization (i18n)** — Dynamic language switching across 12 languages (English, 简体中文, Čeština, Deutsch, Español, Français, etc.).
 
 <div align="center">
   <img src="assets/broker_admin.png" width="850" alt="FormVault Broker Admin Operations Console">

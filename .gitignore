@@ -41,7 +41,6 @@ venv.bak/
 .vscode/
 .idea/
 .kiro/
-.kiro/
 *.swp
 *.swo
 *~
@@ -108,5 +107,3 @@ dmypy.json
 # Alembic
 alembic/versions/*.py
 !alembic/versions/.gitkeep
-# Local temporary scratch scripts
-scratch/
