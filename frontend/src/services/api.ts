@@ -17,8 +17,9 @@ declare module 'axios' {
 
 // API Configuration with smart environment & relative URL support
 const getApiBaseUrl = (): string => {
-  if (process.env.REACT_APP_API_BASE_URL) {
-    return process.env.REACT_APP_API_BASE_URL;
+  const envUrl = process.env.REACT_APP_API_BASE_URL?.trim();
+  if (envUrl && !envUrl.includes('yourdomain.com') && !envUrl.includes('example.com')) {
+    return envUrl;
   }
   if (typeof window !== 'undefined' && window.location) {
     const { protocol, hostname, port } = window.location;
