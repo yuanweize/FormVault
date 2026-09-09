@@ -1,5 +1,5 @@
 # Frontend Dockerfile for production
-FROM node:18-alpine as builder
+FROM --platform=$BUILDPLATFORM node:18-alpine AS builder
 
 # Set working directory
 WORKDIR /app
