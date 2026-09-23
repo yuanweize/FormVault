@@ -13,7 +13,7 @@
 >
 > 🌐 **Live Demo**: [https://insure.hktse.eu.org/](https://insure.hktse.eu.org/)
 
-**FormVault** is an enterprise-grade, trust-first InsurTech SaaS platform engineered for multi-step insurance applications, high-assurance identity verification (Student ID, Passport), client-side checksum validation, AES-256-GCM encrypted document storage, and auditable email dispatch.
+**FormVault** is a privacy-first document intake and insurance application platform engineered for multi-step form applications, identity verification (Student ID, Passport), client-side checksum validation, AES-256-GCM encrypted document storage, and auditable email dispatch.
 
 <div align="center">
   <img src="assets/portal_frontend.png" width="850" alt="FormVault Insurance Applicant Portal">

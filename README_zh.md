@@ -13,11 +13,11 @@
 >
 > 🌐 **在线演示 (Live Demo)**: [https://insure.hktse.eu.org/](https://insure.hktse.eu.org/)
 
-**FormVault** 是一套企业级、可信优先（Trust-First）的现代保险科技（InsurTech）SaaS 平台，专为多步骤保单申报、高敏感身份（护照、学生证）加密上传、客户端验真、AES-256-GCM 文件加密存储与可审计邮件归档流转设计。
+**FormVault** 是一套注重隐私与合规的文档收集与保险申报系统，专为多步骤保单申报、证件（护照、学生证）加密上传、客户端验真、AES-256-GCM 文件加密存储与邮件流转设计。
 
 <div align="center">
   <img src="assets/portal_frontend.png" width="850" alt="FormVault 投保申请客户端门户">
-  <p><em>FormVault 投保申请前端 — 多步骤保单申报、捷克主流保险产品即时算价、凭据校验与金融级安全护航轨</em></p>
+  <p><em>FormVault 投保申请前端 — 多步骤保单申报、捷克主流保险产品即时算价、凭据校验与端到端安全传输</em></p>
 </div>
 
 ---
