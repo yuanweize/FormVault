@@ -31,31 +31,31 @@ describe('i18n Configuration', () => {
 
   it('loads English translations correctly', () => {
     expect(i18n.t('app.title')).toBe('FormVault');
-    expect(i18n.t('pages.home.title')).toBe('Welcome to FormVault');
+    expect(i18n.t('pages.home.title')).toBe('Health Insurance Enquiry for International Students in Czechia');
     expect(i18n.t('forms.personalInfo.fields.firstName')).toBe('First Name');
   });
 
   it('changes language to Chinese and loads translations', async () => {
     await i18n.changeLanguage('zh');
-    
+
     expect(i18n.language).toBe('zh');
     expect(i18n.t('app.title')).toBe('FormVault');
-    expect(i18n.t('pages.home.title')).toBe('欢迎使用 FormVault');
+    expect(i18n.t('pages.home.title')).toBe('捷克留学生医疗保险申请咨询');
     expect(i18n.t('forms.personalInfo.fields.firstName')).toBe('名字');
   });
 
   it('changes language to Spanish and loads translations', async () => {
     await i18n.changeLanguage('es');
-    
+
     expect(i18n.language).toBe('es');
     expect(i18n.t('app.title')).toBe('FormVault');
-    expect(i18n.t('pages.home.title')).toBe('Bienvenido a FormVault');
+    expect(i18n.t('pages.home.title')).toBe('Consulta de seguro médico para estudiantes internacionales en la República Checa');
     expect(i18n.t('forms.personalInfo.fields.firstName')).toBe('Nombre');
   });
 
   it('falls back to English for missing translations', async () => {
     await i18n.changeLanguage('zh');
-    
+
     // Test a key that might not exist in Chinese
     const fallbackKey = 'nonexistent.key';
     expect(i18n.t(fallbackKey)).toBe(fallbackKey);
@@ -63,21 +63,21 @@ describe('i18n Configuration', () => {
 
   it('handles interpolation correctly', async () => {
     await i18n.changeLanguage('en');
-    
+
     const result = i18n.t('fileUpload.errors.fileTooLarge', { maxSize: 5 });
     expect(result).toBe('File is too large. Maximum size is 5MB');
   });
 
   it('handles interpolation in Chinese', async () => {
     await i18n.changeLanguage('zh');
-    
+
     const result = i18n.t('fileUpload.errors.fileTooLarge', { maxSize: 5 });
     expect(result).toBe('文件过大。最大大小为5MB');
   });
 
   it('handles interpolation in Spanish', async () => {
     await i18n.changeLanguage('es');
-    
+
     const result = i18n.t('fileUpload.errors.fileTooLarge', { maxSize: 5 });
     expect(result).toBe('El archivo es demasiado grande. El tamaño máximo es 5MB');
   });
@@ -136,13 +136,13 @@ describe('i18n Configuration', () => {
       // Re-import to test initialization
       jest.resetModules();
       const freshI18n = require('../config').default;
-      
+
       // Since we can't easily test the initialization logic due to module caching,
       // we'll test the language detection logic separately
       const detectedLang = browserLang.split('-')[0];
       const supportedLanguages = ['en', 'zh', 'es'];
       const finalLang = supportedLanguages.includes(detectedLang) ? detectedLang : 'en';
-      
+
       expect(finalLang).toBe(expected);
     });
   });
@@ -150,7 +150,7 @@ describe('i18n Configuration', () => {
   it('respects saved language preference', () => {
     // Test that the configuration can handle saved language preferences
     mockGetItem.mockReturnValue('zh');
-    
+
     // The configuration should be able to read from localStorage
     expect(typeof window !== 'undefined').toBe(true);
     expect(window.localStorage).toBeDefined();
@@ -160,7 +160,7 @@ describe('i18n Configuration', () => {
     // Test that the configuration handles environment checks
     expect(typeof window !== 'undefined').toBe(true);
     expect(typeof navigator !== 'undefined').toBe(true);
-    
+
     // The configuration should not throw when checking for browser APIs
     expect(() => {
       const hasLocalStorage = typeof window !== 'undefined' && window.localStorage;
@@ -170,10 +170,10 @@ describe('i18n Configuration', () => {
 
   it('validates translation file structure', () => {
     const languages = ['en', 'zh', 'es'];
-    
+
     languages.forEach(lang => {
       i18n.changeLanguage(lang);
-      
+
       // Test that main sections exist
       expect(i18n.exists('app')).toBe(true);
       expect(i18n.exists('pages')).toBe(true);

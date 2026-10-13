@@ -54,6 +54,12 @@ class Settings(BaseSettings):
     ADMIN_USERNAME: str = "admin"
     ADMIN_PASSWORD: str = "change_me_in_production"
     ADMIN_SECRET_KEY: str = "admin-session-secret-key"
+    ADMIN_API_TOKEN: Optional[str] = None  # Machine API token (disabled when None)
+    ENV_ADMIN_ENABLED: bool = False
+
+    # Regulatory Scope Settings
+    BUSINESS_SCOPE_MODE: str = "LEAD_ONLY"
+    NON_LEAD_MODES_ENABLED: bool = False
 
     # Security settings
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30

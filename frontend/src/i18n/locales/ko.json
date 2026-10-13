@@ -35,8 +35,8 @@
   },
   "pages": {
     "home": {
-      "title": "FormVault에 오신 것을 환영합니다",
-      "subtitle": "안전하고 효율적으로 보험 신청을 완료하세요",
+      "title": "체코 유학생을 위한 건강보험 상담 및 접수",
+      "subtitle": "기본 요구 사항을 제출해 주시면, 제휴 보험 중개 파트너(České pojištění a.s.)로 안전하게 전달되어 맞춤형 보험 옵션을 안내해 드립니다.",
       "getStarted": "시작하기",
       "features": {
         "secure": "하드웨어급 AES-256 GCM 암호화 금고",
@@ -46,7 +46,7 @@
         "mobile": "휘발성 세션 프라이버시 샌드박스",
         "mobileDesc": "즉각적인 카메라 캡처 및 격리된 세션 관리. 세션 종료 시 민감한 신원 정보는 즉시 파기됩니다."
       },
-      "authorizedBroker": "체코공화국 및 EU 표준 공인 보험 중개사",
+      "authorizedBroker": "체코 외국인 유학생 및 체류자 건강보험 문의 접수 (Tipař)",
       "trackMyApplication": "신청 진행 상황 조회",
       "metrics": {
         "actCompliance": "체코 내무부 OAMP 요건 완전 충족",
@@ -82,7 +82,7 @@
         "refCopied": "참조 번호가 클립보드에 복사되었습니다!",
         "notFoundTitle": "신청 내역을 찾을 수 없습니다",
         "notFoundDesc": "입력하신 참조 번호 또는 이메일과 일치하는 내역이 없습니다. 정보를 다시 확인해 주세요.",
-        "supportNote": "체코 비자 또는 보험과 관련하여 긴급 지원이 필요하신가요? 중개 부서로 문의하세요:",
+        "supportNote": "보험 문의나 체코 비자 요건과 관련하여 도움이 필요하신가요? 지원팀에 문의하세요:",
         "emailUs": "이메일 문의하기",
         "historyTitle": "최근 조회 내역"
       },
@@ -120,7 +120,9 @@
         "defaultButton": "온라인 신청",
         "lawCompliance": "체코 외국인 체류법(법률 제326/1999호) 준수 보험",
         "lawDetails": "당사 에이전시를 통해 발급되는 모든 보험 증서는 장기 비자 및 거주 허가 신청에 대한 체코 내무부 OAMP의 최신 법적 요건을 충족합니다."
-      }
+      },
+      "roleBadge": "체코 외국인 유학생 및 체류자 건강보험 문의 접수 (Tipař)",
+      "requestOptions": "보험 옵션 문의하기"
     },
     "personalInfo": {
       "title": "개인 정보",
@@ -192,13 +194,13 @@
     "terms": {
       "badge": "체코 민법(법률 제89/2012호) 및 보험 유통법(법률 제170/2018호) 준거",
       "title": "서비스 이용약관",
-      "subtitle": "체코 프라하에서 FormVault가 제공하는 보험 중개 서비스 이용 약관.",
-      "section1Title": "1. 중개 대상 및 서비스 범위",
-      "section1Content": "FormVault는 체코공화국에서 정식 인가된 보험 중개인입니다. 본 서비스는 체코 법률 제326/1999호에 의거하여 인가된 보험사에 대한 비교 견적, 작성 지원 및 신청 접수를 제공합니다.",
+      "subtitle": "FormVault 플랫폼을 통한 보험 문의 접수, 연락처 전달 및 기술 서비스 약관.",
+      "section1Title": "1. 운영사 역할 및 서비스 범위",
+      "section1Content": "FormVault는 HKTSE s.r.o.(IČO: 10858032)가 공인 보험 중개 파트너 České pojištění a.s.(법률 제170/2018호)와의 협력 하에 리드 소개자(tipař)로서 운영합니다. HKTSE는 문의를 전달하고, České pojištění a.s.에서 규제 대상 보험 모집, 사전 정보 제공 및 계약 체결을 담당합니다.",
       "section2Title": "2. 신청인의 의무 및 기재 내용의 진실성",
       "section2Content": "신청인은 정확하고 진실된 인적 사항, 여권 번호 및 건강 상태를 기재해야 합니다. 허위 기재 시 보험 계약이 무효화될 수 있으며 체코 내무부(OAMP) 비자 심사에서 거절될 수 있습니다.",
-      "section3Title": "3. 보험 증권 발급 및 계약 성립",
-      "section3Content": "보험 계약은 결제 확인 및 보험사의 인수 심사 승인 완료 시 성립됩니다. 공식 전자 확인서(Potvrzení o pojištění)는 이메일로 발송됩니다.",
+      "section3Title": "3. 제휴 중개사로의 안전한 전달",
+      "section3Content": "FormVault는 문의 사항을 České pojištění a.s.로 안전하게 전달합니다. 공식 보험 증권 및 견적서는 České pojištění a.s. 또는 공인 보험사에서 직접 제공합니다.",
       "section4Title": "4. 비자 거절 시 계약 취소 및 환불 권리",
       "section4Content": "재외공관 또는 체코 내무부에 의해 비자나 거주 허가가 공식 거절된 경우, 공식 거절 통지서를 제출하시면 해당 보험사의 약관에 따라 보험료를 환불받으실 수 있습니다.",
       "section5Title": "5. 준거법 및 분쟁 관할",
@@ -225,30 +227,30 @@
         "q1": "신청 완료 후 공식 보험 증서는 얼마나 빨리 발급되나요?",
         "a1": "결제 및 서류 확인 후 영업일 기준 보통 1~4시간 이내에 전자 보험 증명서(Potvrzení o pojištění)가 발급되며, 비자 신청용 계약 번호가 포함된 공인 PDF가 이메일로 전달됩니다.",
         "q2": "발급되는 보험이 체코 내무부(OAMP)에서 100% 인정되나요?",
-        "a2": "네, 당사에서 중개하는 모든 보험은 체코 외국인 체류법(제326/1999호)을 엄격히 준수하며 내무부 전산망에 정식 등록됩니다.",
+        "a2": "네. 제휴 공인 중개 파트너 České pojištění a.s.를 통해 제공되는 종합 외국인 건강보험은 체코 외국인 체류법(법률 제326/1999호) 및 내무부(OAMP) 비자 요건(최대 보상 한도 40만 유로)을 엄격히 충족합니다.",
         "q3": "대사관에서 비자가 거절되면 어떻게 해야 하나요?",
         "a3": "공식 비자 거절 통지서 사본을 insurance@hktse.eu.org 로 보내주시면 즉시 보험 해지 및 환불 절차를 안내해 드립니다.",
         "q4": "체코 현지에서 병원 이용 및 보험금 청구는 어떻게 하나요?",
         "a4": "보험사 협약 병원(프라하 모톨 병원, FNKV, VFN 등)에서는 보험 카드를 제시하시면 직접 결제(Direct Billing) 처리됩니다. 비협약 병원은 영수증과 진단서를 제출하시면 14일 이내에 환급됩니다.",
-        "q5": "여권 사본과 재학 증명 서류는 왜 제출해야 하나요?",
-        "a5": "체코 보험법상 내무부 계약 등록을 위해 신원 확인이 의무화되어 있습니다. 또한 학생 서류 확인 시 최대 30% 학생 특별 할인율이 적용됩니다."
+        "q5": "보험 문의를 제출하려면 어떤 정보가 필요한가요?",
+        "a5": "FormVault는 체류 기본 매개변수(기간, 시작일, 학생 여부, 연령대) 및 연락처 정보만 수집합니다. 문의 단계에서는 여권 사본이나 민감한 의료 문서를 수집하지 않습니다."
       },
       "connectingChat": "상담원 연결 중..."
     },
     "privacy": {
       "badge": "EU GDPR 2016/679 및 체코 법률 제110/2019호 준수",
       "title": "개인정보 처리방침 및 데이터 보호",
-      "subtitle": "체코공화국 및 유럽연합 내 개인정보 수집, 처리, 암호화 및 보호에 관한 공식 규정.",
+      "subtitle": "GDPR에 따른 기본 문의 정보 수집, 암호화 및 전달에 관한 개인정보 처리방침.",
       "section1Title": "1. 개인정보 처리자",
-      "section1Content": "개인정보 처리자는 체코 프라하 소재 FormVault 보험 중개 서비스입니다. 개인정보 보호 문의 및 DPO 연락처: insurance@hktse.eu.org",
+      "section1Content": "개인정보 처리자는 HKTSE s.r.o.(IČO: 10858032, 체코 프라하)입니다. 이메일: insurance@hktse.eu.org.",
       "section2Title": "2. 개인정보 처리 목적 및 법적 근거",
-      "section2Intro": "당사는 다음 목적을 위해 신청인의 개인정보(성명, 생년월일, 여권 사본, 학생 신분, 주소 등)를 수집 및 처리합니다:",
-      "section2Item1": "인가된 보험사와의 건강 및 여행 보험 계약 체결 및 증권 발급;",
+      "section2Intro": "수집된 연락처 및 체류 정보는 다음 목적에 한해서만 이용됩니다:",
+      "section2Item1": "고객 동의에 따라 공인 보험 중개 파트너 České pojištění a.s.로 문의 전달;",
       "section2Item2": "체코 외국인 체류법(법률 제326/1999호, OAMP 규정) 준수;",
       "section2Item3": "체코 보험업법에 따른 감사 검증, 부정 방지 및 법적 의무 보관.",
       "section2Legal": "법적 근거: GDPR 제6조 제1항(b)(계약 이행) 및 제6조 제1항(c)(법적 의무 준수).",
       "section3Title": "3. 최고 등급 하드웨어 암호화 및 보안 저장",
-      "section3Content": "제출된 모든 여권 및 개인 기록은 고유 IV를 적용한 AES-256 GCM 인증 암호화로 안전하게 보관됩니다. 데이터베이스는 공용 인터넷과 격리되어 있으며 TLS 1.3 보안 전송을 사용합니다.",
+      "section3Content": "모든 데이터는 TLS 1.3으로 전송되며 AES-256 GCM 인증 암호화로 안전하게 저장됩니다.",
       "section4Title": "4. GDPR에 따른 정보주체의 권리 (제15조~제22조)",
       "section4Intro": "신청인은 EU 법률에 따라 다음과 같은 법적 권리를 행사할 수 있습니다:",
       "section4Item1": "열람청구권(제15조): 보관 중인 개인정보 사본 요청;",
@@ -286,8 +288,8 @@
     "privacy": "개인정보처리방침",
     "terms": "이용약관",
     "support": "고객 지원 센터",
-    "brokerTitle": "FormVault 보험 중개 및 인수 서비스",
-    "brokerDesc": "체코 프라하 공인 보험 중개 네트워크. České pojištění a.s.와의 협력 하에 PVZP, Slavia 및 SV pojišťovna 공식 파트너.",
+    "brokerTitle": "FormVault 보험 문의 접수 서비스",
+    "brokerDesc": "FormVault는 České pojištění a.s.와의 협력 계약에 따라 HKTSE s.r.o.가 운영합니다. HKTSE는 기본 보험 문의 및 연락처를 수집하여 České pojištění a.s.로 전달합니다. HKTSE는 보험 회사나 보험 중개사가 아닙니다. 보험 상담, 상품 제안 및 규제 대상 보험 배포는 České pojištění a.s.에서 담당합니다.",
     "techPlatformLead": "FormVault는 다음에 의해 운영됩니다: "
   },
   "forms": {
@@ -559,38 +561,38 @@
     "privacyPolicy": "개인정보 처리방침"
   },
   "securityRail": {
-    "title": "기관급 보안 레일",
+    "title": "System Security & Compliance",
     "aes": {
-      "label": "AES-256 GCM 암호화",
-      "tooltip": "모든 문서와 양식 데이터는 군용 수준의 AES-256 GCM으로 안전하게 암호화 보관됩니다."
+      "label": "AES-256 GCM File Encryption",
+      "tooltip": "Uploaded files are encrypted at rest using authenticated AES-256 GCM with per-document nonces."
     },
     "privacy": {
-      "label": "영지식 개인정보 보호",
-      "tooltip": "민감한 개인정보는 엄격히 격리되어 승인된 인수 심사팀만 열람할 수 있습니다."
+      "label": "Role-Based Access Control",
+      "tooltip": "Access to customer data is strictly controlled through RBAC; unauthorized access is prohibited."
     },
     "tls": {
-      "label": "TLS 1.3 활성 채널",
-      "tooltip": "안전하고 고신뢰성의 암호화 통신 채널이 설정되었습니다."
+      "label": "TLS 1.3 Encrypted Transport",
+      "tooltip": "Enforced modern HTTPS and TLS 1.3 encrypted transport for all communications."
     },
     "autoSave": {
-      "label": "암호화 자동 저장",
-      "tooltip": "작성 중인 임시 내용은 로컬 보안 금고에 자동으로 저장됩니다."
+      "label": "Session-Scoped Draft",
+      "tooltip": "In-progress drafts are captured in encrypted local storage and expire upon submission or cleanup."
     },
     "rbac": {
-      "label": "엄격한 RBAC 권한 격리",
-      "tooltip": "신원 확인 서류는 제로 트러스트 엔클레이브에 격리되며, 복호화는 인증된 심사역에게만 엄격히 제한됩니다."
+      "label": "Strict Authorization",
+      "tooltip": "Administrative decryption and data access are restricted to authenticated, authorized operators."
     },
     "session": {
-      "label": "휘발성 세션 샌드박스",
-      "tooltip": "민감한 신청자 정보는 휘발성 세션 메모리에만 상주하여 공용 PC의 디스크 캐시 저장을 원천 차단합니다."
+      "label": "Session Privacy Protection",
+      "tooltip": "Customer data is scoped to active browser sessions to prevent caching on shared devices."
     },
     "cnb": {
-      "label": "체코 국립은행(ČNB) 중개 규정 준수",
-      "tooltip": "HKTSE s.r.o.가 운영하는 기술 인프라이며, 체코 법률 제170/2018호에 따라 České pojištění a.s.와의 정식 협력 하에 제공됩니다."
+      "label": "Intermediary Collaboration",
+      "tooltip": "Platform operated by HKTSE s.r.o. as a lead introducer (tipař) in cooperation with licensed intermediary České pojištění a.s."
     },
     "audit": {
-      "label": "위변조 방지 감사 추적",
-      "tooltip": "모든 복호화, 서류 검토 및 상태 변경은 위변조가 불가능한 암호화 감사 기록으로 영구 보존됩니다."
+      "label": "Tamper-Evident Audit Trail",
+      "tooltip": "Key system events record timestamps, actor IDs, and cryptographic SHA-256 hashes for regulatory traceability."
     }
   },
   "addressAssistant": {

@@ -15,7 +15,7 @@ client = TestClient(app)
 
 
 def test_portal_showcase_seeded(db):
-    """Test that GET /api/v1/portal/showcase returns active partners and plans."""
+    """Test that GET /api/v1/portal/showcase complies with LEAD_ONLY mode by hiding insurer offers."""
     response = client.get("/api/v1/portal/showcase")
     assert response.status_code == 200
     data = response.json()
@@ -23,8 +23,9 @@ def test_portal_showcase_seeded(db):
     assert "companies" in data
     assert "plans" in data
     assert "banners" in data
-    assert len(data["companies"]) >= 1
-    assert len(data["plans"]) >= 1
+    # In default LEAD_ONLY mode, specific insurer plans and pricing are concealed from public portal
+    assert data["companies"] == []
+    assert data["plans"] == []
 
 
 def test_application_track_dual_factor_success(db):

@@ -23,8 +23,11 @@ def test_system_config_edit_view_accessible(client, db):
         admin = AdminUser(
             username=settings.ADMIN_USERNAME,
             password_hash=pwd_context.hash(settings.ADMIN_PASSWORD),
+            role="super_admin",
         )
         db.add(admin)
+    else:
+        admin.role = "super_admin"
 
     # Ensure SystemConfig row exists
     cfg = db.query(SystemConfig).filter_by(id=1).first()
@@ -68,8 +71,11 @@ def test_admin_dashboard_view_renders_kpis_and_crisp(client, db):
         admin = AdminUser(
             username=settings.ADMIN_USERNAME,
             password_hash=pwd_context.hash(settings.ADMIN_PASSWORD),
+            role="super_admin",
         )
         db.add(admin)
+    else:
+        admin.role = "super_admin"
 
     # Ensure SystemConfig with Crisp
     cfg = db.query(SystemConfig).filter_by(id=1).first()
@@ -103,7 +109,7 @@ def test_admin_dashboard_view_renders_kpis_and_crisp(client, db):
     dash_res = client.get("/admin/")
     assert dash_res.status_code == 200
     html = dash_res.text
-    assert "Insurance Operations Console" in html
+    assert "Operations Console" in html
     assert "Crisp Live Chat Integration" in html
     assert "test-crisp-uuid-12345" in html
     assert "Production Ingress" in html

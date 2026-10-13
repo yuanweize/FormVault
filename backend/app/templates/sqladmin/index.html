@@ -8,10 +8,11 @@
       <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge bg-blue text-white px-2 py-1">FormVault Insurance Broker</span>
+            <span class="badge bg-blue text-white px-2 py-1">FormVault Lead Operations</span>
+            <span class="badge bg-warning-lt text-warning fw-bold px-2 py-1">INTERNAL ONLY</span>
             <span class="badge bg-azure-lt text-azure px-2 py-1">Czechia Operations 🇨🇿</span>
           </div>
-          <h1 class="fw-bold mb-2 text-dark">Insurance Operations Console</h1>
+          <h1 class="fw-bold mb-2 text-dark">Lead & Insurance Operations Console</h1>
           <p class="text-secondary mb-3 fs-3">
             Secure multi-tenant insurance application management for international students and expatriates in the Czech Republic.
           </p>
@@ -197,7 +198,7 @@
       </div>
       <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
         <span class="badge bg-success-lt text-success fw-bold">
-          {{ stats.partners_active }} Certified Insurers
+          {{ stats.partners_active }} Internal Insurer References
         </span>
         <a href="{{ url_for('admin:list', identity='insurance-plan') }}" class="small text-primary text-decoration-none fw-semibold">
           Manage &rarr;
@@ -245,7 +246,7 @@
       </div>
       <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
         <span class="badge bg-azure-lt text-azure fw-bold">
-          GDPR Immutable
+          GDPR Tamper-Evident
         </span>
         <a href="{{ url_for('admin:list', identity='audit-log') }}" class="small text-primary text-decoration-none fw-semibold">
           Logs &rarr;
@@ -264,7 +265,7 @@
       <h3 class="card-title fw-bold m-0 text-dark">
         <i class="fa-solid fa-bolt text-warning me-2"></i>Operational Quick Actions
       </h3>
-      <span class="badge bg-blue-lt">Broker Suite</span>
+      <span class="badge bg-secondary-lt">Internal Tools</span>
     </div>
     <div class="card-body">
       <div class="row g-3">
@@ -275,8 +276,8 @@
                 <i class="fa-solid fa-clipboard-list"></i>
               </span>
               <div>
-                <div class="fw-bold text-dark">Review Customer Forms</div>
-                <div class="small text-secondary">Verify applicant passport scans and insurance coverage.</div>
+                <div class="fw-bold text-dark">Review Customer Enquiries</div>
+                <div class="small text-secondary">Review intake records and intermediary handoff status.</div>
               </div>
             </div>
           </a>
@@ -289,8 +290,8 @@
                 <i class="fa-solid fa-building-shield"></i>
               </span>
               <div>
-                <div class="fw-bold text-dark">Insurance Partners</div>
-                <div class="small text-secondary">Manage PVZP, Slavia, SV pojišťovna showcase cards.</div>
+                <div class="fw-bold text-dark">Insurance Reference Data (INTERNAL ONLY)</div>
+                <div class="small text-secondary">Manage internal carrier profiles & price rate books.</div>
               </div>
             </div>
           </a>
@@ -304,7 +305,7 @@
               </span>
               <div>
                 <div class="fw-bold text-dark">Broadcast Banners</div>
-                <div class="small text-secondary">Publish discount announcements or semester promo notices.</div>
+                <div class="small text-secondary">Publish regulatory notices or general informational banners.</div>
               </div>
             </div>
           </a>
@@ -317,8 +318,8 @@
                 <i class="fa-solid fa-gears"></i>
               </span>
               <div>
-                <div class="fw-bold text-dark">Brand & Support Setup</div>
-                <div class="small text-secondary">Configure Crisp live chat key, test connection & support email.</div>
+                <div class="fw-bold text-dark">Brand & Scope Setup</div>
+                <div class="small text-secondary">Configure scope mode, Crisp live chat & support email.</div>
               </div>
             </div>
           </a>
@@ -338,18 +339,18 @@
     <div class="card-body">
       <div class="alert alert-info border-0 p-3 mb-3">
         <div class="fw-bold mb-1">
-          <i class="fa-solid fa-circle-info me-1"></i>Act No. 326/1999 Coll. (Foreigners Residence Act) & Act No. 170/2018 Coll.
+          <i class="fa-solid fa-circle-info me-1"></i>Act No. 326/1999 Coll. & Act No. 170/2018 Coll.
         </div>
         <div class="small">
-          All foreign nationals and students applying for a Long-term Visa or Residence Permit in Czechia must hold <strong>Comprehensive Foreigners Health Insurance (Komplexní zdravotní pojištění cizinců)</strong> with a statutory minimum indemnity limit of <strong>€400,000</strong> per event.
+          All foreign nationals applying for Long-term Visa or Residence Permit in Czechia must hold <strong>Comprehensive Foreigners Health Insurance</strong> with statutory minimum indemnity limit of <strong>€400,000</strong> per event.
         </div>
       </div>
 
       <div class="text-secondary small">
-        <div class="mb-2"><strong>Partner Underwriters:</strong> PVZP (Pojišťovna VZP), Slavia pojišťovna, SV pojišťovna (formerly ERGO)</div>
-        <div class="mb-2"><strong>Broker Network:</strong> Authorized collaboration with České pojištění a.s.; registered entity <strong>HKTSE s.r.o.</strong> (IČO: 10858032, Municipal Court in Prague).</div>
-        <div class="mb-2"><strong>Data Protection:</strong> All applicant identity documents and policy attachments are encrypted end-to-end in compliance with GDPR Article 32.</div>
-        <div><strong>Official Inquiries & Support:</strong> <code>{{ stats.system_config.support_email if stats.system_config else 'insurance@hktse.eu.org' }}</code></div>
+        <div class="mb-2"><strong>Insurance Reference Data:</strong> Internal reference records for Czech foreigners health insurance.</div>
+        <div class="mb-2"><strong>Intermediary Partner:</strong> Cooperation with licensed insurance intermediary <strong>České pojištění a.s.</strong>; operator <strong>HKTSE s.r.o.</strong> (IČO: 10858032) acts as tipař / lead generator.</div>
+        <div class="mb-2"><strong>Data Protection:</strong> All applicant inquiry parameters are encrypted in compliance with GDPR Article 32.</div>
+        <div><strong>Official Support:</strong> <code>{{ stats.system_config.support_email if stats.system_config else 'insurance@hktse.eu.org' }}</code></div>
       </div>
     </div>
   </div>

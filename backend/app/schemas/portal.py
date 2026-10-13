@@ -88,8 +88,12 @@ class PortalPublicConfigSchema(BaseModel):
     partner_cnb_id: Optional[str] = "24729007"
     partner_website_url: Optional[str] = "https://ceskepojisteni.cz"
     relationship_status: str = "VERIFIED"
+    public_wording_approved: bool = False
+    workflow_scope_status: str = "LEAD_ONLY_CONFIRMED"
+    non_lead_modes_enabled: bool = False
     dpa_status: str = "VERIFIED"
     lead_only_fallback_url: Optional[str] = None
+    capabilities: Optional[dict] = None
 
     model_config = ConfigDict(from_attributes=True)
 

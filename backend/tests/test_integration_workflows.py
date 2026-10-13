@@ -20,6 +20,14 @@ from app.models.email_export import EmailExport
 class TestCompleteApplicationWorkflow:
     """Test complete application submission workflow."""
 
+    @pytest.fixture(autouse=True)
+    def enable_assisted_mode(self):
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            yield
+
     def test_complete_application_submission_workflow(
         self, client: TestClient, db: Session
     ):
@@ -310,6 +318,14 @@ class TestCompleteApplicationWorkflow:
 
 class TestConcurrentOperations:
     """Test concurrent operations and race conditions."""
+
+    @pytest.fixture(autouse=True)
+    def enable_assisted_mode(self):
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            yield
 
     def test_concurrent_file_uploads(self, client: TestClient, db: Session):
         """Test concurrent file uploads to same application."""

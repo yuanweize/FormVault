@@ -65,6 +65,15 @@ class TestFilesAPIIntegration:
         return TestClient(app)
 
     @pytest.fixture
+    def admin_headers(self, monkeypatch):
+        """Create admin authentication headers using dedicated ADMIN_API_TOKEN."""
+        from app.core.config import get_settings
+
+        test_token = "test-machine-api-token-xyz-123"
+        monkeypatch.setattr(get_settings(), "ADMIN_API_TOKEN", test_token)
+        return {"Authorization": f"Bearer {test_token}"}
+
+    @pytest.fixture
     def temp_upload_dir(self):
         """Create temporary upload directory."""
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -147,18 +156,24 @@ class TestFilesAPIIntegration:
         self, client, test_application, valid_png_data, temp_upload_dir
     ):
         """Test uploading a valid PNG file."""
-        files = {"file": ("test.png", BytesIO(valid_png_data), "image/png")}
-        data = {"file_type": "passport", "application_id": test_application.id}
+        from unittest.mock import patch
 
-        response = client.post("/api/v1/files/upload", files=files, data=data)
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            files = {"file": ("test.png", BytesIO(valid_png_data), "image/png")}
+            data = {"file_type": "passport", "application_id": test_application.id}
 
-        assert response.status_code == 201
-        result = response.json()
+            response = client.post("/api/v1/files/upload", files=files, data=data)
 
-        assert result["success"] is True
-        assert result["file_type"] == "passport"
-        assert result["original_filename"] == "test.png"
-        assert result["mime_type"] == "image/png"
+            assert response.status_code == 201
+            result = response.json()
+
+            assert result["success"] is True
+            assert result["file_type"] == "passport"
+            assert result["original_filename"] == "test.png"
+            assert result["mime_type"] == "image/png"
 
     def test_upload_file_valid_pdf(
         self, client, test_application, valid_pdf_data, temp_upload_dir
@@ -275,7 +290,13 @@ class TestFilesAPIIntegration:
         )
 
     def test_get_file_info_success(
-        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+        self,
+        client,
+        test_db,
+        test_application,
+        valid_jpeg_data,
+        temp_upload_dir,
+        admin_headers,
     ):
         """Test getting file information."""
         # First upload a file
@@ -287,7 +308,7 @@ class TestFilesAPIIntegration:
         file_id = upload_response.json()["id"]
 
         # Get file info
-        response = client.get(f"/api/v1/files/{file_id}")
+        response = client.get(f"/api/v1/files/{file_id}", headers=admin_headers)
 
         assert response.status_code == 200
         result = response.json()
@@ -298,9 +319,9 @@ class TestFilesAPIIntegration:
         assert result["mime_type"] == "image/jpeg"
         assert "created_at" in result
 
-    def test_get_file_info_not_found(self, client):
+    def test_get_file_info_not_found(self, client, admin_headers):
         """Test getting info for non-existent file."""
-        response = client.get("/api/v1/files/nonexistent-id")
+        response = client.get("/api/v1/files/nonexistent-id", headers=admin_headers)
 
         assert response.status_code == 404
         result = response.json()
@@ -308,9 +329,9 @@ class TestFilesAPIIntegration:
         assert result["success"] is False
         assert "not found" in result["message"].lower()
 
-    def test_list_files_empty(self, client):
+    def test_list_files_empty(self, client, admin_headers):
         """Test listing files when none exist."""
-        response = client.get("/api/v1/files/")
+        response = client.get("/api/v1/files/", headers=admin_headers)
 
         assert response.status_code == 200
         result = response.json()
@@ -319,7 +340,13 @@ class TestFilesAPIIntegration:
         assert result["files"] == []
 
     def test_list_files_with_data(
-        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+        self,
+        client,
+        test_db,
+        test_application,
+        valid_jpeg_data,
+        temp_upload_dir,
+        admin_headers,
     ):
         """Test listing files with uploaded data."""
         # Upload a file
@@ -330,7 +357,7 @@ class TestFilesAPIIntegration:
         assert upload_response.status_code == 201
 
         # List files
-        response = client.get("/api/v1/files/")
+        response = client.get("/api/v1/files/", headers=admin_headers)
 
         assert response.status_code == 200
         result = response.json()
@@ -341,40 +368,63 @@ class TestFilesAPIIntegration:
         assert result["files"][0]["original_filename"] == "test.jpg"
 
     def test_list_files_with_filters(
-        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+        self,
+        client,
+        test_db,
+        test_application,
+        valid_jpeg_data,
+        temp_upload_dir,
+        admin_headers,
     ):
         """Test listing files with filters."""
-        # Upload files of different types
-        files1 = {"file": ("student.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
-        data1 = {"file_type": "student_id", "application_id": test_application.id}
+        from unittest.mock import patch
 
-        files2 = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
-        data2 = {"file_type": "passport", "application_id": test_application.id}
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            # Upload files of different types
+            files1 = {"file": ("student.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+            data1 = {"file_type": "student_id", "application_id": test_application.id}
 
-        client.post("/api/v1/files/upload", files=files1, data=data1)
-        client.post("/api/v1/files/upload", files=files2, data=data2)
+            files2 = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+            data2 = {"file_type": "passport", "application_id": test_application.id}
 
-        # Filter by file type
-        response = client.get(f"/api/v1/files/?file_type=student_id")
+            client.post("/api/v1/files/upload", files=files1, data=data1)
+            client.post("/api/v1/files/upload", files=files2, data=data2)
 
-        assert response.status_code == 200
-        result = response.json()
+            # Filter by file type
+            response = client.get(
+                f"/api/v1/files/?file_type=student_id", headers=admin_headers
+            )
 
-        assert result["success"] is True
-        assert len(result["files"]) == 1
-        assert result["files"][0]["file_type"] == "student_id"
+            assert response.status_code == 200
+            result = response.json()
 
-        # Filter by application ID
-        response = client.get(f"/api/v1/files/?application_id={test_application.id}")
+            assert result["success"] is True
+            assert len(result["files"]) == 1
+            assert result["files"][0]["file_type"] == "student_id"
 
-        assert response.status_code == 200
-        result = response.json()
+            # Filter by application ID
+            response = client.get(
+                f"/api/v1/files/?application_id={test_application.id}",
+                headers=admin_headers,
+            )
 
-        assert result["success"] is True
-        assert len(result["files"]) == 2
+            assert response.status_code == 200
+            result = response.json()
+
+            assert result["success"] is True
+            assert len(result["files"]) == 2
 
     def test_delete_file_success(
-        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+        self,
+        client,
+        test_db,
+        test_application,
+        valid_jpeg_data,
+        temp_upload_dir,
+        admin_headers,
     ):
         """Test successful file deletion."""
         # Upload a file
@@ -386,7 +436,7 @@ class TestFilesAPIIntegration:
         file_id = upload_response.json()["id"]
 
         # Delete the file
-        response = client.delete(f"/api/v1/files/{file_id}")
+        response = client.delete(f"/api/v1/files/{file_id}", headers=admin_headers)
 
         assert response.status_code == 200
         result = response.json()
@@ -396,12 +446,12 @@ class TestFilesAPIIntegration:
         assert "deleted successfully" in result["message"]
 
         # Verify file is gone
-        get_response = client.get(f"/api/v1/files/{file_id}")
+        get_response = client.get(f"/api/v1/files/{file_id}", headers=admin_headers)
         assert get_response.status_code == 404
 
-    def test_delete_file_not_found(self, client):
+    def test_delete_file_not_found(self, client, admin_headers):
         """Test deletion of non-existent file."""
-        response = client.delete("/api/v1/files/nonexistent-id")
+        response = client.delete("/api/v1/files/nonexistent-id", headers=admin_headers)
 
         assert response.status_code == 404
         result = response.json()
@@ -456,29 +506,50 @@ class TestFilesAPIIntegration:
         self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
     ):
         """Test that unauthenticated file download is strictly forbidden (403)."""
-        files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
-        data = {"file_type": "passport", "application_id": test_application.id}
-        upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
-        file_id = upload_resp.json()["id"]
+        from unittest.mock import patch
 
-        # Attempt download without admin credentials
-        resp = client.get(f"/api/v1/files/{file_id}/download")
-        assert resp.status_code == 403
-        assert "strictly restricted" in resp.json()["detail"]
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+            data = {"file_type": "passport", "application_id": test_application.id}
+            upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
+            assert upload_resp.status_code == 201
+            file_id = upload_resp.json()["id"]
+
+            # Attempt download without admin credentials
+            resp = client.get(f"/api/v1/files/{file_id}/download")
+            assert resp.status_code == 403
+            assert "restricted" in resp.json()["detail"].lower()
 
     def test_download_file_authenticated_admin_success(
-        self, client, test_db, test_application, valid_jpeg_data, temp_upload_dir
+        self,
+        client,
+        test_db,
+        test_application,
+        valid_jpeg_data,
+        temp_upload_dir,
+        admin_headers,
     ):
         """Test that authenticated admin can decrypt and download document with security headers."""
-        files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
-        data = {"file_type": "passport", "application_id": test_application.id}
-        upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
-        file_id = upload_resp.json()["id"]
+        from unittest.mock import patch
 
-        # Provide Bearer admin token
-        headers = {"Authorization": "Bearer admin-token"}
-        resp = client.get(f"/api/v1/files/{file_id}/download", headers=headers)
-        assert resp.status_code == 200
-        assert resp.content == valid_jpeg_data
-        assert resp.headers.get("X-FormVault-Encryption") == "AES-256-GCM-Verified"
-        assert "attachment" in resp.headers.get("Content-Disposition", "")
+        with patch(
+            "app.services.business_scope.get_effective_scope_mode",
+            return_value="ASSISTED_APPLICATION",
+        ):
+            files = {"file": ("passport.jpg", BytesIO(valid_jpeg_data), "image/jpeg")}
+            data = {"file_type": "passport", "application_id": test_application.id}
+            upload_resp = client.post("/api/v1/files/upload", files=files, data=data)
+            assert upload_resp.status_code == 201
+            file_id = upload_resp.json()["id"]
+
+            # Provide Bearer admin token
+            resp = client.get(
+                f"/api/v1/files/{file_id}/download", headers=admin_headers
+            )
+            assert resp.status_code == 200
+            assert resp.content == valid_jpeg_data
+            assert resp.headers.get("X-FormVault-Encryption") == "AES-256-GCM-Verified"
+            assert "attachment" in resp.headers.get("Content-Disposition", "")

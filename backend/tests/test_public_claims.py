@@ -26,12 +26,60 @@ FORBIDDEN_PATTERNS = [
         "Exaggerated claim: 'military-grade' is forbidden marketing hyperbole",
     ),
     (
+        r"军工级",
+        "Exaggerated claim: '军工级' is forbidden marketing hyperbole in Chinese",
+    ),
+    (
+        r"离开即焚",
+        "Exaggerated claim: '离开即焚' is forbidden marketing hyperbole in Chinese",
+    ),
+    (
         r"national insurance database",
         "Fictitious claim: Czech health insurance is registered in underwriter systems, not a national database",
     ),
     (
         r"co[- ]compliance",
         "Legally invalid: Act No. 170/2018 Coll. defines broker supervision over tipař, not co-compliance",
+    ),
+    (
+        r"authorized\s+partner\s+for\s+PVZP",
+        "Unauthorized claim: HKTSE is a lead generator, not an authorized partner of PVZP",
+    ),
+    (
+        r"authorized\s+partner\s+for\s+Slavia",
+        "Unauthorized claim: HKTSE is not a direct authorized partner of Slavia",
+    ),
+    (
+        r"authorized\s+partner\s+for\s+SV",
+        "Unauthorized claim: HKTSE is not a direct authorized partner of SV",
+    ),
+    (
+        r"FormVault\s+Insurance\s+Brokerage\s+Services",
+        "Unauthorized claim: FormVault is a technology platform, not an insurance brokerage",
+    ),
+    (
+        r"FormVault\s+registered\s+insurance\s+intermediary",
+        "Unauthorized claim: FormVault is not a registered insurance intermediary",
+    ),
+    (
+        r"brokerage\s+mediation\s+by\s+(FormVault|HKTSE)",
+        "Unauthorized claim: HKTSE acts as tipař (lead generator), not insurance brokerage",
+    ),
+    (
+        r"Authorized\s+European\s+Insurance\s+Broker",
+        "Unauthorized claim: HKTSE is not an insurance broker",
+    ),
+    (
+        r"DEFAULT_CZECH_COMPANIES",
+        "Prohibited fallback: Real carrier quotes cannot exist in client-side fallbacks",
+    ),
+    (
+        r"零知识",
+        "Exaggerated claim: '零知识' conflicts with server-side processing & DPA handoff in Chinese",
+    ),
+    (
+        r"不可篡改",
+        "Imprecise claim: cryptographic hashes provide tamper-evidence, not immutability in Chinese",
     ),
 ]
 

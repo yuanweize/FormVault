@@ -35,23 +35,23 @@
   },
   "pages": {
     "home": {
-      "title": "欢迎使用 FormVault",
-      "subtitle": "安全高效地完成您的保险申请",
+      "title": "捷克留学生医疗保险申请咨询",
+      "subtitle": "告诉我们您的基本保险需求。我们将安全转交给合作保险中介（České pojištění a.s.），由其为您准备适配的保险方案与官方报价。",
       "getStarted": "开始申请",
       "features": {
-        "secure": "硬件级 AES-256 GCM 密态金库",
-        "secureDesc": "军工级认证加密与单文件专属 Nonce 隔离，严格行级权限控制，仅限授权持牌核保人透明解密。",
+        "secure": "AES-256-GCM 密态金库",
+        "secureDesc": "通过带认证的 AES-256-GCM 对称加密与专属 Nonce 隔离，保障客户咨询参数与联系信息安全。",
         "multilingual": "12 国语系即时协同",
         "multilingualDesc": "无缝跨国投保协同，全面适配捷克内务部 (OAMP) 外籍居留法案与跨语言标准规范校验。",
-        "mobile": "端侧沙箱与瞬时留痕",
-        "mobileDesc": "智能相机瞬时采集与会话级内存沙箱，离开发起即焚，公用电脑与移动设备均可安全秒级申办。"
+        "mobile": "会话隔离与隐私保护",
+        "mobileDesc": "填报过程在端侧会话沙箱中进行，严格遵循数据最小化原则，保障咨询隐私。"
       },
-      "authorizedBroker": "欧洲认证保险经纪服务机构 • 符合捷克与欧盟监管标准",
+      "authorizedBroker": "捷克留学生与居留医疗保险咨询 • 需求转交服务 (Tipař)",
       "trackMyApplication": "查询申请进度",
       "metrics": {
         "actCompliance": "符合捷克内政部移民局 (OAMP) 规定",
-        "rapidApp": "快速极简填报",
-        "bankPrivacy": "银行级加密隐私"
+        "rapidApp": "快捷在线提交",
+        "bankPrivacy": "安全加密转交"
       },
       "securityBadges": {
         "endToEnd": "端到端全程加密存储",
@@ -82,7 +82,7 @@
         "policyDelivery": "保单签发与送达",
         "notFoundTitle": "未找到相关申请记录",
         "notFoundDesc": "未能检索到与该参考号或注册邮箱匹配的保单记录，请仔细核对输入信息。",
-        "supportNote": "需要签证申请或保单核发方面的紧急协助？请联系我司专属经纪团队：",
+        "supportNote": "需要保险咨询或签证居留要求方面的协助？请联系我们的支持团队：",
         "emailUs": "直接发送电子邮件咨询",
         "historyTitle": "近期查询记录"
       },
@@ -109,9 +109,9 @@
         "schengenCovered": "全申根区多国通行有效"
       },
       "partners": {
-        "badge": "承保合作保司",
-        "title": "由欧洲与捷克顶尖保险机构直接承保",
-        "subtitle": "本代理中心拥有法定资质，与捷克主流保险集团直接联网出单与核保。",
+        "badge": "合规合作",
+        "title": "与持牌保险中介机构合规协同",
+        "subtitle": "根据捷克保险法案，由持牌中介机构 České pojištění a.s. 负责受监管的保险咨询与分销。",
         "officialPortal": "官方网站"
       },
       "banner": {
@@ -123,7 +123,9 @@
         "defaultButton": "即刻在线申请",
         "lawCompliance": "符合捷克《外国人居留法》（第 326/1999 号法令）合规保险",
         "lawDetails": "通过我司代理签发的所有保险凭单均完全符合捷克内政部难民与移民政策司（OAMP）针对长期签证与居留许可申请的最新监管要求。"
-      }
+      },
+      "roleBadge": "捷克留学生与居留医疗保险咨询 • 需求转交服务 (Tipař)",
+      "requestOptions": "提交保险需求"
     },
     "personalInfo": {
       "title": "个人信息",
@@ -153,7 +155,7 @@
     },
     "success": {
       "title": "申请已成功提交！",
-      "subtitle": "您的保险申请已进入正式核保流程",
+      "subtitle": "您的咨询需求已成功提交并转交合作中介处理",
       "referenceNumber": "您的申请编号",
       "referenceNumberNote": "请妥善保存此申请编号以供日后查询和跟进进度",
       "applicationSummary": "申请概要",
@@ -162,8 +164,8 @@
         "title": "后续处理流程",
         "emailConfirmation": "邮件确认",
         "emailConfirmationNote": "系统将在 5 分钟内向您的预留邮箱发送确认邮件",
-        "processing": "核保审理",
-        "processingNote": "保司与审核团队将在 2-3 个工作日内完成保单初审",
+        "processing": "需求审理与方案准备",
+        "processingNote": "合作持牌中介专业顾问将及时审核并与您取得联系",
         "followUp": "后续联络",
         "followUpNote": "如需补充证明文件，我们将通过邮件与您联系"
       },
@@ -195,13 +197,13 @@
     "terms": {
       "badge": "受捷克民法典（第 89/2012 号法律）及保险分销法（第 170/2018 号法律）管辖",
       "title": "服务条款",
-      "subtitle": "规范通过 FormVault 数字化平台提交保险申请、文件验证和经纪代理的标准商业与中介条款。",
-      "section1Title": "1. 中介范围与经纪人资质",
-      "section1Content": "FormVault 依据捷克《保险分销法》（第 170/2018 号法律）开展正规居间中介服务。携手 České pojištění a.s. 合作网络，为申请人协助办理经捷克监管批准的合法承保机构（包含 Pojišťovna VZP, a.s.、Slavia pojišťovna a.s. 与 SV pojišťovna, a.s.）之医疗保险协议。",
+      "subtitle": "规范通过 FormVault 平台提交保险咨询需求、联系信息转交及相关技术服务的条款。",
+      "section1Title": "1. 服务定位与业务范围",
+      "section1Content": "FormVault 由 HKTSE s.r.o.（IČO: 10858032）运营，作为在线需求引荐方（tipař），与持牌保险中介 České pojištění a.s. 开展合作。HKTSE 收集客户的基本保险需求与联系信息并转交给 České pojištění a.s.，由其依法负责受监管的保险分销、合同前信息披露、正式报价与保单缔结。",
       "section2Title": "2. 申请人声明与材料真实性",
       "section2Content": "提交申请并上传身份证明文件（护照、学生证、签证材料等）即表示您保证所提交的所有信息真实、最新且完整。根据捷克刑法典（第 40/2009 号法律），提交伪造或变造的文件属于刑事犯罪，将导致立即终止服务并通报相关官方监管部门（捷克内政部 OAMP / 捷克外事警察局）。",
-      "section3Title": "3. 保单出具与捷克内政部 OAMP 合规",
-      "section3Content": "FormVault 协调出具符合捷克《外国人居留法》（第 326/1999 号法律）标准的正式保险凭证（Pojistná smlouva / Potvrzení o pojištění）。经承保公司核保与确认后，保单电子版将立即发送至您的注册邮箱，并同步录入捷克国家保险监管数据库。",
+      "section3Title": "3. 信息转交与中介处理",
+      "section3Content": "FormVault 安全将您的咨询需求转交给 České pojištění a.s.。后续正式保险凭证、法定文件与方案均由 České pojištění a.s. 或承保保险公司直接提供。",
       "section4Title": "4. 退保、退款与签证拒签政策",
       "section4Content": "如果您的捷克签证或长期居留许可申请被捷克内政部（OAMP）或捷克驻外使领馆正式拒签，您有权凭官方正式书面拒签信按照承保公司的规定申请全额或按比例退费。承保公司可能会根据合同条款扣除合理的手续费或行政费用。",
       "section5Title": "5. 适用法律与争议管辖",
@@ -228,30 +230,30 @@
         "q1": "提交申请后多久能收到正式的保险证明？",
         "a1": "在核保审核及付款确认后，通常 1 至 4 个工作小时内即可生成正式的电子保险凭证（Potvrzení o pojištění）。带防伪编号的官方 PDF 文件将直接发送到您的注册邮箱，可直接用于捷克签证及居留申请。",
         "q2": "你们的保单 100% 被捷克内政部（OAMP）认可吗？",
-        "a2": "是的。通过我们网络代理出具的保单（PVZP、Slavia、SV pojišťovna）100% 严格符合捷克《外国人居留法》（Act No. 326/1999 Coll.）最新要求。均为综合医疗保险（KZPC），最高保额达 10,000,000 捷克克朗，内政部移民局（OAMP）官方认可。",
+        "a2": "是的。由持牌保险中介伙伴 České pojištění a.s. 分销的捷克外国人综合医疗保险，均严格符合捷克《外国人居留法》（Act No. 326/1999 Coll.）与内政部移民局（OAMP）签证要求，法定最高保额达到 400,000 欧元。",
         "q3": "如果我的签证申请被使领馆拒签了，该怎么办？",
         "a3": "如果您的签证或居留申请被拒签，您有权凭拒签文件向保险公司申请退费。只需将捷克内政部（OAMP）或使领馆出具的官方正式拒签证明扫描件发送至 insurance@hktse.eu.org，我们团队将协助您完成保单注销与退款。",
         "q4": "在捷克就医如何进行直付结算或理赔报销？",
         "a4": "在与承保公司签约的公立医院与诊所（如布拉格的 Motol、FNKV、VFN 或布尔诺的 FN Brno），只需出示实体或电子保险卡即可享受免现金直付结算。若在非签约机构就诊，可先行垫付并保存病历和发票，事后提交理赔，通常 14 天内即可获得赔付。",
-        "q5": "为什么必须提供护照和学生身份证明？",
-        "a5": "捷克保险法律及内政部监管要求对外国公民进行严格的实名验证，以确保保单顺利完成官方备案。上传有效学生证或在读证明还可享受专属大学生优惠费率（最高可优惠 30%）。"
+        "q5": "提交保险咨询需求需要提供哪些信息？",
+        "a5": "在当前需求引荐（Tipař）模式下，FormVault 仅收集您的基本居留参数（起保日期、投保时长、学生身份、年龄区间）以及联系方式（姓名、邮箱、电话）。初次咨询不收集护照原件扫描件或敏感病史。"
       },
       "connectingChat": "正在连接核保咨询专员..."
     },
     "privacy": {
       "badge": "符合欧盟通用数据保护条例 (GDPR) 及捷克第 110/2019 号数据处理法",
       "title": "隐私政策与数据安全保护",
-      "subtitle": "关于 FormVault 如何收集、处理、加密和保护捷克及欧盟保险申请人个人身份信息的官方声明。",
+      "subtitle": "关于 FormVault 如何依据 GDPR 规范收集、加密与转交基本咨询信息的官方声明。",
       "section1Title": "1. 数据控制者身份",
-      "section1Content": "负责处理您个人数据的数据控制者为 FormVault Insurance Brokerage Services（位于捷克共和国布拉格）。如对数据保护有任何疑问或需要联络我们的数据保护官（DPO），请发送邮件至：insurance@hktse.eu.org。",
+      "section1Content": "负责收集与转交您基本咨询信息的数据控制方为 HKTSE s.r.o.（IČO: 10858032，捷克共和国布拉格）。联系邮箱：insurance@hktse.eu.org。",
       "section2Title": "2. 数据处理目的与法律依据",
-      "section2Intro": "我们收集并处理您的身份信息（姓名、出生日期、护照/身份证件复印件、学生身份证明、地址）严格用于以下目的：",
-      "section2Item1": "协助经许可的保险承保机构出具健康、旅行及留学生保险保单；",
+      "section2Intro": "我们在取得您明确同意的前提下，仅收集基本联系方式与居留需求参数，用于以下用途：",
+      "section2Item1": "将您的保险咨询需求安全转交给持牌保险中介 České pojištění a.s.；",
       "section2Item2": "符合捷克《外国人居留法》（第 326/1999 号法律）及捷克内政部 OAMP 的法定申报要求；",
       "section2Item3": "依据捷克保险业法规进行审计核验、防范欺诈及法定凭证归档。",
       "section2Legal": "法律依据：GDPR 第 6(1)(b) 条（履行合同所需）及 GDPR 第 6(1)(c) 条（遵守法定义务）。",
-      "section3Title": "3. 硬件级加密与零知识存储",
-      "section3Content": "传输至 FormVault 的所有护照照片、学生证明文件及个人记录均使用具有独立初始向量（IV）的 AES-256 GCM 认证加密进行静态密文存储。数据库与公网完全物理隔离，系统内部通信严格使用 TLS 1.3 传输加密。",
+      "section3Title": "3. AES-256-GCM 文件加密与传输保护",
+      "section3Content": "您的基本咨询信息通过 TLS 1.3 加密传输，并采用 AES-256-GCM 认证加密安全存储，严禁未授权调阅。",
       "section4Title": "4. 您在 GDPR 项下的法定权利（第 15-22 条）",
       "section4Intro": "作为申请人（数据主体），您享有以下法定权利：",
       "section4Item1": "访问权（第 15 条）：要求获取我们所持有的关于您的所有个人数据副本；",
@@ -289,8 +291,8 @@
     "privacy": "隐私政策",
     "terms": "服务条款",
     "support": "支持",
-    "brokerTitle": "FormVault 保险经纪与核保服务平台",
-    "brokerDesc": "捷克布拉格正规合规保险中介网络。携手 České pojištění a.s.，官方代理 PVZP、Slavia 与 SV pojišťovna 综合医疗保险。",
+    "brokerTitle": "FormVault 保险咨询与转交平台",
+    "brokerDesc": "FormVault 由 HKTSE s.r.o. 根据与 České pojištění a.s. 的合作协议运营。HKTSE 收集基本保险咨询需求和联系信息并转交给 České pojištění a.s.。HKTSE 不是保险公司或保险中介。保险建议、产品方案与受监管的保险分销由 České pojištění a.s. 负责。",
     "techPlatformLead": "FormVault 由 "
   },
   "forms": {
@@ -562,38 +564,38 @@
     }
   },
   "securityRail": {
-    "title": "金融级安全合规轨道",
+    "title": "系统安全与合规保障",
     "aes": {
-      "label": "AES-256 GCM 密文存储",
-      "tooltip": "所有证件附件与填报信息均采用军工级 AES-256 GCM 算法在存储前即时加密。"
+      "label": "AES-256 GCM 文件加密",
+      "tooltip": "上传附件在落盘前使用带认证的 AES-256-GCM 算法加密，配合独立 Nonce 隔离保护。"
     },
     "privacy": {
-      "label": "零知识隐私保护",
-      "tooltip": "您的敏感个人数据严格隔离保护，仅限法定受托核保团队在出单时调阅。"
+      "label": "基于角色的访问控制",
+      "tooltip": "后台与接口受严格 RBAC 权限控制，未授权人员无法调阅敏感客户信息。"
     },
     "tls": {
-      "label": "TLS 1.3 加密信道",
-      "tooltip": "客户端与保司后端之间已建立最高级别加密通信信道。"
+      "label": "TLS 1.3 加密传输",
+      "tooltip": "全站与数据接口强制使用现代化 TLS 1.3 加密通信信道。"
     },
     "autoSave": {
-      "label": "草稿密文自动保存",
-      "tooltip": "填写过程中的修改内容会自动在本地安全密室加密暂存，防止意外丢失。"
+      "label": "会话作用域草稿",
+      "tooltip": "填写中的草稿在本地安全加密暂存，在会话完成或提交后自动失效。"
     },
     "rbac": {
-      "label": "严格 RBAC 权限隔离",
-      "tooltip": "身份凭证文件存储于零信任飞地中；仅限经过验证的授权核保人执行解密。"
+      "label": "严格权限隔离",
+      "tooltip": "数据访问受严格角色隔离，解密与调阅仅限授权管理人员。"
     },
     "session": {
-      "label": "瞬时会话内存沙箱",
-      "tooltip": "敏感身份凭证仅驻留于浏览器瞬时会话内存中，离开即焚，杜绝公用机房磁盘残留。"
+      "label": "会话隐私保护",
+      "tooltip": "客户数据在会话生命周期内严格隔离，避免在共享终端残留。"
     },
     "cnb": {
-      "label": "ČNB 挂靠合规中介协同",
-      "tooltip": "技术基础设施由 HKTSE s.r.o. 运营，在持牌中介 České pojištění a.s. 授权合作下遵循捷克第 170/2018 号法规运营。"
+      "label": "中介合作协同",
+      "tooltip": "技术基础设施由 HKTSE s.r.o. 作为引荐方（tipař）运营，与持牌中介 České pojištění a.s. 合规协同。"
     },
     "audit": {
-      "label": "防篡改合规审计流水",
-      "tooltip": "每一次文件解密、保单核保与状态变更均生成不可篡改且可追溯的加密审计日志。"
+      "label": "防篡改审计流水",
+      "tooltip": "关键操作记录时间戳、操作人与 SHA-256 哈希校验值，用于合规追溯。"
     }
   },
   "addressAssistant": {

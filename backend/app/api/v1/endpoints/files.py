@@ -43,33 +43,63 @@ from app.services.file_service import file_service
 router = APIRouter()
 
 
-def verify_admin_download_access(request: Request) -> dict:
+from app.services.business_scope import get_public_capabilities
+
+
+def verify_admin_access(request: Request) -> dict:
     """
     Ensure only authenticated administrators or underwriters with an active session
-    can perform decryption and download operations.
+    or valid administrative API Bearer token can access file records, metadata,
+    or perform management actions.
     """
+    settings = get_settings()
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        bearer_token = auth_header.replace("Bearer ", "").strip()
+        import secrets
+
+        # ADMIN_SECRET_KEY is strictly a session/HMAC secret and MUST NEVER serve as a bearer token.
+        # Dedicated machine API token ADMIN_API_TOKEN must be explicitly configured and non-empty.
+        if settings.ADMIN_API_TOKEN and secrets.compare_digest(
+            bearer_token, settings.ADMIN_API_TOKEN
+        ):
+            return {"user_id": "api-admin", "role": "super_admin", "company_id": None}
+
     token = request.session.get("token")
     role = request.session.get("role")
     user_id = request.session.get("user_id")
 
-    # Also support Authorization header
-    auth_header = request.headers.get("Authorization")
-    settings = get_settings()
-    if auth_header and auth_header.startswith("Bearer "):
-        bearer_token = auth_header.replace("Bearer ", "").strip()
-        if bearer_token in (settings.ADMIN_SECRET_KEY, "admin-token"):
-            return {"user_id": "api-admin", "role": "super_admin", "company_id": None}
-
     if not token or not user_id or not role:
         raise HTTPException(
             status_code=403,
-            detail="Decryption and download of identity documents is strictly restricted to authenticated administrators and underwriters.",
+            detail="Access to identity document records and metadata is strictly restricted to authenticated administrators.",
         )
+
+    # Validate allowed roles
+    if role not in (
+        "super_admin",
+        "broker_agent",
+        "company_partner",
+        "compliance_auditor",
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="Unauthorized role for administrative file access.",
+        )
+
     return {
         "user_id": user_id,
         "role": role,
         "company_id": request.session.get("company_id"),
     }
+
+
+def verify_admin_download_access(request: Request) -> dict:
+    """
+    Ensure only authenticated administrators or underwriters with an active session
+    can perform decryption and download operations.
+    """
+    return verify_admin_access(request)
 
 
 @router.post("/upload", response_model=FileUploadResponseSchema, status_code=201)
@@ -90,6 +120,14 @@ async def upload_file(
     - **file_type**: Type of file (student_id or passport)
     - **application_id**: Optional application ID to associate with file
     """
+    # Enforce regulatory capability gate
+    caps = get_public_capabilities(db)
+    if not caps.allow_sensitive_document_upload and file_type == FileType.PASSPORT:
+        raise HTTPException(
+            status_code=403,
+            detail="Sensitive document upload (such as passport) is disabled in LEAD_ONLY mode.",
+        )
+
     return await file_service.upload_file(
         db=db,
         file=file,
@@ -107,18 +145,11 @@ async def list_files(
         100, ge=1, le=1000, description="Maximum number of files to return"
     ),
     offset: int = Query(0, ge=0, description="Number of files to skip"),
+    admin: dict = Depends(verify_admin_access),
     db: Session = Depends(get_db),
 ) -> FileListResponseSchema:
     """
-    List uploaded files with optional filtering.
-
-    Retrieves a list of uploaded files with optional filters
-    for application ID and file type.
-
-    - **application_id**: Filter by application ID
-    - **file_type**: Filter by file type (student_id or passport)
-    - **limit**: Maximum number of files to return (1-1000)
-    - **offset**: Number of files to skip for pagination
+    List uploaded files with optional filtering. Restricted to authenticated administrators.
     """
     files = file_service.list_files(
         db=db,
@@ -132,14 +163,13 @@ async def list_files(
 
 
 @router.get("/{file_id}", response_model=FileInfoSchema)
-async def get_file_info(file_id: str, db: Session = Depends(get_db)) -> FileInfoSchema:
+async def get_file_info(
+    file_id: str,
+    admin: dict = Depends(verify_admin_access),
+    db: Session = Depends(get_db),
+) -> FileInfoSchema:
     """
-    Get information about a specific file.
-
-    Returns metadata about a specific file including size,
-    type, and upload timestamp.
-
-    - **file_id**: Unique file identifier
+    Get information about a specific file. Restricted to authenticated administrators.
     """
     return file_service.get_file(db=db, file_id=file_id)
 
@@ -220,7 +250,10 @@ async def download_file(
 
 @router.delete("/{file_id}", response_model=FileDeleteResponseSchema)
 async def delete_file(
-    file_id: str, request: Request, db: Session = Depends(get_db)
+    file_id: str,
+    request: Request,
+    admin: dict = Depends(verify_admin_access),
+    db: Session = Depends(get_db),
 ) -> FileDeleteResponseSchema:
     """
     Delete a specific file.

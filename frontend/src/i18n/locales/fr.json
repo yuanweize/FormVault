@@ -35,8 +35,8 @@
   },
   "pages": {
     "home": {
-      "title": "Bienvenue sur FormVault",
-      "subtitle": "Complétez votre demande d'assurance en toute sécurité",
+      "title": "Demande d'assurance santé pour les étudiants internationaux en République tchèque",
+      "subtitle": "Indiquez-nous vos besoins de base. Nous transmettons votre demande en toute sécurité à notre partenaire intermédiaire (České pojištění a.s.), qui prépare vos options.",
       "getStarted": "Commencer",
       "features": {
         "secure": "Coffre-fort AES-256 GCM de niveau matériel",
@@ -46,7 +46,7 @@
         "mobile": "Bac à sable de session volatile",
         "mobileDesc": "Capture instantanée par caméra et état de session isolé. Les identifiants sensibles disparaissent à la fermeture."
       },
-      "authorizedBroker": "Courtier d'assurance européen agréé • Normes de la République tchèque et de l'UE",
+      "authorizedBroker": "Demande d'assurance santé pour étrangers en République tchèque • Présentateur (Tipař)",
       "trackMyApplication": "Suivre ma demande",
       "metrics": {
         "actCompliance": "Conforme OAMP tchèque",
@@ -82,7 +82,7 @@
         "policyDelivery": "Délivrance de la police",
         "notFoundTitle": "Demande introuvable",
         "notFoundDesc": "Aucun dossier ne correspond au numéro de référence ou à l'adresse e-mail renseignée. Veuillez vérifier vos informations.",
-        "supportNote": "Besoin d'une assistance urgente pour votre demande de visa ou votre police ? Contactez notre bureau de courtage :",
+        "supportNote": "Besoin d'aide concernant votre demande d'assurance ? Contactez notre support :",
         "emailUs": "Nous contacter par e-mail",
         "historyTitle": "Recherches récentes"
       },
@@ -120,7 +120,9 @@
         "defaultButton": "Souscrire en ligne",
         "lawCompliance": "Assurance conforme à la loi sur le séjour des étrangers en Rép. tchèque (loi n° 326/1999)",
         "lawDetails": "Toutes les attestations d'assurance délivrées par notre intermédiaire respectent les exigences les plus récentes de l'OAMP (ministère de l'Intérieur tchèque) pour les demandes de visa long séjour et de titre de séjour."
-      }
+      },
+      "roleBadge": "Demande d'assurance santé pour étrangers en République tchèque • Présentateur (Tipař)",
+      "requestOptions": "Demander des options d'assurance"
     },
     "personalInfo": {
       "title": "Informations Personnelles",
@@ -192,13 +194,13 @@
     "terms": {
       "badge": "Régie par le code civil tchèque (loi n° 89/2012 Coll.) et la loi sur la distribution d'assurances (loi n° 170/2018 Coll.)",
       "title": "Conditions d'utilisation",
-      "subtitle": "Conditions régissant la soumission des demandes d'assurance et la médiation de courtage par FormVault.",
-      "section1Title": "1. Champ d'application et statut d'intermédiaire",
-      "section1Content": "FormVault agit en tant qu'intermédiaire d'assurance enregistré conformément à la loi n° 170/2018 Coll. En coopération avec České pojištění a.s., nous intermédions des contrats avec les assureurs agréés (PVZP, Slavia et SV pojišťovna).",
+      "subtitle": "Conditions générales régissant la collecte et la transmission des demandes d'assurance via FormVault.",
+      "section1Title": "1. Rôle de l'exploitant et portée du service",
+      "section1Content": "FormVault est exploité par HKTSE s.r.o. (IČO: 10858032) en qualité d'indicateur (tipař) en coopération avec l'intermédiaire agréé České pojištění a.s. (loi n° 170/2018 Coll.). HKTSE transmet les demandes à České pojištění a.s., qui assure la distribution réglementée, les informations précontractuelles et la souscription.",
       "section2Title": "2. Exactitude des déclarations et documents",
       "section2Content": "Le demandeur certifie que toutes les données personnelles, passeports et confirmations d'études sont authentiques et exactes.",
-      "section3Title": "3. Émission de la police et enregistrement OAMP",
-      "section3Content": "Dès validation et réception du paiement, le certificat officiel (Potvrzení o pojištění) est généré et enregistré au registre national tchèque.",
+      "section3Title": "3. Transmission à l'intermédiaire agréé",
+      "section3Content": "FormVault transmet en toute sécurité votre demande à České pojištění a.s. Les offres et contrats officiels sont émis directement par České pojištění a.s. ou les compagnies partenaires.",
       "section4Title": "4. Annulation et refus de visa",
       "section4Content": "En cas de refus de visa par l'Ambassade ou l'OAMP, vous avez droit au remboursement conformément aux conditions de l'assureur.",
       "section5Title": "5. Droit applicable et juridiction compétente",
@@ -225,30 +227,30 @@
         "q1": "Quand recevrai-je mon certificat d'assurance officiel après soumission ?",
         "a1": "Les certificats électroniques (Potvrzení o pojištění) sont émis sous 1 à 4 heures ouvrées après validation du dossier et paiement.",
         "q2": "Vos polices sont-elles acceptées à 100 % par le ministère de l'Intérieur tchèque (OAMP) ?",
-        "a2": "Oui. Toutes les polices souscrites via notre réseau (PVZP, Slavia, SV pojišťovna) sont strictement conformes à la loi sur le séjour des étrangers (loi n° 326/1999 Coll.). Elles incluent une assurance santé complète (KZPC) avec des plafonds allant jusqu'à 10 000 000 CZK.",
+        "a2": "Oui. Les assurances complètes distribuées par notre partenaire agréé České pojištění a.s. sont conformes à la loi sur le séjour des étrangers (loi n° 326/1999 Coll.) et aux exigences de l'OAMP jusqu'à 400 000 EUR.",
         "q3": "Que faire si ma demande de visa est refusée par l'Ambassade ?",
         "a3": "Transmettez-nous simplement une copie du document officiel de refus pour enclencher l'annulation et le remboursement intégral.",
         "q4": "Comment fonctionnent le tiers payant et le remboursement des soins en Tchéquie ?",
         "a4": "Dans les hôpitaux conventionnés, présentez votre carte d'assurance pour une prise en charge directe. Sinon, soumettez vos factures en ligne.",
-        "q5": "Pourquoi le passeport et le justificatif d'études sont-ils exigés ?",
-        "a5": "La loi tchèque impose une vérification d'identité pour enregistrer la police. Le statut étudiant donne accès à des tarifs réduits jusqu'à 30 %."
+        "q5": "Quelles informations sont requises pour soumettre une demande ?",
+        "a5": "FormVault ne recueille que les paramètres de séjour (durée, date de début, statut étudiant, tranche d'âge) et les coordonnées de base. Les copies de passeport ne sont pas collectées au stade du lead."
       },
       "connectingChat": "Connexion au conseiller en cours..."
     },
     "privacy": {
       "badge": "Conforme au RGPD UE 2016/679 et à la loi tchèque n° 110/2019 Coll.",
       "title": "Politique de confidentialité & Protection des données",
-      "subtitle": "Informations transparentes sur la protection de vos données personnelles et documents conformément au RGPD.",
+      "subtitle": "Déclaration sur la collecte et la transmission des données de demande selon le RGPD.",
       "section1Title": "1. Responsable du traitement et portée",
-      "section1Content": "FormVault traite les données pour le compte de l'intermédiaire agréé HKTSE s.r.o. en stricte conformité avec le RGPD européen.",
+      "section1Content": "Le responsable du traitement des données est HKTSE s.r.o. (IČO: 10858032, Prague, République tchèque). E-mail : insurance@hktse.eu.org.",
       "section2Title": "2. Catégories de données collectées",
-      "section2Intro": "Nous collectons uniquement les informations requises par la loi tchèque sur les assurances :",
-      "section2Item1": "Données d'identification (nom complet, date de naissance, sexe, nationalité, numéro de passeport)",
+      "section2Intro": "Nous recueillons vos coordonnées et critères de séjour exclusivement pour :",
+      "section2Item1": "Transmettre votre demande à l'intermédiaire agréé České pojištění a.s. ;",
       "section2Item2": "Données de séjour en République tchèque (adresse postale, durée d'assurance, type de séjour)",
       "section2Item3": "Copies de documents cryptées (scan du passeport, attestation d'inscription universitaire)",
       "section2Legal": "Bases légales : exécution du contrat (Art. 6-1-b RGPD) et obligations légales (Art. 6-1-c RGPD).",
       "section3Title": "3. Transmission sécurisée aux assureurs",
-      "section3Content": "Vos données sont transmises exclusivement par canaux cryptés à la compagnie choisie (PVZP, Slavia, SV pojišťovna).",
+      "section3Content": "Vos données sont transmises via TLS 1.3 et stockées de manière sécurisée avec le chiffrement AES-256 GCM.",
       "section4Title": "4. Vos droits au titre du RGPD",
       "section4Intro": "Conformément au chapitre III du RGPD, vous disposez des droits suivants :",
       "section4Item1": "Droit d'accès à vos données (Art. 15 RGPD)",
@@ -286,8 +288,8 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "support": "Support et Assistance",
-    "brokerTitle": "Services d'intermédiation en assurance FormVault",
-    "brokerDesc": "Réseau d'intermédiation en assurance agréé à Prague, République tchèque. En coopération avec České pojištění a.s., partenaire agréé pour PVZP, Slavia et SV pojišťovna.",
+    "brokerTitle": "Services de demande d'assurance FormVault",
+    "brokerDesc": "FormVault est exploité par HKTSE s.r.o. dans le cadre d'un accord de coopération avec České pojištění a.s. HKTSE recueille les demandes d'assurance de base et les coordonnées pour les transmettre à České pojištění a.s. HKTSE n'est ni une compagnie d'assurance ni un intermédiaire d'assurance. Le conseil, les offres et la distribution d'assurance sont gérés par České pojištění a.s.",
     "techPlatformLead": "FormVault est exploité par "
   },
   "forms": {
@@ -559,38 +561,38 @@
     "privacyPolicy": "Politique de confidentialité"
   },
   "securityRail": {
-    "title": "Rail de sécurité institutionnelle",
+    "title": "System Security & Compliance",
     "aes": {
-      "label": "Chiffré AES-256 GCM",
-      "tooltip": "Tous les documents et données sont chiffrés au repos via AES-256 GCM authentifié."
+      "label": "AES-256 GCM File Encryption",
+      "tooltip": "Uploaded files are encrypted at rest using authenticated AES-256 GCM with per-document nonces."
     },
     "privacy": {
-      "label": "Isolation des données par rôles",
-      "tooltip": "Vos données personnelles sensibles sont strictement isolées."
+      "label": "Role-Based Access Control",
+      "tooltip": "Access to customer data is strictly controlled through RBAC; unauthorized access is prohibited."
     },
     "tls": {
-      "label": "Canal actif TLS 1.3",
-      "tooltip": "Canal de communication sécurisé et hautement chiffré établi."
+      "label": "TLS 1.3 Encrypted Transport",
+      "tooltip": "Enforced modern HTTPS and TLS 1.3 encrypted transport for all communications."
     },
     "autoSave": {
-      "label": "Sauvegarde automatique chiffrée",
-      "tooltip": "Les brouillons sont automatiquement enregistrés dans votre coffre local sécurisé."
+      "label": "Session-Scoped Draft",
+      "tooltip": "In-progress drafts are captured in encrypted local storage and expire upon submission or cleanup."
     },
     "rbac": {
-      "label": "Isolation stricte RBAC",
-      "tooltip": "Les fichiers d'identité sont isolés dans des enclaves zero-trust ; le déchiffrement est strictement réservé aux souscripteurs authentifiés."
+      "label": "Strict Authorization",
+      "tooltip": "Administrative decryption and data access are restricted to authenticated, authorized operators."
     },
     "session": {
-      "label": "Bac à sable de session volatile",
-      "tooltip": "Les données d'identité sensibles résident dans la mémoire temporaire de session, évitant la mise en cache sur disque sur les ordinateurs partagés."
+      "label": "Session Privacy Protection",
+      "tooltip": "Customer data is scoped to active browser sessions to prevent caching on shared devices."
     },
     "cnb": {
-      "label": "Conformité d'intermédiation ČNB",
-      "tooltip": "Infrastructure technique exploitée par HKTSE s.r.o. en coopération autorisée avec České pojištění a.s. en vertu de la loi n° 170/2018 Coll."
+      "label": "Intermediary Collaboration",
+      "tooltip": "Platform operated by HKTSE s.r.o. as a lead introducer (tipař) in cooperation with licensed intermediary České pojištění a.s."
     },
     "audit": {
-      "label": "Piste d'audit infalsifiable",
-      "tooltip": "Chaque déchiffrement, examen de document et mise à jour de statut génère un enregistrement d'audit cryptographique immuable."
+      "label": "Tamper-Evident Audit Trail",
+      "tooltip": "Key system events record timestamps, actor IDs, and cryptographic SHA-256 hashes for regulatory traceability."
     }
   },
   "addressAssistant": {

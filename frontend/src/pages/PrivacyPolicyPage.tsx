@@ -132,7 +132,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
                   {t('pages.privacy.section1Lead', {
                     defaultValue:
-                      'The technical application infrastructure is operated by ',
+                      'The technical application intake infrastructure is operated by ',
                   })}
                   <a
                     href="https://hktse.eu.org/"
@@ -142,7 +142,7 @@ const PrivacyPolicyPage: React.FC = () => {
                   >
                     HKTSE s.r.o.
                   </a>
-                  {' (IČO: 10858032, Municipal Court in Prague). Insurance distribution and underwriting mediation is conducted in authorized cooperation with '}
+                  {' (IČO: 10858032, Municipal Court in Prague). HKTSE acts as a lead introducer (tipař) in cooperation with '}
                   <a
                     href="https://ceskepojisteni.cz/"
                     target="_blank"
@@ -151,7 +151,7 @@ const PrivacyPolicyPage: React.FC = () => {
                   >
                     České pojištění a.s.
                   </a>
-                  {', an independent intermediary supervised by the Czech National Bank (ČNB). Underwriter partners and our platform act as joint or independent controllers under GDPR Article 26/28. For data privacy inquiries or DPO correspondence, email: insurance@hktse.eu.org.'}
+                  {', an independent insurance intermediary regulated by the Czech National Bank (ČNB). Under this arrangement, HKTSE securely collects your basic insurance inquiry parameters and contact details to transmit them to České pojištění a.s. for licensed advisory and policy option preparation. For data privacy inquiries, contact: insurance@hktse.eu.org.'}
                 </Typography>
               </Box>
 
@@ -159,38 +159,38 @@ const PrivacyPolicyPage: React.FC = () => {
 
               <Box>
                 <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-                  {t('pages.privacy.section2Title', { defaultValue: '2. Purpose of Data Processing & Legal Basis' })}
+                  {t('pages.privacy.section2Title', { defaultValue: '2. Purpose of Data Processing & Data Minimization' })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
                   {t('pages.privacy.section2Intro', {
                     defaultValue:
-                      'We collect and process your identity details (Name, Date of Birth, Passport/ID copy, Student Status, Address) strictly for the following purposes:',
+                      'In accordance with GDPR Article 5(1)(c) (Data Minimization), we collect only the essential details necessary to route your enquiry (Full Name, Contact Email, Phone, Preferred Language, Student Status, Age Bracket, Stay Parameters, and Notes):',
                   })}
                 </Typography>
                 <Box component="ul" sx={{ pl: 2.5, mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
                   <li>
                     {t('pages.privacy.section2Item1', {
                       defaultValue:
-                        'Binding and issuing health, travel, and student insurance policies with licensed underwriters;',
+                        'Forwarding your inquiry to licensed intermediary České pojištění a.s. for consultation and quotation preparation;',
                     })}
                   </li>
                   <li>
                     {t('pages.privacy.section2Item2', {
                       defaultValue:
-                        'Compliance with the Czech Foreigners Residence Act (Act No. 326/1999 Coll., OAMP requirements);',
+                        'Ensuring the proposed options correspond to the applicant\'s student status and Czech Foreigners Residence Act criteria;',
                     })}
                   </li>
                   <li>
                     {t('pages.privacy.section2Item3', {
                       defaultValue:
-                        'Audit verification, fraud prevention, and regulatory archiving under Czech Insurance Law.',
+                        'Tracking enquiry fulfillment and maintaining a tamper-evident consent audit trail.',
                     })}
                   </li>
                 </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                   {t('pages.privacy.section2Legal', {
                     defaultValue:
-                      'Legal basis: Article 6(1)(b) GDPR (Performance of a contract) and Article 6(1)(c) GDPR (Legal obligations).',
+                      'Legal basis: Article 6(1)(a) GDPR (Explicit user consent for intermediary handoff) and Article 6(1)(f) GDPR (Legitimate operational coordination).',
                   })}
                 </Typography>
               </Box>

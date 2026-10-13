@@ -111,6 +111,10 @@ class SystemConfig(Base):
     partner_website_url = Column(
         String(255), default="https://ceskepojisteni.cz", nullable=True
     )
+    lead_recipient_email = Column(
+        String(100), default="insurance@ceskepojisteni.cz", nullable=True
+    )
+    lead_handoff_enabled = Column(Boolean, default=False, nullable=False)
 
     relationship_status = Column(
         String(30), default="VERIFIED", nullable=False
@@ -118,7 +122,11 @@ class SystemConfig(Base):
     relationship_valid_from = Column(DateTime, nullable=True)
     relationship_valid_until = Column(DateTime, nullable=True)
     relationship_verified_at = Column(DateTime, nullable=True)
-    public_wording_approved = Column(Boolean, default=True, nullable=False)
+    public_wording_approved = Column(Boolean, default=False, nullable=False)
+    workflow_scope_status = Column(
+        String(50), default="LEAD_ONLY_CONFIRMED", nullable=False
+    )
+    non_lead_modes_enabled = Column(Boolean, default=False, nullable=False)
 
     # Data Processing Agreement (DPA) status & dates
     dpa_status = Column(

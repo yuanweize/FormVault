@@ -49,7 +49,9 @@ class AdminAuth(AuthenticationBackend):
         password = form.get("password")
 
         # 1. Try Database Auth
-        db: Session = SessionLocal()
+        import app.database as database
+
+        db: Session = database.SessionLocal()
         try:
             user = db.query(AdminUser).filter(AdminUser.username == username).first()
             try:
@@ -57,11 +59,15 @@ class AdminAuth(AuthenticationBackend):
                     if not user.is_active:
                         return False  # Account suspended
 
+                    # Strict RBAC: missing role is an authentication failure; NEVER fallback to super_admin
+                    if not user.role:
+                        return False
+
                     # Record login timestamp
                     user.last_login_at = datetime.now(timezone.utc)
                     db.commit()
 
-                    role = user.role or "super_admin"
+                    role = user.role
                     request.session.update(
                         {
                             "token": f"db-user-{user.id}",
@@ -79,18 +85,25 @@ class AdminAuth(AuthenticationBackend):
         finally:
             db.close()
 
-        # 2. Fallback to Env Vars (Safety Net / Initial Bootstrap)
-        if username == settings.ADMIN_USERNAME and password == settings.ADMIN_PASSWORD:
-            request.session.update(
-                {
-                    "token": "admin-token",
-                    "user_id": "env-admin",
-                    "username": settings.ADMIN_USERNAME,
-                    "role": "super_admin",
-                    "company_id": None,
-                }
-            )
-            return True
+        # 2. Env Bootstrap: strictly disabled in production unless ENV_ADMIN_ENABLED is explicitly True
+        env_admin_enabled = getattr(settings, "ENV_ADMIN_ENABLED", False)
+        if env_admin_enabled:
+            if (
+                username == settings.ADMIN_USERNAME
+                and password == settings.ADMIN_PASSWORD
+            ):
+                import secrets
+
+                request.session.update(
+                    {
+                        "token": f"env-bootstrap-{secrets.token_urlsafe(24)}",
+                        "user_id": "env-admin",
+                        "username": settings.ADMIN_USERNAME,
+                        "role": "super_admin",
+                        "company_id": None,
+                    }
+                )
+                return True
 
         return False
 
@@ -106,14 +119,16 @@ class AdminAuth(AuthenticationBackend):
         # If logged in via DB, verify account is still active and sync latest role
         if token.startswith("db-user-"):
             user_id = token.replace("db-user-", "")
-            db: Session = SessionLocal()
+            import app.database as database
+
+            db: Session = database.SessionLocal()
             try:
                 user = db.query(AdminUser).filter(AdminUser.id == user_id).first()
-                if not user or not user.is_active:
+                if not user or not user.is_active or not user.role:
                     request.session.clear()
                     return False
                 # Live sync session data
-                request.session["role"] = user.role or "super_admin"
+                request.session["role"] = user.role
                 request.session["company_id"] = user.company_id
                 request.session["username"] = user.username
             except Exception:

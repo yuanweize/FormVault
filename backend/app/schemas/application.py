@@ -5,7 +5,14 @@ This module contains all schemas for application creation, updates,
 and responses in the FormVault Insurance Portal.
 """
 
-from pydantic import BaseModel, Field, EmailStr, field_validator, ConfigDict
+from pydantic import (
+    BaseModel,
+    Field,
+    EmailStr,
+    field_validator,
+    model_validator,
+    ConfigDict,
+)
 from typing import Optional, List
 from datetime import date, datetime
 import re
@@ -344,3 +351,195 @@ class ApplicationTrackResponseSchema(ResponseBase):
     submitted_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     timeline: List[ApplicationTimelineStepSchema]
+
+
+class LeadInquiryCreateSchema(BaseModel):
+    """
+    Dedicated Lead Intake schema under LEAD_ONLY mode adhering to 'Collect Once, Reuse Everywhere'.
+    Collects complete client identity, stay parameters, and insurance requirements in a single intake session.
+    """
+
+    first_name: Optional[str] = Field(
+        None, min_length=1, max_length=100, description="Applicant first/given name"
+    )
+    last_name: Optional[str] = Field(
+        None, min_length=1, max_length=100, description="Applicant last/family name"
+    )
+    full_name: Optional[str] = Field(
+        None,
+        min_length=2,
+        max_length=100,
+        description="Full name (optional if first_name/last_name provided)",
+    )
+    date_of_birth: Optional[date] = Field(
+        None,
+        description="Exact date of birth for eligibility and automated age calculation",
+    )
+    gender: Optional[str] = Field(
+        None,
+        max_length=20,
+        description="Gender (male, female, other, prefer_not_to_say)",
+    )
+    nationality: str = Field(
+        "Chinese", max_length=50, description="Country of citizenship"
+    )
+
+    # Contact
+    email: EmailStr = Field(..., description="Contact email address")
+    phone: Optional[str] = Field(
+        None, max_length=50, description="Contact phone or mobile number"
+    )
+    wechat_id: Optional[str] = Field(
+        None, max_length=100, description="WeChat ID for Chinese student communication"
+    )
+    wechat: Optional[str] = Field(
+        None, max_length=100, description="Alias for wechat_id"
+    )
+    preferred_contact_method: str = Field(
+        "email", max_length=20, description="Preferred contact: email, phone, or wechat"
+    )
+    preferred_language: str = Field(
+        "zh", max_length=10, description="Preferred language (zh, en, cs)"
+    )
+
+    # Student & Academic Context
+    student_status: bool = Field(True, description="Whether applicant is a student")
+    school_or_university: Optional[str] = Field(
+        None,
+        max_length=150,
+        description="Enrolled Czech school, university, or language institute",
+    )
+    study_status: Optional[str] = Field(
+        None,
+        max_length=50,
+        description="Current study status (e.g. preparatory, bachelor, master, exchange)",
+    )
+    expected_study_end_date: Optional[date] = Field(
+        None, description="Expected graduation or study completion date"
+    )
+
+    # Stay & Insurance Requirements
+    type_of_stay: str = Field(
+        "student",
+        max_length=50,
+        description="Type of stay: student, employee, family, other",
+    )
+    requested_start_date: Optional[date] = Field(
+        None, description="Requested insurance policy start date"
+    )
+    requested_duration_months: int = Field(
+        12,
+        ge=1,
+        le=60,
+        description="Requested policy duration in months (e.g. 3, 6, 12, 24)",
+    )
+    current_location: Optional[str] = Field(
+        None,
+        max_length=100,
+        description="Czech city (e.g. Prague, Brno) or current residency",
+    )
+    general_insurance_need: str = Field(
+        "comprehensive",
+        max_length=50,
+        description="General coverage category (e.g. comprehensive, basic)",
+    )
+    special_notes: Optional[str] = Field(
+        None, max_length=1000, description="Special notes or specific questions"
+    )
+    free_text_note: Optional[str] = Field(
+        None, max_length=1000, description="Alias for special_notes"
+    )
+
+    # Marketing Attribution & Referral Tracking
+    utm_source: Optional[str] = Field(
+        None,
+        max_length=100,
+        description="Marketing source (e.g. xiaohongshu, wechat, google)",
+    )
+    utm_medium: Optional[str] = Field(
+        None, max_length=100, description="Marketing medium (e.g. social, post, group)"
+    )
+    utm_campaign: Optional[str] = Field(
+        None, max_length=100, description="Campaign tag (e.g. student_oct2026)"
+    )
+    utm_term: Optional[str] = Field(
+        None, max_length=100, description="Search keyword or targeting tag"
+    )
+    utm_content: Optional[str] = Field(
+        None, max_length=100, description="Content identifier or ad variant"
+    )
+    referrer_url: Optional[str] = Field(
+        None, max_length=255, description="Document referrer URL"
+    )
+    landing_page: Optional[str] = Field(
+        None, max_length=255, description="Initial landing page URL"
+    )
+    referral_code: Optional[str] = Field(
+        None, max_length=100, description="Promotional or partner referral code"
+    )
+
+    # Regulatory Consent
+    handoff_consent: bool = Field(
+        ..., description="Explicit agreement to forward inquiry to České pojištění a.s."
+    )
+    handoff_consent_text_version: str = Field(
+        "v1.0", max_length=30, description="Consent notice version"
+    )
+
+    @model_validator(mode="after")
+    def validate_identity_and_contacts(self):
+        # Resolve names
+        if not self.first_name and not self.last_name:
+            if not self.full_name or not self.full_name.strip():
+                raise ValueError(
+                    "Applicant first and last name or full name is required."
+                )
+            parts = self.full_name.strip().split(None, 1)
+            self.first_name = parts[0]
+            self.last_name = parts[1] if len(parts) > 1 else parts[0]
+        elif not self.first_name:
+            self.first_name = self.last_name
+        elif not self.last_name:
+            self.last_name = self.first_name
+
+        # Resolve wechat alias
+        if not self.wechat_id and self.wechat:
+            self.wechat_id = self.wechat
+
+        # Require at least one contact channel (phone or wechat)
+        if not (self.phone and self.phone.strip()) and not (
+            self.wechat_id and self.wechat_id.strip()
+        ):
+            raise ValueError("Please provide at least one contact number or WeChat ID.")
+
+        # Resolve note alias
+        if not self.special_notes and self.free_text_note:
+            self.special_notes = self.free_text_note
+
+        # Verify consent
+        if not self.handoff_consent:
+            raise ValueError(
+                "You must agree to forward your inquiry to České pojištění a.s. to proceed."
+            )
+
+        # Default requested_start_date if not specified
+        if not self.requested_start_date:
+            from datetime import timedelta
+
+            self.requested_start_date = date.today() + timedelta(days=1)
+
+        return self
+
+
+class LeadInquiryResponseSchema(ResponseBase):
+    """Response returned upon successful lead intake submission."""
+
+    reference_number: str
+    status: str = "INQUIRY_RECEIVED"
+    status_label: str = "Enquiry Received"
+    recipient: str = "České pojištění a.s."
+    derived_age: Optional[int] = None
+    derived_age_band: Optional[str] = None
+    message: str = (
+        "Your enquiry has been received. We will forward it to České pojištění a.s. for insurance handling and the next steps."
+    )

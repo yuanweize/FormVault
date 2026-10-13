@@ -18,6 +18,7 @@ from sqlalchemy import select, func
 from starlette.requests import Request
 
 from ..models.application import Application
+from ..models.lead import LeadInquiry
 from ..models.file import File
 from ..models.email_export import EmailExport
 from ..models.audit_log import AuditLog
@@ -144,6 +145,89 @@ class ApplicationAdmin(ModelView, model=Application):
     async def check_can_create(self, request: Request) -> bool:
         admin = get_current_admin(request)
         return admin["role"] in ("super_admin", "broker_agent")
+
+
+class LeadInquiryAdmin(ModelView, model=LeadInquiry):
+    name = "Lead Inquiry"
+    name_plural = "Lead Inquiries (Marketing & Attribution)"
+    category = "Application Operations"
+    icon = "fa-solid fa-bullhorn"
+
+    column_list = [
+        LeadInquiry.reference_number,
+        LeadInquiry.status,
+        LeadInquiry.first_name,
+        LeadInquiry.last_name,
+        LeadInquiry.date_of_birth,
+        LeadInquiry.nationality,
+        LeadInquiry.student_status,
+        LeadInquiry.type_of_stay,
+        LeadInquiry.requested_duration_months,
+        LeadInquiry.email,
+        LeadInquiry.phone,
+        LeadInquiry.wechat_id,
+        LeadInquiry.preferred_contact_method,
+        LeadInquiry.preferred_language,
+        LeadInquiry.utm_source,
+        LeadInquiry.utm_campaign,
+        LeadInquiry.referral_code,
+        LeadInquiry.created_at,
+    ]
+    column_labels = {
+        LeadInquiry.reference_number: "Reference #",
+        LeadInquiry.status: "Status",
+        LeadInquiry.first_name: "First Name",
+        LeadInquiry.last_name: "Last Name",
+        LeadInquiry.date_of_birth: "DOB",
+        LeadInquiry.nationality: "Nationality",
+        LeadInquiry.student_status: "Student?",
+        LeadInquiry.type_of_stay: "Stay Type",
+        LeadInquiry.requested_duration_months: "Duration (Mo.)",
+        LeadInquiry.email: "Email",
+        LeadInquiry.phone: "Phone",
+        LeadInquiry.wechat_id: "WeChat ID",
+        LeadInquiry.preferred_contact_method: "Preferred Contact",
+        LeadInquiry.preferred_language: "Language",
+        LeadInquiry.utm_source: "Traffic Source",
+        LeadInquiry.utm_campaign: "Campaign",
+        LeadInquiry.referral_code: "Referral Code",
+        LeadInquiry.created_at: "Received At",
+    }
+    column_searchable_list = [
+        LeadInquiry.reference_number,
+        LeadInquiry.first_name,
+        LeadInquiry.last_name,
+        LeadInquiry.email,
+        LeadInquiry.phone,
+        LeadInquiry.wechat_id,
+        LeadInquiry.utm_source,
+        LeadInquiry.utm_campaign,
+        LeadInquiry.referral_code,
+    ]
+    column_sortable_list = [
+        LeadInquiry.created_at,
+        LeadInquiry.status,
+        LeadInquiry.reference_number,
+        LeadInquiry.utm_source,
+        LeadInquiry.utm_campaign,
+        LeadInquiry.referral_code,
+    ]
+    column_default_sort = ("created_at", True)
+
+    async def is_accessible(self, request: Request) -> bool:
+        admin = get_current_admin(request)
+        return admin["role"] in ("super_admin", "broker_agent", "compliance_auditor")
+
+    async def check_can_create(self, request: Request) -> bool:
+        return False  # Generated exclusively via public intake API
+
+    async def check_can_edit(self, request: Request, model) -> bool:
+        admin = get_current_admin(request)
+        return admin["role"] in ("super_admin", "broker_agent")
+
+    async def check_can_delete(self, request: Request, model) -> bool:
+        admin = get_current_admin(request)
+        return admin["role"] == "super_admin"
 
 
 class FileAdmin(ModelView, model=File):

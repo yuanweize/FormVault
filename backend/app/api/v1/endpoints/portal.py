@@ -13,8 +13,10 @@ from datetime import datetime, timezone
 
 from app.database import get_db
 from app.models.partner import InsuranceCompany, InsurancePlan, AgencyBanner
+from app.models.compliance import FormRecipe
 from app.models.system import SystemConfig
 from app.services.seed_service import seed_czech_broker_defaults
+from app.services.business_scope import get_public_capabilities
 from app.utils.db_helpers import create_audit_log
 from app.schemas.portal import (
     PortalShowcaseResponseSchema,
@@ -58,6 +60,8 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         except Exception:
             db.rollback()
 
+    caps = get_public_capabilities(db)
+
     return PortalPublicConfigSchema(
         success=True,
         site_title=config.site_title
@@ -98,8 +102,15 @@ def get_portal_public_config(db: Session = Depends(get_db)) -> PortalPublicConfi
         or "https://ceskepojisteni.cz",
         relationship_status=getattr(config, "relationship_status", "VERIFIED")
         or "VERIFIED",
+        public_wording_approved=bool(getattr(config, "public_wording_approved", False)),
+        workflow_scope_status=getattr(
+            config, "workflow_scope_status", "LEAD_ONLY_CONFIRMED"
+        )
+        or "LEAD_ONLY_CONFIRMED",
+        non_lead_modes_enabled=bool(getattr(config, "non_lead_modes_enabled", False)),
         dpa_status=getattr(config, "dpa_status", "VERIFIED") or "VERIFIED",
         lead_only_fallback_url=getattr(config, "lead_only_fallback_url", None),
+        capabilities=caps.model_dump(),
     )
 
 
@@ -196,18 +207,12 @@ def verify_crisp_website_id(
 def get_portal_showcase(db: Session = Depends(get_db)) -> PortalShowcaseResponseSchema:
     """
     Retrieve broker showcase data for the portal homepage.
-    Includes active promotional banners, verified partner insurance companies,
-    and featured insurance packages.
+    Under LEAD_ONLY mode (HKTSE tipař role), specific insurer offers and pricing
+    are strictly gated and returned as empty arrays to prevent uncertified distribution claims.
     """
-    # Seed default templates if completely empty
-    company_count = db.query(InsuranceCompany).count()
-    if company_count == 0:
-        try:
-            seed_czech_broker_defaults(db)
-        except Exception:
-            db.rollback()
+    caps = get_public_capabilities(db)
 
-    # Query active banners
+    # Query active generic banners
     banners = (
         db.query(AgencyBanner)
         .filter(AgencyBanner.is_active == True)
@@ -227,7 +232,16 @@ def get_portal_showcase(db: Session = Depends(get_db)) -> PortalShowcaseResponse
         for b in banners
     ]
 
-    # Query active insurance companies
+    # Hard gate: Under LEAD_ONLY, fail-close and return zero specific carriers or plan pricing
+    if not caps.show_specific_insurers or not caps.show_prices:
+        return PortalShowcaseResponseSchema(
+            success=True,
+            banners=banner_items,
+            companies=[],
+            plans=[],
+        )
+
+    # Query active insurance companies (non-lead modes only)
     companies = (
         db.query(InsuranceCompany)
         .filter(InsuranceCompany.is_active == True)
@@ -248,7 +262,7 @@ def get_portal_showcase(db: Session = Depends(get_db)) -> PortalShowcaseResponse
         for c in companies
     ]
 
-    # Query active insurance plans
+    # Query active insurance plans (non-lead modes only)
     plans = (
         db.query(InsurancePlan)
         .filter(InsurancePlan.is_active == True)
@@ -324,3 +338,163 @@ def submit_gdpr_request(
         ticket_id=ticket_id,
         message=f"Your GDPR {request_data.request_type} request has been officially recorded under reference {ticket_id}. Under EU GDPR Article 12, our Data Protection Officer will review and respond within 30 calendar days.",
     )
+
+
+@router.get("/lead-recipe")
+def get_lead_intake_recipe(db: Session = Depends(get_db)):
+    """
+    Retrieve active FormRecipe for one-shot lead intake.
+    Allows dynamic configuration of fields, required flags, order, labels, and conditional visibility.
+    """
+    recipe = (
+        db.query(FormRecipe)
+        .filter(
+            FormRecipe.recipe_version == "LEAD_INTAKE", FormRecipe.is_active == True
+        )
+        .order_by(FormRecipe.id.desc())
+        .first()
+    )
+    if recipe and recipe.schema_json:
+        try:
+            return json.loads(recipe.schema_json)
+        except Exception:
+            pass
+
+    return {
+        "profile": "LEAD_INTAKE",
+        "title": "International Student Lead Intake",
+        "version": "1.0.0",
+        "steps": [
+            {
+                "step": 1,
+                "id": "about_you",
+                "title": "About You",
+                "fields": [
+                    {
+                        "id": "first_name",
+                        "type": "text",
+                        "required": True,
+                        "label": "First Name",
+                    },
+                    {
+                        "id": "last_name",
+                        "type": "text",
+                        "required": True,
+                        "label": "Last Name",
+                    },
+                    {
+                        "id": "date_of_birth",
+                        "type": "date",
+                        "required": True,
+                        "label": "Date of Birth",
+                    },
+                    {
+                        "id": "gender",
+                        "type": "select",
+                        "required": False,
+                        "label": "Gender",
+                    },
+                    {
+                        "id": "nationality",
+                        "type": "text",
+                        "required": True,
+                        "label": "Nationality",
+                    },
+                ],
+            },
+            {
+                "step": 2,
+                "id": "situation",
+                "title": "Stay & Needs",
+                "fields": [
+                    {
+                        "id": "student_status",
+                        "type": "boolean",
+                        "required": True,
+                        "label": "Are you a student?",
+                    },
+                    {
+                        "id": "school_or_university",
+                        "type": "text",
+                        "required": False,
+                        "label": "School / University",
+                    },
+                    {
+                        "id": "type_of_stay",
+                        "type": "select",
+                        "required": True,
+                        "label": "Type of Stay",
+                    },
+                    {
+                        "id": "requested_start_date",
+                        "type": "date",
+                        "required": True,
+                        "label": "Requested Start Date",
+                    },
+                    {
+                        "id": "requested_duration_months",
+                        "type": "number",
+                        "required": True,
+                        "label": "Duration (Months)",
+                    },
+                    {
+                        "id": "current_location",
+                        "type": "text",
+                        "required": False,
+                        "label": "Czech City / Location",
+                    },
+                    {
+                        "id": "special_notes",
+                        "type": "textarea",
+                        "required": False,
+                        "label": "Special Notes",
+                    },
+                ],
+            },
+            {
+                "step": 3,
+                "id": "contact",
+                "title": "Contact",
+                "fields": [
+                    {
+                        "id": "email",
+                        "type": "email",
+                        "required": True,
+                        "label": "Email",
+                    },
+                    {"id": "phone", "type": "tel", "required": False, "label": "Phone"},
+                    {
+                        "id": "wechat_id",
+                        "type": "text",
+                        "required": False,
+                        "label": "WeChat ID",
+                    },
+                    {
+                        "id": "preferred_contact_method",
+                        "type": "select",
+                        "required": False,
+                        "label": "Preferred Contact Method",
+                    },
+                    {
+                        "id": "preferred_language",
+                        "type": "select",
+                        "required": True,
+                        "label": "Preferred Language",
+                    },
+                ],
+            },
+            {
+                "step": 4,
+                "id": "review",
+                "title": "Review & Consent",
+                "fields": [
+                    {
+                        "id": "consent_forward_intermediary",
+                        "type": "checkbox",
+                        "required": True,
+                        "label": "Consent to Intermediary Handoff",
+                    },
+                ],
+            },
+        ],
+    }

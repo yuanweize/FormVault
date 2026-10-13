@@ -22,26 +22,31 @@
 
 ---
 
+## Regulatory Role & Partnership Baseline
+
+FormVault is operated by **HKTSE s.r.o.** (IČO: 10858032) under a formal cooperation agreement with **České pojištění a.s.** (IČO: 07963363):
+- **HKTSE s.r.o.** acts as a **lead generator / introducer (`tipař`)**. HKTSE collects customer stay parameters and contact details and securely forwards them to České pojištění a.s. HKTSE is not an insurance company or insurance intermediary.
+- **České pojištění a.s.** is a licensed insurance intermediary (**`makléř`**) registered under Czech Act No. 170/2018 Coll. Regulated insurance distribution, advice, product offers, and policy conclusions are conducted exclusively by České pojištění a.s.
+- **Production Mode**: The system defaults fail-closed to **`LEAD_ONLY`** mode. Public endpoints conceal specific insurer quotations and pricing while exposing high-converting lead intake forms with explicit customer handoff consent.
+
+---
+
 ## Key Features & Architecture Highlights
 
 - **Modern InsurTech SaaS UI/UX** — Deep Obsidian Dark Mode & Crisp Alpine Light Mode, glassmorphism surfaces, and smooth focus glows.
-- **Curated Plans & Statutory Compliance Showcase** — Authentic Czech Republic insurance packages (PVZP, Slavia, SV pojišťovna in CZK via licensed broker network) compliant with Act No. 326/1999 Coll. (OAMP).
-- **Prominent Student Discount & Promo Badges** — Distinct highlight ribbons with graduation cap icons and special rate tags, cleanly separated from core policy titles.
-- **Symmetrical Centered Grid Architecture** — Dynamic responsive grid layout automatically adapting to 1, 2, 3, or 4 plans/partners with equal-height stretch and zero awkward whitespace.
+- **Regulatory Business Scope Gate** — Built-in fail-closed business scope engine (`LEAD_ONLY` by default for public portal, preserving generic multi-mode insurance application engine for internal admin operations).
+- **Compliant Lead Intake Engine** — Dedicated `/api/v1/applications/inquire` endpoint capturing applicant stay parameters, preferred language, student status, and explicit GDPR partner handoff consent.
+- **Dual-Factor Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
 - **Crisp Live Chat Integration** — Direct customer support with official API connectivity verification, floating widget, header quick-call, and admin-configurable placement (`bottom-right` or `bottom-left`).
-- **Regulatory Business Scope Gate** — Dynamic mode switching via Admin Panel: `LEAD_ONLY` (default compliant mode) and `ASSISTED_APPLICATION` (full document intake once broker agreement is verified).
-- **Dual-Factor Application Status Tracker (`/track`)** — Instant status & timeline tracking using Reference Number and registered Email on the homepage with safe OWASP-compliant data masking.
 - **Tamper-Evident SHA-256 Audit Hash Chain** — Monotonically increasing sequence with immutable cryptographic parent hashing preventing backdating or silent ledger tampering.
 - **Automated Submission Confirmation Email** — Instant email dispatch with tracking reference upon submission.
-- **Institutional Security Rail** — Real-time TLS 1.3 active channel indicators, authenticated AES-256-GCM storage encryption, and strict RBAC isolation.
-- **Stripe-Inspired Fluid Stepper** — Connected step rail with pulsing halos, completion badges, and smooth progress tracking.
-- **Secure File Vault** — Client-side file signature validation, anti-tampering checksums, and encrypted local/S3 storage.
-- **WCAG 2.1 AA Compliant Accessibility** — axe automated zero violation testing, full keyboard navigation and screen reader support.
+- **Institutional Security Rail** — Enforced TLS 1.3 transport, authenticated AES-256-GCM file storage encryption, and strict RBAC isolation.
+- **WCAG 2.1 AA Compliant Accessibility** — Automated zero violation testing, full keyboard navigation and screen reader support.
 - **Full Internationalization (i18n)** — Dynamic language switching across 12 languages (English, 简体中文, Čeština, Deutsch, Español, Français, etc.).
 
 <div align="center">
-  <img src="assets/broker_admin.png" width="850" alt="FormVault Broker Admin Operations Console">
-  <p><em>FormVault Broker Admin Console — Application lifecycle auditing, applicant status transitions, and secure document inspection</em></p>
+  <img src="assets/broker_admin.png" width="850" alt="FormVault Operations Console">
+  <p><em>FormVault Operations Console — Application lifecycle auditing, applicant status transitions, and secure lead management</em></p>
 </div>
 
 ---

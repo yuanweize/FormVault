@@ -1,6 +1,6 @@
 /**
  * Application service for managing insurance applications.
- * 
+ *
  * This service handles all API calls related to creating, updating,
  * retrieving, and submitting insurance applications.
  */
@@ -105,6 +105,56 @@ export interface ExportApplicationResponse {
   message: string;
 }
 
+export interface LeadInquiryRequest {
+  first_name?: string;
+  last_name?: string;
+  full_name?: string;
+  date_of_birth?: string;
+  gender?: string;
+  nationality?: string;
+  email: string;
+  phone?: string;
+  wechat?: string;
+  wechat_id?: string;
+  preferred_contact_method?: string;
+  preferred_language?: string;
+  student_status?: boolean;
+  school_or_university?: string;
+  study_status?: string;
+  expected_study_end_date?: string;
+  age_band?: string;
+  type_of_stay?: string;
+  requested_start_date?: string;
+  requested_duration_months?: number;
+  current_location?: string;
+  general_insurance_need?: string;
+  special_notes?: string;
+  free_text_note?: string;
+  contact_note?: string;
+  handoff_consent: boolean;
+  handoff_consent_text_version?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  referrer_url?: string;
+  landing_page?: string;
+  referral_code?: string;
+}
+
+export interface LeadInquiryResponse {
+  success: boolean;
+  reference_number: string;
+  status: string;
+  status_label: string;
+  recipient?: string;
+  message: string;
+  derived_age?: number;
+  derived_age_band?: string;
+  created_at?: string;
+}
+
 /**
  * Application service class
  */
@@ -129,11 +179,11 @@ export class ApplicationService {
    * Update an existing application
    */
   async updateApplication(
-    applicationId: string, 
+    applicationId: string,
     data: UpdateApplicationRequest
   ): Promise<CreateApplicationResponse> {
     const response = await apiClient.put<CreateApplicationResponse>(
-      `/applications/${applicationId}`, 
+      `/applications/${applicationId}`,
       data
     );
     return response.data;
@@ -143,11 +193,11 @@ export class ApplicationService {
    * Submit an application for processing
    */
   async submitApplication(
-    applicationId: string, 
+    applicationId: string,
     data: SubmitApplicationRequest
   ): Promise<SubmitApplicationResponse> {
     const response = await apiClient.post<SubmitApplicationResponse>(
-      `/applications/${applicationId}/submit`, 
+      `/applications/${applicationId}/submit`,
       data
     );
     return response.data;
@@ -178,11 +228,11 @@ export class ApplicationService {
    * Export application via email
    */
   async exportApplication(
-    applicationId: string, 
+    applicationId: string,
     data: ExportApplicationRequest
   ): Promise<ExportApplicationResponse> {
     const response = await apiClient.post<ExportApplicationResponse>(
-      `/applications/${applicationId}/export`, 
+      `/applications/${applicationId}/export`,
       data
     );
     return response.data;
@@ -219,6 +269,14 @@ export class ApplicationService {
       reference_number: referenceNumber,
       email,
     });
+    return response.data;
+  }
+
+  /**
+   * Submit lead inquiry under LEAD_ONLY mode
+   */
+  async submitInquiry(data: LeadInquiryRequest): Promise<LeadInquiryResponse> {
+    const response = await apiClient.post<LeadInquiryResponse>('/applications/inquire', data);
     return response.data;
   }
 

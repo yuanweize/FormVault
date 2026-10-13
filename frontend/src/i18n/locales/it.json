@@ -35,8 +35,8 @@
   },
   "pages": {
     "home": {
-      "title": "Benvenuto in FormVault",
-      "subtitle": "Completa la tua richiesta di assicurazione in modo sicuro ed efficiente",
+      "title": "Richiesta di assicurazione sanitaria per studenti internazionali in Rep. Ceca",
+      "subtitle": "Inviaci i tuoi requisiti di base. Inoltreremo la tua richiesta al nostro intermediario partner (České pojištění a.s.), che preparerà le offerte disponibili.",
       "getStarted": "Inizia",
       "features": {
         "secure": "Vault AES-256 GCM di livello hardware",
@@ -46,7 +46,7 @@
         "mobile": "Sandbox di sessione volatile",
         "mobileDesc": "Acquisizione immediata da fotocamera e stato della sessione sandbox. I dati sensibili svaniscono all'uscita."
       },
-      "authorizedBroker": "Broker assicurativo europeo autorizzato • Standard Repubblica Ceca e UE",
+      "authorizedBroker": "Richiesta assicurazione sanitaria per stranieri in Rep. Ceca • Presentatore (Tipař)",
       "trackMyApplication": "Verifica stato della mia domanda",
       "metrics": {
         "actCompliance": "Conforme ai requisiti OAMP ceco",
@@ -82,7 +82,7 @@
         "refCopied": "Codice di riferimento copiato!",
         "notFoundTitle": "Domanda non trovata",
         "notFoundDesc": "Nessuna polizza corrisponde al numero di riferimento o all'indirizzo email inserito. Si prega di verificare i dati.",
-        "supportNote": "Hai bisogno di assistenza immediata per il visto o la polizza? Contatta il nostro ufficio al broker:",
+        "supportNote": "Hai bisogno di assistenza per la tua richiesta di assicurazione? Contatta il supporto:",
         "emailUs": "Inviaci un'email",
         "historyTitle": "Ricerche recenti"
       },
@@ -120,7 +120,9 @@
         "defaultButton": "Richiedi online",
         "lawCompliance": "Assicurazione conforme alla Legge sul soggiorno degli stranieri della Repubblica Ceca (326/1999 Racc.)",
         "lawDetails": "Tutti i certificati di assicurazione emessi tramite la nostra agenzia soddisfano i requisiti OAMP del Ministero dell'Interno della Repubblica Ceca per visti e permessi di soggiorno a lungo termine."
-      }
+      },
+      "roleBadge": "Richiesta assicurazione sanitaria per stranieri in Rep. Ceca • Presentatore (Tipař)",
+      "requestOptions": "Richiedi opzioni assicurative"
     },
     "personalInfo": {
       "title": "Informazioni Personali",
@@ -192,13 +194,13 @@
     "terms": {
       "badge": "Disciplinato dal Codice Civile Ceco (Legge n. 89/2012 Racc.) e Legge sulla Distribuzione Assicurativa",
       "title": "Termini di Servizio",
-      "subtitle": "Condizioni di intermediazione assicurativa fornite da FormVault a Praga, Repubblica Ceca.",
-      "section1Title": "1. Oggetto dell'intermediazione e ambito contrattuale",
-      "section1Content": "FormVault agisce in qualità di intermediario assicurativo autorizzato nella Repubblica Ceca. I servizi offerti includono la comparazione, la compilazione assistita e l'inoltro delle richieste di polizza sanitaria verso compagnie autorizzate ai sensi della Legge n. 326/1999 Racc.",
+      "subtitle": "Termini che regolano l'acquisizione delle richieste assicurative e l'inoltro tramite FormVault.",
+      "section1Title": "1. Ruolo dell'operatore e ambito del servizio",
+      "section1Content": "FormVault è gestito da HKTSE s.r.o. (IČO: 10858032) come presentatore (tipař) in collaborazione con l'intermediario autorizzato České pojištění a.s. (Legge n. 170/2018 Coll.). HKTSE inoltra le richieste a České pojištění a.s., che cura la distribuzione regolamentata e la stipula.",
       "section2Title": "2. Obblighi del richiedente e veridicità delle dichiarazioni",
       "section2Content": "Il richiedente è tenuto a fornire dati anagrafici, estremi del passaporto e dichiarazioni sanitarie veritieri e conformi alla realtà. Qualsiasi dichiarazione mendace può comportare la nullità della copertura e il rigetto della domanda da parte dell'OAMP ceco.",
-      "section3Title": "3. Emissione del certificato e perfezionamento della polizza",
-      "section3Content": "La polizza si intende perfezionata esclusivamente a seguito della conferma di pagamento e dell'accettazione da parte della compagnia sottoscrivente. Il certificato ufficiale (Potvrzení o pojištění) verrà trasmesso via email.",
+      "section3Title": "3. Inoltro all'intermediario autorizzato",
+      "section3Content": "FormVault inoltra in modo sicuro la richiesta a České pojištění a.s. I preventivi e le polizze ufficiali sono forniti direttamente da České pojištění a.s. o dalle compagnie accreditate.",
       "section4Title": "4. Diritto di recesso e rimborsi in caso di diniego del visto",
       "section4Content": "In caso di diniego ufficiale del visto o del permesso di soggiorno da parte delle autorità consolari o dell'OAMP, il richiedente ha diritto al rimborso della quota versata, previa trasmissione del provvedimento ufficiale di diniego.",
       "section5Title": "5. Legge applicabile e foro competente",
@@ -225,30 +227,30 @@
         "q1": "Quanto tempo occorre per ricevere il certificato ufficiale?",
         "a1": "Il certificato elettronico ufficiale (Potvrzení o pojištění) viene emesso entro 1-4 ore lavorative dalla conferma del pagamento. Riceverai il PDF autenticato via email pronto per l'OAMP.",
         "q2": "Le vostre polizze sono pienamente accettate dall'OAMP ceco?",
-        "a2": "Sì, tutte le polizze intermediate tramite la nostra agenzia sono pienamente conformi alla Legge 326/1999 Racc. e registrate nel registro centrale ceco.",
+        "a2": "Sì. Le polizze sanitarie complete distribuite dal nostro partner autorizzato České pojištění a.s. sono pienamente conformi alla Legge sul soggiorno degli stranieri (n. 326/1999 Coll.) e ai requisiti OAMP fino a 400.000 EUR.",
         "q3": "Cosa succede se la mia domanda di visto viene respinta dall'Ambasciata?",
         "a3": "In caso di rigetto ufficiale, hai diritto al rimborso in base alle condizioni generali della compagnia. È sufficiente trasmettere la copia del diniego consolare a insurance@hktse.eu.org.",
         "q4": "Come funziona il rimborso delle spese mediche in Repubblica Ceca?",
         "a4": "Negli ospedali e cliniche convenzionate (es. Motol, FNKV, VFN a Praga), è sufficiente esibire la tessera per la presa in carico diretta. Nelle strutture non convenzionate, si paga la fattura e si ottiene il rimborso entro 14 giorni.",
-        "q5": "Perché è necessario caricare il passaporto e il certificato di studio?",
-        "a5": "La legge ceca richiede l'identificazione certa del cittadino straniero ai fini dell'emissione del contratto. Il documento universitario consente inoltre di beneficiare dello sconto studenti (fino al 30%)."
+        "q5": "Quali informazioni sono necessarie per inviare una richiesta?",
+        "a5": "FormVault raccoglie solo i parametri del soggiorno (durata, data di inizio, status di studente, fascia di età) e i recapiti di base. Non vengono raccolte copie del passaporto in questa fase."
       },
       "connectingChat": "Connessione al consulente in corso..."
     },
     "privacy": {
       "badge": "Conforme al GDPR UE 2016/679 e Legge Ceca n. 110/2019 Racc.",
       "title": "Informativa sulla Privacy e Protezione dei Dati",
-      "subtitle": "Informativa sul trattamento, la crittografia e la protezione dei dati personali per le domande di assicurazione in Repubblica Ceca e UE.",
+      "subtitle": "Informativa sul trattamento e inoltro dei dati ai sensi del GDPR.",
       "section1Title": "1. Titolare del trattamento dei dati",
-      "section1Content": "Il titolare del trattamento dei dati personali è il servizio di intermediazione FormVault a Praga, Repubblica Ceca. Per qualsiasi richiesta relativa alla privacy o per contattare il nostro Responsabile della protezione dei dati (DPO): insurance@hktse.eu.org.",
+      "section1Content": "Il titolare del trattamento dei dati è HKTSE s.r.o. (IČO: 10858032, Praga, Repubblica Ceca). Email: insurance@hktse.eu.org.",
       "section2Title": "2. Finalità del trattamento e base giuridica",
-      "section2Intro": "Raccogliamo e trattiamo i tuoi dati identificativi (nome, data di nascita, passaporto, status universitario, indirizzo) esclusivamente per:",
-      "section2Item1": "La stipula e l'emissione di contratti di assicurazione sanitaria e viaggio con compagnie autorizzate;",
+      "section2Intro": "Raccogliamo i recapiti e i parametri del soggiorno esclusivamente per:",
+      "section2Item1": "Inoltrare la richiesta all'intermediario autorizzato České pojištění a.s.;",
       "section2Item2": "La conformità alla Legge sul soggiorno degli stranieri della Repubblica Ceca (Legge n. 326/1999 Racc., requisiti OAMP);",
       "section2Item3": "La conservazione a fini di vigilanza e prevenzione delle frodi secondo la normativa assicurativa ceca.",
       "section2Legal": "Base giuridica: Articolo 6, par. 1, lett. b) RGPD (esecuzione di un contratto) e lett. c) RGPD (obblighi legali).",
       "section3Title": "3. Crittografia hardware e archiviazione sicura",
-      "section3Content": "Tutti i documenti e le informazioni anagrafiche sono crittografati a riposo con algoritmo AES-256 GCM e vettori di inizializzazione unici. I database sono isolati e le trasmissioni avvengono mediante protocollo TLS 1.3.",
+      "section3Content": "I dati vengono trasmessi su canali TLS 1.3 e crittografati a riposo con AES-256 GCM.",
       "section4Title": "4. I tuoi diritti ai sensi del RGPD (Artt. 15-22)",
       "section4Intro": "In qualità di interessato, godi dei seguenti diritti statutari:",
       "section4Item1": "Diritto di accesso (Art. 15): richiedere una copia dei tuoi dati conservati;",
@@ -286,8 +288,8 @@
     "privacy": "Privacy",
     "terms": "Termini",
     "support": "Assistenza & Supporto",
-    "brokerTitle": "Servizi di intermediazione assicurativa FormVault",
-    "brokerDesc": "Rete di intermediazione assicurativa autorizzata a Praga, Repubblica Ceca. In collaborazione con České pojištění a.s., partner autorizzato per PVZP, Slavia e SV pojišťovna.",
+    "brokerTitle": "Servizi di richiesta FormVault",
+    "brokerDesc": "FormVault è gestito da HKTSE s.r.o. in base a un accordo di cooperazione con České pojištění a.s. HKTSE raccoglie le richieste assicurative di base e i recapiti per inoltrarli a České pojištění a.s. HKTSE non è una compagnia assicurativa né un intermediario. La consulenza, le offerte e la distribuzione assicurativa regolamentata sono gestite da České pojištění a.s.",
     "techPlatformLead": "FormVault è gestito da "
   },
   "forms": {
@@ -559,38 +561,38 @@
     "privacyPolicy": "Informativa sulla privacy"
   },
   "securityRail": {
-    "title": "Barra di sicurezza istituzionale",
+    "title": "System Security & Compliance",
     "aes": {
-      "label": "Crittografato AES-256 GCM",
-      "tooltip": "Tutti i documenti e i dati dei moduli sono crittografati con standard AES-256 GCM."
+      "label": "AES-256 GCM File Encryption",
+      "tooltip": "Uploaded files are encrypted at rest using authenticated AES-256 GCM with per-document nonces."
     },
     "privacy": {
-      "label": "Isolamento dati basato sui ruoli",
-      "tooltip": "I tuoi dati sensibili sono rigorosamente isolati."
+      "label": "Role-Based Access Control",
+      "tooltip": "Access to customer data is strictly controlled through RBAC; unauthorized access is prohibited."
     },
     "tls": {
-      "label": "Canale attivo TLS 1.3",
-      "tooltip": "Canale di comunicazione crittografato ad alta sicurezza stabilito."
+      "label": "TLS 1.3 Encrypted Transport",
+      "tooltip": "Enforced modern HTTPS and TLS 1.3 encrypted transport for all communications."
     },
     "autoSave": {
-      "label": "Salvataggio automatico crittografato",
-      "tooltip": "Le modifiche vengono salvate automaticamente nella tua cassaforte locale."
+      "label": "Session-Scoped Draft",
+      "tooltip": "In-progress drafts are captured in encrypted local storage and expire upon submission or cleanup."
     },
     "rbac": {
-      "label": "Isolamento rigoroso RBAC",
-      "tooltip": "I file di identità sono isolati in enclave zero-trust; la decrittazione è riservata esclusivamente ai sottoscrittori autenticati."
+      "label": "Strict Authorization",
+      "tooltip": "Administrative decryption and data access are restricted to authenticated, authorized operators."
     },
     "session": {
-      "label": "Sandbox di sessione volatile",
-      "tooltip": "I dati sensibili del richiedente risiedono nella memoria di sessione volatile, impedendo la memorizzazione nella cache su computer condivisi."
+      "label": "Session Privacy Protection",
+      "tooltip": "Customer data is scoped to active browser sessions to prevent caching on shared devices."
     },
     "cnb": {
-      "label": "Conformità di intermediazione ČNB",
-      "tooltip": "Infrastruttura tecnica gestita da HKTSE s.r.o. in cooperazione autorizzata con České pojištění a.s. ai sensi della legge n. 170/2018 Racc."
+      "label": "Intermediary Collaboration",
+      "tooltip": "Platform operated by HKTSE s.r.o. as a lead introducer (tipař) in cooperation with licensed intermediary České pojištění a.s."
     },
     "audit": {
-      "label": "Audit a prova di manomissione",
-      "tooltip": "Ogni decrittazione, revisione dei documenti e aggiornamento di stato genera un record di audit crittografico immutabile."
+      "label": "Tamper-Evident Audit Trail",
+      "tooltip": "Key system events record timestamps, actor IDs, and cryptographic SHA-256 hashes for regulatory traceability."
     }
   },
   "addressAssistant": {

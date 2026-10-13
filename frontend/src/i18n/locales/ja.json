@@ -35,8 +35,8 @@
   },
   "pages": {
     "home": {
-      "title": "FormVaultへようこそ",
-      "subtitle": "安全かつ効率的に保険申請を完了できます",
+      "title": "チェコ留学生向け外国人健康保険の相談・受付",
+      "subtitle": "基本的なご要望をお知らせください。提携保険仲介会社（České pojištění a.s.）へ安全に取り次ぎ、最適な保険プランと見積もりをご案内します。",
       "getStarted": "始める",
       "features": {
         "secure": "ハードウェア級 AES-256 GCM 暗号化金庫",
@@ -46,7 +46,7 @@
         "mobile": "揮发性セッションサンドボックス",
         "mobileDesc": "即時カメラ撮影とサンドボックス化されたセッション管理。終了時に機密情報は即座に消去されます。"
       },
-      "authorizedBroker": "チェコ共和国・EU基準公認 保険ブローカー",
+      "authorizedBroker": "チェコ外国人健康保険の相談・窓口受付（Tipař）",
       "trackMyApplication": "申請状況を確認する",
       "metrics": {
         "actCompliance": "チェコ内務省OAMP完全準拠",
@@ -82,7 +82,7 @@
         "refCopied": "参照番号をクリップボードにコピーしました！",
         "notFoundTitle": "申請が見つかりません",
         "notFoundDesc": "入力された参照番号またはメールアドレスに一致する記録がありません。入力内容をご確認ください。",
-        "supportNote": "チェコビザや保険に関して緊急のサポートが必要ですか？ブローカー窓口までご連絡ください：",
+        "supportNote": "保険の相談やビザ要件に関してサポートが必要な場合はお問い合わせください：",
         "emailUs": "メールで問い合わせ",
         "historyTitle": "最近の照会履歴"
       },
@@ -120,7 +120,9 @@
         "defaultButton": "オンラインで申し込む",
         "lawCompliance": "チェコ外国人滞在法（法律番号 326/1999 Coll.）準拠保険",
         "lawDetails": "当代理店を通じて発行されるすべての保険証書は、長期ビザおよび居住許可申請に関するチェコ内務省OAMPの最新要件を完全に満たしています。"
-      }
+      },
+      "roleBadge": "チェコ外国人健康保険の相談・窓口受付（Tipař）",
+      "requestOptions": "保険プランを問い合わせる"
     },
     "personalInfo": {
       "title": "個人情報",
@@ -192,13 +194,13 @@
     "terms": {
       "badge": "チェコ民法典（法律第89/2012号）および保険販売法（法律第170/2018号）に準拠",
       "title": "利用規約",
-      "subtitle": "チェコ・プラハにおいてFormVaultが提供する保険仲介サービスの利用規約。",
-      "section1Title": "1. 仲介業務および契約範囲",
-      "section1Content": "FormVaultはチェコ共和国において公認された保険仲介者として業務を行っています。本サービスは、チェコ法律第326/1999号に基づく正規引受保険会社への比較、申請サポート、契約取次を含みます。",
+      "subtitle": "FormVault を通じた保険相談の受付、連絡先の取り次ぎ、技術プラットフォームに関する利用規約。",
+      "section1Title": "1. 運営者の役割と業務範囲",
+      "section1Content": "FormVault は HKTSE s.r.o.（IČO: 10858032）により紹介者（tipař）として運営され、認可保険仲介会社 České pojištění a.s.（法第170/2018号）と提携しています。HKTSE は相談内容を取り次ぎ、České pojištění a.s. が保険募集、事前情報提供、契約締結を行います。",
       "section2Title": "2. 申請者の責任および申告内容の真実性",
       "section2Content": "申請者は、正確かつ真正な個人情報、旅券情報、健康状態を申告するものとします。虚偽の申告は保険契約の無効およびチェコ内務省（OAMP）によるビザ却下の原因となります。",
-      "section3Title": "3. 保険証書の発行および契約成立",
-      "section3Content": "保険契約は、保険料の入金確認および保険会社による引受審査の完了をもって成立します。公式電子証明書（Potvrzení o pojištění）はメールにて送付されます。",
+      "section3Title": "3. 提携仲介会社への取り次ぎ",
+      "section3Content": "FormVault はお客様の相談内容を České pojištění a.s. に安全に取り次ぎます。正式な保険契約書および提案書は České pojištění a.s. または提携保険会社から直接提供されます。",
       "section4Title": "4. ビザ却下時の契約解除および返金",
       "section4Content": "在外公館またはチェコ内務省によりビザ・滞在許可が正式に却下された場合、公式却下通知書の提出により、各保険会社の解約約款に基づき返金を受ける権利を有します。",
       "section5Title": "5. 準拠法および管轄裁判所",
@@ -225,30 +227,30 @@
         "q1": "申請後、公式な保険証書はどれくらいで届きますか？",
         "a1": "お支払いと引受確認完了後、通常1〜4営業時間以内に電子保険証明書（Potvrzení o pojištění）が発行され、ビザ申請用契約番号付きPDFが登録メール宛に届きます。",
         "q2": "保険はチェコ内務省（OAMP）に100%承認されますか？",
-        "a2": "はい。当代理店が取り扱う保険はチェコ外国人滞在法（第326/1999号）に完全準拠し、内務省の公式中央台帳に登録されます。",
+        "a2": "はい。提携仲介会社 České pojištění a.s. が取り扱う総合外国人健康保険は、チェコ外国人滞在法（法律番号 326/1999 Coll.）および内務省（OAMP）の法定要件（補償上限400,000ユーロ）に完全適合しています。",
         "q3": "大使館でビザが却下された場合はどうなりますか？",
         "a3": "万が一ビザや滞在許可が却下された場合は、大使館またはOAMPからの正式な却下通知書のコピーを insurance@hktse.eu.org に送付いただくことで、保険料の解約・返金手続きを行います。",
         "q4": "チェコ現地での医療費直接請求やキャッシュレス診療はどう利用しますか？",
         "a4": "保険会社の提携病院（プラハのモトール病院、FNKV、VFN、ブルノのFNなど）では、保険カードを提示するだけでキャッシュレスで受診できます。非提携機関の場合は一旦立て替えて領収書と診断書を提出すれば、14日以内に払い戻されます。",
-        "q5": "なぜパスポートと学生証の提出が必要なのですか？",
-        "a5": "チェコの保険業法により、内務省登録のために外国人の本人確認が義務付けられています。また、学生証の提出により学生割引料金（最大30%オフ）が適用されます。"
+        "q5": "相談の送信に必要な情報は何ですか？",
+        "a5": "FormVault では滞在に関する基本条件（期間、開始日、学生ステータス、年齢層）と連絡先のみを収集します。初回の問い合わせ段階でパスポート画像や病歴を収集することはありません。"
       },
       "connectingChat": "アドバイザーに接続中..."
     },
     "privacy": {
       "badge": "EU一般データ保護規則（GDPR）およびチェコ法第110/2019号に完全準拠",
       "title": "プライバシーポリシーとデータ保護",
-      "subtitle": "チェコ共和国およびEUにおける個人情報の収集・暗号化・保護に関する公式方針。",
+      "subtitle": "GDPRに基づく保険相談情報の収集、暗号化、取り次ぎに関するプライバシーポリシー。",
       "section1Title": "1. 個人データ管理者",
-      "section1Content": "お客様の個人データを取り扱うデータ管理者は、FormVault保険仲介サービス（チェコ共和国プラハ）です。プライバシーに関するお問い合わせまたはDPO窓口：insurance@hktse.eu.org",
+      "section1Content": "データ管理者は HKTSE s.r.o.（IČO: 10858032、チェコ共和国プラハ）です。メール: insurance@hktse.eu.org。",
       "section2Title": "2. データ処理の目的および法的根拠",
-      "section2Intro": "当社は、以下の正当な目的のためにお客様の個人情報（氏名、生年月日、旅券写し、学生証、住所等）を収集・処理します：",
-      "section2Item1": "認可保険会社との健康・旅行保険契約の締結および証券発行；",
+      "section2Intro": "収集した連絡先および滞在条件は以下の目的でのみ利用されます：",
+      "section2Item1": "お客様の同意に基づき、認可保険仲介会社 České pojištění a.s. へ相談を取り次ぐこと；",
       "section2Item2": "チェコ外国人滞在法（法律番号 326/1999 Coll.、OAMP規制）の遵守；",
       "section2Item3": "監査対応、不正防止、およびチェコ保険法に基づく公的アーカイブ保管。",
       "section2Legal": "法的根拠：GDPR第6条第1項(b)（契約の履行）および第6条第1項(c)（法的義務の遵守）。",
       "section3Title": "3. 暗号化およびゼロノウレッジ高水準セキュリティ",
-      "section3Content": "提出されたすべての旅券画像、身分証明書、個人記録は、固有のIVを用いたAES-256 GCM認証付き暗号化により保管されます。データベースは公共インターネットから隔離され、TLS 1.3通信で保護されています。",
+      "section3Content": "データは TLS 1.3 で暗号化送信され、AES-256 GCM 認証暗号化により安全に保管されます。",
       "section4Title": "4. GDPRに基づくお客様の権利（第15条〜第22条）",
       "section4Intro": "お客様にはEU法令に基づき、以下の権利が保障されています：",
       "section4Item1": "アクセス権（第15条）：保管されている個人データの開示請求；",
@@ -286,8 +288,8 @@
     "privacy": "プライバシー",
     "terms": "利用規約",
     "support": "カスタマーサポート",
-    "brokerTitle": "FormVault 保険仲介・引受サービス",
-    "brokerDesc": "チェコ共和国プラハの正規保険仲介ネットワーク。České pojištění a.s. と提携し、PVZP、Slavia、SV pojišťovna の公式認定パートナー。",
+    "brokerTitle": "FormVault 保険相談受付サービス",
+    "brokerDesc": "FormVault は České pojištění a.s. との協力契約に基づき HKTSE s.r.o. によって運営されています。HKTSE は保険に関する基本的な相談および連絡先情報を収集し、České pojištění a.s. に取り次ぎます。HKTSE は保険会社または保険仲介業者ではありません。保険の助言、プラン提案、および規制対象となる保険募集業務は České pojištění a.s. が担当します。",
     "techPlatformLead": "FormVault は以下によって運営されています: "
   },
   "forms": {
@@ -559,38 +561,38 @@
     "privacyPolicy": "プライバシーポリシー"
   },
   "securityRail": {
-    "title": "機関レベルのセキュリティレール",
+    "title": "System Security & Compliance",
     "aes": {
-      "label": "AES-256 GCM 暗号化",
-      "tooltip": "すべての文書とフォームデータは軍用グレードのAES-256 GCMで暗号化保管されます。"
+      "label": "AES-256 GCM File Encryption",
+      "tooltip": "Uploaded files are encrypted at rest using authenticated AES-256 GCM with per-document nonces."
     },
     "privacy": {
-      "label": "ゼロナレッジプライバシー",
-      "tooltip": "機密個人データは厳格に隔離され、承認された引受人のみがアクセスできます。"
+      "label": "Role-Based Access Control",
+      "tooltip": "Access to customer data is strictly controlled through RBAC; unauthorized access is prohibited."
     },
     "tls": {
-      "label": "TLS 1.3 アクティブチャネル",
-      "tooltip": "安全で高信頼性の暗号化通信チャネルが確立されています。"
+      "label": "TLS 1.3 Encrypted Transport",
+      "tooltip": "Enforced modern HTTPS and TLS 1.3 encrypted transport for all communications."
     },
     "autoSave": {
-      "label": "暗号化自動保存",
-      "tooltip": "入力中の内容はローカルの安全な保管庫に自動保存されます。"
+      "label": "Session-Scoped Draft",
+      "tooltip": "In-progress drafts are captured in encrypted local storage and expire upon submission or cleanup."
     },
     "rbac": {
-      "label": "厳格なRBAC権限分離",
-      "tooltip": "本人確認書類はゼロトラスト領域に隔離され、復号は認証された引受査定者に厳格に制限されます。"
+      "label": "Strict Authorization",
+      "tooltip": "Administrative decryption and data access are restricted to authenticated, authorized operators."
     },
     "session": {
-      "label": "揮発性セッションサンドボックス",
-      "tooltip": "機密性の高い申請者情報は揮発性セッションメモリ内のみに保持され、共有端末のディスクへのキャッシュを防ぎます。"
+      "label": "Session Privacy Protection",
+      "tooltip": "Customer data is scoped to active browser sessions to prevent caching on shared devices."
     },
     "cnb": {
-      "label": "チェコ国立銀行(ČNB)仲介協調準拠",
-      "tooltip": "HKTSE s.r.o. が運営する技術基盤であり、České pojištění a.s. との提携のもと法第170/2018号に従い運営されています。"
+      "label": "Intermediary Collaboration",
+      "tooltip": "Platform operated by HKTSE s.r.o. as a lead introducer (tipař) in cooperation with licensed intermediary České pojištění a.s."
     },
     "audit": {
-      "label": "改ざん耐性監査証跡",
-      "tooltip": "すべての復号、書類審査、ステータス変更は改ざん不能な暗号化監査ログとして記録されます。"
+      "label": "Tamper-Evident Audit Trail",
+      "tooltip": "Key system events record timestamps, actor IDs, and cryptographic SHA-256 hashes for regulatory traceability."
     }
   },
   "addressAssistant": {

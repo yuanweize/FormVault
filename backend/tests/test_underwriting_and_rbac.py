@@ -96,11 +96,17 @@ def test_create_application_with_czech_underwriting_fields(db):
         "type_of_stay": "student",
     }
 
-    res = client.post("/api/v1/applications/", json=payload)
-    assert res.status_code in (200, 201)
-    data = res.json()
-    assert "id" in data
-    app_id = data["id"]
+    from unittest.mock import patch
+
+    with patch(
+        "app.services.business_scope.get_effective_scope_mode",
+        return_value="ASSISTED_APPLICATION",
+    ):
+        res = client.post("/api/v1/applications/", json=payload)
+        assert res.status_code in (200, 201)
+        data = res.json()
+        assert "id" in data
+        app_id = data["id"]
 
     # Verify directly in database
     app_record = db.query(Application).filter(Application.id == app_id).first()

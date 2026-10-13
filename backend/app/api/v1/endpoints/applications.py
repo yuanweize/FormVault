@@ -17,9 +17,16 @@ import app.models.application as app_module
 from app.models.application import Application
 from app.models.file import File
 from app.models.email_export import EmailExport
+from app.models.compliance import PartnerHandoffConsent
+from app.models.system import SystemConfig
+from app.services.business_scope import (
+    get_public_capabilities,
+    get_effective_scope_mode,
+)
 from app.utils.db_helpers import create_audit_log, handle_integrity_error
 from app.services.email_service import email_service
 from datetime import datetime, timezone
+import json
 from app.schemas.application import (
     ApplicationCreateSchema,
     ApplicationUpdateSchema,
@@ -33,6 +40,8 @@ from app.schemas.application import (
     FileInfoSchema,
     PersonalInfoSchema,
     AddressSchema,
+    LeadInquiryCreateSchema,
+    LeadInquiryResponseSchema,
 )
 from app.schemas.email_export import (
     EmailExportRequestSchema,
@@ -93,6 +102,117 @@ async def track_application_status(
     ref = track_data.reference_number.strip()
     email = track_data.email.strip().lower()
 
+    # 1. Check LeadInquiry table first (for one-shot lead entries)
+    from app.models.lead import LeadInquiry
+
+    lead = db.query(LeadInquiry).filter(LeadInquiry.reference_number == ref).first()
+    if lead and (lead.email or "").strip().lower() == email:
+        lead_status = lead.status
+        timeline = [
+            ApplicationTimelineStepSchema(
+                key="draft",
+                label="Enquiry Received",
+                description="Your enquiry details have been securely received by FormVault.",
+                completed=True,
+                current=(lead_status == "INQUIRY_RECEIVED"),
+                timestamp=lead.created_at,
+            ),
+            ApplicationTimelineStepSchema(
+                key="submitted",
+                label="Forwarded to Intermediary",
+                description="Enquiry securely forwarded to České pojištění a.s. for licensed intermediary review.",
+                completed=(
+                    lead_status
+                    in [
+                        "FORWARDED_TO_INTERMEDIARY",
+                        "AWAITING_INTERMEDIARY_RESPONSE",
+                        "PARTNER_PROCESSING",
+                        "CONTACTED",
+                        "CLOSED",
+                    ]
+                ),
+                current=(lead_status == "FORWARDED_TO_INTERMEDIARY"),
+                timestamp=(
+                    lead.last_handoff_attempt_at
+                    if lead_status
+                    in [
+                        "FORWARDED_TO_INTERMEDIARY",
+                        "AWAITING_INTERMEDIARY_RESPONSE",
+                        "PARTNER_PROCESSING",
+                        "CONTACTED",
+                        "CLOSED",
+                    ]
+                    else None
+                ),
+            ),
+            ApplicationTimelineStepSchema(
+                key="exported",
+                label="Awaiting Intermediary Response",
+                description="Licensed insurance intermediary is preparing available insurance options.",
+                completed=(
+                    lead_status
+                    in [
+                        "AWAITING_INTERMEDIARY_RESPONSE",
+                        "PARTNER_PROCESSING",
+                        "CONTACTED",
+                        "CLOSED",
+                    ]
+                ),
+                current=(
+                    lead_status
+                    in ["AWAITING_INTERMEDIARY_RESPONSE", "PARTNER_PROCESSING"]
+                ),
+                timestamp=(
+                    lead.updated_at
+                    if lead_status
+                    in [
+                        "AWAITING_INTERMEDIARY_RESPONSE",
+                        "PARTNER_PROCESSING",
+                        "CONTACTED",
+                        "CLOSED",
+                    ]
+                    else None
+                ),
+            ),
+            ApplicationTimelineStepSchema(
+                key="processed",
+                label="Contacted & Options Provided",
+                description="Intermediary specialist has contacted applicant with tailored insurance offers.",
+                completed=(lead_status in ["CONTACTED", "CLOSED"]),
+                current=(lead_status == "CONTACTED"),
+                timestamp=(
+                    lead.updated_at if lead_status in ["CONTACTED", "CLOSED"] else None
+                ),
+            ),
+        ]
+
+        status_labels = {
+            "INQUIRY_RECEIVED": "Enquiry Received",
+            "FORWARDED_TO_INTERMEDIARY": "Forwarded to Intermediary",
+            "HANDOFF_FAILED": "Dispatch Retry Scheduled",
+            "HANDOFF_RETRY_PENDING": "Dispatch Retry Scheduled",
+            "AWAITING_INTERMEDIARY_RESPONSE": "Awaiting Intermediary Response",
+            "PARTNER_PROCESSING": "Underwriting In Progress",
+            "CONTACTED": "Contacted & Options Provided",
+            "CLOSED": "Enquiry Completed",
+        }
+
+        return ApplicationTrackResponseSchema(
+            success=True,
+            reference_number=lead.reference_number,
+            status=lead.status,
+            status_label=status_labels.get(lead.status, lead.status),
+            insurance_type="Health",
+            masked_name=_mask_name(lead.first_name, lead.last_name),
+            masked_email=_mask_email(lead.email),
+            created_at=lead.created_at,
+            submitted_at=lead.last_handoff_attempt_at or lead.created_at,
+            updated_at=lead.updated_at,
+            timeline=timeline,
+            message="Lead enquiry status verified successfully",
+        )
+
+    # 2. Check Application table
     application = (
         db.query(Application).filter(Application.reference_number == ref).first()
     )
@@ -104,37 +224,37 @@ async def track_application_status(
         )
 
     status_order = {"draft": 1, "submitted": 2, "exported": 3, "processed": 4}
-    curr_idx = status_order.get(application.status, 1)
+    curr_idx = status_order.get(application.status, 2)
 
     timeline = [
         ApplicationTimelineStepSchema(
             key="draft",
-            label="Application Initiated",
-            description="Initial policy details and applicant identity provided.",
+            label="Enquiry Received",
+            description="Your enquiry details have been securely received by FormVault.",
             completed=curr_idx >= 1,
             current=curr_idx == 1,
             timestamp=application.created_at,
         ),
         ApplicationTimelineStepSchema(
             key="submitted",
-            label="Received by Broker",
-            description="Application securely transferred to insurance specialist review queue.",
+            label="Forwarded to Intermediary",
+            description="Enquiry securely forwarded to České pojištění a.s. for licensed intermediary review.",
             completed=curr_idx >= 2,
             current=curr_idx == 2,
             timestamp=application.updated_at if curr_idx >= 2 else None,
         ),
         ApplicationTimelineStepSchema(
             key="exported",
-            label="Underwriting & Verification",
-            description="Documents dispatched to carrier underwriting department.",
+            label="Awaiting Intermediary Response",
+            description="Licensed insurance intermediary is preparing available insurance options.",
             completed=curr_idx >= 3,
             current=curr_idx == 3,
             timestamp=application.updated_at if curr_idx >= 3 else None,
         ),
         ApplicationTimelineStepSchema(
             key="processed",
-            label="Certificate & Policy Issued",
-            description="Official insurance policy active and certified for regulatory authorities.",
+            label="Contacted & Options Provided",
+            description="Intermediary specialist has contacted applicant with tailored insurance offers.",
             completed=curr_idx >= 4,
             current=curr_idx == 4,
             timestamp=application.updated_at if curr_idx >= 4 else None,
@@ -142,10 +262,10 @@ async def track_application_status(
     ]
 
     status_labels = {
-        "draft": "Draft in Progress",
-        "submitted": "Submitted & In Review",
-        "exported": "Underwriting Processing",
-        "processed": "Approved & Policy Issued",
+        "draft": "Enquiry Received",
+        "submitted": "Forwarded to Intermediary",
+        "exported": "Awaiting Intermediary Response",
+        "processed": "Contacted & Options Provided",
     }
 
     return ApplicationTrackResponseSchema(
@@ -185,6 +305,26 @@ async def create_application(
     - **student_id_file_id**: Optional student ID file reference
     - **passport_file_id**: Optional passport file reference
     """
+    caps = get_public_capabilities(db)
+    effective_mode = get_effective_scope_mode(db)
+
+    # In LEAD_ONLY mode, fail-close against product/insurer selection and passport submission
+    if not caps.allow_product_selection and (
+        application_data.insurance_company_id or application_data.insurance_plan_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Specific product and insurer selection is disabled in LEAD_ONLY mode.",
+        )
+
+    if not caps.allow_sensitive_document_upload and (
+        application_data.passport_file_id or application_data.passport_number
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Passport upload is disabled in LEAD_ONLY mode.",
+        )
+
     try:
         # Create new application instance
         application = app_module.Application(
@@ -214,6 +354,7 @@ async def create_application(
             type_of_stay=application_data.type_of_stay or "student",
             study_confirmation_file_id=application_data.study_confirmation_file_id,
             custom_fields_data=application_data.custom_fields_data,
+            regulatory_mode_snapshot=effective_mode,
             status="draft",
         )
 
@@ -364,6 +505,135 @@ async def create_application(
             status_code=500,
             detail="An unexpected error occurred while creating the application",
         )
+
+
+@router.post("/inquire", response_model=LeadInquiryResponseSchema, status_code=201)
+@router.post("/leads", response_model=LeadInquiryResponseSchema, status_code=201)
+async def create_lead_inquiry(
+    inquiry_data: LeadInquiryCreateSchema,
+    request: Request,
+    db: Session = Depends(get_db),
+) -> LeadInquiryResponseSchema:
+    """
+    Intake complete one-shot student/expatriate insurance requirements and contact details under LEAD_ONLY mode.
+    'Collect Once, Reuse Everywhere': gathers complete client identity, stay parameters, and insurance requirements.
+    Secures explicit handoff consent and queues for České pojištění a.s. licensed intermediary handling.
+    """
+    effective_mode = get_effective_scope_mode(db)
+    user_ip = request.client.host if request.client else None
+    user_agent = request.headers.get("user-agent")
+
+    from app.services.lead_service import create_lead_inquiry as service_create_lead
+
+    try:
+        # Create full structured LeadInquiry
+        lead = service_create_lead(
+            db=db,
+            data=inquiry_data,
+            client_ip=user_ip,
+            user_agent=user_agent,
+        )
+
+        # Maintain Application projection record for backward compatibility & direct tracking
+        custom_data = {
+            "lead_id": lead.id,
+            "wechat": lead.wechat_id,
+            "wechat_id": lead.wechat_id,
+            "preferred_contact_method": lead.preferred_contact_method,
+            "student_status": lead.student_status,
+            "school_or_university": lead.school_or_university,
+            "derived_age": lead.age,
+            "derived_age_band": lead.age_band,
+            "general_insurance_need": lead.general_insurance_need,
+            "special_notes": lead.special_notes,
+            "utm_source": lead.utm_source,
+            "utm_campaign": lead.utm_campaign,
+            "referral_code": lead.referral_code,
+        }
+
+        application = app_module.Application(
+            id=str(uuid4()),
+            reference_number=lead.reference_number,
+            first_name=lead.first_name,
+            last_name=lead.last_name,
+            email=lead.email,
+            phone=lead.phone,
+            date_of_birth=lead.date_of_birth,
+            gender=lead.gender,
+            nationality=lead.nationality,
+            address_city=lead.current_location,
+            type_of_stay=lead.type_of_stay,
+            insurance_type="health",
+            insurance_duration_months=lead.requested_duration_months,
+            insurance_commencement_date=lead.requested_start_date,
+            custom_fields_data=json.dumps(custom_data),
+            status="submitted",
+            regulatory_mode_snapshot=effective_mode,
+        )
+        db.add(application)
+        db.flush()
+
+        # Link consent
+        consent = (
+            db.query(PartnerHandoffConsent)
+            .filter(PartnerHandoffConsent.ip_address == user_ip)
+            .order_by(PartnerHandoffConsent.consented_at.desc())
+            .first()
+        )
+        if consent:
+            application.handoff_consent_id = consent.id
+        lead.converted_application_id = application.id
+        db.commit()
+
+        config = db.query(SystemConfig).first()
+        recipient_name = getattr(config, "partner_name", None) or "České pojištění a.s."
+
+        return LeadInquiryResponseSchema(
+            success=True,
+            reference_number=lead.reference_number,
+            status=lead.status,
+            status_label="Enquiry Received",
+            recipient=recipient_name,
+            derived_age=lead.age,
+            derived_age_band=lead.age_band,
+            message=f"Your enquiry has been received. We will forward it to {recipient_name} for insurance handling and the next steps.",
+        )
+    except Exception as e:
+        db.rollback()
+        logger.error("Failed to process lead inquiry", error=str(e), exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to register insurance enquiry. Please try again later.",
+        )
+
+
+@router.post("/leads/{lead_id}/convert", response_model=ApplicationResponseSchema)
+async def convert_lead_to_application_endpoint(
+    lead_id: str,
+    db: Session = Depends(get_db),
+) -> ApplicationResponseSchema:
+    """
+    Administrative promotion of LeadInquiry into formal Application.
+    Transfers all applicant identity and stay data losslessly.
+    """
+    from app.services.lead_service import convert_lead_to_application
+
+    app_record = convert_lead_to_application(lead_id=lead_id, db=db)
+    return ApplicationResponseSchema.model_validate(app_record)
+
+
+@router.post("/leads/{lead_id}/handoff")
+async def handoff_lead_endpoint(
+    lead_id: str,
+    db: Session = Depends(get_db),
+):
+    """
+    Trigger partner handoff dossier dispatch for a specific lead.
+    """
+    from app.services.lead_service import LeadHandoffService
+
+    success = LeadHandoffService.handoff_lead(lead_id=lead_id, db=db)
+    return {"success": success, "lead_id": lead_id}
 
 
 @router.get("/", response_model=ApplicationListResponseSchema)

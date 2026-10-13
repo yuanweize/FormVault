@@ -83,7 +83,9 @@ const SupportPage: React.FC = () => {
             try {
               (window as any).$crisp.push(['do', 'chat:show']);
               (window as any).$crisp.push(['do', 'chat:open']);
-            } catch (err) {}
+            } catch (err) {
+              // Crisp client push may fail if blocked by ad-blocker
+            }
           };
           document.head.appendChild(script);
         }
@@ -110,20 +112,20 @@ const SupportPage: React.FC = () => {
   const faqs = [
     {
       q: t('pages.support.faqs.q1', {
-        defaultValue: 'How fast will I receive my official insurance certificate after submission?',
+        defaultValue: 'How does the insurance enquiry process work?',
       }),
       a: t('pages.support.faqs.a1', {
         defaultValue:
-          'Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.',
+          'Once you submit your basic requirements through FormVault, HKTSE s.r.o. securely forwards your enquiry to licensed insurance intermediary České pojištění a.s. Their qualified insurance advisors will prepare available options and contact you with full pre-contractual information.',
       }),
     },
     {
       q: t('pages.support.faqs.q2', {
-        defaultValue: 'Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?',
+        defaultValue: 'Do the available insurance plans meet Czech Ministry of the Interior (OAMP) requirements?',
       }),
       a: t('pages.support.faqs.a2', {
         defaultValue:
-          'Yes. All policies mediated through our agency network (PVZP, Slavia, SV pojišťovna) strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.). They include comprehensive health insurance (KZPC) with medical limits up to 10,000,000 CZK (EUR 400,000) and are automatically registered in the Czech national insurance registry.',
+          'Yes. The comprehensive health insurance plans provided through České pojištění a.s. fully comply with the Czech Foreigners Residence Act (Act No. 326/1999 Coll.) and are recognized for Czech long-term visa and residence permit applications.',
       }),
     },
     {
@@ -132,25 +134,25 @@ const SupportPage: React.FC = () => {
       }),
       a: t('pages.support.faqs.a3', {
         defaultValue:
-          'If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.',
+          'If your visa application is denied, licensed insurance policies generally qualify for premium refunds subject to carrier terms upon providing the official written rejection notice.',
       }),
     },
     {
       q: t('pages.support.faqs.q4', {
-        defaultValue: 'How does medical claim reimbursement and direct billing work in Czechia?',
+        defaultValue: 'How does medical claim settlement work in the Czech Republic?',
       }),
       a: t('pages.support.faqs.a4', {
         defaultValue:
-          'For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.',
+          'Contracted clinics and hospitals provide direct cashless billing upon presentation of your insurance card. For other medical facilities, invoices and medical reports are submitted to the insurer for reimbursement.',
       }),
     },
     {
       q: t('pages.support.faqs.q5', {
-        defaultValue: 'Why are passport and student verification documents required?',
+        defaultValue: 'What information is needed to submit an enquiry?',
       }),
       a: t('pages.support.faqs.a5', {
         defaultValue:
-          'Czech insurance law mandates strict identity verification for foreign nationals to register your policy with the Ministry of the Interior. Uploading your student ID also qualifies you for discounted university student rates (up to 30% savings).',
+          'Under our current enquiry process, we only collect basic details: your contact information, student status, age bracket, and intended length of stay. No sensitive passport scans or medical dossiers are required.',
       }),
     },
   ];
@@ -161,7 +163,7 @@ const SupportPage: React.FC = () => {
       <Box sx={{ textAlign: 'center', maxWidth: 820, mx: 'auto', mb: 6 }}>
         <Chip
           icon={<HelpOutline sx={{ fontSize: 16 }} />}
-          label={t('pages.support.badge', { defaultValue: '24/7 Client Care & Broker Assistance' })}
+          label={t('pages.support.badge', { defaultValue: 'Client Care & Enquiry Assistance' })}
           sx={{
             mb: 2,
             px: 1.5,
@@ -179,7 +181,7 @@ const SupportPage: React.FC = () => {
         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', lineHeight: 1.6 }}>
           {t('pages.support.subtitle', {
             defaultValue:
-              'Get assistance with policy applications, Czech visa document requirements, claim procedures, or chat live with an underwriting advisor.',
+              'Get assistance with your health insurance enquiry, understand Czech stay requirements, or reach out to our team.',
           })}
         </Typography>
       </Box>
@@ -301,7 +303,7 @@ const SupportPage: React.FC = () => {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5, lineHeight: 1.6 }}>
                 {t('pages.support.chatCardDesc', {
                   defaultValue:
-                    'Connect directly with a licensed insurance specialist in English, Chinese (中文), or Czech. Instant assistance during European business hours.',
+                    'Connect with our support team in English, Chinese (中文), or Czech. Assistance during European business hours.',
                 })}
               </Typography>
 

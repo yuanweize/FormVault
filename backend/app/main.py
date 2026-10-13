@@ -35,6 +35,7 @@ import app.models  # Ensures all ORM models are registered with Base.metadata
 from app.admin.auth import authentication_backend
 from app.admin.views import (
     ApplicationAdmin,
+    LeadInquiryAdmin,
     FileAdmin,
     EmailExportAdmin,
     AuditLogAdmin,
@@ -263,8 +264,20 @@ def auto_upgrade_schema(bind_engine):
                             "ALTER TABLE system_config ADD COLUMN lead_only_fallback_url VARCHAR(255) NULL"
                         )
                     )
+                if "workflow_scope_status" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN workflow_scope_status VARCHAR(50) DEFAULT 'LEAD_ONLY_CONFIRMED' NOT NULL"
+                        )
+                    )
+                if "non_lead_modes_enabled" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN non_lead_modes_enabled BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
 
-                # Smoothly sanitize legacy unlicensed wording in existing rows
+                # Smoothly sanitize legacy wording and reset public_wording_approved to FALSE until partner review
                 try:
                     conn.execute(
                         text(
@@ -274,6 +287,11 @@ def auto_upgrade_schema(bind_engine):
                     conn.execute(
                         text(
                             "UPDATE system_config SET site_description = 'Digital application portal for Czech health insurance in authorized cooperation with České pojištění a.s.' WHERE site_description LIKE '%Licensed insurance brokerage%'"
+                        )
+                    )
+                    conn.execute(
+                        text(
+                            "UPDATE system_config SET public_wording_approved = FALSE, business_scope_mode = 'LEAD_ONLY', workflow_scope_status = 'LEAD_ONLY_CONFIRMED'"
                         )
                     )
                 except Exception:
@@ -515,6 +533,7 @@ admin = FormVaultAdmin(
     templates_dir=admin_templates_dir,
 )
 admin.add_view(ApplicationAdmin)
+admin.add_view(LeadInquiryAdmin)
 admin.add_view(FileAdmin)
 admin.add_view(EmailExportAdmin)
 admin.add_view(InsuranceCompanyAdmin)

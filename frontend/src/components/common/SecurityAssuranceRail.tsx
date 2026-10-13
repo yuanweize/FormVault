@@ -38,37 +38,37 @@ export const SecurityAssuranceRail: React.FC<SecurityAssuranceRailProps> = ({
     },
     {
       icon: <AdminPanelSettingsOutlined sx={{ fontSize: 16, color: '#6366F1' }} />,
-      label: t('securityRail.rbac.label', { defaultValue: 'Strict RBAC Isolation' }),
+      label: t('securityRail.rbac.label', { defaultValue: 'Role-Based Access Control' }),
       tooltip: t('securityRail.rbac.tooltip', {
-        defaultValue: 'Identity files are isolated in zero-trust enclaves; decryption is restricted exclusively to authenticated underwriters.',
+        defaultValue: 'Access to customer inquiry data is restricted strictly through role-based access control (RBAC) to authorized personnel.',
       }),
     },
     {
       icon: <HttpsOutlined sx={{ fontSize: 16, color: '#06B6D4' }} />,
-      label: t('securityRail.tls.label', { defaultValue: 'TLS 1.3 Strict Ingress' }),
+      label: t('securityRail.tls.label', { defaultValue: 'TLS 1.3 Encrypted Ingress' }),
       tooltip: t('securityRail.tls.tooltip', {
-        defaultValue: 'In-transit communications are enforced via Cloudflare Zero-Trust ingress with strict HSTS and PFS cipher suites.',
+        defaultValue: 'In-transit communications are enforced via TLS 1.3 with strict modern cipher suites.',
       }),
     },
     {
       icon: <EnhancedEncryptionOutlined sx={{ fontSize: 16, color: '#8B5CF6' }} />,
-      label: t('securityRail.session.label', { defaultValue: 'Volatile Session Sandbox' }),
+      label: t('securityRail.session.label', { defaultValue: 'Session Privacy Protection' }),
       tooltip: t('securityRail.session.tooltip', {
-        defaultValue: 'Sensitive applicant credentials exist in volatile session memory, preventing disk caching on shared workstations.',
+        defaultValue: 'Sensitive customer credentials exist in temporary session memory, preventing disk caching on shared workstations.',
       }),
     },
     {
       icon: <VerifiedUserOutlined sx={{ fontSize: 16, color: '#F59E0B' }} />,
-      label: t('securityRail.cnb.label', { defaultValue: 'Authorized Broker Collaboration' }),
+      label: t('securityRail.cnb.label', { defaultValue: 'Intermediary Collaboration' }),
       tooltip: t('securityRail.cnb.tooltip', {
-        defaultValue: 'Technical infrastructure operated by HKTSE s.r.o. as a lead introducer (tipař) in authorized collaboration with licensed broker České pojištění a.s. under Act No. 170/2018 Coll.',
+        defaultValue: 'Technical infrastructure operated by HKTSE s.r.o. as a lead introducer (tipař) in authorized collaboration with licensed intermediary České pojištění a.s.',
       }),
     },
     {
       icon: <AssignmentTurnedInOutlined sx={{ fontSize: 16, color: '#EC4899' }} />,
-      label: t('securityRail.audit.label', { defaultValue: 'Tamper-Evident Hash Chain' }),
+      label: t('securityRail.audit.label', { defaultValue: 'Tamper-Evident Audit Trail' }),
       tooltip: t('securityRail.audit.tooltip', {
-        defaultValue: 'Every document decryption, review, and status transition generates an immutable SHA-256 chained audit record.',
+        defaultValue: 'Every document access and status transition generates a tamper-evident SHA-256 chained audit record.',
       }),
     },
   ];

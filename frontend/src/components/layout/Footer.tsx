@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
 
   const defaultBrokerDesc = (
     <span>
-      {t('footer.techPlatformLead', 'FormVault is operated by ')}
+      FormVault is operated by{' '}
       <Link
         href={operatorUrl}
         target="_blank"
@@ -58,26 +58,19 @@ const Footer: React.FC = () => {
         sx={{ fontWeight: 700 }}
       >
         {operatorName}
+      </Link>{' '}
+      under a cooperation agreement with{' '}
+      <Link
+        href={partnerUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        color="inherit"
+        underline="hover"
+        sx={{ fontWeight: 700 }}
+      >
+        {partnerName}
       </Link>
-      {' (IČO: 10858032), providing digital intake & IT infrastructure as a lead introducer (tipař) '}
-      {isPartnerVerified ? (
-        <>
-          {'in authorized cooperation with '}
-          <Link
-            href={partnerUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            color="inherit"
-            underline="hover"
-            sx={{ fontWeight: 700 }}
-          >
-            {partnerName}
-          </Link>
-          {' (registered independent broker under Czech National Bank ČNB supervision per Act No. 170/2018 Coll.).'}
-        </>
-      ) : (
-        'under configurable intermediary settings per Act No. 170/2018 Coll.'
-      )}
+      . HKTSE collects basic insurance enquiries and contact details and forwards them to České pojištění a.s. HKTSE is not an insurance company or insurance intermediary. Insurance advice, product offers and regulated insurance distribution are handled by České pojištění a.s.
     </span>
   );
 
@@ -108,20 +101,16 @@ const Footer: React.FC = () => {
             gap: 2.5,
           }}
         >
-          {/* Brand & Broker Accreditation */}
+          {/* Brand & Intermediary Role Disclosure */}
           <Box sx={{ maxWidth: { xs: '100%', md: '58%' } }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.8 }}>
               <ShieldOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                {t('footer.brokerTitle', 'FormVault Insurance Technology & Distribution Support')}
+                {t('footer.brokerTitle', 'Health Insurance Enquiry Portal')}
               </Typography>
             </Stack>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.6 }}>
-              {portalConfig?.broker_legal_disclosure ? (
-                <span>{portalConfig.broker_legal_disclosure}</span>
-              ) : (
-                defaultBrokerDesc
-              )}
+              {defaultBrokerDesc}
             </Typography>
           </Box>
 

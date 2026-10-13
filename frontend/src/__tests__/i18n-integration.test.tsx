@@ -29,23 +29,23 @@ describe('Internationalization Integration', () => {
   describe('Basic Translation Functionality', () => {
     it('translates simple keys correctly in English', async () => {
       await i18n.changeLanguage('en');
-      
+
       renderWithProviders(<TestComponent translationKey="app.title" />);
       expect(screen.getByText('FormVault')).toBeInTheDocument();
     });
 
     it('translates simple keys correctly in Chinese', async () => {
       await i18n.changeLanguage('zh');
-      
+
       renderWithProviders(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('欢迎使用 FormVault')).toBeInTheDocument();
+      expect(screen.getByText('捷克留学生医疗保险申请咨询')).toBeInTheDocument();
     });
 
     it('translates simple keys correctly in Spanish', async () => {
       await i18n.changeLanguage('es');
-      
+
       renderWithProviders(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('Bienvenido a FormVault')).toBeInTheDocument();
+      expect(screen.getByText('Consulta de seguro médico para estudiantes internacionales en la República Checa')).toBeInTheDocument();
     });
   });
 
@@ -54,21 +54,21 @@ describe('Internationalization Integration', () => {
       const languages = ['en', 'zh', 'es'];
       const keyTranslations = {
         'en': {
-          'pages.home.title': 'Welcome to FormVault',
+          'pages.home.title': 'Health Insurance Enquiry for International Students in Czechia',
           'forms.personalInfo.fields.firstName': 'First Name',
           'fileUpload.studentId': 'Student ID',
           'common.submit': 'Submit',
           'stepper.personalInfo': 'Personal Information',
         },
         'zh': {
-          'pages.home.title': '欢迎使用 FormVault',
+          'pages.home.title': '捷克留学生医疗保险申请咨询',
           'forms.personalInfo.fields.firstName': '名字',
           'fileUpload.studentId': '学生证',
           'common.submit': '提交',
           'stepper.personalInfo': '个人信息',
         },
         'es': {
-          'pages.home.title': 'Bienvenido a FormVault',
+          'pages.home.title': 'Consulta de seguro médico para estudiantes internacionales en la República Checa',
           'forms.personalInfo.fields.firstName': 'Nombre',
           'fileUpload.studentId': 'Identificación de Estudiante',
           'common.submit': 'Enviar',
@@ -78,9 +78,9 @@ describe('Internationalization Integration', () => {
 
       for (const lang of languages) {
         await i18n.changeLanguage(lang);
-        
+
         const expectedTranslations = keyTranslations[lang as keyof typeof keyTranslations];
-        
+
         for (const [key, expectedValue] of Object.entries(expectedTranslations)) {
           const translation = i18n.t(key);
           expect(translation).toBe(expectedValue);
@@ -125,29 +125,29 @@ describe('Internationalization Integration', () => {
       // Start with English
       await i18n.changeLanguage('en');
       rerender(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('Welcome to FormVault')).toBeInTheDocument();
+      expect(screen.getByText('Health Insurance Enquiry for International Students in Czechia')).toBeInTheDocument();
 
       // Change to Chinese
       await i18n.changeLanguage('zh');
       rerender(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('欢迎使用 FormVault')).toBeInTheDocument();
+      expect(screen.getByText('捷克留学生医疗保险申请咨询')).toBeInTheDocument();
 
       // Change to Spanish
       await i18n.changeLanguage('es');
       rerender(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('Bienvenido a FormVault')).toBeInTheDocument();
+      expect(screen.getByText('Consulta de seguro médico para estudiantes internacionales en la República Checa')).toBeInTheDocument();
     });
 
     it('maintains language state across component remounts', async () => {
       await i18n.changeLanguage('zh');
-      
+
       const { unmount } = renderWithProviders(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('欢迎使用 FormVault')).toBeInTheDocument();
+      expect(screen.getByText('捷克留学生医疗保险申请咨询')).toBeInTheDocument();
       unmount();
-      
+
       // Remount with same language
       renderWithProviders(<TestComponent translationKey="pages.home.title" />);
-      expect(screen.getByText('欢迎使用 FormVault')).toBeInTheDocument();
+      expect(screen.getByText('捷克留学生医疗保险申请咨询')).toBeInTheDocument();
     });
   });
 
@@ -168,7 +168,7 @@ describe('Internationalization Integration', () => {
 
       for (const lang of languages) {
         await i18n.changeLanguage(lang);
-        
+
         for (const section of requiredSections) {
           expect(i18n.exists(section)).toBe(true);
         }
@@ -188,7 +188,7 @@ describe('Internationalization Integration', () => {
 
       for (const lang of languages) {
         await i18n.changeLanguage(lang);
-        
+
         for (const field of criticalFields) {
           const translation = i18n.t(field);
           expect(translation).toBeTruthy();

@@ -39,6 +39,8 @@ import {
   CampaignOutlined,
   CloseOutlined,
   InfoOutlined,
+  SupportAgentOutlined,
+  AssignmentOutlined,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import {
@@ -48,108 +50,26 @@ import {
   InsuranceCompanyShowcase,
   InsurancePlanShowcase,
   AgencyBannerShowcase,
+  LeadInquiryResponse,
 } from '../services/applicationService';
-
-// Default Czech Republic fallback broker data (strictly authentic partners & verified pricing)
-const DEFAULT_CZECH_COMPANIES: InsuranceCompanyShowcase[] = [
-  {
-    id: 1,
-    name: 'PVZP (Pojišťovna VZP)',
-    code: 'PVZP',
-    rating: 'Top Market Leader / 5,000+ Contracted Clinics',
-    website: 'https://www.pvzp.cz',
-    description: 'Premier Czech insurer for foreigners with the largest medical provider network and pre-existing conditions coverage options.',
-    display_order: 1,
-  },
-  {
-    id: 2,
-    name: 'Slavia Pojišťovna',
-    code: 'SLAVIA',
-    rating: 'Best Value / Backdated Coverage Allowed',
-    website: 'https://www.slavia-pojistovna.cz',
-    description: 'Heritage Czech insurer established in 1868, offering cost-effective comprehensive policies with up to 3 months backdating.',
-    display_order: 2,
-  },
-  {
-    id: 3,
-    name: 'SV Pojišťovna (formerly ERGO)',
-    code: 'SV',
-    rating: 'Client Favorite / Rapid Digital Settlement',
-    website: 'https://www.sv-pojistovna.cz',
-    description: 'Renowned for competitive student premiums, streamlined underwriting with no special questionnaires for healthy clients.',
-    display_order: 3,
-  },
-];
-
-const DEFAULT_CZECH_PLANS: InsurancePlanShowcase[] = [
-  {
-    id: 1,
-    company_id: 1,
-    company_name: 'PVZP',
-    company_code: 'PVZP',
-    name: 'PVZP Komplexní PLUS',
-    category: 'Comprehensive Health',
-    price_amount: 12978,
-    currency: 'CZK',
-    billing_period: 'year',
-    coverage_summary: '5,000+ contracted medical facilities with direct hospital billing across the Czech Republic.',
-    badge: 'Official Market Leader',
-    target_audience: 'Student Special (15–30 let)',
-    features: 'Czech OAMP visa certified\nDirect hospital billing (Motol, FNKV, VFN)\n10,000,000 CZK comprehensive limit\nPre-existing condition coverage eligible',
-    is_featured: true,
-    display_order: 1,
-  },
-  {
-    id: 2,
-    company_id: 2,
-    company_name: 'Slavia',
-    company_code: 'SLAVIA',
-    name: 'Slavia KZPC 131 Komplexní',
-    category: 'Student Special',
-    price_amount: 11200,
-    currency: 'CZK',
-    billing_period: 'year',
-    coverage_summary: 'Includes +2 months free promotional extension & allows backdating up to 3 months.',
-    badge: 'Best Value (+2 Mo Free)',
-    target_audience: 'Student Discount (15–35 let)',
-    features: 'Act No. 326/1999 Coll. fully certified\n+2 extra months free promotional discount\nBackdating permitted up to 3 months\nEmergency dental & prescription drugs covered',
-    is_featured: true,
-    display_order: 2,
-  },
-  {
-    id: 3,
-    company_id: 3,
-    company_name: 'SV',
-    company_code: 'SV',
-    name: 'SV WELCOME Komplex',
-    category: 'Comprehensive Health',
-    price_amount: 11214,
-    currency: 'CZK',
-    billing_period: 'year',
-    coverage_summary: 'Fast digital claims processing & 24/7 multilingual emergency medical hotline.',
-    badge: 'Client Favorite',
-    target_audience: 'Student Special (16–26 let)',
-    features: 'Official OAMP long-term visa certified\nCompetitive student annual fee\nNo special medical questionnaire required\n24/7 multilingual medical hotline',
-    is_featured: true,
-    display_order: 3,
-  },
-];
+import { LeadInquiryForm } from '../components/forms';
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
   const trackSectionRef = useRef<HTMLDivElement>(null);
+  const inquirySectionRef = useRef<HTMLDivElement>(null);
 
-  // Showcase state
-  const [companies, setCompanies] = useState<InsuranceCompanyShowcase[]>(DEFAULT_CZECH_COMPANIES);
-  const [plans, setPlans] = useState<InsurancePlanShowcase[]>(DEFAULT_CZECH_PLANS);
+  // Showcase state (strictly empty fallback in LEAD_ONLY mode; no hardcoded insurer quotes)
+  const [companies, setCompanies] = useState<InsuranceCompanyShowcase[]>([]);
+  const [plans, setPlans] = useState<InsurancePlanShowcase[]>([]);
   const [banner, setBanner] = useState<AgencyBannerShowcase | null>({
     id: 1,
-    title: 'Czech Foreigners Residence Act (326/1999 Coll.) Compliant Insurance',
-    subtitle: 'All insurance certificates issued through our agency meet the latest OAMP Czech Ministry requirements for Long-Term Visa and Residence Permit applications.',
+    title: 'Czech Foreigners Residence Act (Act No. 326/1999 Coll.) Compliant Insurance Information',
+    subtitle: 'Foreign nationals applying for Czech long-term visas or residence permits must hold comprehensive health insurance meeting statutory requirements. Submit your enquiry to receive licensed intermediary options.',
     tag: 'Regulatory Notice',
-    button_text: 'Apply Online',
+    button_text: 'Request Options',
     display_order: 1,
   });
   const [bannerVisible, setBannerVisible] = useState(true);
@@ -160,6 +80,7 @@ const HomePage: React.FC = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [trackResult, setTrackResult] = useState<TrackApplicationResponse | null>(null);
+
   // Feature cards custom config state
   interface FeatureCardItem {
     id?: string;
@@ -174,23 +95,21 @@ const HomePage: React.FC = () => {
   const [customFeatures, setCustomFeatures] = useState<FeatureCardItem[] | null>(null);
 
   useEffect(() => {
-    // Fetch live showcase data from API
+    // Fetch live showcase data from API (fails gracefully to empty lists in LEAD_ONLY mode)
     const loadShowcase = async () => {
       try {
         const data: PortalShowcaseResponse = await applicationService.getPortalShowcase();
         if (data.success) {
-          if (data.companies && data.companies.length > 0) {
-            setCompanies(data.companies);
-          }
-          if (data.plans && data.plans.length > 0) {
-            setPlans(data.plans);
-          }
+          setCompanies(data.companies || []);
+          setPlans(data.plans || []);
           if (data.banners && data.banners.length > 0) {
             setBanner(data.banners[0]);
           }
         }
       } catch (err) {
-        // Retain default templates gracefully
+        // Fail-close to empty showcase
+        setCompanies([]);
+        setPlans([]);
       }
 
       // Fetch dynamic portal config for customizable features showcase
@@ -209,11 +128,14 @@ const HomePage: React.FC = () => {
     loadShowcase();
   }, []);
 
-  const handleGetStarted = (presetInsuranceType?: string) => {
-    if (presetInsuranceType) {
-      sessionStorage.setItem('preferred_insurance_type', presetInsuranceType);
+  const scrollToInquiry = () => {
+    inquirySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const nameInput =
+      document.getElementById('inquiry-first-name-input') ||
+      document.getElementById('inquiry-name-input');
+    if (nameInput) {
+      nameInput.focus();
     }
-    navigate('/personal-info');
   };
 
   const scrollToTrack = () => {
@@ -222,6 +144,10 @@ const HomePage: React.FC = () => {
     if (refInput) {
       refInput.focus();
     }
+  };
+
+  const handleInquirySuccess = (res: LeadInquiryResponse) => {
+    setTrackRef(res.reference_number);
   };
 
   const handleTrackSubmit = async (e: React.FormEvent) => {
@@ -248,7 +174,7 @@ const HomePage: React.FC = () => {
         err?.response?.data?.detail ||
         t('pages.home.tracker.notFoundError', {
           defaultValue:
-            'No matching application found. Please verify your reference number and registered email address.',
+            'No matching enquiry found. Please verify your reference number and registered email address.',
         });
       setTrackError(errMsg);
     } finally {
@@ -261,52 +187,6 @@ const HomePage: React.FC = () => {
     if (c.includes('student')) return <SchoolOutlined sx={{ fontSize: 28, color: '#4F46E5' }} />;
     if (c.includes('travel') || c.includes('schengen')) return <FlightTakeoffOutlined sx={{ fontSize: 28, color: '#059669' }} />;
     return <LocalHospitalOutlined sx={{ fontSize: 28, color: '#2563EB' }} />;
-  };
-
-  const parsePlanDisplay = (plan: InsurancePlanShowcase) => {
-    let cleanName = plan.name;
-    let audience = plan.target_audience || '';
-    
-    // Cleanly extract parentheses from name (e.g. "PVZP Komplexní PLUS (Student 15-30 let)")
-    const match = plan.name.match(/^(.*?)\s*\((.*?)\)$/);
-    if (match) {
-      cleanName = match[1].trim();
-      if (!audience || audience === plan.name) {
-        audience = match[2].trim();
-      }
-    }
-
-    // Format prominent medical limit guarantee
-    let limitHighlight = '10,000,000 CZK (~€400,000) Medical Limit';
-    let cleanSummary = plan.coverage_summary || '';
-
-    if (
-      cleanSummary.includes('10,000,000') ||
-      cleanSummary.includes('400,000')
-    ) {
-      limitHighlight = '10,000,000 CZK (~€400,000) Medical Limit';
-      cleanSummary = cleanSummary
-        .replace(/10[,.0-9]+\s*CZK\s*(\(~?[0-9,.]+\s*EUR\))?\s*(medical\s*)?(limit,?\s*)?(with\s*)?/i, '')
-        .replace(/^with\s+/i, '')
-        .replace(/^limit,\s*/i, '')
-        .trim();
-      if (cleanSummary) {
-        cleanSummary = cleanSummary.charAt(0).toUpperCase() + cleanSummary.slice(1);
-      }
-    } else if (cleanSummary.toLowerCase().includes('schengen') || cleanSummary.toLowerCase().includes('travel')) {
-      limitHighlight = '€30,000 Schengen Compliant Minimum';
-    }
-
-    if (!cleanSummary) {
-      cleanSummary = 'Direct hospital billing across contracted medical facilities in the Czech Republic.';
-    }
-
-    const isStudent =
-      cleanName.toLowerCase().includes('student') ||
-      audience.toLowerCase().includes('student') ||
-      plan.category.toLowerCase().includes('student');
-
-    return { cleanName, audience, limitHighlight, cleanSummary, isStudent };
   };
 
   const getStatusColor = (status: string) => {
@@ -324,7 +204,7 @@ const HomePage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
-      {/* 1. Regulatory / Agency Announcement Banner */}
+      {/* 1. Regulatory / Informational Announcement Banner */}
       {banner && bannerVisible && (
         <Paper
           elevation={0}
@@ -424,7 +304,7 @@ const HomePage: React.FC = () => {
                     wordBreak: 'break-word',
                   }}
                 >
-                  {banner.id === 1 && banner.subtitle.includes('All insurance certificates issued through our agency meet')
+                  {banner.id === 1 && banner.subtitle.includes('Foreign nationals applying for Czech long-term visas')
                     ? t('pages.home.banner.defaultSubtitle', { defaultValue: banner.subtitle })
                     : banner.subtitle}
                 </Typography>
@@ -443,7 +323,7 @@ const HomePage: React.FC = () => {
             <Button
               variant="contained"
               size="small"
-              onClick={() => handleGetStarted('health')}
+              onClick={scrollToInquiry}
               sx={{
                 px: 2.2,
                 py: 0.7,
@@ -455,9 +335,7 @@ const HomePage: React.FC = () => {
                 boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
               }}
             >
-              {banner.id === 1 && (banner.button_text === 'Apply Online' || banner.button_text === 'Apply Now')
-                ? t('pages.home.banner.defaultButton', { defaultValue: 'Apply Online' })
-                : banner.button_text || t('pages.home.banner.learnMore', { defaultValue: 'Apply Online' })}
+              {t('pages.home.banner.defaultButton', { defaultValue: 'Request Options' })}
             </Button>
           </Box>
         </Paper>
@@ -469,12 +347,14 @@ const HomePage: React.FC = () => {
           textAlign: 'center',
           maxWidth: 860,
           mx: 'auto',
-          mb: { xs: 6, md: 9 },
+          mb: { xs: 6, md: 8 },
         }}
       >
         <Chip
           icon={<VerifiedUserOutlined sx={{ fontSize: 16 }} />}
-          label={t('pages.home.authorizedBroker', { defaultValue: 'Authorized European Insurance Broker • Czech Republic & EU Standards' })}
+          label={t('pages.home.roleBadge', {
+            defaultValue: 'International Student Health Insurance Enquiry • One-Shot Intake',
+          })}
           sx={{
             mb: 3,
             px: 1.5,
@@ -500,7 +380,7 @@ const HomePage: React.FC = () => {
           gutterBottom
           sx={{
             fontWeight: 800,
-            fontSize: { xs: '2.25rem', sm: '3.15rem', md: '3.85rem' },
+            fontSize: { xs: '2.2rem', sm: '3.1rem', md: '3.75rem' },
             letterSpacing: '-0.03em',
             lineHeight: 1.15,
             mb: 2.5,
@@ -512,7 +392,9 @@ const HomePage: React.FC = () => {
             WebkitTextFillColor: 'transparent',
           }}
         >
-          {t('pages.home.title', { defaultValue: 'Secure Insurance Application Portal' })}
+          {t('pages.home.title', {
+            defaultValue: 'Health Insurance Enquiry for International Students in Czechia',
+          })}
         </Typography>
 
         <Typography
@@ -522,14 +404,14 @@ const HomePage: React.FC = () => {
           sx={{
             fontSize: { xs: '1.05rem', sm: '1.25rem' },
             lineHeight: 1.6,
-            maxWidth: 720,
+            maxWidth: 740,
             mx: 'auto',
             mb: 4,
           }}
         >
           {t('pages.home.subtitle', {
             defaultValue:
-              'Official digital broker portal for student health, foreigner comprehensive residency insurance, and European travel coverage. Instant submission with verified carrier dispatch.',
+              '在线填写一次基本资料和保险需求，我们会将您的申请需求转交给合作保险中介继续处理。',
           })}
         </Typography>
 
@@ -539,13 +421,13 @@ const HomePage: React.FC = () => {
           spacing={2}
           justifyContent="center"
           alignItems="center"
-          sx={{ mb: 4 }}
+          sx={{ mb: 2 }}
         >
           <Button
             variant="contained"
             size="large"
             endIcon={<ArrowForwardOutlined />}
-            onClick={() => handleGetStarted()}
+            onClick={scrollToInquiry}
             sx={{
               px: 4.5,
               py: 1.6,
@@ -553,9 +435,10 @@ const HomePage: React.FC = () => {
               fontWeight: 700,
               borderRadius: '12px',
               boxShadow: '0 8px 24px rgba(79, 70, 229, 0.35)',
+              textTransform: 'none',
             }}
           >
-            {t('pages.home.getStarted', { defaultValue: 'Start New Application' })}
+            {t('pages.home.requestOptions', { defaultValue: '开始填写 (Start Enquiry)' })}
           </Button>
 
           <Button
@@ -570,18 +453,39 @@ const HomePage: React.FC = () => {
               fontWeight: 600,
               borderRadius: '12px',
               borderWidth: '1.5px',
+              textTransform: 'none',
             }}
           >
             {t('pages.home.trackMyApplication', { defaultValue: 'Track My Application' })}
           </Button>
         </Stack>
 
-        {/* Live Metrics Row */}
-        <Grid container spacing={2} sx={{ mb: 4, maxWidth: 700, mx: 'auto' }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: 'block', mb: 4, fontSize: '0.82rem' }}
+        >
+          {t('pages.home.partnerDisclaimerFootnote', {
+            defaultValue:
+              'Insurance products and regulated insurance services are handled by our intermediary partner (České pojištění a.s.).',
+          })}
+        </Typography>
+
+        {/* Value Metrics Row */}
+        <Grid container spacing={2} sx={{ mb: 4, maxWidth: 720, mx: 'auto' }}>
           {[
-            { value: 'Act 326/1999', label: t('pages.home.metrics.actCompliance', { defaultValue: 'Czech OAMP Compliant' }) },
-            { value: '< 3 Min', label: t('pages.home.metrics.rapidApp', { defaultValue: 'Rapid Application' }) },
-            { value: 'AES-256 GCM', label: t('pages.home.metrics.bankPrivacy', { defaultValue: 'Bank-Grade Privacy' }) },
+            {
+              value: 'Act 326/1999',
+              label: t('pages.home.metrics.actCompliance', { defaultValue: 'Czech OAMP Compliant Standards' }),
+            },
+            {
+              value: '< 2 Min',
+              label: t('pages.home.metrics.rapidApp', { defaultValue: 'Rapid Online Enquiry' }),
+            },
+            {
+              value: 'AES-256 GCM',
+              label: t('pages.home.metrics.bankPrivacy', { defaultValue: 'Encrypted Lead Forwarding' }),
+            },
           ].map((metric, i) => (
             <Grid item xs={4} key={i}>
               <Box
@@ -628,19 +532,24 @@ const HomePage: React.FC = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <LockOutlined sx={{ fontSize: 18, color: 'success.main' }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              {t('pages.home.securityBadges.endToEnd', { defaultValue: 'End-to-End Encrypted Storage' })}
+              {t('pages.home.securityBadges.endToEnd', { defaultValue: 'AES-256-GCM Encrypted Storage' })}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <SpeedOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              {t('pages.home.securityBadges.autoEmail', { defaultValue: 'Automatic Tracking Confirmation Email' })}
+              {t('pages.home.securityBadges.autoEmail', { defaultValue: 'Automatic Reference & Status Tracking' })}
             </Typography>
           </Box>
         </Stack>
       </Box>
 
-      {/* 3. Dual-Factor Application Status Tracker Section */}
+      {/* 3. Lead Intake Form Section */}
+      <Box ref={inquirySectionRef} id="inquiry-form-section" sx={{ mb: { xs: 8, md: 11 } }}>
+        <LeadInquiryForm onSuccess={handleInquirySuccess} />
+      </Box>
+
+      {/* 4. Dual-Factor Application / Enquiry Status Tracker Section */}
       <Box ref={trackSectionRef} id="track-status" sx={{ mb: { xs: 8, md: 11 } }}>
         <Card
           sx={{
@@ -683,11 +592,14 @@ const HomePage: React.FC = () => {
                 <SearchOutlined fontSize="small" />
               </Box>
               <Typography variant="h5" sx={{ fontWeight: 800 }}>
-                {t('pages.home.tracker.title', { defaultValue: 'Track Application Status' })}
+                {t('pages.home.tracker.title', { defaultValue: 'Track Enquiry Status' })}
               </Typography>
             </Stack>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              {t('pages.home.tracker.subtitle', { defaultValue: 'Enter your tracking reference number and registered email address to check real-time underwriting progress.' })}
+              {t('pages.home.tracker.subtitle', {
+                defaultValue:
+                  'Enter your reference number and registered email address to check real-time forwarding and handling status.',
+              })}
             </Typography>
 
             {/* Tracking Form */}
@@ -834,7 +746,7 @@ const HomePage: React.FC = () => {
                 </Typography>
 
                 <Stack spacing={2}>
-                  {trackResult.timeline?.map((step, idx) => (
+                  {trackResult.timeline?.map((step) => (
                     <Box
                       key={step.key}
                       sx={{
@@ -892,435 +804,214 @@ const HomePage: React.FC = () => {
         </Card>
       </Box>
 
-      {/* 4. Curated Insurance Plans (Dynamic Czech / Universal Showcase) */}
-      <Box sx={{ mb: { xs: 8, md: 11 } }}>
-        <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Chip
-            label={t('pages.home.plans.badge', { defaultValue: 'Curated Coverage Tiers' })}
-            size="small"
-            sx={{ fontWeight: 600, mb: 1.5, backgroundColor: 'rgba(79, 70, 229, 0.1)', color: 'primary.main' }}
-          />
-          <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.4rem' } }}>
-            {t('pages.home.plans.title', { defaultValue: 'Recommended Insurance Plans' })}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', mt: 1 }}>
-            {t('pages.home.plans.subtitle', { defaultValue: 'Fully certified by Czech regulatory authorities (OAMP) for foreign students, expatriates, and travelers.' })}
-          </Typography>
-        </Box>
+      {/* 5. Educational Framework Section (Active in LEAD_ONLY when plans list is empty) */}
+      {plans.length === 0 ? (
+        <Box sx={{ mb: { xs: 8, md: 11 } }}>
+          <Box sx={{ textAlign: 'center', mb: 5 }}>
+            <Chip
+              label={t('pages.home.guide.badge', { defaultValue: 'Czech Visa & Residency Guide' })}
+              size="small"
+              sx={{ fontWeight: 600, mb: 1.5, backgroundColor: 'rgba(79, 70, 229, 0.1)', color: 'primary.main' }}
+            />
+            <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.4rem' } }}>
+              {t('pages.home.guide.title', { defaultValue: 'Understanding Czech Foreigners Health Insurance' })}
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 660, mx: 'auto', mt: 1 }}>
+              {t('pages.home.guide.subtitle', {
+                defaultValue:
+                  'Official statutory compliance criteria under Czech Act No. 326/1999 Coll. for international students, interns, and foreign residents.',
+              })}
+            </Typography>
+          </Box>
 
-        <Grid container spacing={3.5} justifyContent="center" alignItems="stretch">
-          {plans.map((plan) => {
-            const { cleanName, audience, limitHighlight, cleanSummary, isStudent } = parsePlanDisplay(plan);
-            const gridCols =
-              plans.length === 3
-                ? { xs: 12, sm: 6, md: 4 }
-                : plans.length === 2
-                ? { xs: 12, sm: 6, md: 5 }
-                : plans.length === 1
-                ? { xs: 12, sm: 8, md: 6 }
-                : { xs: 12, sm: 6, md: 3 };
-
-            return (
-              <Grid item {...gridCols} key={plan.id} sx={{ display: 'flex' }}>
+          <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+            {[
+              {
+                icon: <LocalHospitalOutlined sx={{ fontSize: 32, color: '#4F46E5' }} />,
+                title: t('pages.home.guide.card1Title', { defaultValue: 'Comprehensive Health Insurance (Komplexní)' }),
+                badge: t('pages.home.guide.card1Badge', { defaultValue: 'Mandatory for Visa >90 Days' }),
+                description: t('pages.home.guide.card1Desc', {
+                  defaultValue:
+                    'Required for long-term visa, residence permit, and extension applications at OAMP (Czech Ministry of the Interior). Covers outpatient diagnosis, hospitalization, emergency dental, prescription drugs, and repatriation.',
+                }),
+              },
+              {
+                icon: <SchoolOutlined sx={{ fontSize: 32, color: '#059669' }} />,
+                title: t('pages.home.guide.card2Title', { defaultValue: 'Student & Youth Preferential Rates' }),
+                badge: t('pages.home.guide.card2Badge', { defaultValue: 'Ages 15–30' }),
+                description: t('pages.home.guide.card2Desc', {
+                  defaultValue:
+                    'University students and youths aged 15–30 qualify for substantial discounts from accredited insurance providers. Our partner prepares options aligned with your age bracket and academic term.',
+                }),
+              },
+              {
+                icon: <ShieldOutlined sx={{ fontSize: 32, color: '#D97706' }} />,
+                title: t('pages.home.guide.card3Title', { defaultValue: 'Direct Hospital Settlement Networks' }),
+                badge: t('pages.home.guide.card3Badge', { defaultValue: 'Nationwide Contracted Clinics' }),
+                description: t('pages.home.guide.card3Desc', {
+                  defaultValue:
+                    'Leading healthcare provider networks across Prague (Motol, FNKV, VFN), Brno, and regional university cities support direct insurance billing, minimizing out-of-pocket expenses for students.',
+                }),
+              },
+            ].map((card, idx) => (
+              <Grid item xs={12} md={4} key={idx} sx={{ display: 'flex' }}>
                 <Card
                   sx={{
                     width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
+                    p: 3.5,
                     borderRadius: '20px',
-                    border: plan.is_featured
-                      ? '2px solid rgba(79, 70, 229, 0.45)'
-                      : '1px solid rgba(15, 23, 42, 0.08)',
-                    boxShadow: plan.is_featured
-                      ? '0 12px 32px -4px rgba(79, 70, 229, 0.22)'
-                      : '0 4px 16px -2px rgba(0, 0, 0, 0.04)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative',
-                    overflow: 'visible',
-                    '&:hover': {
-                      transform: 'translateY(-6px)',
-                      boxShadow: '0 18px 40px -4px rgba(79, 70, 229, 0.28)',
-                    },
-                  }}
-                >
-                  {/* Top Popular / Value Badge */}
-                  {plan.badge && (
-                    <Chip
-                      label={plan.badge}
-                      size="small"
-                      sx={{
-                        position: 'absolute',
-                        top: 16,
-                        right: 16,
-                        fontWeight: 700,
-                        fontSize: '0.725rem',
-                        backgroundColor: plan.is_featured ? 'primary.main' : 'rgba(79, 70, 229, 0.1)',
-                        color: plan.is_featured ? '#FFFFFF' : 'primary.main',
-                        borderRadius: '8px',
-                        boxShadow: plan.is_featured ? '0 2px 8px rgba(79, 70, 229, 0.3)' : 'none',
-                      }}
-                    />
-                  )}
-
-                  <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    {/* Carrier Icon & Category */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 1.5 }}>
-                      <Box sx={{ p: 1, borderRadius: '10px', backgroundColor: 'rgba(79, 70, 229, 0.06)' }}>
-                        {getPlanCategoryIcon(plan.category)}
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          sx={{ textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}
-                        >
-                          {plan.company_name}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500 }}>
-                          {plan.category}
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    {/* Clean Plan Title */}
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 800,
-                        fontSize: '1.25rem',
-                        lineHeight: 1.3,
-                        mb: 1.2,
-                        minHeight: 32,
-                        color: 'text.primary',
-                      }}
-                    >
-                      {cleanName}
-                    </Typography>
-
-                    {/* Student Discount & Promotional Highlight Banner (醒目提示区 / 广告美观设计) */}
-                    {isStudent ? (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          px: 1.5,
-                          py: 0.85,
-                          mb: 2,
-                          borderRadius: '10px',
-                          background:
-                            theme.palette.mode === 'light'
-                              ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(147, 51, 234, 0.08) 100%)'
-                              : 'linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.18) 100%)',
-                          border:
-                            theme.palette.mode === 'light'
-                              ? '1px solid rgba(79, 70, 229, 0.3)'
-                              : '1px solid rgba(129, 140, 248, 0.35)',
-                        }}
-                      >
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <SchoolOutlined sx={{ fontSize: 20, color: 'primary.main', flexShrink: 0 }} />
-                          <Box>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                fontWeight: 800,
-                                fontSize: '0.78rem',
-                                color: 'primary.main',
-                                display: 'block',
-                                lineHeight: 1.1,
-                                letterSpacing: '0.02em',
-                              }}
-                            >
-                              {t('pages.home.plans.studentSpecialTag', { defaultValue: 'Student Discount' })}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              sx={{
-                                fontSize: '0.72rem',
-                                color: 'text.secondary',
-                                fontWeight: 600,
-                              }}
-                            >
-                              {audience || '15–30 let'}
-                            </Typography>
-                          </Box>
-                        </Box>
-                        <Chip
-                          label={t('pages.home.plans.promoTag', { defaultValue: 'Special Rate' })}
-                          size="small"
-                          sx={{
-                            height: 22,
-                            fontSize: '0.675rem',
-                            fontWeight: 800,
-                            backgroundColor: 'primary.main',
-                            color: '#FFFFFF',
-                            borderRadius: '6px',
-                          }}
-                        />
-                      </Box>
-                    ) : audience ? (
-                      <Box
-                        sx={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 0.8,
-                          px: 1.25,
-                          py: 0.6,
-                          mb: 2,
-                          borderRadius: '8px',
-                          backgroundColor:
-                            theme.palette.mode === 'light'
-                              ? 'rgba(15, 23, 42, 0.04)'
-                              : 'rgba(255, 255, 255, 0.06)',
-                          border: '1px solid rgba(148, 163, 184, 0.2)',
-                          width: 'fit-content',
-                        }}
-                      >
-                        <VerifiedUserOutlined sx={{ fontSize: 16, color: 'text.secondary' }} />
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            fontWeight: 600,
-                            fontSize: '0.75rem',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          {audience}
-                        </Typography>
-                      </Box>
-                    ) : null}
-
-                    {/* Price & Billing Period on Same Single Line (紧凑单行基线对齐，绝对无空行) */}
-                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.75, mb: 2 }}>
-                      <Typography
-                        variant="h3"
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: { xs: '2.1rem', sm: '2.35rem' },
-                          color: 'primary.main',
-                          letterSpacing: '-0.02em',
-                          lineHeight: 1,
-                        }}
-                      >
-                        {plan.price_amount > 0
-                          ? plan.price_amount.toLocaleString()
-                          : t('pages.home.plans.customRate', { defaultValue: 'Custom' })}
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{ fontWeight: 800, color: 'text.primary', lineHeight: 1 }}
-                      >
-                        {plan.currency}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary', fontWeight: 600, ml: 0.2, lineHeight: 1 }}
-                      >
-                        {plan.billing_period === 'month'
-                          ? t('pages.home.plans.perMonth', { defaultValue: '/ month' })
-                          : t('pages.home.plans.perYear', { defaultValue: '/ year' })}
-                      </Typography>
-                    </Box>
-
-                    {/* Medical Coverage Guarantee Banner */}
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1.25,
-                        p: 1.25,
-                        mb: 2,
-                        borderRadius: '10px',
-                        backgroundColor:
-                          theme.palette.mode === 'light'
-                            ? 'rgba(16, 185, 129, 0.08)'
-                            : 'rgba(16, 185, 129, 0.14)',
-                        border: '1px solid rgba(16, 185, 129, 0.25)',
-                      }}
-                    >
-                      <ShieldOutlined sx={{ fontSize: 22, color: '#10B981', flexShrink: 0 }} />
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            display: 'block',
-                            fontWeight: 800,
-                            fontSize: '0.825rem',
-                            color: theme.palette.mode === 'light' ? '#047857' : '#34D399',
-                            lineHeight: 1.2,
-                          }}
-                        >
-                          {limitHighlight}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            display: 'block',
-                            fontSize: '0.7rem',
-                            color: theme.palette.mode === 'light' ? '#065F46' : '#A7F3D0',
-                            fontWeight: 600,
-                            mt: 0.2,
-                          }}
-                        >
-                          {t('pages.home.plans.actCertified', { defaultValue: 'Czech Act No. 326/1999 Coll. Certified' })}
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    {/* Clean Descriptive Details */}
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mb: 2.5, minHeight: 42, fontSize: '0.85rem', lineHeight: 1.5 }}
-                    >
-                      {cleanSummary}
-                    </Typography>
-
-                    {/* Features Checklist */}
-                    {plan.features && (
-                      <Stack spacing={1} sx={{ mb: 3, flex: 1 }}>
-                        {plan.features.split('\n').map((feat, i) => (
-                          <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
-                            <CheckCircleOutline
-                              sx={{ fontSize: 16, color: '#10B981', mt: 0.2, flexShrink: 0 }}
-                            />
-                            <Typography
-                              variant="caption"
-                              color="text.primary"
-                              sx={{ fontWeight: 500, fontSize: '0.8rem', lineHeight: 1.4 }}
-                            >
-                              {feat}
-                            </Typography>
-                          </Box>
-                        ))}
-                      </Stack>
-                    )}
-
-                    {/* Apply Now Button */}
-                    <Button
-                      variant={plan.is_featured ? 'contained' : 'outlined'}
-                      fullWidth
-                      onClick={() =>
-                        handleGetStarted(
-                          plan.category.toLowerCase().includes('travel') ? 'travel' : 'health'
-                        )
-                      }
-                      sx={{
-                        mt: 'auto',
-                        fontWeight: 700,
-                        borderRadius: '12px',
-                        py: 1.2,
-                        textTransform: 'none',
-                        fontSize: '0.925rem',
-                        boxShadow: plan.is_featured ? '0 4px 14px rgba(79, 70, 229, 0.35)' : 'none',
-                      }}
-                    >
-                      {t('pages.home.plans.applyNow', { defaultValue: 'Apply Now' })}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-
-      {/* 5. Partner Underwriters Trust Wall */}
-      <Box sx={{ mb: { xs: 8, md: 10 } }}>
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Chip
-            label={t('pages.home.partners.badge', { defaultValue: 'Underwriting Partners' })}
-            size="small"
-            sx={{ fontWeight: 600, mb: 1, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#059669' }}
-          />
-          <Typography variant="h4" sx={{ fontWeight: 800 }}>
-            {t('pages.home.partners.title', { defaultValue: 'Underwritten by Leading European Insurers' })}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 580, mx: 'auto', mt: 0.5 }}>
-            {t('pages.home.partners.subtitle', { defaultValue: 'Our agency is authorized to bind coverage directly with leading insurance institutions in the Czech Republic.' })}
-          </Typography>
-        </Box>
-
-        <Grid container spacing={3.5} justifyContent="center" alignItems="stretch">
-          {companies.map((company) => {
-            const companyGridCols =
-              companies.length === 3
-                ? { xs: 12, sm: 6, md: 4 }
-                : companies.length === 2
-                ? { xs: 12, sm: 6, md: 5 }
-                : companies.length === 1
-                ? { xs: 12, sm: 8, md: 6 }
-                : { xs: 12, sm: 6, md: 3 };
-
-            return (
-              <Grid item {...companyGridCols} key={company.id} sx={{ display: 'flex' }}>
-                <Card
-                  sx={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '16px',
                     border: '1px solid rgba(15, 23, 42, 0.08)',
-                    p: 2.5,
+                    boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      borderColor: 'primary.main',
-                      boxShadow: '0 8px 24px -4px rgba(79, 70, 229, 0.12)',
-                    },
                   }}
                 >
-                  <Box sx={{ flex: 1 }}>
-                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
-                      <ShieldOutlined sx={{ color: 'primary.main', fontSize: 22 }} />
-                      <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
-                        {company.name}
-                      </Typography>
-                    </Stack>
-                    <Chip
-                      label={company.rating}
-                      size="small"
-                      sx={{
-                        mb: 1.5,
-                        fontWeight: 600,
-                        fontSize: '0.725rem',
-                        backgroundColor: 'rgba(59, 130, 246, 0.08)',
-                        color: '#2563EB',
-                      }}
-                    />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.825rem', lineHeight: 1.5 }}>
-                      {company.description}
-                    </Typography>
-                  </Box>
-                  {company.website && (
-                    <Box sx={{ mt: 2, pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
-                      <Link
-                        href={company.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                      <Box
                         sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 0.5,
-                          fontSize: '0.8rem',
-                          fontWeight: 600,
-                          textDecoration: 'none',
+                          p: 1.25,
+                          borderRadius: '12px',
+                          backgroundColor: 'rgba(79, 70, 229, 0.08)',
+                          display: 'inline-flex',
                         }}
                       >
-                        {t('pages.home.partners.officialPortal', { defaultValue: 'Official Portal' })} <OpenInNewOutlined sx={{ fontSize: 14 }} />
-                      </Link>
-                    </Box>
-                  )}
+                        {card.icon}
+                      </Box>
+                      <Chip
+                        label={card.badge}
+                        size="small"
+                        sx={{ fontWeight: 700, fontSize: '0.72rem', backgroundColor: 'rgba(79, 70, 229, 0.08)' }}
+                      />
+                    </Stack>
+                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.2, fontSize: '1.15rem' }}>
+                      {card.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, fontSize: '0.875rem' }}>
+                      {card.description}
+                    </Typography>
+                  </Box>
                 </Card>
               </Grid>
-            );
-          })}
-        </Grid>
+            ))}
+          </Grid>
+        </Box>
+      ) : null}
+
+      {/* 6. Licensed Intermediary Partner Transparency Card (Replaces uncertified broker / direct carrier claims) */}
+      <Box sx={{ mb: { xs: 8, md: 10 } }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 3, sm: 4.5 },
+            borderRadius: '24px',
+            backgroundColor:
+              theme.palette.mode === 'light' ? 'rgba(248, 250, 252, 0.95)' : 'rgba(15, 23, 42, 0.8)',
+            border:
+              theme.palette.mode === 'light'
+                ? '1px solid rgba(79, 70, 229, 0.15)'
+                : '1px solid rgba(129, 140, 248, 0.2)',
+          }}
+        >
+          <Grid container spacing={3.5} alignItems="center">
+            <Grid item xs={12} md={7}>
+              <Chip
+                label={t('pages.home.partnerIntermediary.badge', {
+                  defaultValue: 'Statutory Cooperation • Licensed Intermediary',
+                })}
+                size="small"
+                sx={{
+                  mb: 1.5,
+                  fontWeight: 700,
+                  backgroundColor: 'rgba(16, 185, 129, 0.12)',
+                  color: '#059669',
+                }}
+              />
+              <Typography variant="h4" sx={{ fontWeight: 800, mb: 1.5, fontSize: { xs: '1.5rem', sm: '1.9rem' } }}>
+                {t('pages.home.partnerIntermediary.title', {
+                  defaultValue: 'Cooperation with Licensed Insurance Intermediary',
+                })}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7, fontSize: '0.9rem', mb: 2 }}>
+                {t('pages.home.partnerIntermediary.disclosure', {
+                  defaultValue:
+                    'FormVault is operated by HKTSE s.r.o. under a cooperation agreement with České pojištění a.s. HKTSE collects basic insurance enquiries and contact details and forwards them to České pojištění a.s. HKTSE is not an insurance company or insurance intermediary. Insurance advice, product offers and regulated insurance distribution are handled by České pojištění a.s.',
+                })}
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mt: 2 }}>
+                <Link
+                  href="https://hktse.eu.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                  }}
+                >
+                  HKTSE s.r.o. (IČO: 10858032) <OpenInNewOutlined sx={{ fontSize: 14 }} />
+                </Link>
+                <Link
+                  href="https://ceskepojisteni.cz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    color: 'primary.main',
+                  }}
+                >
+                  České pojištění a.s. (IČO: 07963363) <OpenInNewOutlined sx={{ fontSize: 14 }} />
+                </Link>
+              </Stack>
+            </Grid>
+
+            <Grid item xs={12} md={5}>
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 3,
+                  borderRadius: '16px',
+                  backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : 'rgba(30, 41, 59, 0.6)',
+                  border: '1px solid rgba(0, 0, 0, 0.08)',
+                }}
+              >
+                <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2 }}>
+                  <SupportAgentOutlined sx={{ color: 'primary.main', fontSize: 28 }} />
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
+                      {t('pages.home.partnerIntermediary.partnerCardTitle', {
+                        defaultValue: 'České pojištění a.s.',
+                      })}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {t('pages.home.partnerIntermediary.partnerRole', {
+                        defaultValue: 'Licensed Insurance Intermediary (Makléř)',
+                      })}
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.825rem', lineHeight: 1.6 }}>
+                  {t('pages.home.partnerIntermediary.partnerDesc', {
+                    defaultValue:
+                      'Registered intermediary regulated under Czech National Bank (ČNB) supervision, authorized to distribute comprehensive foreigners health insurance and provide professional policy advice.',
+                  })}
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Paper>
       </Box>
 
-      {/* 6. Feature Cards (Streamlined, Compact, High-Tech, Fully Customizable via Backend Config) */}
+      {/* 7. Feature Cards (Streamlined, Accurate Technical Wording) */}
       <Grid container spacing={2.5} sx={{ mb: 1 }}>
         {(customFeatures && customFeatures.length > 0
           ? customFeatures.map((item) => ({
@@ -1334,27 +1025,27 @@ const HomePage: React.FC = () => {
               {
                 icon: <SecurityOutlined sx={{ fontSize: 24, color: '#4F46E5' }} />,
                 badge: 'AES-256 GCM',
-                title: t('pages.home.features.secure', { defaultValue: 'Authenticated AES-256 GCM Vault' }),
+                title: t('pages.home.features.secure', { defaultValue: 'AES-256-GCM Secure Data Vault' }),
                 description: t('pages.home.features.secureDesc', {
-                  defaultValue: 'Authenticated symmetric encryption with per-document nonces and PBKDF2 key derivation. Decryption restricted to verified underwriters.',
+                  defaultValue: 'Authenticated symmetric encryption with per-document nonces and cryptographic key derivation to protect customer enquiry data.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
               },
               {
                 icon: <LanguageOutlined sx={{ fontSize: 24, color: '#059669' }} />,
                 badge: '12 Languages',
-                title: t('pages.home.features.multilingual', { defaultValue: '12-Language Multilingual Intake' }),
+                title: t('pages.home.features.multilingual', { defaultValue: 'Multilingual Chinese & English Support' }),
                 description: t('pages.home.features.multilingualDesc', {
-                  defaultValue: 'Seamless cross-border applications compliant with Czech Ministry (OAMP) naming and residency requirements.',
+                  defaultValue: 'Seamless cross-border communication designed to assist international students and expatriates relocating to the Czech Republic.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.12) 100%)',
               },
               {
-                icon: <PhoneAndroidOutlined sx={{ fontSize: 24, color: '#D97706' }} />,
-                badge: 'Zero-Trace Sandbox',
-                title: t('pages.home.features.mobile', { defaultValue: 'Volatile Session Sandbox' }),
-                description: t('pages.home.features.mobileDesc', {
-                  defaultValue: 'Instant camera OCR & sandboxed session state. Sensitive identity credentials vanish upon session exit.',
+                icon: <AssignmentOutlined sx={{ fontSize: 24, color: '#D97706' }} />,
+                badge: 'Tamper-Evident',
+                title: t('pages.home.features.audit', { defaultValue: 'Tamper-Evident Audit Trail' }),
+                description: t('pages.home.features.auditDesc', {
+                  defaultValue: 'Cryptographically hashed timeline records each stage of enquiry handoff and intermediary consultation with zero data ambiguity.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%)',
               },
@@ -1411,7 +1102,7 @@ const HomePage: React.FC = () => {
                       size="small"
                       sx={{
                         fontSize: '0.7rem',
-                        fontWeight: 700,
+                        fontWeight: 750,
                         letterSpacing: '0.02em',
                         borderRadius: '6px',
                         height: 22,

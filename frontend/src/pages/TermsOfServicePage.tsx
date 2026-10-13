@@ -32,7 +32,7 @@ const TermsOfServicePage: React.FC = () => {
         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', lineHeight: 1.6 }}>
           {t('pages.terms.subtitle', {
             defaultValue:
-              'Standard commercial and intermediary terms governing insurance application submission, document verification, and brokerage mediation through the FormVault digital portal.',
+              'Terms governing online insurance enquiry intake and technical processing through the FormVault platform in cooperation with České pojištění a.s.',
           })}
         </Typography>
       </Box>
@@ -49,12 +49,12 @@ const TermsOfServicePage: React.FC = () => {
         <Stack spacing={4}>
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section1Title', { defaultValue: '1. Regulatory Status & Platform Architecture' })}
+              {t('pages.terms.section1Title', { defaultValue: '1. Service Scope & Role Delineation' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section1Lead', {
                 defaultValue:
-                  'FormVault is a specialized digital insurance intake and workflow platform operated by ',
+                  'FormVault is an online insurance enquiry and technical intake portal operated by ',
               })}
               <Link
                 href="https://hktse.eu.org/"
@@ -66,7 +66,7 @@ const TermsOfServicePage: React.FC = () => {
               >
                 HKTSE s.r.o. <OpenInNewOutlined sx={{ fontSize: 12 }} />
               </Link>
-              {' (IČO: 10858032), registered in the Commercial Register maintained by the Municipal Court in Prague. Application intake and distribution services are performed in authorized cooperation with '}
+              {' (IČO: 10858032) under a formal cooperation agreement with '}
               <Link
                 href="https://ceskepojisteni.cz/"
                 target="_blank"
@@ -77,7 +77,7 @@ const TermsOfServicePage: React.FC = () => {
               >
                 České pojištění a.s. <OpenInNewOutlined sx={{ fontSize: 12 }} />
               </Link>
-              {', an independent insurance intermediary registered with and regulated by the Czech National Bank (Česká národní banka - ČNB) pursuant to Act No. 170/2018 Coll. (Insurance Distribution Act). Policies are underwritten by authorized carriers (PVZP, Slavia, SV pojišťovna) and fully compliant with Czech Foreigners Residence Act No. 326/1999 Coll.'}
+              {'. HKTSE s.r.o. acts solely as a lead introducer (tipař) collecting basic insurance requirements and contact details. HKTSE is not an insurance company or insurance intermediary.'}
             </Typography>
           </Box>
 
@@ -85,12 +85,12 @@ const TermsOfServicePage: React.FC = () => {
 
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section2Title', { defaultValue: '2. Applicant Representations & Document Authenticity' })}
+              {t('pages.terms.section2Title', { defaultValue: '2. Regulated Insurance Distribution Handled by Intermediary' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section2Content', {
                 defaultValue:
-                  'By submitting an application and uploading identity documents (passport, student verification card, visa records), you warrant and guarantee that all submitted data is true, current, and complete. Submitting forged or altered documents is a criminal offense under Czech Penal Code (Act No. 40/2009 Coll.) and will result in immediate termination of mediation and reporting to the relevant authorities (OAMP / Czech Police).',
+                  'All regulated insurance advice, presentation of insurer offers, product recommendations, provision of statutory pre-contractual information, and conclusion of insurance contracts are conducted exclusively by licensed insurance intermediary České pojištění a.s. (supervised by the Czech National Bank ČNB per Act No. 170/2018 Coll.). FormVault does not issue insurance policies or recommend specific carriers.',
               })}
             </Typography>
           </Box>
@@ -99,12 +99,12 @@ const TermsOfServicePage: React.FC = () => {
 
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section3Title', { defaultValue: '3. Policy Issuance & Czech OAMP Compliance' })}
+              {t('pages.terms.section3Title', { defaultValue: '3. Data Intake & Intermediary Handoff' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section3Content', {
                 defaultValue:
-                  'FormVault coordinates the issuance of the official Insurance Certificate (Pojistná smlouva / Potvrzení o pojištění) compliant with the Czech Foreigners Act (Act No. 326/1999 Coll.). Once accepted and verified by the carrier, the certificate is delivered electronically to your registered email address and registered into the underwriter system.',
+                  'By submitting an enquiry through FormVault, you agree that HKTSE s.r.o. may transmit your contact details and indicated insurance requirements to České pojištění a.s. so that their licensed advisors may process your enquiry and prepare available policy options. Data is protected with authenticated encryption and processed in compliance with GDPR.',
               })}
             </Typography>
           </Box>
@@ -113,12 +113,12 @@ const TermsOfServicePage: React.FC = () => {
 
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section4Title', { defaultValue: '4. Cancellations, Refunds & Visa Refusal Policy' })}
+              {t('pages.terms.section4Title', { defaultValue: '4. Information Accuracy' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section4Content', {
                 defaultValue:
-                  'In the event that your visa or long-term residence permit application is officially denied by the Czech Ministry of the Interior (OAMP) or an Embassy/Consulate, you are entitled to a refund of premium in accordance with carrier terms, subject to providing the official written rejection notice. Processing fees or administrative deductions may apply pursuant to the individual carrier\'s contract terms.',
+                  'You represent and warrant that the contact details and basic stay parameters provided in your enquiry are accurate and truthful to enable the intermediary to prepare relevant options suited to your situation.',
               })}
             </Typography>
           </Box>
@@ -127,12 +127,12 @@ const TermsOfServicePage: React.FC = () => {
 
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 800, mb: 1.5, color: 'primary.main' }}>
-              {t('pages.terms.section5Title', { defaultValue: '5. Governing Law & Dispute Resolution' })}
+              {t('pages.terms.section5Title', { defaultValue: '5. Governing Law & Jurisdiction' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
               {t('pages.terms.section5Content', {
                 defaultValue:
-                  'These terms and any agreements mediated via this platform are exclusively governed by and construed in accordance with the laws of the Czech Republic. Any disputes arising out of or in connection with our mediation services shall be subject to the exclusive jurisdiction of the competent courts of Prague, Czech Republic.',
+                  'These terms and the technical intake services provided via this platform are governed by and construed in accordance with the laws of the Czech Republic. The competent courts of Prague, Czech Republic shall have exclusive jurisdiction.',
               })}
             </Typography>
           </Box>

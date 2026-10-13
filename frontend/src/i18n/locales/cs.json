@@ -35,8 +35,8 @@
   },
   "pages": {
     "home": {
-      "title": "Vítejte ve FormVault",
-      "subtitle": "Dokončete svou žádost o pojištění bezpečně a efektivně",
+      "title": "Poptávka zdravotního pojištění pro zahraniční studenty v ČR",
+      "subtitle": "Sdělte nám své základní požadavky. Vaši poptávku bezpečně předáme partnerskému pojišťovacímu zprostředkovateli (České pojištění a.s.), který připraví dostupné nabídky.",
       "getStarted": "Začít",
       "features": {
         "secure": "Hardwareový trezor AES-256 GCM",
@@ -46,7 +46,7 @@
         "mobile": "Bezstopý relační sandbox",
         "mobileDesc": "Okamžité snímání kamerou a sandbox relace. Citlivé identifikační údaje se při ukončení relace skartují."
       },
-      "authorizedBroker": "Autorizovaný evropský pojišťovací zprostředkovatel • Normy ČR a EU",
+      "authorizedBroker": "Poptávka zdravotního pojištění cizinců v ČR • Tipař",
       "trackMyApplication": "Sledovat mou žádost",
       "metrics": {
         "actCompliance": "V souladu s OAMP MV ČR",
@@ -82,7 +82,7 @@
         "policyDelivery": "Doručení pojistky",
         "notFoundTitle": "Žádost nenalezena",
         "notFoundDesc": "Pro zadané referenční číslo nebo e-mailovou adresu nebyla nalezena žádná pojistka. Zkontrolujte prosím zadané údaje.",
-        "supportNote": "Potřebujete urgentní pomoc s vízovou žádostí nebo pojistkou? Kontaktujte naši makléřskou kancelář:",
+        "supportNote": "Potřebujete asistenci s poptávkou pojištění nebo vízovými požadavky? Kontaktujte naši podporu:",
         "emailUs": "Napište nám přímo na e-mail",
         "historyTitle": "Nedávná vyhledávání"
       },
@@ -123,7 +123,9 @@
         "defaultButton": "Sjednat online",
         "lawCompliance": "Pojištění v plném souladu se zákonem o pobytu cizinců v ČR (zák. č. 326/1999 Sb.)",
         "lawDetails": "Všechny pojistné certifikáty vydané naší agenturou splňují nejnovější požadavky OAMP Ministerstva vnitra ČR pro dlouhodobá víza a povolení k pobytu."
-      }
+      },
+      "roleBadge": "Poptávka zdravotního pojištění cizinců v ČR • Tipař",
+      "requestOptions": "Odeslat poptávku pojištění"
     },
     "personalInfo": {
       "title": "Osobní Informace",
@@ -195,13 +197,13 @@
     "terms": {
       "badge": "Řídí se občanským zákoníkem (zák. č. 89/2012 Sb.) a zákonem o distribuci pojištění (zák. č. 170/2018 Sb.)",
       "title": "Obchodní podmínky",
-      "subtitle": "Standardní obchodní a zprostředkovatelské podmínky upravující podávání žádostí o pojištění, ověřování dokumentů a zprostředkování pojištění přes portál FormVault.",
-      "section1Title": "1. Rozsah zprostředkování a status makléře",
-      "section1Content": "FormVault působí jako zprostředkovatel pojištění dle zákona č. 170/2018 Sb. Ve spolupráci s České pojištění a.s. zprostředkováváme pojistné smlouvy mezi žadatelem a licencovanými pojistiteli (Pojišťovna VZP, a.s., Slavia pojišťovna a.s. a SV pojišťovna, a.s.).",
+      "subtitle": "Podmínky upravující sběr poptávek pojištění, předávání kontaktů a technické služby platformy FormVault.",
+      "section1Title": "1. Postavení provozovatele a rozsah služeb",
+      "section1Content": "FormVault provozuje společnost HKTSE s.r.o. (IČO: 10858032) jako tipař na základě smlouvy o spolupráci se samostatným zprostředkovatelem pojištění České pojištění a.s. dle zákona č. 170/2018 Sb. HKTSE shromažďuje základní poptávky pojištění a kontaktní údaje a předává je České pojištění a.s., které zajišťuje regulovanou distribuci pojištění, předsmluvní informace, nabídky a sjednání.",
       "section2Title": "2. Prohlášení žadatele a pravost dokumentů",
       "section2Content": "Odesláním žádosti a nahráním dokladů totožnosti (cestovní pas, potvrzení o studiu, vízum) zaručujete, že veškeré poskytnuté údaje jsou pravdivé, aktuální a úplné. Předložení padělaných nebo pozměněných dokumentů je trestným činem podle trestního zákoníku ČR (zák. č. 40/2009 Sb.) a povede k okamžitému ukončení zprostředkování a nahlášení příslušným orgánům (OAMP / Policie ČR).",
-      "section3Title": "3. Vydání pojistky a soulad s OAMP MV ČR",
-      "section3Content": "FormVault koordinuje vydání oficiálního dokladu o pojištění (Pojistná smlouva / Potvrzení o pojištění) splňujícího požadavky zákona o pobytu cizinců (zák. č. 326/1999 Sb.). Po akceptaci a ověření pojistitelem je doklad elektronicky zaslán na Váš e-mail a zaevidován v národním registru pojištění.",
+      "section3Title": "3. Předání licencovanému zprostředkovateli",
+      "section3Content": "FormVault bezpečně předává poptávku společnosti České pojištění a.s. Oficiální pojistné smlouvy, zákonné informace a nabídky poskytuje přímo České pojištění a.s. nebo akreditované pojišťovny.",
       "section4Title": "4. Zrušení, refundace a postup při zamítnutí víza",
       "section4Content": "Pokud je Vaše žádost o vízum nebo pobytové oprávnění oficiálně zamítnuta Ministerstvem vnitra ČR (OAMP) nebo zastupitelským úřadem, máte nárok na vrácení pojistného v souladu s podmínkami pojistitele po předložení úředního rozhodnutí o zamítnutí. Mohou být uplatněny administrativní poplatky dle smluvních podmínek dané pojišťovny.",
       "section5Title": "5. Rozhodné právo a řešení sporů",
@@ -228,29 +230,29 @@
         "q1": "Jak rychle obdržím oficiální doklad o pojištění po odeslání?",
         "a1": "Standardní elektronické potvrzení o pojištění je vygenerováno do 1 až 4 pracovních hodin po schválení a úhradě. Certifikované PDF s číslem pojistné smlouvy obdržíte přímo na Váš e-mail pro potřeby vízové žádosti.",
         "q2": "Jsou Vaše pojistky 100% akceptovány Ministerstvem vnitra ČR (OAMP)?",
-        "a2": "Ano. Všechna pojištění zprostředkovaná naší sítí (PVZP, Slavia, SV pojišťovna) striktně splňují požadavky Zákona o pobytu cizinců (zákon č. 326/1999 Sb.). Zahrnují komplexní zdravotní pojištění cizinců (KZPC) s limitem plnění až 10 000 000 Kč a jsou registrována v centrálním registru.",
+        "a2": "Ano. Nabídky komplexního zdravotního pojištění zprostředkované naším licencovaným partnerem České pojištění a.s. striktně splňují požadavky Zákona o pobytu cizinců (zákon č. 326/1999 Sb.) i MV ČR (OAMP) s limitem plnění až 400 000 EUR.",
         "q3": "Co dělat v případě, že je má žádost o vízum zamítnuta ambasádou?",
         "a3": "V případě zamítnutí žádosti máte nárok na vrácení pojistného dle storno podmínek pojišťovny. Zašlete kopii oficiálního rozhodnutí o zamítnutí na insurance@hktse.eu.org a my vyřídíme storno i vrácení peněz.",
         "q4": "Jak funguje přímé proplácení a úhrada lékařské péče v ČR?",
         "a4": "Ve smluvních nemocnicích a klinikách (např. Motol, FNKV, VFN v Praze či FN Brno) stačí předložit průkaz pojištěnce pro bezhotovostní ošetření. V nesmluvních zařízeních uhradíte péči a s lékařskou zprávou a fakturou požádáte o proplacení do 14 dnů.",
-        "q5": "Proč je vyžadován cestovní pas a potvrzení o studiu?",
-        "a5": "Česká legislativa vyžaduje přesné ověření totožnosti cizince pro zápis smlouvy do registru MV ČR. Nahrání potvrzení o studiu Vám navíc zajistí studentskou slevu (až 30 % úspora)."
+        "q5": "Jaké údaje jsou vyžadovány pro odeslání poptávky pojištění?",
+        "a5": "FormVault shromažďuje pouze základní parametry pobytu (délka, datum počátku, status studenta, věková kategorie) a kontaktní údaje. V rámci poptávky se neshromažďují skeny pasů ani zdravotní dotazníky."
       },
       "connectingChat": "Připojování ke konzultantovi..."
     },
     "privacy": {
       "badge": "V souladu s nařízením EU 2016/679 (GDPR) a zákonem č. 110/2019 Sb.",
       "title": "Zásady ochrany osobních údajů",
-      "subtitle": "Oficiální prohlášení o tom, jak FormVault shromažďuje, zpracovává, šifruje a chrání osobní údaje pro pojistné žádosti v ČR a EU.",
+      "subtitle": "Zásady shromažďování, šifrování a předávání základních poptávkových údajů dle GDPR.",
       "section1Title": "1. Správce osobních údajů",
-      "section1Content": "Správcem osobních údajů je FormVault Insurance Brokerage Services (se sídlem v Praze, Česká republika). Pro veškeré dotazy týkající se ochrany osobních údajů nebo kontaktování pověřence (DPO) použijte e-mail: insurance@hktse.eu.org.",
+      "section1Content": "Správcem osobních údajů pro sběr a předání poptávek je HKTSE s.r.o. (IČO: 10858032, Praha, Česká republika). E-mail: insurance@hktse.eu.org.",
       "section2Title": "2. Účel zpracování údajů a právní základ",
-      "section2Intro": "Vaše identifikační údaje (jméno, datum narození, kopie pasu/OP, status studenta, adresa) zpracováváme výhradně pro tyto účely:",
-      "section2Item1": "Sjednání a vydání zdravotního, cestovního a studentského pojištění u licencovaných pojistitelů;",
+      "section2Intro": "Shromažďujeme základní kontaktní údaje a parametry pobytu výhradně pro následující účely:",
+      "section2Item1": "Předání vaší poptávky licencovanému pojišťovacímu zprostředkovateli České pojištění a.s. na základě vašeho souhlasu;",
       "section2Item2": "Splnění zákonných požadavků zákona o pobytu cizinců (zák. č. 326/1999 Sb., požadavky OAMP MV ČR);",
       "section2Item3": "Audity, prevence podvodů a zákonná archivace dle předpisů o distribuci pojištění.",
       "section3Title": "3. Šifrování na aplikační vrstvě AES-256 GCM",
-      "section3Content": "Veškeré fotografie pasů, studentské průkazy a osobní záznamy zaslané do FormVault jsou šifrovány pomocí autentizovaného šifrování AES-256 GCM s unikátními inicializačními vektory (IV). Databáze je zcela izolována od veřejného internetu a přenosy probíhají přes TLS 1.3.",
+      "section3Content": "Vaše údaje jsou přenášeny šifrovaně přes TLS 1.3 a uloženy pomocí AES-256 GCM autentizovaného šifrování.",
       "section4Title": "4. Vaše práva podle GDPR (články 15-22)",
       "section4Intro": "Jako subjekt údajů máte následující zákonná práva:",
       "section4Item1": "Právo na přístup (čl. 15): Žádat kopii všech osobních údajů, které o Vás vedeme;",
@@ -288,8 +290,8 @@
     "privacy": "Soukromí",
     "terms": "Podmínky",
     "support": "Podpora",
-    "brokerTitle": "Zprostředkovatelské a pojišťovací služby FormVault",
-    "brokerDesc": "Licencovaný zprostředkovatel pojištění v Praze, Česká republika. Ve spolupráci s České pojištění a.s., autorizovaný partner pro PVZP, Slavia a SV pojišťovnu.",
+    "brokerTitle": "FormVault Služby poptávky pojištění",
+    "brokerDesc": "FormVault provozuje společnost HKTSE s.r.o. na základě smlouvy o spolupráci se společností České pojištění a.s. HKTSE shromažďuje základní poptávky pojištění a kontaktní údaje a předává je společnosti České pojištění a.s. HKTSE není pojišťovnou ani pojišťovacím zprostředkovatelem. Pojišťovací poradenství, nabídky produktů a regulovanou distribuci pojištění zajišťuje České pojištění a.s.",
     "techPlatformLead": "FormVault provozuje "
   },
   "forms": {
@@ -561,38 +563,38 @@
     "privacyPolicy": "Zásady ochrany osobních údajů"
   },
   "securityRail": {
-    "title": "Institucionální bezpečnostní lišta",
+    "title": "Zabezpečení a shoda systému",
     "aes": {
-      "label": "Šifrování AES-256 GCM",
-      "tooltip": "Všechny dokumenty a formulářová data jsou uložena v zašifrovaném stavu pomocí standardu AES-256 GCM."
+      "label": "Šifrování souborů AES-256 GCM",
+      "tooltip": "Nahrané soubory jsou ukládány s autentizovaným šifrováním AES-256 GCM a jedinečnými nonce."
     },
     "privacy": {
-      "label": "Role-Based izolace dat",
-      "tooltip": "Vaše citlivé osobní údaje jsou přísně izolovány a přístupné pouze oprávněným upisovatelům."
+      "label": "Řízení přístupu (RBAC)",
+      "tooltip": "Přístup k údajům zákazníků je přísně řízen na základě uživatelských rolí (RBAC)."
     },
     "tls": {
-      "label": "Aktivní kanál TLS 1.3",
-      "tooltip": "Navázán vysoce zabezpečený šifrovaný komunikační kanál."
+      "label": "Šifrovaný přenos TLS 1.3",
+      "tooltip": "Vynucený moderní šifrovaný přenos HTTPS a TLS 1.3 pro veškerou komunikaci."
     },
     "autoSave": {
-      "label": "Šifrované automatické ukládání",
-      "tooltip": "Změny konceptu se automaticky ukládají do vašeho lokálního zabezpečeného trezoru."
+      "label": "Relační ukládání konceptů",
+      "tooltip": "Rozpracované koncepty jsou bezpečně uloženy v relačním úložišti prohlížeče."
     },
     "rbac": {
-      "label": "Striktní RBAC izolace",
-      "tooltip": "Identifikační soubory jsou izolovány v režimu zero-trust; dešifrování je vyhrazeno výhradně ověřeným upisovatelům."
+      "label": "Přísná autorizace",
+      "tooltip": "Přístup k údajům je omezen výhradně na ověřené a oprávněné operátory."
     },
     "session": {
-      "label": "Rychlý relační sandbox",
-      "tooltip": "Citlivé údaje žadatele existují pouze v dočasné paměti relace, což zabraňuje ukládání na disk sdílených počítačů."
+      "label": "Ochrana soukromí relace",
+      "tooltip": "Údaje jsou vázány na aktivní relaci prohlížeče, aby se zabránilo ukládání na sdílených zařízeních."
     },
     "cnb": {
-      "label": "ČNB zprostředkovatelská shoda",
-      "tooltip": "Technická infrastruktura provozovaná HKTSE s.r.o. v autorizované spolupráci s České pojištění a.s. podle zákona č. 170/2018 Sb."
+      "label": "Spolupráce se zprostředkovatelem",
+      "tooltip": "Platformu provozuje HKTSE s.r.o. jako tipař ve spolupráci se samostatným zprostředkovatelem České pojištění a.s."
     },
     "audit": {
-      "label": "Audit odolný proti manipulaci",
-      "tooltip": "Každé dešifrování, kontrola dokumentu a aktualizace stavu generuje neměnný kryptografický záznam o auditu."
+      "label": "Auditní záznam chráněný proti manipulaci",
+      "tooltip": "Klíčové události zaznamenávají časová razítka a kryptografické hashe SHA-256 pro regulatorní dohledatelnost."
     }
   },
   "addressAssistant": {
