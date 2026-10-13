@@ -276,6 +276,18 @@ def auto_upgrade_schema(bind_engine):
                             "ALTER TABLE system_config ADD COLUMN non_lead_modes_enabled BOOLEAN DEFAULT FALSE NOT NULL"
                         )
                     )
+                if "lead_recipient_email" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN lead_recipient_email VARCHAR(100) NULL"
+                        )
+                    )
+                if "lead_handoff_enabled" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN lead_handoff_enabled BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
 
                 # Smoothly sanitize legacy wording and reset public_wording_approved to FALSE until partner review
                 try:
