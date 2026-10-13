@@ -105,6 +105,22 @@ export interface ExportApplicationResponse {
   message: string;
 }
 
+export interface LeadDocumentItem {
+  id: string;
+  document_type: string;
+  original_filename: string;
+  file_size: number;
+  mime_type: string;
+  created_at: string;
+}
+
+export interface IntakeSessionResponse {
+  success: boolean;
+  session_token: string;
+  expires_at: string;
+  message?: string;
+}
+
 export interface LeadInquiryRequest {
   first_name?: string;
   last_name?: string;
@@ -127,12 +143,19 @@ export interface LeadInquiryRequest {
   requested_start_date?: string;
   requested_duration_months?: number;
   current_location?: string;
+  czech_city?: string;
+  current_insurance_expiry_date?: string;
   general_insurance_need?: string;
   special_notes?: string;
   free_text_note?: string;
   contact_note?: string;
   handoff_consent: boolean;
   handoff_consent_text_version?: string;
+  intake_session_token?: string;
+  passport_file_id?: string;
+  study_confirmation_file_id?: string;
+  hp_website?: string;
+  cf_turnstile_response?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -281,6 +304,57 @@ export class ApplicationService {
   }
 
   /**
+   * Create temporary intake session for secure document upload
+   */
+  async createIntakeSession(): Promise<IntakeSessionResponse> {
+    const response = await apiClient.post<IntakeSessionResponse>('/applications/intake-sessions');
+    return response.data;
+  }
+
+  /**
+   * Upload encrypted intake document to session
+   */
+  async uploadIntakeDocument(
+    sessionToken: string,
+    file: File,
+    documentType: string = 'PASSPORT'
+  ): Promise<LeadDocumentItem> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('document_type', documentType);
+    const response = await apiClient.post<LeadDocumentItem>(
+      `/applications/intake-sessions/${sessionToken}/upload`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return response.data;
+  }
+
+  /**
+   * List documents currently staged in intake session
+   */
+  async getIntakeDocuments(sessionToken: string): Promise<LeadDocumentItem[]> {
+    const response = await apiClient.get<LeadDocumentItem[]>(
+      `/applications/intake-sessions/${sessionToken}/documents`
+    );
+    return response.data;
+  }
+
+  /**
+   * Delete staged document from intake session
+   */
+  async deleteIntakeDocument(sessionToken: string, documentId: string): Promise<{ success: boolean }> {
+    const response = await apiClient.delete<{ success: boolean }>(
+      `/applications/intake-sessions/${sessionToken}/documents/${documentId}`
+    );
+    return response.data;
+  }
+
+  /**
    * Get broker portal showcase data (partners, plans, banners)
    */
   async getPortalShowcase(): Promise<PortalShowcaseResponse> {
@@ -313,6 +387,13 @@ export interface PortalPublicConfig {
   form_profile_config?: string;
   features_config?: string;
   business_scope_mode?: 'LEAD_ONLY' | 'ASSISTED_APPLICATION' | 'REGULATED_DISTRIBUTION';
+  document_intake_policy?: 'DISABLED' | 'VERIFIED_LEAD' | 'INITIAL_REQUIRED';
+  passport_required?: boolean;
+  study_proof_required?: boolean;
+  anti_abuse_mode?: string;
+  turnstile_enabled?: boolean;
+  turnstile_site_key?: string;
+  contact_verification_mode?: string;
   operator_legal_name?: string;
   operator_ico?: string;
   operator_role?: string;

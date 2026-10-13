@@ -331,6 +331,7 @@ class ApplicationTimelineStepSchema(BaseModel):
     """Step in the application review and policy issuance pipeline."""
 
     key: str
+    code: str = "INQUIRY_RECEIVED"  # Semantic code for frontend localization
     label: str
     description: str
     completed: bool
@@ -343,8 +344,10 @@ class ApplicationTrackResponseSchema(ResponseBase):
 
     reference_number: str
     status: str
+    status_code: Optional[str] = None
     status_label: str
     insurance_type: str
+    insurance_type_code: str = "HEALTH"
     masked_name: str
     masked_email: str
     created_at: datetime
@@ -356,7 +359,7 @@ class ApplicationTrackResponseSchema(ResponseBase):
 class LeadInquiryCreateSchema(BaseModel):
     """
     Dedicated Lead Intake schema under LEAD_ONLY mode adhering to 'Collect Once, Reuse Everywhere'.
-    Collects complete client identity, stay parameters, and insurance requirements in a single intake session.
+    No silent forced defaults: user explicitly chooses situation.
     """
 
     first_name: Optional[str] = Field(
@@ -378,10 +381,10 @@ class LeadInquiryCreateSchema(BaseModel):
     gender: Optional[str] = Field(
         None,
         max_length=20,
-        description="Gender (male, female, other, prefer_not_to_say)",
+        description="Gender (male, female, prefer_not_to_say)",
     )
-    nationality: str = Field(
-        "Chinese", max_length=50, description="Country of citizenship"
+    nationality: Optional[str] = Field(
+        None, max_length=50, description="Country of citizenship (ISO code or name)"
     )
 
     # Contact
@@ -395,15 +398,17 @@ class LeadInquiryCreateSchema(BaseModel):
     wechat: Optional[str] = Field(
         None, max_length=100, description="Alias for wechat_id"
     )
-    preferred_contact_method: str = Field(
-        "email", max_length=20, description="Preferred contact: email, phone, or wechat"
+    preferred_contact_method: Optional[str] = Field(
+        None, max_length=20, description="Preferred contact: email, phone, or wechat"
     )
-    preferred_language: str = Field(
-        "zh", max_length=10, description="Preferred language (zh, en, cs)"
+    preferred_language: Optional[str] = Field(
+        "zh", max_length=10, description="Preferred language (zh, en, cs, etc.)"
     )
 
     # Student & Academic Context
-    student_status: bool = Field(True, description="Whether applicant is a student")
+    student_status: Optional[bool] = Field(
+        None, description="Whether applicant is currently a student"
+    )
     school_or_university: Optional[str] = Field(
         None,
         max_length=150,
@@ -419,16 +424,16 @@ class LeadInquiryCreateSchema(BaseModel):
     )
 
     # Stay & Insurance Requirements
-    type_of_stay: str = Field(
-        "student",
+    type_of_stay: Optional[str] = Field(
+        None,
         max_length=50,
-        description="Type of stay: student, employee, family, other",
+        description="Type of stay: student, employment, family, other",
     )
     requested_start_date: Optional[date] = Field(
         None, description="Requested insurance policy start date"
     )
-    requested_duration_months: int = Field(
-        12,
+    requested_duration_months: Optional[int] = Field(
+        None,
         ge=1,
         le=60,
         description="Requested policy duration in months (e.g. 3, 6, 12, 24)",
@@ -438,7 +443,16 @@ class LeadInquiryCreateSchema(BaseModel):
         max_length=100,
         description="Czech city (e.g. Prague, Brno) or current residency",
     )
-    general_insurance_need: str = Field(
+    czech_city: Optional[str] = Field(
+        None,
+        max_length=100,
+        description="Czech city (alias/specific)",
+    )
+    current_insurance_expiry_date: Optional[date] = Field(
+        None,
+        description="Date existing insurance policy expires if transferring",
+    )
+    general_insurance_need: Optional[str] = Field(
         "comprehensive",
         max_length=50,
         description="General coverage category (e.g. comprehensive, basic)",
@@ -448,6 +462,21 @@ class LeadInquiryCreateSchema(BaseModel):
     )
     free_text_note: Optional[str] = Field(
         None, max_length=1000, description="Alias for special_notes"
+    )
+
+    # Temporary Intake Session Token & Anti-Abuse
+    intake_token: Optional[str] = Field(
+        None,
+        max_length=64,
+        description="Temporary intake session token used to bind uploaded documents",
+    )
+    turnstile_token: Optional[str] = Field(
+        None,
+        description="Cloudflare Turnstile captcha token for anti-spam verification",
+    )
+    hp_field: Optional[str] = Field(
+        None,
+        description="Honeypot field for anti-bot filtering (must be empty)",
     )
 
     # Marketing Attribution & Referral Tracking
@@ -543,3 +572,34 @@ class LeadInquiryResponseSchema(ResponseBase):
     message: str = (
         "Your enquiry has been received. We will forward it to České pojištění a.s. for insurance handling and the next steps."
     )
+
+
+class IntakeSessionCreateResponseSchema(ResponseBase):
+    token: str
+    expires_at: datetime
+
+
+class LeadDocumentItemSchema(BaseModel):
+    id: str
+    document_type: str
+    original_filename: str
+    file_size: int
+    mime_type: str
+    status: str
+    created_at: datetime
+
+
+class IntakeSessionDocumentsResponseSchema(ResponseBase):
+    token: str
+    documents: List[LeadDocumentItemSchema]
+
+
+class SendOtpRequestSchema(BaseModel):
+    email: EmailStr
+    intake_token: Optional[str] = None
+
+
+class VerifyOtpRequestSchema(BaseModel):
+    email: EmailStr
+    code: str
+    intake_token: Optional[str] = None

@@ -288,6 +288,78 @@ def auto_upgrade_schema(bind_engine):
                             "ALTER TABLE system_config ADD COLUMN lead_handoff_enabled BOOLEAN DEFAULT FALSE NOT NULL"
                         )
                     )
+                if "document_intake_policy" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN document_intake_policy VARCHAR(30) DEFAULT 'DISABLED' NOT NULL"
+                        )
+                    )
+                if "passport_required" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN passport_required BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
+                if "study_proof_required" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN study_proof_required BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
+                if "accepted_study_proof_types" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN accepted_study_proof_types VARCHAR(255) DEFAULT '[\"confirmation_of_study\", \"student_id\", \"isic\"]' NOT NULL"
+                        )
+                    )
+                if "document_collection_approved" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN document_collection_approved BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
+                if "document_collection_evidence_id" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN document_collection_evidence_id VARCHAR(100) NULL"
+                        )
+                    )
+                if "document_collection_approved_at" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN document_collection_approved_at DATETIME NULL"
+                        )
+                    )
+                if "anti_abuse_mode" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN anti_abuse_mode VARCHAR(30) DEFAULT 'NORMAL' NOT NULL"
+                        )
+                    )
+                if "turnstile_enabled" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN turnstile_enabled BOOLEAN DEFAULT FALSE NOT NULL"
+                        )
+                    )
+                if "turnstile_site_key" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN turnstile_site_key VARCHAR(150) NULL"
+                        )
+                    )
+                if "turnstile_secret_key" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN turnstile_secret_key VARCHAR(150) NULL"
+                        )
+                    )
+                if "contact_verification_mode" not in cfg_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE system_config ADD COLUMN contact_verification_mode VARCHAR(30) DEFAULT 'NONE' NOT NULL"
+                        )
+                    )
 
                 # Smoothly sanitize legacy wording and reset public_wording_approved to FALSE until partner review
                 try:
@@ -495,6 +567,26 @@ def auto_upgrade_schema(bind_engine):
                         text(
                             "ALTER TABLE audit_logs ADD COLUMN entry_hash VARCHAR(64) NULL"
                         )
+                    )
+
+            # 5. lead_inquiries (Stay specifics & Document linking)
+            if "lead_inquiries" in table_names:
+                lead_cols = {c["name"] for c in inspector.get_columns("lead_inquiries")}
+                if "czech_city" not in lead_cols:
+                    conn.execute(
+                        text("ALTER TABLE lead_inquiries ADD COLUMN czech_city VARCHAR(100) NULL")
+                    )
+                if "current_insurance_expiry_date" not in lead_cols:
+                    conn.execute(
+                        text("ALTER TABLE lead_inquiries ADD COLUMN current_insurance_expiry_date DATE NULL")
+                    )
+                if "passport_file_id" not in lead_cols:
+                    conn.execute(
+                        text("ALTER TABLE lead_inquiries ADD COLUMN passport_file_id VARCHAR(36) NULL")
+                    )
+                if "study_confirmation_file_id" not in lead_cols:
+                    conn.execute(
+                        text("ALTER TABLE lead_inquiries ADD COLUMN study_confirmation_file_id VARCHAR(36) NULL")
                     )
 
             conn.commit()

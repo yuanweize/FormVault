@@ -18,6 +18,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
 )
+from sqlalchemy.orm import relationship
 from ..database import Base
 
 
@@ -141,6 +142,15 @@ class LeadInquiry(Base):
     # 9. Continuation Token (For Future Assisted Self-Service Completion)
     continuation_token = Column(String(64), nullable=True, unique=True, index=True)
 
+    # 10. Stay Specifics & Document Links
+    czech_city = Column(String(100), nullable=True)
+    current_insurance_expiry_date = Column(Date, nullable=True)
+    passport_file_id = Column(String(36), nullable=True)
+    study_confirmation_file_id = Column(String(36), nullable=True)
+    documents = relationship(
+        "LeadDocument", back_populates="lead", cascade="all, delete-orphan"
+    )
+
     # Timestamps
     created_at = Column(
         DateTime, default=lambda: datetime.now(timezone.utc), nullable=False, index=True
@@ -178,3 +188,75 @@ class LeadInquiry(Base):
         date_str = datetime.now().strftime("%Y%m%d")
         suffix = "".join(random.choices(string.ascii_uppercase + string.digits, k=4))
         return f"FV-{date_str}-{suffix}"
+
+
+class IntakeSession(Base):
+    """
+    Temporary session for holding uploaded documents before final lead submission.
+    Ensures zero orphan sensitive files without lifecycle ownership.
+    TTL defaults to 24 hours.
+    """
+
+    __tablename__ = "intake_sessions"
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    token = Column(String(64), unique=True, nullable=False, index=True)
+    ip_address = Column(String(45), nullable=True)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
+    expires_at = Column(DateTime, nullable=False)
+    is_consumed = Column(Boolean, default=False, nullable=False)
+    verified_email = Column(String(255), nullable=True)
+    otp_code_hash = Column(String(128), nullable=True)
+    otp_expires_at = Column(DateTime, nullable=True)
+    otp_attempts = Column(Integer, default=0, nullable=False)
+
+    documents = relationship(
+        "LeadDocument", back_populates="session", cascade="all, delete-orphan"
+    )
+
+    def __repr__(self) -> str:
+        return f"<IntakeSession {self.token[:8]}... (consumed={self.is_consumed})>"
+
+
+class LeadDocument(Base):
+    """
+    Document attached to a lead inquiry or an active intake session.
+    Keeps audit trail of passport and study proof documents without requiring full Application conversion.
+    """
+
+    __tablename__ = "lead_documents"
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    lead_id = Column(
+        String(36),
+        ForeignKey("lead_inquiries.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    intake_session_id = Column(
+        String(36),
+        ForeignKey("intake_sessions.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    document_type = Column(
+        String(50), nullable=False
+    )  # passport_bio_page, study_confirmation, student_id, isic, residence_permit
+    file_id = Column(String(36), nullable=False)
+    original_filename = Column(String(255), nullable=False)
+    file_size = Column(Integer, nullable=False)
+    mime_type = Column(String(100), nullable=False)
+    status = Column(
+        String(30), default="ATTACHED", nullable=False
+    )  # ATTACHED, VERIFIED, REJECTED
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
+
+    lead = relationship("LeadInquiry", back_populates="documents")
+    session = relationship("IntakeSession", back_populates="documents")
+
+    def __repr__(self) -> str:
+        return f"<LeadDocument {self.document_type}: {self.original_filename}>"

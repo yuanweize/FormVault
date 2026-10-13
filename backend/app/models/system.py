@@ -142,6 +142,32 @@ class SystemConfig(Base):
         nullable=True,
     )
 
+    # Document Intake Policy & Verification (Decoupled from Regulatory Scope)
+    document_intake_policy = Column(
+        String(30), default="DISABLED", nullable=False
+    )  # DISABLED, VERIFIED_LEAD, INITIAL_REQUIRED
+    passport_required = Column(Boolean, default=False, nullable=False)
+    study_proof_required = Column(Boolean, default=False, nullable=False)
+    accepted_study_proof_types = Column(
+        String(255),
+        default='["confirmation_of_study", "student_id", "isic"]',
+        nullable=False,
+    )
+    document_collection_approved = Column(Boolean, default=False, nullable=False)
+    document_collection_evidence_id = Column(String(100), nullable=True)
+    document_collection_approved_at = Column(DateTime, nullable=True)
+
+    # Anti-Abuse & Seriousness Gate
+    anti_abuse_mode = Column(String(30), default="NORMAL", nullable=False)  # NORMAL, STRICT
+    turnstile_enabled = Column(Boolean, default=False, nullable=False)
+    turnstile_site_key = Column(String(150), nullable=True)
+    turnstile_secret_key = Column(String(150), nullable=True)
+
+    # Contact Verification Policy
+    contact_verification_mode = Column(
+        String(30), default="NONE", nullable=False
+    )  # NONE, EMAIL_OTP, STRICT
+
     updated_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),

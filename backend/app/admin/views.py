@@ -592,6 +592,20 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         # 6. JSON Configs
         SystemConfig.form_profile_config,
         SystemConfig.features_config,
+        # 7. Document Intake Policy (Decoupled from Broker Scope)
+        SystemConfig.document_intake_policy,
+        SystemConfig.passport_required,
+        SystemConfig.study_proof_required,
+        SystemConfig.accepted_study_proof_types,
+        SystemConfig.document_collection_approved,
+        SystemConfig.document_collection_evidence_id,
+        SystemConfig.document_collection_approved_at,
+        # 8. Anti-Abuse & Contact Verification Gate
+        SystemConfig.anti_abuse_mode,
+        SystemConfig.turnstile_enabled,
+        SystemConfig.turnstile_site_key,
+        SystemConfig.turnstile_secret_key,
+        SystemConfig.contact_verification_mode,
     ]
     form_overrides = dict(
         business_scope_mode=SelectField,
@@ -603,8 +617,35 @@ class SystemConfigAdmin(ModelView, model=SystemConfig):
         crisp_custom_color=SelectField,
         crisp_position=SelectField,
         production_ingress_name=SelectField,
+        document_intake_policy=SelectField,
+        anti_abuse_mode=SelectField,
+        contact_verification_mode=SelectField,
     )
     form_args = dict(
+        document_intake_policy=dict(
+            choices=[
+                ("DISABLED", "DISABLED (Default: No sensitive document collection)"),
+                ("VERIFIED_LEAD", "VERIFIED_LEAD (Collect documents after contact verification)"),
+                ("INITIAL_REQUIRED", "INITIAL_REQUIRED (Passport photo page and study proof required before final submission)"),
+            ],
+            label="Document Intake Policy",
+            description="Decoupled from distribution mode. Requires written evidence ID before switching to INITIAL_REQUIRED.",
+        ),
+        anti_abuse_mode=dict(
+            choices=[
+                ("NORMAL", "NORMAL (Honeypot, IP rate-limiting, duplicate prevention)"),
+                ("STRICT", "STRICT (Enforces Turnstile captcha and stricter IP limits)"),
+            ],
+            label="Anti-Abuse Mode",
+        ),
+        contact_verification_mode=dict(
+            choices=[
+                ("NONE", "NONE (Direct intake without OTP)"),
+                ("EMAIL_OTP", "EMAIL_OTP (Sends 6-digit verification code to email)"),
+                ("STRICT", "STRICT (Mandatory email verification before upload/submission)"),
+            ],
+            label="Contact Verification Mode",
+        ),
         business_scope_mode=dict(
             choices=[
                 (

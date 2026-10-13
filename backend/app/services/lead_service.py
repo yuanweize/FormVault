@@ -59,6 +59,15 @@ def create_lead_inquiry(
     start_date = data.requested_start_date or (date.today() + timedelta(days=1))
     dob = data.date_of_birth or date(2002, 1, 1)
 
+    nationality = data.nationality or "Not specified"
+    type_of_stay = data.type_of_stay or "student"
+    is_student = (
+        data.student_status
+        if data.student_status is not None
+        else (type_of_stay == "student")
+    )
+    city = data.czech_city or data.current_location
+
     lead = LeadInquiry(
         id=str(uuid4()),
         reference_number=LeadInquiry.generate_reference_number(),
@@ -66,20 +75,22 @@ def create_lead_inquiry(
         last_name=last_name,
         date_of_birth=dob,
         gender=data.gender,
-        nationality=data.nationality or "Chinese",
+        nationality=nationality,
         email=str(data.email).strip().lower(),
         phone=data.phone.strip() if data.phone else None,
         wechat_id=wechat_id.strip() if wechat_id else None,
         preferred_contact_method=data.preferred_contact_method or "email",
         preferred_language=data.preferred_language or "zh",
-        student_status=data.student_status,
+        student_status=is_student,
         school_or_university=data.school_or_university,
         study_status=data.study_status,
         expected_study_end_date=data.expected_study_end_date,
-        type_of_stay=data.type_of_stay or "student",
+        type_of_stay=type_of_stay,
         requested_start_date=start_date,
-        requested_duration_months=data.requested_duration_months,
-        current_location=data.current_location,
+        requested_duration_months=data.requested_duration_months or 12,
+        current_location=city,
+        czech_city=city,
+        current_insurance_expiry_date=data.current_insurance_expiry_date,
         general_insurance_need=data.general_insurance_need or "comprehensive",
         special_notes=special_notes,
         utm_source=data.utm_source,

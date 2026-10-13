@@ -8,7 +8,7 @@ from .email_export import EmailExport
 from .audit_log import AuditLog
 from .system import AdminUser, SystemConfig
 from .partner import InsuranceCompany, InsurancePlan, AgencyBanner
-from .lead import LeadInquiry, calculate_age, derive_age_band
+from .lead import LeadInquiry, IntakeSession, LeadDocument, calculate_age, derive_age_band
 from .compliance import (
     EvidenceRecord,
     ProductVersion,
@@ -45,6 +45,8 @@ __all__ = [
     "PrivacyRequest",
     "SecurityIncident",
     "LeadInquiry",
+    "IntakeSession",
+    "LeadDocument",
     "calculate_age",
     "derive_age_band",
 ]

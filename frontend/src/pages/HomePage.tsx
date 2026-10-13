@@ -7,7 +7,6 @@ import {
   IconButton,
   Grid,
   Card,
-  CardContent,
   Container,
   Chip,
   Stack,
@@ -17,12 +16,14 @@ import {
   Divider,
   Paper,
   Link,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   useTheme,
 } from '@mui/material';
 import {
   SecurityOutlined,
   LanguageOutlined,
-  PhoneAndroidOutlined,
   ArrowForwardOutlined,
   VerifiedUserOutlined,
   SpeedOutlined,
@@ -33,14 +34,14 @@ import {
   RadioButtonUnchecked,
   OpenInNewOutlined,
   ShieldOutlined,
-  LocalHospitalOutlined,
   SchoolOutlined,
-  FlightTakeoffOutlined,
   CampaignOutlined,
   CloseOutlined,
-  InfoOutlined,
   SupportAgentOutlined,
   AssignmentOutlined,
+  ExpandMoreOutlined,
+  HelpOutline,
+  ContactSupportOutlined,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import {
@@ -62,12 +63,13 @@ const HomePage: React.FC = () => {
   const inquirySectionRef = useRef<HTMLDivElement>(null);
 
   // Showcase state (strictly empty fallback in LEAD_ONLY mode; no hardcoded insurer quotes)
-  const [companies, setCompanies] = useState<InsuranceCompanyShowcase[]>([]);
-  const [plans, setPlans] = useState<InsurancePlanShowcase[]>([]);
+  const [, setCompanies] = useState<InsuranceCompanyShowcase[]>([]);
+  const [, setPlans] = useState<InsurancePlanShowcase[]>([]);
   const [banner, setBanner] = useState<AgencyBannerShowcase | null>({
     id: 1,
     title: 'Czech Foreigners Residence Act (Act No. 326/1999 Coll.) Compliant Insurance Information',
-    subtitle: 'Foreign nationals applying for Czech long-term visas or residence permits must hold comprehensive health insurance meeting statutory requirements. Submit your enquiry to receive licensed intermediary options.',
+    subtitle:
+      'Foreign nationals applying for Czech long-term visas or residence permits must hold comprehensive health insurance meeting statutory requirements. Submit your enquiry to receive licensed intermediary options.',
     tag: 'Regulatory Notice',
     button_text: 'Request Options',
     display_order: 1,
@@ -80,6 +82,9 @@ const HomePage: React.FC = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [trackResult, setTrackResult] = useState<TrackApplicationResponse | null>(null);
+
+  // FAQ Accordion state
+  const [expandedFaq, setExpandedFaq] = useState<string | false>('faq-1');
 
   // Feature cards custom config state
   interface FeatureCardItem {
@@ -130,20 +135,25 @@ const HomePage: React.FC = () => {
 
   const scrollToInquiry = () => {
     inquirySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const nameInput =
-      document.getElementById('inquiry-first-name-input') ||
-      document.getElementById('inquiry-name-input');
-    if (nameInput) {
-      nameInput.focus();
-    }
+    setTimeout(() => {
+      const nameInput =
+        document.getElementById('firstName') ||
+        document.getElementById('inquiry-first-name-input') ||
+        document.getElementById('inquiry-name-input');
+      if (nameInput) {
+        nameInput.focus();
+      }
+    }, 400);
   };
 
   const scrollToTrack = () => {
     trackSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const refInput = document.getElementById('tracking-reference-input');
-    if (refInput) {
-      refInput.focus();
-    }
+    setTimeout(() => {
+      const refInput = document.getElementById('tracking-reference-input');
+      if (refInput) {
+        refInput.focus();
+      }
+    }, 400);
   };
 
   const handleInquirySuccess = (res: LeadInquiryResponse) => {
@@ -154,9 +164,11 @@ const HomePage: React.FC = () => {
     e.preventDefault();
     if (!trackRef.trim() || !trackEmail.trim()) {
       setTrackError(
-        t('pages.home.tracker.provideBothError', {
-          defaultValue: 'Please provide both your Application Reference Number and registered Email.',
-        })
+        String(
+          t('pages.home.tracker.provideBothError', {
+            defaultValue: 'Please provide both your Application Reference Number and registered Email.',
+          })
+        )
       );
       return;
     }
@@ -172,21 +184,20 @@ const HomePage: React.FC = () => {
       const errMsg =
         err?.response?.data?.message ||
         err?.response?.data?.detail ||
-        t('pages.home.tracker.notFoundError', {
-          defaultValue:
-            'No matching enquiry found. Please verify your reference number and registered email address.',
-        });
+        String(
+          t('pages.home.tracker.notFoundError', {
+            defaultValue:
+              'No matching enquiry found. Please verify your reference number and registered email address.',
+          })
+        );
       setTrackError(errMsg);
     } finally {
       setIsTracking(false);
     }
   };
 
-  const getPlanCategoryIcon = (category: string) => {
-    const c = category.toLowerCase();
-    if (c.includes('student')) return <SchoolOutlined sx={{ fontSize: 28, color: '#4F46E5' }} />;
-    if (c.includes('travel') || c.includes('schengen')) return <FlightTakeoffOutlined sx={{ fontSize: 28, color: '#059669' }} />;
-    return <LocalHospitalOutlined sx={{ fontSize: 28, color: '#2563EB' }} />;
+  const handleFaqChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpandedFaq(isExpanded ? panel : false);
   };
 
   const getStatusColor = (status: string) => {
@@ -203,164 +214,30 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
-      {/* 1. Regulatory / Informational Announcement Banner */}
-      {banner && bannerVisible && (
-        <Paper
-          elevation={0}
-          sx={{
-            position: 'relative',
-            mb: { xs: 3, md: 5 },
-            p: { xs: 2, sm: 2.5 },
-            pr: { xs: 5, sm: 6 },
-            borderRadius: '16px',
-            background:
-              theme.palette.mode === 'light'
-                ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.05) 100%)'
-                : 'linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(124, 58, 237, 0.12) 100%)',
-            border: '1px solid rgba(79, 70, 229, 0.25)',
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: { xs: 'flex-start', md: 'center' },
-            justifyContent: 'space-between',
-            gap: { xs: 1.5, md: 2.5 },
-            boxShadow: '0 4px 20px -2px rgba(79, 70, 229, 0.08)',
-          }}
-        >
-          {/* Top-Right Close Button */}
-          <IconButton
-            size="small"
-            onClick={() => setBannerVisible(false)}
-            aria-label={String(t('common.close', 'Close'))}
-            sx={{
-              position: 'absolute',
-              top: { xs: 8, sm: 10 },
-              right: { xs: 8, sm: 10 },
-              color: 'text.secondary',
-              '&:hover': { color: 'text.primary' },
-            }}
-          >
-            <CloseOutlined fontSize="small" />
-          </IconButton>
-
-          {/* Left Text Block */}
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, width: '100%' }}>
-            <Box
-              sx={{
-                p: 1,
-                borderRadius: '10px',
-                backgroundColor: 'rgba(79, 70, 229, 0.15)',
-                color: 'primary.main',
-                display: { xs: 'none', sm: 'flex' },
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                mt: 0.25,
-              }}
-            >
-              <CampaignOutlined fontSize="small" />
-            </Box>
-            <Box sx={{ flex: 1, minWidth: 0 }}>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, mb: 0.75 }}>
-                <Chip
-                  label={
-                    banner.id === 1 && (banner.tag === 'Regulatory Notice' || !banner.tag)
-                      ? t('pages.home.banner.defaultTag', { defaultValue: 'Regulatory Notice' })
-                      : banner.tag || t('pages.home.banner.notice', { defaultValue: 'Notice' })
-                  }
-                  size="small"
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '0.72rem',
-                    height: 22,
-                    backgroundColor: 'primary.main',
-                    color: '#FFFFFF',
-                    flexShrink: 0,
-                  }}
-                />
-                <Typography
-                  variant="subtitle2"
-                  component="span"
-                  sx={{
-                    fontWeight: 800,
-                    fontSize: { xs: '0.92rem', sm: '1rem' },
-                    lineHeight: 1.45,
-                    color: 'text.primary',
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {banner.id === 1 && banner.title.includes('Czech Foreigners Residence Act')
-                    ? t('pages.home.banner.defaultTitle', { defaultValue: banner.title })
-                    : banner.title}
-                </Typography>
-              </Box>
-              {banner.subtitle && (
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    fontSize: { xs: '0.82rem', sm: '0.875rem' },
-                    lineHeight: 1.6,
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {banner.id === 1 && banner.subtitle.includes('Foreign nationals applying for Czech long-term visas')
-                    ? t('pages.home.banner.defaultSubtitle', { defaultValue: banner.subtitle })
-                    : banner.subtitle}
-                </Typography>
-              )}
-            </Box>
-          </Box>
-
-          {/* Action Button */}
-          <Box
-            sx={{
-              alignSelf: { xs: 'flex-start', md: 'center' },
-              flexShrink: 0,
-              mt: { xs: 0.5, md: 0 },
-            }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              onClick={scrollToInquiry}
-              sx={{
-                px: 2.2,
-                py: 0.7,
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                borderRadius: '8px',
-                whiteSpace: 'nowrap',
-                textTransform: 'none',
-                boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
-              }}
-            >
-              {t('pages.home.banner.defaultButton', { defaultValue: 'Request Options' })}
-            </Button>
-          </Box>
-        </Paper>
-      )}
-
-      {/* 2. Hero Section */}
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 7 } }}>
+      {/* =========================================================================
+          1. HERO SECTION
+          ========================================================================= */}
       <Box
         sx={{
           textAlign: 'center',
-          maxWidth: 860,
+          maxWidth: 880,
           mx: 'auto',
-          mb: { xs: 6, md: 8 },
+          mb: { xs: 6, md: 9 },
         }}
       >
+        {/* Role & Compliance Badge */}
         <Chip
           icon={<VerifiedUserOutlined sx={{ fontSize: 16 }} />}
           label={t('pages.home.roleBadge', {
-            defaultValue: 'International Student Health Insurance Enquiry • One-Shot Intake',
+            defaultValue: 'Czech Foreigners Health Insurance Enquiry • Official Introducer (Tipař)',
           })}
           sx={{
             mb: 3,
             px: 1.5,
             py: 0.5,
             fontSize: '0.825rem',
-            fontWeight: 600,
+            fontWeight: 650,
             background:
               theme.palette.mode === 'light'
                 ? 'rgba(79, 70, 229, 0.08)'
@@ -374,14 +251,15 @@ const HomePage: React.FC = () => {
           }}
         />
 
+        {/* Main Title */}
         <Typography
           variant="h2"
           component="h1"
           gutterBottom
           sx={{
-            fontWeight: 800,
-            fontSize: { xs: '2.2rem', sm: '3.1rem', md: '3.75rem' },
-            letterSpacing: '-0.03em',
+            fontWeight: 850,
+            fontSize: { xs: '2.1rem', sm: '3.1rem', md: '3.75rem' },
+            letterSpacing: '-0.035em',
             lineHeight: 1.15,
             mb: 2.5,
             background:
@@ -397,6 +275,7 @@ const HomePage: React.FC = () => {
           })}
         </Typography>
 
+        {/* Subtitle */}
         <Typography
           variant="h5"
           color="text.secondary"
@@ -404,14 +283,15 @@ const HomePage: React.FC = () => {
           sx={{
             fontSize: { xs: '1.05rem', sm: '1.25rem' },
             lineHeight: 1.6,
-            maxWidth: 740,
+            maxWidth: 760,
             mx: 'auto',
             mb: 4,
+            fontWeight: 400,
           }}
         >
           {t('pages.home.subtitle', {
             defaultValue:
-              '在线填写一次基本资料和保险需求，我们会将您的申请需求转交给合作保险中介继续处理。',
+              'Tell us your basic requirements. We’ll securely forward your enquiry to our insurance intermediary partner (České pojištění a.s.), who will prepare available options and tailored pricing.',
           })}
         </Typography>
 
@@ -432,13 +312,18 @@ const HomePage: React.FC = () => {
               px: 4.5,
               py: 1.6,
               fontSize: '1.05rem',
-              fontWeight: 700,
+              fontWeight: 750,
               borderRadius: '12px',
               boxShadow: '0 8px 24px rgba(79, 70, 229, 0.35)',
               textTransform: 'none',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 28px rgba(79, 70, 229, 0.45)',
+              },
             }}
           >
-            {t('pages.home.requestOptions', { defaultValue: '开始填写 (Start Enquiry)' })}
+            {t('pages.home.requestOptions', { defaultValue: 'Request Insurance Options' })}
           </Button>
 
           <Button
@@ -450,16 +335,22 @@ const HomePage: React.FC = () => {
               px: 3.5,
               py: 1.5,
               fontSize: '0.95rem',
-              fontWeight: 600,
+              fontWeight: 650,
               borderRadius: '12px',
               borderWidth: '1.5px',
               textTransform: 'none',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                borderWidth: '1.5px',
+                transform: 'translateY(-2px)',
+              },
             }}
           >
             {t('pages.home.trackMyApplication', { defaultValue: 'Track My Application' })}
           </Button>
         </Stack>
 
+        {/* Footnote Disclaimers */}
         <Typography
           variant="caption"
           color="text.secondary"
@@ -472,7 +363,7 @@ const HomePage: React.FC = () => {
         </Typography>
 
         {/* Value Metrics Row */}
-        <Grid container spacing={2} sx={{ mb: 4, maxWidth: 720, mx: 'auto' }}>
+        <Grid container spacing={2} sx={{ mb: 4, maxWidth: 740, mx: 'auto' }}>
           {[
             {
               value: 'Act 326/1999',
@@ -490,30 +381,35 @@ const HomePage: React.FC = () => {
             <Grid item xs={4} key={i}>
               <Box
                 sx={{
-                  py: 1.5,
-                  px: 1,
-                  borderRadius: '12px',
+                  py: 1.8,
+                  px: 1.2,
+                  borderRadius: '14px',
                   backgroundColor:
                     theme.palette.mode === 'light'
-                      ? 'rgba(255, 255, 255, 0.7)'
+                      ? 'rgba(255, 255, 255, 0.8)'
                       : 'rgba(255, 255, 255, 0.03)',
                   border:
                     theme.palette.mode === 'light'
                       ? '1px solid rgba(15, 23, 42, 0.06)'
                       : '1px solid rgba(255, 255, 255, 0.06)',
+                  backdropFilter: 'blur(8px)',
+                  boxShadow:
+                    theme.palette.mode === 'light'
+                      ? '0 2px 10px rgba(0, 0, 0, 0.03)'
+                      : '0 2px 10px rgba(0, 0, 0, 0.3)',
                 }}
               >
                 <Typography
                   variant="h6"
                   sx={{
                     fontWeight: 800,
-                    fontSize: { xs: '0.9rem', sm: '1.1rem' },
+                    fontSize: { xs: '0.92rem', sm: '1.15rem' },
                     color: 'primary.main',
                   }}
                 >
                   {metric.value}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 550 }}>
                   {metric.label}
                 </Typography>
               </Box>
@@ -531,29 +427,309 @@ const HomePage: React.FC = () => {
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <LockOutlined sx={{ fontSize: 18, color: 'success.main' }} />
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            <Typography variant="body2" sx={{ fontWeight: 550 }}>
               {t('pages.home.securityBadges.endToEnd', { defaultValue: 'AES-256-GCM Encrypted Storage' })}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
             <SpeedOutlined sx={{ fontSize: 18, color: 'primary.main' }} />
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              {t('pages.home.securityBadges.autoEmail', { defaultValue: 'Automatic Reference & Status Tracking' })}
+            <Typography variant="body2" sx={{ fontWeight: 550 }}>
+              {t('pages.home.securityBadges.autoEmail', {
+                defaultValue: 'Automatic Reference & Status Tracking',
+              })}
             </Typography>
           </Box>
         </Stack>
       </Box>
 
-      {/* 3. Lead Intake Form Section */}
-      <Box ref={inquirySectionRef} id="inquiry-form-section" sx={{ mb: { xs: 8, md: 11 } }}>
+      {/* =========================================================================
+          2. 3-STEP STREAMLINED PROCESS (HOW IT WORKS)
+          ========================================================================= */}
+      <Box sx={{ mb: { xs: 8, md: 10 } }}>
+        <Box sx={{ textAlign: 'center', mb: 4.5 }}>
+          <Chip
+            label={t('pages.home.howItWorks.badge', { defaultValue: 'How It Works' })}
+            size="small"
+            sx={{
+              fontWeight: 700,
+              mb: 1.5,
+              backgroundColor:
+                theme.palette.mode === 'light' ? 'rgba(79, 70, 229, 0.08)' : 'rgba(129, 140, 248, 0.15)',
+              color: 'primary.main',
+            }}
+          />
+          <Typography variant="h4" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', sm: '2.1rem' }, mb: 1 }}>
+            {t('pages.home.howItWorks.title', { defaultValue: 'Simple 3-Step Insurance Enquiry' })}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', fontSize: '0.95rem' }}>
+            {t('pages.home.howItWorks.subtitle', {
+              defaultValue:
+                'Transparent, fast, and fully compliant with Czech foreigners residency insurance requirements.',
+            })}
+          </Typography>
+        </Box>
+
+        <Grid container spacing={3} alignItems="stretch">
+          {[
+            {
+              step: '01',
+              icon: <AssignmentOutlined sx={{ fontSize: 30, color: '#4F46E5' }} />,
+              title: t('pages.home.howItWorks.step1Title', { defaultValue: '1. Submit Stay Parameters' }),
+              description: t('pages.home.howItWorks.step1Desc', {
+                defaultValue:
+                  'Select your stay dates, university, and age bracket. Takes under 2 minutes with zero paper hassles.',
+              }),
+              colorBg: 'rgba(79, 70, 229, 0.08)',
+              chipColor: '#4F46E5',
+            },
+            {
+              step: '02',
+              icon: <SupportAgentOutlined sx={{ fontSize: 30, color: '#059669' }} />,
+              title: t('pages.home.howItWorks.step2Title', { defaultValue: '2. Advisor Review & Quotation' }),
+              description: t('pages.home.howItWorks.step2Desc', {
+                defaultValue:
+                  'Encrypted transfer to licensed broker České pojištění a.s., who compares accredited underwriters and student discounts.',
+              }),
+              colorBg: 'rgba(16, 185, 129, 0.08)',
+              chipColor: '#059669',
+            },
+            {
+              step: '03',
+              icon: <ShieldOutlined sx={{ fontSize: 30, color: '#D97706' }} />,
+              title: t('pages.home.howItWorks.step3Title', { defaultValue: '3. Receive Official Certificate' }),
+              description: t('pages.home.howItWorks.step3Desc', {
+                defaultValue:
+                  'Upon confirming your preferred option and payment, receive your official Potvrzení o pojištění directly for visa submission.',
+              }),
+              colorBg: 'rgba(245, 158, 11, 0.08)',
+              chipColor: '#D97706',
+            },
+          ].map((item, idx) => (
+            <Grid item xs={12} md={4} key={idx} sx={{ display: 'flex' }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: { xs: 3, sm: 3.5 },
+                  width: '100%',
+                  borderRadius: '20px',
+                  backgroundColor:
+                    theme.palette.mode === 'light'
+                      ? 'rgba(255, 255, 255, 0.85)'
+                      : 'rgba(30, 41, 59, 0.5)',
+                  border:
+                    theme.palette.mode === 'light'
+                      ? '1px solid rgba(226, 232, 240, 0.9)'
+                      : '1px solid rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(12px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.25s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow:
+                      theme.palette.mode === 'light'
+                        ? '0 12px 30px -6px rgba(79, 70, 229, 0.12)'
+                        : '0 12px 30px -6px rgba(0, 0, 0, 0.6)',
+                    borderColor: 'primary.main',
+                  },
+                }}
+              >
+                <Box>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                    <Box
+                      sx={{
+                        p: 1.25,
+                        borderRadius: '12px',
+                        backgroundColor: item.colorBg,
+                        display: 'inline-flex',
+                      }}
+                    >
+                      {item.icon}
+                    </Box>
+                    <Chip
+                      label={item.step}
+                      size="small"
+                      sx={{
+                        fontWeight: 800,
+                        fontSize: '0.8rem',
+                        backgroundColor: item.colorBg,
+                        color: item.chipColor,
+                        borderRadius: '8px',
+                      }}
+                    />
+                  </Stack>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.2, fontSize: '1.15rem' }}>
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ lineHeight: 1.65, fontSize: '0.88rem' }}
+                  >
+                    {item.description}
+                  </Typography>
+                </Box>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* =========================================================================
+          3. MAIN LEAD INTAKE FORM SECTION
+          ========================================================================= */}
+      <Box ref={inquirySectionRef} id="inquiry-form-section" sx={{ mb: { xs: 8, md: 10 } }}>
         <LeadInquiryForm onSuccess={handleInquirySuccess} />
       </Box>
 
-      {/* 4. Dual-Factor Application / Enquiry Status Tracker Section */}
-      <Box ref={trackSectionRef} id="track-status" sx={{ mb: { xs: 8, md: 11 } }}>
+      {/* =========================================================================
+          4. USEFUL FAQ SECTION (FREQUENTLY ASKED QUESTIONS)
+          ========================================================================= */}
+      <Box sx={{ mb: { xs: 8, md: 10 }, maxWidth: 860, mx: 'auto' }}>
+        <Box sx={{ textAlign: 'center', mb: 4.5 }}>
+          <Chip
+            icon={<HelpOutline sx={{ fontSize: 16 }} />}
+            label={t('pages.support.badge', { defaultValue: 'Frequently Asked Questions' })}
+            size="small"
+            sx={{
+              fontWeight: 700,
+              mb: 1.5,
+              backgroundColor:
+                theme.palette.mode === 'light' ? 'rgba(79, 70, 229, 0.08)' : 'rgba(129, 140, 248, 0.15)',
+              color: 'primary.main',
+            }}
+          />
+          <Typography variant="h4" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', sm: '2.1rem' }, mb: 1 }}>
+            {t('pages.support.faqTitle', { defaultValue: 'Frequently Asked Questions' })}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 640, mx: 'auto', fontSize: '0.95rem' }}>
+            {t('pages.support.faqSubtitle', {
+              defaultValue: 'Quick answers regarding foreign insurance requirements in the Czech Republic.',
+            })}
+          </Typography>
+        </Box>
+
+        <Stack spacing={1.5}>
+          {[
+            {
+              id: 'faq-1',
+              q: t('pages.support.faqs.q1', {
+                defaultValue: 'How fast will I receive my official insurance certificate after submission?',
+              }),
+              a: t('pages.support.faqs.a1', {
+                defaultValue:
+                  'Standard electronic policy certificates (Potvrzení o pojištění) are generated within 1 to 4 business hours after underwriting review and payment confirmation. You will receive the certified PDF directly to your email, complete with the contract number for your Czech visa application.',
+              }),
+            },
+            {
+              id: 'faq-2',
+              q: t('pages.support.faqs.q2', {
+                defaultValue: 'Are your policies 100% accepted by the Czech Ministry of Interior (OAMP)?',
+              }),
+              a: t('pages.support.faqs.a2', {
+                defaultValue:
+                  'Yes. Comprehensive health insurance options distributed by our licensed intermediary partner České pojištění a.s. strictly comply with the Foreigners Residence Act (Act No. 326/1999 Coll.) and OAMP requirements with statutory limits up to 400,000 EUR.',
+              }),
+            },
+            {
+              id: 'faq-3',
+              q: t('pages.support.faqs.q3', {
+                defaultValue: 'What should I do if my visa application is refused by the Embassy?',
+              }),
+              a: t('pages.support.faqs.a3', {
+                defaultValue:
+                  'If your visa or residence permit is denied, you are entitled to a refund pursuant to carrier cancellation terms. Simply send a copy of the official OAMP/Embassy refusal document to insurance@hktse.eu.org, and our team will process the policy cancellation and refund.',
+              }),
+            },
+            {
+              id: 'faq-4',
+              q: t('pages.support.faqs.q4', {
+                defaultValue: 'How does medical claim reimbursement and direct billing work in Czechia?',
+              }),
+              a: t('pages.support.faqs.a4', {
+                defaultValue:
+                  'For hospitals and clinics contracted with your underwriter (e.g. Motol, FNKV, VFN in Prague, or FN Brno), you simply show your physical or digital insurance card for direct cashless billing. For non-contracted facilities, pay the invoice, obtain the medical report, and submit it for prompt reimbursement within 14 days.',
+              }),
+            },
+            {
+              id: 'faq-5',
+              q: t('pages.support.faqs.q5', {
+                defaultValue: 'What details are required to submit an insurance enquiry?',
+              }),
+              a: t('pages.support.faqs.a5', {
+                defaultValue:
+                  'FormVault only collects your stay parameters (duration, start date, student status, age bracket) and basic contact information. Identity document scans and passport numbers are NOT collected during initial lead intake.',
+              }),
+            },
+          ].map((item) => (
+            <Accordion
+              key={item.id}
+              expanded={expandedFaq === item.id}
+              onChange={handleFaqChange(item.id)}
+              elevation={0}
+              sx={{
+                borderRadius: '16px !important',
+                border:
+                  theme.palette.mode === 'light'
+                    ? '1px solid rgba(226, 232, 240, 0.9)'
+                    : '1px solid rgba(255, 255, 255, 0.08)',
+                backgroundColor:
+                  theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(30, 41, 59, 0.45)',
+                '&:before': { display: 'none' },
+                transition: 'all 0.2s ease',
+                '&.Mui-expanded': {
+                  borderColor: 'primary.main',
+                  boxShadow:
+                    theme.palette.mode === 'light'
+                      ? '0 6px 20px -2px rgba(79, 70, 229, 0.08)'
+                      : '0 6px 20px -2px rgba(0, 0, 0, 0.4)',
+                },
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreOutlined sx={{ color: 'primary.main' }} />}
+                sx={{
+                  px: 3,
+                  py: 1.5,
+                  '& .MuiAccordionSummary-content': { my: 0.5 },
+                }}
+              >
+                <Typography variant="subtitle1" sx={{ fontWeight: 750, fontSize: '1rem' }}>
+                  {item.q}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ px: 3, pt: 0, pb: 2.5 }}>
+                <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7, fontSize: '0.92rem' }}>
+                  {item.a}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Stack>
+
+        <Box sx={{ textAlign: 'center', mt: 3 }}>
+          <Button
+            variant="text"
+            size="small"
+            startIcon={<ContactSupportOutlined />}
+            onClick={() => navigate('/support')}
+            sx={{ fontWeight: 650, textTransform: 'none', fontSize: '0.88rem' }}
+          >
+            {t('pages.home.tracker.supportNote', {
+              defaultValue: 'Need assistance with your insurance enquiry or visa documents? Visit Help Center',
+            })}
+          </Button>
+        </Box>
+      </Box>
+
+      {/* =========================================================================
+          5. COMPACT DUAL-FACTOR APPLICATION / ENQUIRY STATUS TRACKER
+          ========================================================================= */}
+      <Box ref={trackSectionRef} id="track-status" sx={{ mb: { xs: 8, md: 10 } }}>
         <Card
           sx={{
-            maxWidth: 820,
+            maxWidth: 860,
             mx: 'auto',
             borderRadius: '24px',
             border:
@@ -579,8 +755,8 @@ const HomePage: React.FC = () => {
             <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
               <Box
                 sx={{
-                  width: 36,
-                  height: 36,
+                  width: 38,
+                  height: 38,
                   borderRadius: '10px',
                   backgroundColor: 'primary.main',
                   color: '#FFFFFF',
@@ -641,6 +817,7 @@ const HomePage: React.FC = () => {
                       height: 54,
                       fontWeight: 700,
                       borderRadius: '10px',
+                      textTransform: 'none',
                     }}
                   >
                     {isTracking ? <CircularProgress size={24} color="inherit" /> : t('pages.home.tracker.trackButton', { defaultValue: 'Track' })}
@@ -804,103 +981,148 @@ const HomePage: React.FC = () => {
         </Card>
       </Box>
 
-      {/* 5. Educational Framework Section (Active in LEAD_ONLY when plans list is empty) */}
-      {plans.length === 0 ? (
-        <Box sx={{ mb: { xs: 8, md: 11 } }}>
-          <Box sx={{ textAlign: 'center', mb: 5 }}>
-            <Chip
-              label={t('pages.home.guide.badge', { defaultValue: 'Czech Visa & Residency Guide' })}
-              size="small"
-              sx={{ fontWeight: 600, mb: 1.5, backgroundColor: 'rgba(79, 70, 229, 0.1)', color: 'primary.main' }}
-            />
-            <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.4rem' } }}>
-              {t('pages.home.guide.title', { defaultValue: 'Understanding Czech Foreigners Health Insurance' })}
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 660, mx: 'auto', mt: 1 }}>
-              {t('pages.home.guide.subtitle', {
-                defaultValue:
-                  'Official statutory compliance criteria under Czech Act No. 326/1999 Coll. for international students, interns, and foreign residents.',
-              })}
-            </Typography>
-          </Box>
-
-          <Grid container spacing={3} justifyContent="center" alignItems="stretch">
-            {[
-              {
-                icon: <LocalHospitalOutlined sx={{ fontSize: 32, color: '#4F46E5' }} />,
-                title: t('pages.home.guide.card1Title', { defaultValue: 'Comprehensive Health Insurance (Komplexní)' }),
-                badge: t('pages.home.guide.card1Badge', { defaultValue: 'Mandatory for Visa >90 Days' }),
-                description: t('pages.home.guide.card1Desc', {
-                  defaultValue:
-                    'Required for long-term visa, residence permit, and extension applications at OAMP (Czech Ministry of the Interior). Covers outpatient diagnosis, hospitalization, emergency dental, prescription drugs, and repatriation.',
-                }),
-              },
-              {
-                icon: <SchoolOutlined sx={{ fontSize: 32, color: '#059669' }} />,
-                title: t('pages.home.guide.card2Title', { defaultValue: 'Student & Youth Preferential Rates' }),
-                badge: t('pages.home.guide.card2Badge', { defaultValue: 'Ages 15–30' }),
-                description: t('pages.home.guide.card2Desc', {
-                  defaultValue:
-                    'University students and youths aged 15–30 qualify for substantial discounts from accredited insurance providers. Our partner prepares options aligned with your age bracket and academic term.',
-                }),
-              },
-              {
-                icon: <ShieldOutlined sx={{ fontSize: 32, color: '#D97706' }} />,
-                title: t('pages.home.guide.card3Title', { defaultValue: 'Direct Hospital Settlement Networks' }),
-                badge: t('pages.home.guide.card3Badge', { defaultValue: 'Nationwide Contracted Clinics' }),
-                description: t('pages.home.guide.card3Desc', {
-                  defaultValue:
-                    'Leading healthcare provider networks across Prague (Motol, FNKV, VFN), Brno, and regional university cities support direct insurance billing, minimizing out-of-pocket expenses for students.',
-                }),
-              },
-            ].map((card, idx) => (
-              <Grid item xs={12} md={4} key={idx} sx={{ display: 'flex' }}>
-                <Card
-                  sx={{
-                    width: '100%',
-                    p: 3.5,
-                    borderRadius: '20px',
-                    border: '1px solid rgba(15, 23, 42, 0.08)',
-                    boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Box>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Box
-                        sx={{
-                          p: 1.25,
-                          borderRadius: '12px',
-                          backgroundColor: 'rgba(79, 70, 229, 0.08)',
-                          display: 'inline-flex',
-                        }}
-                      >
-                        {card.icon}
-                      </Box>
-                      <Chip
-                        label={card.badge}
-                        size="small"
-                        sx={{ fontWeight: 700, fontSize: '0.72rem', backgroundColor: 'rgba(79, 70, 229, 0.08)' }}
-                      />
-                    </Stack>
-                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.2, fontSize: '1.15rem' }}>
-                      {card.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, fontSize: '0.875rem' }}>
-                      {card.description}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      ) : null}
-
-      {/* 6. Licensed Intermediary Partner Transparency Card (Replaces uncertified broker / direct carrier claims) */}
+      {/* =========================================================================
+          6. STATUTORY COMPLIANCE & PARTNER TRANSPARENCY SECTION
+          ========================================================================= */}
       <Box sx={{ mb: { xs: 8, md: 10 } }}>
+        {/* Informational / Regulatory Notice Banner (Moved down to compliance area) */}
+        {banner && bannerVisible && (
+          <Paper
+            elevation={0}
+            sx={{
+              position: 'relative',
+              mb: 4,
+              p: { xs: 2.5, sm: 3 },
+              pr: { xs: 5, sm: 6 },
+              borderRadius: '20px',
+              background:
+                theme.palette.mode === 'light'
+                  ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.07) 0%, rgba(124, 58, 237, 0.04) 100%)'
+                  : 'linear-gradient(135deg, rgba(79, 70, 229, 0.18) 0%, rgba(124, 58, 237, 0.1) 100%)',
+              border: '1px solid rgba(79, 70, 229, 0.22)',
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: { xs: 'flex-start', md: 'center' },
+              justifyContent: 'space-between',
+              gap: { xs: 1.5, md: 2.5 },
+              boxShadow: '0 4px 20px -2px rgba(79, 70, 229, 0.06)',
+            }}
+          >
+            {/* Top-Right Close Button */}
+            <IconButton
+              size="small"
+              onClick={() => setBannerVisible(false)}
+              aria-label={String(t('common.close', { defaultValue: 'Close' }))}
+              sx={{
+                position: 'absolute',
+                top: { xs: 8, sm: 10 },
+                right: { xs: 8, sm: 10 },
+                color: 'text.secondary',
+                '&:hover': { color: 'text.primary' },
+              }}
+            >
+              <CloseOutlined fontSize="small" />
+            </IconButton>
+
+            {/* Left Text Block */}
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, width: '100%' }}>
+              <Box
+                sx={{
+                  p: 1.2,
+                  borderRadius: '12px',
+                  backgroundColor: 'rgba(79, 70, 229, 0.14)',
+                  color: 'primary.main',
+                  display: { xs: 'none', sm: 'flex' },
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  mt: 0.25,
+                }}
+              >
+                <CampaignOutlined fontSize="small" />
+              </Box>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, mb: 0.75 }}>
+                  <Chip
+                    label={
+                      banner.id === 1 && (banner.tag === 'Regulatory Notice' || !banner.tag)
+                        ? t('pages.home.banner.defaultTag', { defaultValue: 'Regulatory Notice' })
+                        : banner.tag || t('pages.home.banner.notice', { defaultValue: 'Notice' })
+                    }
+                    size="small"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: '0.72rem',
+                      height: 22,
+                      backgroundColor: 'primary.main',
+                      color: '#FFFFFF',
+                      flexShrink: 0,
+                    }}
+                  />
+                  <Typography
+                    variant="subtitle2"
+                    component="span"
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: { xs: '0.92rem', sm: '1rem' },
+                      lineHeight: 1.45,
+                      color: 'text.primary',
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {banner.id === 1 && banner.title.includes('Czech Foreigners Residence Act')
+                      ? t('pages.home.banner.defaultTitle', { defaultValue: banner.title })
+                      : banner.title}
+                  </Typography>
+                </Box>
+                {banner.subtitle && (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: { xs: '0.82rem', sm: '0.875rem' },
+                      lineHeight: 1.6,
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {banner.id === 1 && banner.subtitle.includes('Foreign nationals applying for Czech long-term visas')
+                      ? t('pages.home.banner.defaultSubtitle', { defaultValue: banner.subtitle })
+                      : banner.subtitle}
+                  </Typography>
+                )}
+              </Box>
+            </Box>
+
+            {/* Action Button */}
+            <Box
+              sx={{
+                alignSelf: { xs: 'flex-start', md: 'center' },
+                flexShrink: 0,
+                mt: { xs: 0.5, md: 0 },
+              }}
+            >
+              <Button
+                variant="contained"
+                size="small"
+                onClick={scrollToInquiry}
+                sx={{
+                  px: 2.4,
+                  py: 0.8,
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  whiteSpace: 'nowrap',
+                  textTransform: 'none',
+                  boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
+                }}
+              >
+                {t('pages.home.banner.defaultButton', { defaultValue: 'Request Options' })}
+              </Button>
+            </Box>
+          </Paper>
+        )}
+
+        {/* Licensed Intermediary Partner Transparency Card */}
         <Paper
           elevation={0}
           sx={{
@@ -1011,14 +1233,16 @@ const HomePage: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* 7. Feature Cards (Streamlined, Accurate Technical Wording) */}
-      <Grid container spacing={2.5} sx={{ mb: 1 }}>
+      {/* =========================================================================
+          7. SECURITY & ARCHITECTURE FEATURE CARDS
+          ========================================================================= */}
+      <Grid container spacing={2.5} sx={{ mb: 2 }}>
         {(customFeatures && customFeatures.length > 0
           ? customFeatures.map((item) => ({
               icon: <SecurityOutlined sx={{ fontSize: 24, color: '#4F46E5' }} />,
               badge: item.badge || 'Verified',
-              title: item.title_key ? t(item.title_key, { defaultValue: item.title || '' }) : (item.title || ''),
-              description: item.desc_key ? t(item.desc_key, { defaultValue: item.description || '' }) : (item.description || ''),
+              title: item.title_key ? t(item.title_key, { defaultValue: item.title || '' }) : item.title || '',
+              description: item.desc_key ? t(item.desc_key, { defaultValue: item.description || '' }) : item.description || '',
               gradient: item.gradient || 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
             }))
           : [
@@ -1027,7 +1251,8 @@ const HomePage: React.FC = () => {
                 badge: 'AES-256 GCM',
                 title: t('pages.home.features.secure', { defaultValue: 'AES-256-GCM Secure Data Vault' }),
                 description: t('pages.home.features.secureDesc', {
-                  defaultValue: 'Authenticated symmetric encryption with per-document nonces and cryptographic key derivation to protect customer enquiry data.',
+                  defaultValue:
+                    'Authenticated symmetric encryption with per-document nonces and cryptographic key derivation to protect customer enquiry data.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%)',
               },
@@ -1036,7 +1261,8 @@ const HomePage: React.FC = () => {
                 badge: '12 Languages',
                 title: t('pages.home.features.multilingual', { defaultValue: 'Multilingual Chinese & English Support' }),
                 description: t('pages.home.features.multilingualDesc', {
-                  defaultValue: 'Seamless cross-border communication designed to assist international students and expatriates relocating to the Czech Republic.',
+                  defaultValue:
+                    'Seamless cross-border communication designed to assist international students and expatriates relocating to the Czech Republic.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.12) 100%)',
               },
@@ -1045,7 +1271,8 @@ const HomePage: React.FC = () => {
                 badge: 'Tamper-Evident',
                 title: t('pages.home.features.audit', { defaultValue: 'Tamper-Evident Audit Trail' }),
                 description: t('pages.home.features.auditDesc', {
-                  defaultValue: 'Cryptographically hashed timeline records each stage of enquiry handoff and intermediary consultation with zero data ambiguity.',
+                  defaultValue:
+                    'Cryptographically hashed timeline records each stage of enquiry handoff and intermediary consultation with zero data ambiguity.',
                 }),
                 gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%)',
               },
@@ -1056,12 +1283,10 @@ const HomePage: React.FC = () => {
               elevation={0}
               sx={{
                 height: '100%',
-                p: { xs: 2, sm: 2.2 },
+                p: { xs: 2.2, sm: 2.5 },
                 borderRadius: '16px',
                 backgroundColor:
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(30, 41, 59, 0.55)'
-                    : 'rgba(255, 255, 255, 0.85)',
+                  theme.palette.mode === 'dark' ? 'rgba(30, 41, 59, 0.55)' : 'rgba(255, 255, 255, 0.85)',
                 backdropFilter: 'blur(12px)',
                 border:
                   theme.palette.mode === 'dark'
@@ -1118,7 +1343,11 @@ const HomePage: React.FC = () => {
                 <Typography variant="subtitle1" sx={{ fontWeight: 750, fontSize: '1.05rem', mb: 0.6 }}>
                   {feature.title}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.55, display: 'block', fontSize: '0.82rem' }}>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ lineHeight: 1.55, display: 'block', fontSize: '0.82rem' }}
+                >
                   {feature.description}
                 </Typography>
               </Box>

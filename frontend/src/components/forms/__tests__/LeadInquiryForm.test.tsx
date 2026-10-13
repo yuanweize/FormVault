@@ -11,6 +11,24 @@ jest.mock('../../../services/applicationService', () => {
     ...actual,
     applicationService: {
       submitInquiry: jest.fn(),
+      getPortalConfig: jest.fn().mockResolvedValue({
+        success: true,
+        document_intake_policy: 'DISABLED',
+      }),
+      createIntakeSession: jest.fn().mockResolvedValue({
+        success: true,
+        session_token: 'mock-session-token',
+        expires_at: '2026-10-14T00:00:00Z',
+      }),
+      uploadIntakeDocument: jest.fn().mockResolvedValue({
+        id: 'doc-123',
+        document_type: 'PASSPORT',
+        original_filename: 'passport.jpg',
+        file_size: 1024,
+        mime_type: 'image/jpeg',
+        created_at: '2026-10-13T00:00:00Z',
+      }),
+      deleteIntakeDocument: jest.fn().mockResolvedValue({ success: true }),
     },
   };
 });
@@ -39,18 +57,36 @@ const renderForm = (onSuccess?: jest.Mock) => {
 describe('LeadInquiryForm Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    (applicationService.getPortalConfig as jest.Mock).mockResolvedValue({
+      success: true,
+      document_intake_policy: 'DISABLED',
+    });
+    window.matchMedia = jest.fn().mockImplementation((query: string) => ({
+      matches: true,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }));
+    sessionStorage.clear();
     delete (window as any).location;
-    (window as any).location = new URL('https://insure.hktse.eu.org/?utm_source=xiaohongshu&utm_campaign=oct2026&referral_code=wechat-group-a');
+    (window as any).location = new URL(
+      'https://insure.hktse.eu.org/?utm_source=xiaohongshu&utm_campaign=oct2026&referral_code=wechat-group-a'
+    );
   });
 
   it('renders initial stepper and step 1 fields', () => {
     renderForm();
 
-    expect(screen.getByText('International Student Insurance Enquiry')).toBeInTheDocument();
-    expect(screen.getByText('About You')).toBeInTheDocument();
-    expect(screen.getByText('Stay & Needs')).toBeInTheDocument();
-    expect(screen.getByText('Contact')).toBeInTheDocument();
-    expect(screen.getByText('Review & Submit')).toBeInTheDocument();
+    expect(screen.getByText('Health Insurance Enquiry for Foreigners in Czechia')).toBeInTheDocument();
+    expect(screen.getAllByText('Basic Information').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Stay & Status').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Insurance Timing').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Contact & Documents').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Review & Submit').length).toBeGreaterThan(0);
 
     expect(screen.getByLabelText(/First Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last Name/i)).toBeInTheDocument();
@@ -62,7 +98,6 @@ describe('LeadInquiryForm Component', () => {
     renderForm();
 
     const dobInput = screen.getByLabelText(/Date of Birth/i);
-    // Student born in 2003 (approx 23 years old)
     fireEvent.change(dobInput, { target: { value: '2003-05-10' } });
 
     await waitFor(() => {
@@ -81,7 +116,7 @@ describe('LeadInquiryForm Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('completes the 4-step intake flow with one submission and captured UTM parameters', async () => {
+  it('completes the 5-step intake flow with one submission and captured UTM parameters', async () => {
     const mockOnSuccess = jest.fn();
     (applicationService.submitInquiry as jest.Mock).mockResolvedValueOnce({
       success: true,
@@ -94,30 +129,37 @@ describe('LeadInquiryForm Component', () => {
 
     renderForm(mockOnSuccess);
 
-    // STEP 1: About You
+    // STEP 0: Basic Information
     fireEvent.change(screen.getByLabelText(/First Name/i), { target: { value: 'San' } });
     fireEvent.change(screen.getByLabelText(/Last Name/i), { target: { value: 'Zhang' } });
     fireEvent.change(screen.getByLabelText(/Date of Birth/i), { target: { value: '2003-05-10' } });
-    fireEvent.change(screen.getByLabelText(/Nationality/i), { target: { value: 'Chinese' } });
+    fireEvent.change(screen.getByLabelText(/Nationality/i), { target: { value: 'China' } });
 
     fireEvent.click(screen.getByRole('button', { name: /Next Step/i }));
 
-    // STEP 2: Stay & Insurance Needs
+    // STEP 1: Stay & Status
     await waitFor(() => {
-      expect(screen.getByText(/Step 2 — Situation & Insurance Needs/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/School \/ University/i)).toBeInTheDocument();
     });
 
     const schoolInput = screen.getByLabelText(/School \/ University/i);
-    fireEvent.change(schoolInput, { target: { value: 'CTU in Prague' } });
+    fireEvent.change(schoolInput, { target: { value: 'Czech Technical University in Prague (CTU)' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Next Step/i }));
+
+    // STEP 2: Coverage Timing
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Requested Start Date/i)).toBeInTheDocument();
+    });
 
     const startDateInput = screen.getByLabelText(/Requested Start Date/i);
     fireEvent.change(startDateInput, { target: { value: '2026-11-01' } });
 
     fireEvent.click(screen.getByRole('button', { name: /Next Step/i }));
 
-    // STEP 3: Contact & Chinese Student Preferences
+    // STEP 3: Contact & Documents
     await waitFor(() => {
-      expect(screen.getByText(/Step 3 — Contact & Communication Preferences/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
     });
 
     fireEvent.change(screen.getByLabelText(/Email Address/i), {
@@ -132,14 +174,12 @@ describe('LeadInquiryForm Component', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Next Step/i }));
 
-    // STEP 4: Review & Consent
+    // STEP 4: Review & Submit
     await waitFor(() => {
-      expect(screen.getByText(/Step 4 — Review Dossier & Authorize Referral/i)).toBeInTheDocument();
+      expect(screen.getByText(/Review Your Enquiry Details/i)).toBeInTheDocument();
       expect(screen.getByText(/San Zhang/i)).toBeInTheDocument();
       expect(screen.getByText(/zhangsan@student.cvut.cz/i)).toBeInTheDocument();
-      expect(screen.getByText(/CTU in Prague/i)).toBeInTheDocument();
-      expect(screen.getByText(/Source: xiaohongshu \/ oct2026/i)).toBeInTheDocument();
-      expect(screen.getByText(/Ref: wechat-group-a/i)).toBeInTheDocument();
+      expect(screen.getByText(/Czech Technical University in Prague \(CTU\)/i)).toBeInTheDocument();
     });
 
     // Check single consent checkbox
@@ -161,7 +201,7 @@ describe('LeadInquiryForm Component', () => {
     expect(submittedPayload.last_name).toBe('Zhang');
     expect(submittedPayload.date_of_birth).toBe('2003-05-10');
     expect(submittedPayload.student_status).toBe(true);
-    expect(submittedPayload.school_or_university).toBe('CTU in Prague');
+    expect(submittedPayload.school_or_university).toBe('Czech Technical University in Prague (CTU)');
     expect(submittedPayload.email).toBe('zhangsan@student.cvut.cz');
     expect(submittedPayload.phone).toBe('+420 777 888 999');
     expect(submittedPayload.wechat_id).toBe('zhangsan_prague');
@@ -173,7 +213,7 @@ describe('LeadInquiryForm Component', () => {
 
     // Verify Success Screen rendered
     await waitFor(() => {
-      expect(screen.getByText(/Insurance Enquiry Received Successfully!/i)).toBeInTheDocument();
+      expect(screen.getByText(/Enquiry Received Successfully!/i)).toBeInTheDocument();
       expect(screen.getByText('FV-20261013-ABCDEF')).toBeInTheDocument();
       expect(mockOnSuccess).toHaveBeenCalledWith(
         expect.objectContaining({ reference_number: 'FV-20261013-ABCDEF' })

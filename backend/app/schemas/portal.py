@@ -95,6 +95,15 @@ class PortalPublicConfigSchema(BaseModel):
     lead_only_fallback_url: Optional[str] = None
     capabilities: Optional[dict] = None
 
+    # Document intake & verification settings
+    document_intake_policy: str = "DISABLED"
+    passport_required: bool = False
+    study_proof_required: bool = False
+    accepted_study_proof_types: Optional[str] = '["confirmation_of_study", "student_id", "isic"]'
+    turnstile_enabled: bool = False
+    turnstile_site_key: Optional[str] = None
+    contact_verification_mode: str = "NONE"
+
     model_config = ConfigDict(from_attributes=True)
 
 

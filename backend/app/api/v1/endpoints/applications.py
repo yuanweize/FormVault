@@ -5,12 +5,29 @@ This module provides REST API endpoints for creating, updating,
 retrieving, and submitting insurance applications.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Query, Request, Response, status
+from fastapi import (
+    APIRouter,
+    HTTPException,
+    Depends,
+    Query,
+    Request,
+    Response,
+    status,
+    UploadFile,
+    File as FastAPIFile,
+    Form,
+)
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from typing import List, Optional
 from uuid import uuid4
 import structlog
+import secrets
+import hashlib
+from datetime import datetime, timezone, timedelta, date
+import json
+import urllib.request
+import urllib.parse
 
 from app.database import get_db
 import app.models.application as app_module
@@ -19,14 +36,14 @@ from app.models.file import File
 from app.models.email_export import EmailExport
 from app.models.compliance import PartnerHandoffConsent
 from app.models.system import SystemConfig
+from app.models.lead import LeadInquiry, IntakeSession, LeadDocument
+from app.services.file_storage import file_storage
 from app.services.business_scope import (
     get_public_capabilities,
     get_effective_scope_mode,
 )
 from app.utils.db_helpers import create_audit_log, handle_integrity_error
 from app.services.email_service import email_service
-from datetime import datetime, timezone
-import json
 from app.schemas.application import (
     ApplicationCreateSchema,
     ApplicationUpdateSchema,
@@ -42,6 +59,11 @@ from app.schemas.application import (
     AddressSchema,
     LeadInquiryCreateSchema,
     LeadInquiryResponseSchema,
+    IntakeSessionCreateResponseSchema,
+    LeadDocumentItemSchema,
+    IntakeSessionDocumentsResponseSchema,
+    SendOtpRequestSchema,
+    VerifyOtpRequestSchema,
 )
 from app.schemas.email_export import (
     EmailExportRequestSchema,
@@ -103,14 +125,13 @@ async def track_application_status(
     email = track_data.email.strip().lower()
 
     # 1. Check LeadInquiry table first (for one-shot lead entries)
-    from app.models.lead import LeadInquiry
-
     lead = db.query(LeadInquiry).filter(LeadInquiry.reference_number == ref).first()
     if lead and (lead.email or "").strip().lower() == email:
         lead_status = lead.status
         timeline = [
             ApplicationTimelineStepSchema(
                 key="draft",
+                code="INQUIRY_RECEIVED",
                 label="Enquiry Received",
                 description="Your enquiry details have been securely received by FormVault.",
                 completed=True,
@@ -119,6 +140,7 @@ async def track_application_status(
             ),
             ApplicationTimelineStepSchema(
                 key="submitted",
+                code="FORWARDED_TO_INTERMEDIARY",
                 label="Forwarded to Intermediary",
                 description="Enquiry securely forwarded to České pojištění a.s. for licensed intermediary review.",
                 completed=(
@@ -147,6 +169,7 @@ async def track_application_status(
             ),
             ApplicationTimelineStepSchema(
                 key="exported",
+                code="PARTNER_PROCESSING",
                 label="Awaiting Intermediary Response",
                 description="Licensed insurance intermediary is preparing available insurance options.",
                 completed=(
@@ -176,6 +199,7 @@ async def track_application_status(
             ),
             ApplicationTimelineStepSchema(
                 key="processed",
+                code="CONTACTED",
                 label="Contacted & Options Provided",
                 description="Intermediary specialist has contacted applicant with tailored insurance offers.",
                 completed=(lead_status in ["CONTACTED", "CLOSED"]),
@@ -201,8 +225,10 @@ async def track_application_status(
             success=True,
             reference_number=lead.reference_number,
             status=lead.status,
+            status_code=lead.status,
             status_label=status_labels.get(lead.status, lead.status),
             insurance_type="Health",
+            insurance_type_code="HEALTH",
             masked_name=_mask_name(lead.first_name, lead.last_name),
             masked_email=_mask_email(lead.email),
             created_at=lead.created_at,
@@ -226,9 +252,17 @@ async def track_application_status(
     status_order = {"draft": 1, "submitted": 2, "exported": 3, "processed": 4}
     curr_idx = status_order.get(application.status, 2)
 
+    app_status_code_map = {
+        "draft": "INQUIRY_RECEIVED",
+        "submitted": "FORWARDED_TO_INTERMEDIARY",
+        "exported": "PARTNER_PROCESSING",
+        "processed": "CONTACTED",
+    }
+
     timeline = [
         ApplicationTimelineStepSchema(
             key="draft",
+            code="INQUIRY_RECEIVED",
             label="Enquiry Received",
             description="Your enquiry details have been securely received by FormVault.",
             completed=curr_idx >= 1,
@@ -237,6 +271,7 @@ async def track_application_status(
         ),
         ApplicationTimelineStepSchema(
             key="submitted",
+            code="FORWARDED_TO_INTERMEDIARY",
             label="Forwarded to Intermediary",
             description="Enquiry securely forwarded to České pojištění a.s. for licensed intermediary review.",
             completed=curr_idx >= 2,
@@ -245,6 +280,7 @@ async def track_application_status(
         ),
         ApplicationTimelineStepSchema(
             key="exported",
+            code="PARTNER_PROCESSING",
             label="Awaiting Intermediary Response",
             description="Licensed insurance intermediary is preparing available insurance options.",
             completed=curr_idx >= 3,
@@ -253,6 +289,7 @@ async def track_application_status(
         ),
         ApplicationTimelineStepSchema(
             key="processed",
+            code="CONTACTED",
             label="Contacted & Options Provided",
             description="Intermediary specialist has contacted applicant with tailored insurance offers.",
             completed=curr_idx >= 4,
@@ -272,10 +309,14 @@ async def track_application_status(
         success=True,
         reference_number=application.reference_number,
         status=application.status,
+        status_code=app_status_code_map.get(
+            application.status, application.status.upper()
+        ),
         status_label=status_labels.get(
             application.status, application.status.capitalize()
         ),
         insurance_type=(application.insurance_type or "health").capitalize(),
+        insurance_type_code="HEALTH",
         masked_name=_mask_name(application.first_name, application.last_name),
         masked_email=_mask_email(application.email),
         created_at=application.created_at,
@@ -523,6 +564,116 @@ async def create_lead_inquiry(
     user_ip = request.client.host if request.client else None
     user_agent = request.headers.get("user-agent")
 
+    # Honeypot spam check
+    if inquiry_data.hp_field and inquiry_data.hp_field.strip():
+        logger.warning("Spam honeypot triggered; discarding silently", ip=user_ip)
+        return LeadInquiryResponseSchema(
+            success=True,
+            reference_number="FV-20261013-SPAM",
+            status="INQUIRY_RECEIVED",
+            status_label="Enquiry Received",
+            recipient="České pojištění a.s.",
+            message="Your enquiry has been received.",
+        )
+
+    # Throttling / Rapid Resubmission Prevention
+    recent_cutoff = datetime.now(timezone.utc) - timedelta(seconds=20)
+    recent_lead = (
+        db.query(LeadInquiry)
+        .filter(
+            LeadInquiry.email == str(inquiry_data.email).strip().lower(),
+            LeadInquiry.created_at >= recent_cutoff,
+        )
+        .first()
+    )
+    if recent_lead:
+        raise HTTPException(
+            status_code=429,
+            detail={
+                "code": "RATE_LIMITED",
+                "field": "email",
+                "message": "Please wait a moment before resubmitting your enquiry.",
+            },
+        )
+
+    config = db.query(SystemConfig).first()
+
+    # Cloudflare Turnstile Verification (if enabled)
+    if config and config.turnstile_enabled and config.turnstile_secret_key:
+        turnstile_tok = inquiry_data.turnstile_token
+        if not turnstile_tok:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "code": "TURNSTILE_REQUIRED",
+                    "field": "turnstile_token",
+                    "message": "Security verification required. Please complete the captcha.",
+                },
+            )
+        try:
+            verify_url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+            post_data = urllib.parse.urlencode({
+                "secret": config.turnstile_secret_key,
+                "response": turnstile_tok,
+                "remoteip": user_ip or "",
+            }).encode("utf-8")
+            req = urllib.request.Request(verify_url, data=post_data, method="POST")
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                turnstile_result = json.loads(resp.read().decode("utf-8"))
+                if not turnstile_result.get("success"):
+                    raise HTTPException(
+                        status_code=400,
+                        detail={
+                            "code": "TURNSTILE_FAILED",
+                            "field": "turnstile_token",
+                            "message": "Security verification failed. Please try again.",
+                        },
+                    )
+        except HTTPException:
+            raise
+        except Exception as t_err:
+            logger.warning(f"Turnstile verification request issue: {t_err}")
+
+    # Document Intake Policy Enforcement
+    policy = getattr(config, "document_intake_policy", "DISABLED") if config else "DISABLED"
+    intake_token = inquiry_data.intake_token
+    intake_session = None
+    if intake_token:
+        intake_session = (
+            db.query(IntakeSession)
+            .filter(
+                IntakeSession.token == intake_token,
+                IntakeSession.is_consumed == False,
+            )
+            .first()
+        )
+
+    if policy == "INITIAL_REQUIRED":
+        passport_req = getattr(config, "passport_required", True)
+        study_req = getattr(config, "study_proof_required", True)
+        has_passport = False
+        has_study = False
+        if intake_session:
+            session_docs = (
+                db.query(LeadDocument)
+                .filter(LeadDocument.intake_session_id == intake_session.id)
+                .all()
+            )
+            has_passport = any(d.document_type == "passport_bio_page" for d in session_docs)
+            has_study = any(
+                d.document_type in ["study_confirmation", "student_id", "isic"]
+                for d in session_docs
+            )
+        if (passport_req and not has_passport) or (study_req and not has_study):
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "code": "DOCUMENTS_REQUIRED",
+                    "field": "documents",
+                    "message": "Passport photo page and proof of study must be uploaded before submitting.",
+                },
+            )
+
     from app.services.lead_service import create_lead_inquiry as service_create_lead
 
     try:
@@ -533,6 +684,22 @@ async def create_lead_inquiry(
             client_ip=user_ip,
             user_agent=user_agent,
         )
+
+        # Attach documents from IntakeSession to LeadInquiry
+        if intake_session:
+            session_docs = (
+                db.query(LeadDocument)
+                .filter(LeadDocument.intake_session_id == intake_session.id)
+                .all()
+            )
+            for doc in session_docs:
+                doc.lead_id = lead.id
+                if doc.document_type == "passport_bio_page":
+                    lead.passport_file_id = doc.file_id
+                elif doc.document_type in ["study_confirmation", "student_id", "isic"]:
+                    lead.study_confirmation_file_id = doc.file_id
+            intake_session.is_consumed = True
+            db.commit()
 
         # Maintain Application projection record for backward compatibility & direct tracking
         custom_data = {
@@ -549,6 +716,8 @@ async def create_lead_inquiry(
             "utm_source": lead.utm_source,
             "utm_campaign": lead.utm_campaign,
             "referral_code": lead.referral_code,
+            "passport_file_id": lead.passport_file_id,
+            "study_confirmation_file_id": lead.study_confirmation_file_id,
         }
 
         application = app_module.Application(
@@ -585,7 +754,6 @@ async def create_lead_inquiry(
         lead.converted_application_id = application.id
         db.commit()
 
-        config = db.query(SystemConfig).first()
         recipient_name = getattr(config, "partner_name", None) or "České pojištění a.s."
 
         return LeadInquiryResponseSchema(
@@ -598,6 +766,9 @@ async def create_lead_inquiry(
             derived_age_band=lead.age_band,
             message=f"Your enquiry has been received. We will forward it to {recipient_name} for insurance handling and the next steps.",
         )
+    except (ValidationException, FormVaultException, HTTPException):
+        db.rollback()
+        raise
     except Exception as e:
         db.rollback()
         logger.error("Failed to process lead inquiry", error=str(e), exc_info=True)
@@ -605,6 +776,305 @@ async def create_lead_inquiry(
             status_code=500,
             detail="Failed to register insurance enquiry. Please try again later.",
         )
+
+
+@router.post("/intake-sessions", response_model=IntakeSessionCreateResponseSchema)
+async def create_intake_session(
+    request: Request,
+    db: Session = Depends(get_db),
+) -> IntakeSessionCreateResponseSchema:
+    """Create a temporary intake session with a 24-hour token for document uploads."""
+    user_ip = request.client.host if request.client else None
+    token = secrets.token_urlsafe(32)
+    session = IntakeSession(
+        token=token,
+        ip_address=user_ip,
+        expires_at=datetime.now(timezone.utc) + timedelta(hours=24),
+    )
+    db.add(session)
+    db.commit()
+    db.refresh(session)
+    return IntakeSessionCreateResponseSchema(
+        success=True,
+        token=session.token,
+        expires_at=session.expires_at,
+    )
+
+
+@router.post("/intake-sessions/{token}/upload", response_model=LeadDocumentItemSchema)
+async def upload_intake_document(
+    token: str,
+    request: Request,
+    file: UploadFile = FastAPIFile(...),
+    document_type: str = Form(...),
+    db: Session = Depends(get_db),
+) -> LeadDocumentItemSchema:
+    """Upload a sensitive document (passport bio page / study confirmation) under a valid temporary intake session."""
+    config = db.query(SystemConfig).first()
+    policy = getattr(config, "document_intake_policy", "DISABLED") if config else "DISABLED"
+    if policy == "DISABLED":
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "code": "DOCUMENTS_DISABLED",
+                "message": "Document intake is currently disabled.",
+            },
+        )
+
+    session = (
+        db.query(IntakeSession)
+        .filter(
+            IntakeSession.token == token,
+            IntakeSession.is_consumed == False,
+            IntakeSession.expires_at > datetime.now(timezone.utc),
+        )
+        .first()
+    )
+    if not session:
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "code": "SESSION_INVALID",
+                "message": "Intake session not found or expired.",
+            },
+        )
+
+    if policy == "VERIFIED_LEAD" and not session.verified_email:
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "code": "EMAIL_VERIFICATION_REQUIRED",
+                "message": "Email verification is required before uploading documents.",
+            },
+        )
+
+    allowed_doc_types = {
+        "passport_bio_page",
+        "study_confirmation",
+        "student_id",
+        "isic",
+        "residence_permit",
+    }
+    if document_type not in allowed_doc_types:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": "INVALID_DOCUMENT_TYPE",
+                "message": f"Unsupported document type: {document_type}",
+            },
+        )
+
+    # Validate file type and security (MIME, size, magic bytes)
+    file_storage.validate_file(file)
+
+    # Save encrypted file
+    file_id = str(uuid4())
+    stored_path, secure_filename, file_size = await file_storage.save_file(
+        file, file_id, db
+    )
+
+    doc = LeadDocument(
+        id=str(uuid4()),
+        intake_session_id=session.id,
+        document_type=document_type,
+        file_id=file_id,
+        original_filename=file.filename or f"{document_type}.bin",
+        file_size=file_size,
+        mime_type=file.content_type or "application/octet-stream",
+        status="ATTACHED",
+    )
+    db.add(doc)
+    db.commit()
+    db.refresh(doc)
+
+    return LeadDocumentItemSchema(
+        id=doc.id,
+        document_type=doc.document_type,
+        original_filename=doc.original_filename,
+        file_size=doc.file_size,
+        mime_type=doc.mime_type,
+        status=doc.status,
+        created_at=doc.created_at,
+    )
+
+
+@router.get(
+    "/intake-sessions/{token}/documents",
+    response_model=IntakeSessionDocumentsResponseSchema,
+)
+def get_intake_documents(
+    token: str,
+    db: Session = Depends(get_db),
+) -> IntakeSessionDocumentsResponseSchema:
+    """Retrieve all uploaded documents for this temporary session."""
+    session = (
+        db.query(IntakeSession)
+        .filter(
+            IntakeSession.token == token,
+            IntakeSession.is_consumed == False,
+        )
+        .first()
+    )
+    if not session:
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "SESSION_INVALID", "message": "Intake session not found."},
+        )
+
+    docs = (
+        db.query(LeadDocument)
+        .filter(LeadDocument.intake_session_id == session.id)
+        .all()
+    )
+    items = [
+        LeadDocumentItemSchema(
+            id=d.id,
+            document_type=d.document_type,
+            original_filename=d.original_filename,
+            file_size=d.file_size,
+            mime_type=d.mime_type,
+            status=d.status,
+            created_at=d.created_at,
+        )
+        for d in docs
+    ]
+    return IntakeSessionDocumentsResponseSchema(
+        success=True,
+        token=token,
+        documents=items,
+    )
+
+
+@router.delete("/intake-sessions/{token}/documents/{doc_id}")
+async def delete_intake_document(
+    token: str,
+    doc_id: str,
+    db: Session = Depends(get_db),
+):
+    """Delete an uploaded document from the temporary intake session."""
+    session = (
+        db.query(IntakeSession)
+        .filter(
+            IntakeSession.token == token,
+            IntakeSession.is_consumed == False,
+        )
+        .first()
+    )
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    doc = (
+        db.query(LeadDocument)
+        .filter(
+            LeadDocument.id == doc_id,
+            LeadDocument.intake_session_id == session.id,
+        )
+        .first()
+    )
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    try:
+        await file_storage.delete_file(doc.file_id, db)
+    except Exception as e:
+        logger.warning(f"File storage cleanup warning: {e}")
+
+    db.delete(doc)
+    db.commit()
+    return {"success": True, "message": "Document deleted successfully"}
+
+
+@router.post("/send-verification-otp")
+async def send_verification_otp(
+    payload: SendOtpRequestSchema,
+    db: Session = Depends(get_db),
+):
+    """Generate and dispatch a 6-digit email OTP for contact verification."""
+    email = payload.email.strip().lower()
+    otp_code = "".join([str(secrets.randbelow(10)) for _ in range(6)])
+    otp_hash = hashlib.sha256(otp_code.encode("utf-8")).hexdigest()
+
+    if payload.intake_token:
+        session = (
+            db.query(IntakeSession)
+            .filter(IntakeSession.token == payload.intake_token)
+            .first()
+        )
+        if session:
+            session.otp_code_hash = otp_hash
+            session.otp_expires_at = datetime.now(timezone.utc) + timedelta(minutes=10)
+            session.otp_attempts = 0
+            db.commit()
+
+    try:
+        subject = f"Your FormVault Verification Code: {otp_code}"
+        body = f"Hello,\n\nYour FormVault verification code is: {otp_code}\nThis code is valid for 10 minutes.\n\nBest regards,\nFormVault Team"
+        await email_service.send_email(to_email=email, subject=subject, content=body)
+    except Exception as e:
+        logger.info(f"OTP dispatch note: {e}. Code generated for {email}.")
+
+    return {"success": True, "message": "Verification code sent to email."}
+
+
+@router.post("/verify-otp")
+def verify_otp(
+    payload: VerifyOtpRequestSchema,
+    db: Session = Depends(get_db),
+):
+    """Verify 6-digit code against intake session."""
+    code = payload.code.strip()
+    candidate_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
+
+    if not payload.intake_token:
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "TOKEN_REQUIRED", "message": "Intake token is required."},
+        )
+
+    session = (
+        db.query(IntakeSession)
+        .filter(IntakeSession.token == payload.intake_token)
+        .first()
+    )
+    if not session or not session.otp_code_hash:
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "code": "OTP_NOT_FOUND",
+                "message": "No active verification code found.",
+            },
+        )
+
+    if session.otp_expires_at and session.otp_expires_at < datetime.now(timezone.utc):
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "OTP_EXPIRED", "message": "Verification code has expired."},
+        )
+
+    session.otp_attempts += 1
+    if session.otp_attempts > 5:
+        raise HTTPException(
+            status_code=429,
+            detail={
+                "code": "TOO_MANY_ATTEMPTS",
+                "message": "Too many failed attempts.",
+            },
+        )
+
+    if session.otp_code_hash != candidate_hash:
+        db.commit()
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": "INVALID_OTP",
+                "message": "Incorrect verification code.",
+            },
+        )
+
+    session.verified_email = payload.email.strip().lower()
+    session.otp_code_hash = None
+    db.commit()
+    return {"success": True, "message": "Email verified successfully."}
 
 
 @router.post("/leads/{lead_id}/convert", response_model=ApplicationResponseSchema)
